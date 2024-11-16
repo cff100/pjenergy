@@ -7,10 +7,8 @@ def valores_nao_aceitos(valor_escolhido, valores_aceitos):
 
 
 def perguntas_usuario():
-  aceito_1 = False
-  aceito_2 = False
-  aceito_3 = False
-  aceito_4 = False
+  aceito_1, aceito_2, aceito_3, aceito_4, aceito_5, aceito_6, aceito_7 = [False] * 7
+
 
   while aceito_1 == False:
     variaveis_dict = {
@@ -31,44 +29,49 @@ def perguntas_usuario():
     aceito_1 = valores_nao_aceitos(variavel, ["1", "2", "3"])
     
 
-  if variavel in ['1', '2']:
+  
 
-    while aceito_2 == False:
-      modo_dict = {
-          "1": "Original",
-          "2": "Original-Derivada"
+  while aceito_2 == False:
+    modo_dict = {
+        "1": "Original",
+        "2": "Original-Derivada"
+    }
+
+    modo = input(
+      '''Qual modo deseja observar? \n 
+      1 - Original \n 
+      2 - Original-Derivada \n \n'''
+    )
+
+    print("\n")
+
+    aceito_2 = valores_nao_aceitos(modo, ["1", "2"])
+    
+
+  if variavel in ['1','3']:
+
+    while aceito_3 == False:
+      componente_velocidade_dict = {
+          "1": "Resultante",
+          "2": "u",
+          "3": "v"
       }
 
-      modo = input(
-        '''Qual modo deseja observar? \n 
-        1 - Original \n 
-        2 - Original-Derivada \n \n'''
+      componente_velocidade = input(
+        '''Qual componente da velocidade deseja observar? \n 
+        1 - Resultante \n 
+        2 - u \n 
+        3 - v \n \n'''
       )
 
       print("\n")
 
-      aceito_2 = valores_nao_aceitos(modo, ["1", "2"])
-      
+      aceito_3 = valores_nao_aceitos(componente_velocidade, ["1", "2", "3"])
+      componente_velocidade = componente_velocidade_dict[componente_velocidade]
 
-    if variavel == '1':
-
-      while aceito_3 == False:
-        componente_dict = {
-            "1": "Resultante",
-            "2": "u",
-            "3": "v"
-        }
-
-        componente = input(
-          '''Qual componente deseja observar? \n 
-          1 - Resultante \n 
-          2 - u \n 
-          3 - v \n \n'''
-        )
-
-        print("\n")
-
-        aceito_3 = valores_nao_aceitos(componente, ["1", "2", "3"])
+  else:
+    componente_velocidade = None
+    
 
   while aceito_4 == False:
     plataformas_dict = {
@@ -100,18 +103,77 @@ def perguntas_usuario():
 
     aceito_4 = valores_nao_aceitos(plataforma, ["p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8", "p9"])
 
+  while aceito_5 == False:
+    indicador_dict = {
+        '1': 'diario',
+        '2': 'média'
+    }
+
+    indicador = input(
+        '''Deseja observar um dia específico ou estações do ano? \n
+        1 - Dia \n
+        2 - Estações \n \n'''
+    )
+
+    print("\n")
+
+    aceito_5 = valores_nao_aceitos(indicador, ['1', '2'])
+
+  if indicador == "1":
+    estacao = None
+    data = input(
+      '''Qual dia deseja observar? Escreva no formato yyyy-mm-dd \n
+      Exemplo: 2022-04-27 \n \n
+    '''
+    )
+
+    print("\n")
+
+  elif indicador == "2":
+    data = None
+    while aceito_7 == False:
+      estacoes_dict = {
+        '1': 'Verão',
+        '2': 'Outono',
+        '3': 'Inverno',
+        '4': 'Primavera',
+        '5': 'Todas',
+        '6': 'Geral'
+      }
+
+      estacao = input(
+          '''Qual estação deseja observar? \n
+          1 - Verão \n
+          2 - Outono \n
+          3 - Inverno \n
+          4 - Primavera \n 
+          5 - Todas (separadas) \n 
+          6 - Geral (juntas) \n \n'''
+          
+      )
+
+      print("\n")
+
+      aceito_7 = valores_nao_aceitos(estacao, ['1', '2', '3', '4', '5'])
+
+      estacao = estacoes_dict[estacao]
 
 
   variavel = variaveis_dict[variavel]
   modo = modo_dict[modo]
-  componente = componente_dict[componente]
   plataforma = plataformas_dict[plataforma]
+  indicador = indicador_dict[indicador]
+  
 
   argumentos = dict(
       variavel = variavel,
       modo = modo,
-      componente = componente,
-      plataforma = plataforma
+      componente = componente_velocidade,
+      plataforma = plataforma,
+      estacao = estacao,
+      indicador = indicador,
+      data = data
+
   )
 
   return argumentos
