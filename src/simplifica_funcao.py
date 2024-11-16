@@ -1,4 +1,4 @@
-# Para facilitar a escolha da plataforma:
+# Para facilitar a escolha da plataforma
 
 def simplifica_funcao(plataforma):
 
