@@ -1,3 +1,5 @@
+from .simplifica import simplifica_plat
+
 def valores_nao_aceitos(valor_escolhido, valores_aceitos):
   if valor_escolhido not in valores_aceitos:
     print("Valor não aceito \n")
