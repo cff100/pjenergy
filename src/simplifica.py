@@ -4,23 +4,23 @@ def simplifica_funcao(plataforma):
 
   #print("Função ativada: simplifica_funcao \n")
 
-  if plataforma == 'p1':
+  if plataforma == '1':
     return 'NAMORADO 2 (PNA-2)', None
-  elif plataforma == 'p2':
+  elif plataforma == '2':
     return 'PETROBRAS 26 (P-26)', None
-  elif plataforma == 'p3':
+  elif plataforma == '3':
     return 'PETROBRAS 32 (P-32)', None
-  elif plataforma == 'p4':
+  elif plataforma == '4':
     return 'PETROBRAS 37 (P-37)', None
-  elif plataforma == 'p5':
+  elif plataforma == '5':
     return 'PETROBRAS IX', None
-  elif plataforma == 'p6':
+  elif plataforma == '6':
     return 'PETROBRAS XIX', None
-  elif plataforma == 'p7':
+  elif plataforma == '7':
     return 'PETROBRAS XXXIII', None
-  elif plataforma == 'p8':
+  elif plataforma == '8':
     return 'VERMELHO 1 (PVM-1)', None
-  elif plataforma == 'p9':
+  elif plataforma == '9':
     return 'VERMELHO 2 (PVM-2)', None
   elif isinstance(plataforma, list):
     mensagem_erro = "Lista de plataformas não é aceito \n"
