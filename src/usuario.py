@@ -184,7 +184,7 @@ def perguntas_usuario():
 
 def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, estacao, indicador, data):
 
-  plataforma = pjs.simplifica_plat(plataforma)
+  plataforma = simplifica_plat(plataforma)
 
   argumentos = dict(
         variavel = variavel,
