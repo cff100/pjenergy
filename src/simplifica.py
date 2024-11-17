@@ -1,6 +1,6 @@
 # Para facilitar a escolha da plataforma
 
-def simplifica_funcao(plataforma):
+def simplifica_plat(plataforma):
 
   #print("Função ativada: simplifica_funcao \n")
 
