@@ -13,9 +13,10 @@ def valores_nao_aceitos(valor_escolhido, valores_aceitos):
     return True
 
 
-
 # Verifica se a data escolhida está no formato aceito
 def formato_data(data_escolhida):
+  if data_escolhida == None:
+    return True
   try:
     datetime.strptime(data_escolhida, '%Y-%m-%d')
     return True
