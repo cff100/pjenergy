@@ -44,7 +44,7 @@ def verifica_ano(ano):
     # Ordena os anos, se necessário
     anos_dataframe.sort()
     aceito_8 = valores_nao_aceitos(ano, anos_dataframe)
-  return aceito_8
+  return aceito_8, ano
 
 
 def perguntas_usuario():
@@ -222,7 +222,7 @@ def perguntas_usuario():
 
         print("\n")
 
-        aceito_8 = verifica_ano(ano)
+        aceito_8, ano = verifica_ano(ano)
         
 
 
@@ -270,7 +270,7 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
   if aceito_data == False:
     return None
 
-  aceito_ano = verifica_ano(ano)
+  aceito_ano, ano = verifica_ano(ano)
   if aceito_ano == False:
     return None
 
