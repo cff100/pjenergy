@@ -248,7 +248,7 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
   aceito_data = formato_data(data)
   if aceito_data == True:
     aceito_data = presenca_data(data)
-  if aceito_data == False
+  if aceito_data == False:
     return None
 
   argumentos = dict(
