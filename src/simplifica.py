@@ -4,11 +4,14 @@ from .usuario import valores_nao_aceitos
 # Para facilitar a escolha da plataforma
 def simplifica_plat(plataforma):
 
-  valores_nao_aceitos(plataforma, ["1", "2", "3", "4", "5", "6", "7", "8", "9",
+  aceito = valores_nao_aceitos(plataforma, ["1", "2", "3", "4", "5", "6", "7", "8", "9",
                                    'NAMORADO 2 (PNA-2)', 'PETROBRAS 26 (P-26)',
                                    'PETROBRAS 32 (P-32)', 'PETROBRAS 37 (P-37)',
                                    'PETROBRAS IX', 'PETROBRAS XIX', 'PETROBRAS XXXIII',
                                    'VERMELHO 1 (PVM-1)', 'VERMELHO 2 (PVM-2)'])
+  
+  if aceito == False:
+    return aceito
   
   if plataforma == '1':
     return 'NAMORADO 2 (PNA-2)'
