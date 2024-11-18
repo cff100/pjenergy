@@ -26,11 +26,11 @@ def formato_data(data_escolhida):
 
 # Verifica se a data escolhida está presente no dataframe
 def presenca_data(data_escolhida):
-  if (df['Data'] == data_escolhida).any():
+  if (df['Data'] == data_escolhida).any() or data_escolhida == None:
     return True
   else:
     print(f"ERRO: A string '{data_escolhida}' não está presente no dataframe. \n")
-    return False  
+    return False
 
 
 
@@ -242,7 +242,7 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
   Esse é o outro modo de obter os argumentos.
   '''
 
-  # Chama uma função que converte o número representativo no nome da plataforma, além de verificar se não foi escolhida uma string invalida. 
+  # Chama uma função que converte o número representativo no nome da plataforma, além de verificar se não foi escolhida uma string invalida.
   #O nome completo da plataforma também é uma entrada válida.
   plataforma = simplifica_plat(plataforma)
   if plataforma == False:
