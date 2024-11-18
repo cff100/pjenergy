@@ -1,17 +1,46 @@
-from .simplifica import simplifica_plat
+import pandas as pd
+#from .simplifica import simplifica_plat
+from datetime import datetime
 
+#Datframe como todos os dados
+df = pd.read_csv('/content/2023_DataFrame.csv')
+
+# Função que garante que a pergunta será repetida caso o usuário responda diferente das alternativas
 def valores_nao_aceitos(valor_escolhido, valores_aceitos):
   if valor_escolhido not in valores_aceitos:
-    print("Valor não aceito \n")
+    print("ERRO: Valor não aceito \n")
     return False
   else:
     return True
+
+# Verifica se a data escolhida está no formato aceito
+def formato_data(data_escolhida):
+  try:
+    datetime.strptime(data_escolhida, '%Y-%m-%d')
+    return True
+  except ValueError:
+    print("ERRO: Formato de data inválido \n")
+    return False
+
+# Verifica se a data escolhida está presente no dataframe
+def presenca_data(data_escolhida):
+  if (df['Data'] == data_escolhida).any():
+    return True
+  else:
+    print(f"ERRO: A string '{data_escolhida}' não está presente no dataframe. \n")
+    return False  
 
 
 
 def perguntas_usuario():
 
-  aceito_1, aceito_2, aceito_3, aceito_4, aceito_5, aceito_6, aceito_7 = [False] * 7
+  '''
+  Faz perguntas ao usuário sobre os argumentos importantes para a formação dos gráficos.
+  Esse é um dos modos de obter os argumentos.
+  '''
+
+  #Variável que determina se a pergunta deve ser repetida
+  aceito_1, aceito_2, aceito_3, aceito_4, aceito_5, aceito_6, aceito_7, aceito_8, aceito_9 = [False] * 9
 
 
   while aceito_1 == False:
@@ -125,13 +154,20 @@ def perguntas_usuario():
 
   if indicador == "1":
     estacao = None
-    data = input(
-      '''Qual dia deseja observar? Escreva no formato yyyy-mm-dd \n
-      Exemplo: 2022-04-27 \n \n
-    '''
-    )
 
-    print("\n")
+    while aceito_9 == False:
+      data = input(
+        '''Qual dia deseja observar? Escreva no formato yyyy-mm-dd \n
+        Exemplo: 2022-04-27 \n \n
+      '''
+      )
+
+      print("\n")
+
+      aceito_9 = formato_data(data)
+      if aceito_9 == True:
+        aceito_9 = presenca_data(data)
+
 
   elif indicador == "2":
     data = None
@@ -162,6 +198,17 @@ def perguntas_usuario():
 
       estacao = estacoes_dict[estacao]
 
+      # Escolha do ano
+      while aceito_8 == False:
+        ano = input(
+            '''Qual ano deseja observar? (Digite 0 caso queira incluir todos os anos) \n \n
+            '''
+        )
+
+        print("\n")
+
+
+
 
   variavel = variaveis_dict[variavel]
   modo = modo_dict[modo]
@@ -182,9 +229,27 @@ def perguntas_usuario():
 
   return argumentos
 
+
+
 def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, estacao, indicador, data):
 
+  '''
+  O usuário coloca os argumentos de forma direta.
+  Esse é o outro modo de obter os argumentos.
+  '''
+
+  # Chama uma função que converte o número representativo no nome da plataforma, além de verificar se não foi escolhida uma string invalida. 
+  #O nome completo da plataforma também é uma entrada válida.
   plataforma = simplifica_plat(plataforma)
+  if plataforma == False:
+    print("ERRO: Plataforma não encontrada \n")
+    return None
+
+  aceito_data = formato_data(data)
+  if aceito_data == True:
+    aceito_data = presenca_data(data)
+  if aceito_data == False
+    return None
 
   argumentos = dict(
         variavel = variavel,
@@ -195,7 +260,7 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
         indicador = indicador,
         data = data
     )
-  
+
   return argumentos
 
 
@@ -204,7 +269,6 @@ def argumentos_usuario(perguntas = True, variavel = "Ambos", modo = "Original", 
     argumentos = perguntas_usuario()
   else:
     argumentos = escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, estacao, indicador, data)
-    
+
 
   return argumentos
-  
