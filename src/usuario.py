@@ -210,11 +210,16 @@ def perguntas_usuario():
         print("\n")
 
         # Cria uma lista dos anos existentes no dataframe
-        anos_dataframe = pd.to_datetime(df['Data']).dt.year.unique().tolist()
+        anos_dataframe = pd.to_datetime(df['Data']).dt.year.unique()
+        anos_dataframe = [str(ano) for ano in anos_dataframe]
         # Ordena os anos, se necessário
         anos_dataframe.sort()
 
-        aceito_8 = valores_nao_aceitos(ano, anos_dataframe)
+        if ano == 0 or ano == 'Todos':
+          ano = 'Todos'
+          aceito_8 = True
+        else:
+          aceito_8 = valores_nao_aceitos(ano, anos_dataframe)
         print(anos_dataframe)
 
 
