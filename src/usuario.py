@@ -1,7 +1,7 @@
 import pandas as pd
 from datetime import datetime
 
-#Datframe como todos os dados
+#Dataframe com todos os dados
 df = pd.read_csv('/content/pjenergy/2023_DataFrame.csv')
 
 # Função que garante que a pergunta será repetida caso o usuário responda diferente das alternativas
@@ -209,7 +209,13 @@ def perguntas_usuario():
 
         print("\n")
 
+        # Cria uma lista dos anos existentes no dataframe
+        anos_dataframe = pd.to_datetime(df['Data']).dt.year.unique().tolist()
+        # Ordena os anos, se necessário
+        anos_dataframe.sort()
 
+        aceito_8 = valores_nao_aceitos(ano, anos_dataframe)
+        print(anos_dataframe)
 
 
   variavel = variaveis_dict[variavel]
