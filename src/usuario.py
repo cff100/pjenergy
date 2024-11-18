@@ -3,7 +3,7 @@ import pandas as pd
 from datetime import datetime
 
 #Datframe como todos os dados
-df = pd.read_csv('/content/2023_DataFrame.csv')
+df = pd.read_csv('/data/2023_DataFrame.csv')
 
 # Função que garante que a pergunta será repetida caso o usuário responda diferente das alternativas
 def valores_nao_aceitos(valor_escolhido, valores_aceitos):
