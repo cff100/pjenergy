@@ -1,9 +1,8 @@
 import pandas as pd
-from .simplifica import simplifica_plat
 from datetime import datetime
 
 #Datframe como todos os dados
-df = pd.read_csv('/content/pjenergy/2023_DataFrame.csv')
+df = pd.read_csv('/content/2023_DataFrame.csv')
 
 # Função que garante que a pergunta será repetida caso o usuário responda diferente das alternativas
 def valores_nao_aceitos(valor_escolhido, valores_aceitos):
@@ -12,6 +11,8 @@ def valores_nao_aceitos(valor_escolhido, valores_aceitos):
     return False
   else:
     return True
+
+
 
 # Verifica se a data escolhida está no formato aceito
 def formato_data(data_escolhida):
@@ -230,6 +231,8 @@ def perguntas_usuario():
   return argumentos
 
 
+
+from .simplifica import simplifica_plat
 
 def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, estacao, indicador, data):
 
