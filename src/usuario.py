@@ -215,7 +215,7 @@ def perguntas_usuario():
         # Ordena os anos, se necessário
         anos_dataframe.sort()
 
-        if ano == 0 or ano == 'Todos':
+        if ano == '0' or ano == 'Todos':
           ano = 'Todos'
           aceito_8 = True
         else:
