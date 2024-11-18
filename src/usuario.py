@@ -33,6 +33,19 @@ def presenca_data(data_escolhida):
     return False
 
 
+def verifica_ano(ano):
+  if ano == '0' or ano == 'Todos':
+    ano = 'Todos'
+    aceito_8 = True
+  else:
+    # Cria uma lista dos anos existentes no dataframe
+    anos_dataframe = pd.to_datetime(df['Data']).dt.year.unique()
+    anos_dataframe = [str(a) for a in anos_dataframe]
+    # Ordena os anos, se necessário
+    anos_dataframe.sort()
+    aceito_8 = valores_nao_aceitos(ano, anos_dataframe)
+  return aceito_8
+
 
 def perguntas_usuario():
 
@@ -209,18 +222,8 @@ def perguntas_usuario():
 
         print("\n")
 
-        # Cria uma lista dos anos existentes no dataframe
-        anos_dataframe = pd.to_datetime(df['Data']).dt.year.unique()
-        anos_dataframe = [str(ano) for ano in anos_dataframe]
-        # Ordena os anos, se necessário
-        anos_dataframe.sort()
-
-        if ano == '0' or ano == 'Todos':
-          ano = 'Todos'
-          aceito_8 = True
-        else:
-          aceito_8 = valores_nao_aceitos(ano, anos_dataframe)
-        print(anos_dataframe)
+        aceito_8 = verifica_ano(ano)
+        
 
 
   variavel = variaveis_dict[variavel]
@@ -265,6 +268,10 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
   if aceito_data == True:
     aceito_data = presenca_data(data)
   if aceito_data == False:
+    return None
+
+  aceito_ano = verifica_ano(ano)
+  if aceito_ano == False:
     return None
 
   argumentos = dict(
