@@ -1,5 +1,5 @@
 import pandas as pd
-#from .simplifica import simplifica_plat
+from .simplifica import simplifica_plat
 from datetime import datetime
 
 #Datframe como todos os dados
