@@ -6,7 +6,7 @@ df = pd.read_csv('/content/pjenergy/data/2023_DataFrame.csv')
 
 
 def valores_nao_aceitos(valor_escolhido, valores_aceitos, dica = False):
-
+  print(dica)
   '''Função que garante que a pergunta será repetida caso o usuário responda diferente das alternativas'''
   
   print(f"Checando valor: {valor_escolhido}")
@@ -296,7 +296,7 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
 
   variavel = valores_nao_aceitos(variavel, ["Velocidade", "Temperatura", "Ambos"], dica = True)
   if variavel == False:
-    return 'casa'
+    return None
 
   modo = valores_nao_aceitos(modo, ["Original", "Original-Derivada"], dica = True)
   if modo == False:
