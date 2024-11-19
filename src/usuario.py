@@ -331,7 +331,7 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
   return argumentos
 
 
-def argumentos_usuario(perguntas = True, variavel = "Ambos", modo = "Original", componente_velocidade = "Resultante", plataforma = "7", estacao = "Geral", indicador = "Estações", data = None, ano = "Todos"):
+def argumentos_usuario(perguntas = True, variavel = "Ambos", modo = "Original", componente_velocidade = "Resultante", plataforma = "7", estacao = "Geral", indicador = "Média", data = None, ano = "Todos"):
   
   '''Inicia a busca pelos argumentos do usuário'''
   
