@@ -1,6 +1,6 @@
 import pandas as pd
 from datetime import datetime
-#teste
+
 #Dataframe com todos os dados
 df = pd.read_csv('/content/pjenergy/data/2023_DataFrame.csv')
 
