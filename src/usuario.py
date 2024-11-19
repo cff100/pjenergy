@@ -281,7 +281,7 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
         plataforma = plataforma,
         estacao = estacao,
         indicador = indicador,
-        data = data
+        data = data,
         ano = ano
     )
 
