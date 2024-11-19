@@ -21,7 +21,7 @@ def valores_nao_aceitos(valor_escolhido, valores_aceitos, dica = False, nome_var
     return False
   else:
     #print(f"Valor escolhido: {valor_escolhido} \n")
-    return True
+    return valor_escolhido
 
 
 
