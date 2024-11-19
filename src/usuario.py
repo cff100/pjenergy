@@ -15,6 +15,7 @@ def valores_nao_aceitos(valor_escolhido, valores_aceitos, dica = False):
       print(f"Valores aceitos: {valores_aceitos} \n")
     return False
   else:
+    print(f"Valor escolhido: {valor_escolhido} \n")
     return True
 
 
