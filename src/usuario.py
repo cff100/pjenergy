@@ -5,19 +5,21 @@ from datetime import datetime
 df = pd.read_csv('/content/pjenergy/data/2023_DataFrame.csv')
 
 
-def valores_nao_aceitos(valor_escolhido, valores_aceitos):
+def valores_nao_aceitos(valor_escolhido, valores_aceitos, dica = False):
 
   '''Função que garante que a pergunta será repetida caso o usuário responda diferente das alternativas'''
 
   if valor_escolhido not in valores_aceitos:
     print("ERRO: Valor não aceito \n")
+    if dica == True:
+      print(f"Valores aceitos: {valores_aceitos} \n")
     return False
   else:
     return True
 
 
 
-def formato_data(data_escolhida):
+def formato_data(data_escolhida, dica = False):
 
   '''Verifica se a data escolhida está no formato aceito'''
 
@@ -28,6 +30,8 @@ def formato_data(data_escolhida):
     return True
   except ValueError:
     print("ERRO: Formato de data inválido \n")
+    if dica == True:
+      print("Formato aceito: yyyy-mm-dd \n")
     return False
 
 
@@ -167,8 +171,8 @@ def perguntas_usuario():
 
   while aceito_5 == False:
     indicador_dict = {
-        '1': 'diario',
-        '2': 'média'
+        '1': 'Diário',
+        '2': 'Média'
     }
 
     indicador = input(
@@ -278,7 +282,7 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
     print("ERRO: Plataforma não encontrada \n")
     return None
 
-  aceito_data = formato_data(data)
+  aceito_data = formato_data(data, dica = True)
   if aceito_data == True:
     aceito_data = presenca_data(data)
   if aceito_data == False:
@@ -286,6 +290,26 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
 
   aceito_ano, ano = verifica_ano(ano)
   if aceito_ano == False:
+    return None
+
+  variavel = valores_nao_aceitos(variavel, ["Velocidade", "Temperatura", "Ambos"], dica = True)
+  if variavel == False:
+    return None
+
+  modo = valores_nao_aceitos(modo, ["Original", "Original-Derivada"], dica = True)
+  if modo == False:
+    return None
+
+  componente_velocidade = valores_nao_aceitos(componente_velocidade, ["Resultante", "u", "v"], dica = True)
+  if componente_velocidade == False:
+    return None
+
+  estacao = valores_nao_aceitos(estacao, ["Verão", "Outono", "Inverno", "Primavera", "Todas", "Geral"], dica = True)
+  if estacao == False:
+    return None
+
+  indicador = valores_nao_aceitos(indicador, ["Diário", "Média"], dica = True)
+  if indicador == False:
     return None
 
   argumentos = dict(
