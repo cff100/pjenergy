@@ -4,8 +4,11 @@ from datetime import datetime
 #Dataframe com todos os dados
 df = pd.read_csv('/content/pjenergy/data/2023_DataFrame.csv')
 
-# Função que garante que a pergunta será repetida caso o usuário responda diferente das alternativas
+
 def valores_nao_aceitos(valor_escolhido, valores_aceitos):
+
+  '''Função que garante que a pergunta será repetida caso o usuário responda diferente das alternativas'''
+
   if valor_escolhido not in valores_aceitos:
     print("ERRO: Valor não aceito \n")
     return False
@@ -13,8 +16,11 @@ def valores_nao_aceitos(valor_escolhido, valores_aceitos):
     return True
 
 
-# Verifica se a data escolhida está no formato aceito
+
 def formato_data(data_escolhida):
+
+  '''Verifica se a data escolhida está no formato aceito'''
+
   if data_escolhida == None:
     return True
   try:
@@ -24,8 +30,12 @@ def formato_data(data_escolhida):
     print("ERRO: Formato de data inválido \n")
     return False
 
-# Verifica se a data escolhida está presente no dataframe
+
+
 def presenca_data(data_escolhida):
+
+  '''Verifica se a data escolhida está presente no dataframe'''
+
   if (df['Data'] == data_escolhida).any() or data_escolhida == None:
     return True
   else:
@@ -34,6 +44,9 @@ def presenca_data(data_escolhida):
 
 
 def verifica_ano(ano):
+
+  '''Verifica se o ano escolhido está presente no dataframe ou se não escolha específica para ano'''
+
   if ano == '0' or ano == 'Todos':
     ano = 'Todos'
     aceito_8 = True
@@ -41,8 +54,9 @@ def verifica_ano(ano):
     # Cria uma lista dos anos existentes no dataframe
     anos_dataframe = pd.to_datetime(df['Data']).dt.year.unique()
     anos_dataframe = [str(a) for a in anos_dataframe]
-    # Ordena os anos, se necessário
+    # Ordena os anos
     anos_dataframe.sort()
+    # Verifica se é um valor aceito
     aceito_8 = valores_nao_aceitos(ano, anos_dataframe)
   return aceito_8, ano
 
@@ -51,7 +65,7 @@ def perguntas_usuario():
 
   '''
   Faz perguntas ao usuário sobre os argumentos importantes para a formação dos gráficos.
-  Esse é um dos modos de obter os argumentos.
+  Esse é um dos modos de obter os argumentos. É o modo mais longo.
   '''
 
   #Variável que determina se a pergunta deve ser repetida
@@ -289,6 +303,9 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
 
 
 def argumentos_usuario(perguntas = True, variavel = "Ambos", modo = "Original", componente_velocidade = "Resultante", plataforma = "7", estacao = "Geral", indicador = "Estações", data = None, ano = "Todos"):
+  
+  '''Inicia a busca pelos argumentos do usuário'''
+  
   if perguntas == True:
     argumentos = perguntas_usuario()
   else:
