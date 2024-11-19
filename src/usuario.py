@@ -5,7 +5,7 @@ from datetime import datetime
 df = pd.read_csv('/content/pjenergy/data/2023_DataFrame.csv')
 
 
-def valores_nao_aceitos(valor_escolhido, valores_aceitos, dica = False):
+def valores_nao_aceitos(valor_escolhido, valores_aceitos, dica = False, nome_variavel = None):
 
   '''Função que garante que a pergunta será repetida caso o usuário responda diferente das alternativas'''
   
@@ -14,6 +14,7 @@ def valores_nao_aceitos(valor_escolhido, valores_aceitos, dica = False):
   if valor_escolhido not in valores_aceitos:
     print("ERRO: Valor não aceito")
     if dica == True:
+      print(f"ERRO: Valor não aceito para {nome_variavel}")
       print(f"Valores aceitos: {valores_aceitos} \n")
     else:
       print('\n')
@@ -52,9 +53,9 @@ def presenca_data(data_escolhida):
     return False
 
 
-def verifica_ano(ano):
+def verifica_ano(ano, dica = False, nome_variavel = None):
 
-  '''Verifica se o ano escolhido está presente no dataframe ou se não escolha específica para ano'''
+  '''Verifica se o ano escolhido está presente no dataframe ou se não há escolha específica para ano'''
 
   if ano == '0' or ano == 'Todos':
     ano = 'Todos'
@@ -66,7 +67,7 @@ def verifica_ano(ano):
     # Ordena os anos
     anos_dataframe.sort()
     # Verifica se é um valor aceito
-    aceito_8 = valores_nao_aceitos(ano, anos_dataframe)
+    aceito_8 = valores_nao_aceitos(ano, anos_dataframe, dica, nome_variavel)
   return aceito_8, ano
 
 
