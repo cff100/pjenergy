@@ -296,7 +296,7 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
 
   variavel = valores_nao_aceitos(variavel, ["Velocidade", "Temperatura", "Ambos"], dica = True)
   if variavel == False:
-    return None
+    return 'casa'
 
   modo = valores_nao_aceitos(modo, ["Original", "Original-Derivada"], dica = True)
   if modo == False:
