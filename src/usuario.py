@@ -285,36 +285,35 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
   #O nome completo da plataforma também é uma entrada válida.
   plataforma = simplifica_plat(plataforma)
   if plataforma == False:
-    print("ERRO: Plataforma não encontrada \n")
     return None
 
-  aceito_data = formato_data(data, dica = True)
+  aceito_data = formato_data(data)
   if aceito_data == True:
     aceito_data = presenca_data(data)
   if aceito_data == False:
     return None
 
-  aceito_ano, ano = verifica_ano(ano)
+  aceito_ano, ano = verifica_ano(ano, dica = True, nome_variavel = 'ano')
   if aceito_ano == False:
     return None
 
-  variavel = valores_nao_aceitos(variavel, ["Velocidade", "Temperatura", "Ambos"], dica = True)
+  variavel = valores_nao_aceitos(variavel, ["Velocidade", "Temperatura", "Ambos"], dica = True, nome_variavel = 'variavel')
   if variavel == False:
     return None
 
-  modo = valores_nao_aceitos(modo, ["Original", "Original-Derivada"], dica = True)
+  modo = valores_nao_aceitos(modo, ["Original", "Original-Derivada"], dica = True, nome_variavel = 'modo')
   if modo == False:
     return None
 
-  componente_velocidade = valores_nao_aceitos(componente_velocidade, ["Resultante", "u", "v"], dica = True)
+  componente_velocidade = valores_nao_aceitos(componente_velocidade, ["Resultante", "u", "v"], dica = True, nome_variavel = 'componente_velocidade')
   if componente_velocidade == False:
     return None
 
-  estacao = valores_nao_aceitos(estacao, ["Verão", "Outono", "Inverno", "Primavera", "Todas", "Geral"], dica = True)
+  estacao = valores_nao_aceitos(estacao, ["Verão", "Outono", "Inverno", "Primavera", "Todas", "Geral"], dica = True, nome_variavel = 'estacao')
   if estacao == False:
     return None
 
-  indicador = valores_nao_aceitos(indicador, ["Diário", "Média"], dica = True)
+  indicador = valores_nao_aceitos(indicador, ["Diário", "Média"], dica = True, nome_variavel = 'indicador')
   if indicador == False:
     return None
 

@@ -9,10 +9,11 @@ def simplifica_plat(plataforma):
                                    'PETROBRAS 32 (P-32)', 'PETROBRAS 37 (P-37)',
                                    'PETROBRAS IX', 'PETROBRAS XIX', 'PETROBRAS XXXIII',
                                    'VERMELHO 1 (PVM-1)', 'VERMELHO 2 (PVM-2)'])
-  
+
   if aceito == False:
+    print('Erro na escolha da plataforma')
     return aceito
-  
+
   if plataforma == '1':
     return 'NAMORADO 2 (PNA-2)'
   elif plataforma == '2':
