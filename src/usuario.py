@@ -6,17 +6,20 @@ df = pd.read_csv('/content/pjenergy/data/2023_DataFrame.csv')
 
 
 def valores_nao_aceitos(valor_escolhido, valores_aceitos, dica = False):
-  print(dica)
+
   '''Função que garante que a pergunta será repetida caso o usuário responda diferente das alternativas'''
   
-  print(f"Checando valor: {valor_escolhido}")
+  #print(dica)
+  #print(f"Checando valor: {valor_escolhido}")
   if valor_escolhido not in valores_aceitos:
-    print("ERRO: Valor não aceito \n")
+    print("ERRO: Valor não aceito")
     if dica == True:
       print(f"Valores aceitos: {valores_aceitos} \n")
+    else:
+      print('\n')
     return False
   else:
-    print(f"Valor escolhido: {valor_escolhido} \n")
+    #print(f"Valor escolhido: {valor_escolhido} \n")
     return True
 
 
