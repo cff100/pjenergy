@@ -1,7 +1,6 @@
 import pandas as pd
 from datetime import datetime
 
-unzip 'content/pjenergy/data/Era5_Vento_CAMPOS.zip' -d 'content/pjenergy/data/'
 #Dataframe com todos os dados
 df = pd.read_csv('/content/pjenergy/data/Era5_Vento_CAMPOS.csv')
 
@@ -9,7 +8,7 @@ df = pd.read_csv('/content/pjenergy/data/Era5_Vento_CAMPOS.csv')
 def valores_nao_aceitos(valor_escolhido, valores_aceitos, dica = False, nome_variavel = None):
 
   '''Função que garante que a pergunta será repetida caso o usuário responda diferente das alternativas'''
-
+  
   #print(dica)
   #print(f"Checando valor: {valor_escolhido}")
   if valor_escolhido not in valores_aceitos:
@@ -248,7 +247,7 @@ def perguntas_usuario():
         print("\n")
 
         aceito_8, ano = verifica_ano(ano)
-
+        
 
 
   variavel = variaveis_dict[variavel]
@@ -333,9 +332,9 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
 
 
 def argumentos_usuario(perguntas = True, variavel = "Ambos", modo = "Original", componente_velocidade = "Resultante", plataforma = "7", estacao = "Geral", indicador = "Média", data = None, ano = "Todos"):
-
+  
   '''Inicia a busca pelos argumentos do usuário'''
-
+  
   if perguntas == True:
     argumentos = perguntas_usuario()
   else:
