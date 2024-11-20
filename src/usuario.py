@@ -1,7 +1,7 @@
 import pandas as pd
 from datetime import datetime
 
-unzip content/pjenergy/data/Era5_Vento_CAMPOS.zip -d content/pjenergy/data/
+unzip 'content/pjenergy/data/Era5_Vento_CAMPOS.zip' -d 'content/pjenergy/data/'
 #Dataframe com todos os dados
 df = pd.read_csv('/content/pjenergy/data/Era5_Vento_CAMPOS.csv')
 
