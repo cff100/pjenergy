@@ -37,7 +37,7 @@ def presenca_data(data_escolhida, df):
     return False
 
 
-def verifica_ano(ano, dica = False, nome_variavel = None):
+def verifica_ano(ano, dica = False, nome_variavel = None, df):
 
   '''Verifica se o ano escolhido está presente no dataframe ou se não há escolha específica para ano'''
 
@@ -276,6 +276,19 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
   df = dataframe_plataforma_escolhida(plataforma)
   df.drop(columns=['Plataforma'], inplace = True)
 
+  
+
+  aceito_ano, ano = verifica_ano(ano, dica = True, nome_variavel = 'ano', df)
+  if aceito_ano == False:
+    return None
+
+  if ano not in ['0', 'Todos']:
+    df['Ano'] = df['Data'].str[:4]
+    df = df[df['Ano'] == ano]
+    df.drop(columns=['Ano'], inplace = True)
+    if data != None:
+      
+
   aceito_data = formato_data(data)
   if aceito_data == True:
     aceito_data = presenca_data(data, df)
@@ -286,15 +299,6 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
     df = df[df['Data'] == data]
     df.drop(columns=['Data'], inplace = True)
 
-
-  aceito_ano, ano = verifica_ano(ano, dica = True, nome_variavel = 'ano')
-  if aceito_ano == False:
-    return None
-
-  if ano not in ['0', 'Todos']:
-    df['Ano'] = df['Data'].str[:4]
-    df = df[df['Ano'] == ano]
-    df.drop(columns=['Ano'], inplace = True)
 
   variavel = valores_nao_aceitos(variavel, ["Velocidade", "Temperatura", "Ambos"], dica = True, nome_variavel = 'variavel')
   if variavel == False:
