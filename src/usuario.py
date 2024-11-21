@@ -2,6 +2,7 @@ import pandas as pd
 from datetime import datetime
 from .simplifica import simplifica_plat
 from .valores_nao_aceitos import valores_nao_aceitos
+from .dataframe_media import dataframe_media
 
 
 def dataframe_plataforma_escolhida(plataforma):
@@ -178,23 +179,31 @@ def perguntas_usuario():
   while aceito_5 == False:
     indicador_dict = {
         '1': 'Diário',
-        '2': 'Média'
+        '2': 'Média',
+        '3': 'Sem_filtros'
     }
 
     indicador = input(
-        '''Deseja observar um dia específico ou estações do ano? \n
+        '''Deseja observar um dia específico ou estações do ano? Ou não deseja colocar filtros? \n
         1 - Dia \n
-        2 - Estações \n \n'''
+        2 - Estações 
+        3 - Sem filtros \n \n'''
     )
 
     print("\n")
 
-    aceito_5 = valores_nao_aceitos(indicador, ['1', '2'])
+    aceito_5 = valores_nao_aceitos(indicador, ['1', '2', '3'])
 
-  if indicador == "1":  # Se o indicador é Diário, é pedido para escolher um dia
-    # Escolha automática de outros argumentos
-    estacao = None 
+  if indicador == "3":
+    estacao = None
     ano = 'Todos'
+    data = None
+
+  elif indicador == "1":  # Se o indicador é Diário, é pedido para escolher um dia
+    # Escolha automática de outros argumentos
+    estacao = None
+    ano = 'Todos'
+
 
     while aceito_9 == False:
       data = input(
@@ -236,7 +245,7 @@ def perguntas_usuario():
           3 - Inverno \n
           4 - Primavera \n
           5 - Todas (separadas) \n
-          6 - Geral (juntas) \n \n'''
+          6 - Geral (juntas) \n \n''' # Mantém as datas do dataframe
 
       )
 
@@ -269,6 +278,14 @@ def perguntas_usuario():
           df = df[df['Ano'] == ano]
           df.drop(columns=['Ano'], inplace = True)
 
+      if estacao == None: # Sempre vai ocorrer quando uma data específica for escolhida ou simplesmente quando o usuário não escolher filtrar estação 
+        pass
+      else:   # Chama a função que faz a média
+        if estacao == 'Todas':
+          estacoes_separadas = True  # Define que a média será para cada estação
+        else:
+          estacoes_separadas = False
+        df = dataframe_media(df, estacoes_separadas)
 
 
 
@@ -316,7 +333,19 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
   if data != None:
     ano = '0'
     indicador = 'Diário'
-    estacao = 'Geral'
+    estacao = None
+    if estacao != None or ano != '0' and indicador != 'Diário':
+      print("Devido a escolha de uma data específica:")
+      if estacao != None:
+        estacao = None
+        print(f'- Estação foi alterada para {estacao}')
+      if ano != 'Todos':
+        ano = 'Todos'
+        print(f'- Ano foi alterado para {ano}')
+      if indicador != 'Diário':
+        indicador = 'Diário'
+        print(f'- Indicador foi alterado para {indicador}')
+    
 
   # Verifica a validade do ano e filtra o dataframe
   aceito_ano, ano = verifica_ano(ano, df, dica = True, nome_variavel = 'ano')
@@ -350,16 +379,26 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
   if componente_velocidade == False:
     return None
 
-  estacao = valores_nao_aceitos(estacao, ["Verão", "Outono", "Inverno", "Primavera", "Todas", "Geral"], dica = True, nome_variavel = 'estacao')
+  estacao = valores_nao_aceitos(estacao, ["Verão", "Outono", "Inverno", "Primavera", "Todas", "Geral", None], dica = True, nome_variavel = 'estacao')
   if estacao == False:
     return None
   if estacao in ['Verão', 'Outono', 'Inverno', 'Primavera']:
     df = df[df['Estação_do_Ano'] == estacao]
     df.drop(columns=['Estação_do_Ano'], inplace = True)
 
-  indicador = valores_nao_aceitos(indicador, ["Diário", "Média"], dica = True, nome_variavel = 'indicador')
+  indicador = valores_nao_aceitos(indicador, ["Diário", "Média", 'Sem_filtros'], dica = True, nome_variavel = 'indicador')
   if indicador == False:
     return None
+
+  # Verificar se é necessário fazer uma média e chamar a função que o faz
+  if estacao == None: # Sempre vai ocorrer quando uma data específica for escolhida ou simplesmente quando o usuário não escolher filtrar estação
+    pass
+  else:
+    if estacao == 'Todas':
+      estacoes_separadas = True
+    else:
+      estacoes_separadas = False
+    df = dataframe_media(df, estacoes_separadas)
 
 
   argumentos = dict(
@@ -377,6 +416,7 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
   return argumentos
 
 
+# Quando estacao e data são None ao mesmo tempo, o dataframe não seria processado o suficiente para plotagem, mas ainda serve para visualização da tabela
 def argumentos_usuario(perguntas = True, variavel = "Ambos", modo = "Original", componente_velocidade = "Resultante", plataforma = "7", estacao = "Geral", indicador = "Média", data = None, ano = "Todos"):
 
   '''Inicia a busca pelos argumentos do usuário'''
