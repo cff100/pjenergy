@@ -186,7 +186,7 @@ def perguntas_usuario():
     indicador = input(
         '''Deseja observar um dia específico ou estações do ano? Ou não deseja colocar filtros? \n
         1 - Dia \n
-        2 - Estações 
+        2 - Estações \n
         3 - Sem filtros \n \n'''
     )
 
