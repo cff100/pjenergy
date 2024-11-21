@@ -3,8 +3,6 @@ from datetime import datetime
 from .simplifica import simplifica_plat
 from .valores_nao_aceitos import valores_nao_aceitos
 
-#Dataframe com todos os dados
-df = pd.read_csv('/content/pjenergy/data/Era5_Vento_CAMPOS.csv')
 
 def dataframe_plataforma_escolhida(plataforma):
   df = pd.read_csv(f'/content/pjenergy/data/dataframes_ventos_por_plataforma/Era5_Vento_CAMPOS-{plataforma}.csv')
