@@ -161,6 +161,7 @@ def perguntas_usuario():
 
     plataforma = plataformas_dict[plataforma]
     df = dataframe_plataforma_escolhida(plataforma)
+    df.drop(columns=['Plataforma'], inplace = True)
 
   while aceito_5 == False:
     indicador_dict = {
@@ -193,6 +194,11 @@ def perguntas_usuario():
       aceito_9 = formato_data(data)
       if aceito_9 == True:
         aceito_9 = presenca_data(data)
+      if data != None:
+        df = df[df['Data'] == data]
+        df.drop(columns=['Data'], inplace = True)
+
+      
 
 
   elif indicador == "2":
@@ -224,6 +230,10 @@ def perguntas_usuario():
 
       estacao = estacoes_dict[estacao]
 
+      if estacao in ['Verão', 'Outono', 'Inverno', 'Primavera']:
+        df = df[df['Estação_do_Ano'] == estacao]
+        df.drop(columns=['Estação_do_Ano'], inplace = True)
+
       # Escolha do ano
       while aceito_8 == False:
         ano = input(
@@ -233,7 +243,12 @@ def perguntas_usuario():
 
         print("\n")
 
-        aceito_8, ano = verifica_ano(ano)
+        aceito_8, ano = verifica_ano(ano, df)
+        if ano not in ['0', 'Todos']:
+          df['Ano'] = df['Data'].str[:4]
+          df = df[df['Ano'] == ano]
+          df.drop(columns=['Ano'], inplace = True)
+
 
 
 
