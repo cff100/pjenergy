@@ -13,14 +13,15 @@ def formato_data(data_escolhida, dica = False):
 
   '''Verifica se a data escolhida está no formato aceito'''
 
-  if data_escolhida == None:
+  if data_escolhida == None:   #Caso não haja data específica escolhida, não há avaliação do formato da data
     return True
+
   try:
-    datetime.strptime(data_escolhida, '%Y-%m-%d')
-    return True
+    datetime.strptime(data_escolhida, '%Y-%m-%d')  
+    return True     # Caso a string da data escolhida aceite a mudança de formato
   except ValueError:
     print("ERRO: Formato de data inválido \n")
-    if dica == True:
+    if dica == True:     # Para quando é necessário reforçar qual o formato aceito
       print("Formato aceito: yyyy-mm-dd \n")
     return False
 
@@ -28,7 +29,7 @@ def formato_data(data_escolhida, dica = False):
 
 def presenca_data(data_escolhida, df):
 
-  '''Verifica se a data escolhida está presente no dataframe'''
+  '''Caso seja escolhida uma data, verifica se a data escolhida está presente no dataframe'''
 
   if (df['Data'] == data_escolhida).any() or data_escolhida == None:
     return True
@@ -66,13 +67,16 @@ def perguntas_usuario():
   aceito_1, aceito_2, aceito_3, aceito_4, aceito_5, aceito_6, aceito_7, aceito_8, aceito_9 = [False] * 9
 
 
+  # Qual variavel a ser escolhida
   while aceito_1 == False:
+    # Dicionário que indica o nome de cada opção
     variaveis_dict = {
         "1": "Velocidade",
         "2": "Temperatura",
         "3": "Ambos"
     }
 
+    # Pergunta para o usuário
     variavel = input(
         '''Qual variável deseja observar? \n
         1 - Velocidade \n
@@ -82,11 +86,13 @@ def perguntas_usuario():
 
     print("\n")
 
-    aceito_1 = valores_nao_aceitos(variavel, ["1", "2", "3"])
+    aceito_1 = valores_nao_aceitos(variavel, ["1", "2", "3"]) # Verifica se é um valor aceito
 
 
 
 
+
+  # Qual o modo a ser escolhido
   while aceito_2 == False:
     modo_dict = {
         "1": "Original",
@@ -101,10 +107,10 @@ def perguntas_usuario():
 
     print("\n")
 
-    aceito_2 = valores_nao_aceitos(modo, ["1", "2"])
+    aceito_2 = valores_nao_aceitos(modo, ["1", "2"]) 
 
 
-  if variavel in ['1','3']:
+  if variavel in ['1','3']: # Caso a variável escolhida inclua velocidade
 
     while aceito_3 == False:
       componente_velocidade_dict = {
@@ -122,11 +128,14 @@ def perguntas_usuario():
 
       print("\n")
 
-      aceito_3 = valores_nao_aceitos(componente_velocidade, ["1", "2", "3"])
-      componente_velocidade = componente_velocidade_dict[componente_velocidade]
+      aceito_3 = valores_nao_aceitos(componente_velocidade, ["1", "2", "3"]) 
+      componente_velocidade = componente_velocidade_dict[componente_velocidade] # Recebe o nome real da opção escolhida
 
   else:
-    componente_velocidade = None
+    componente_velocidade = None   # Caso a variável escolhida seja apenas temperatura
+
+
+
 
 
   while aceito_4 == False:
@@ -160,8 +169,11 @@ def perguntas_usuario():
     aceito_4 = valores_nao_aceitos(plataforma, ["1", "2", "3", "4", "5", "6", "7", "8", "9"])
 
     plataforma = plataformas_dict[plataforma]
-    df = dataframe_plataforma_escolhida(plataforma)
-    df.drop(columns=['Plataforma'], inplace = True)
+    df = dataframe_plataforma_escolhida(plataforma)  # Para escolher o arquivo csv específico da plataforma escolhida
+    df.drop(columns=['Plataforma'], inplace = True)  # Exclui a coluna de plataformas
+
+
+
 
   while aceito_5 == False:
     indicador_dict = {
@@ -179,9 +191,11 @@ def perguntas_usuario():
 
     aceito_5 = valores_nao_aceitos(indicador, ['1', '2'])
 
-  if indicador == "1":
-    estacao = None
+  if indicador == "1":  # Se o indicador é Diário, é pedido para escolher um dia
+    # Escolha automática de outros argumentos
+    estacao = None 
     ano = 'Todos'
+
     while aceito_9 == False:
       data = input(
         '''Qual dia deseja observar? Escreva no formato yyyy-mm-dd \n
@@ -191,18 +205,20 @@ def perguntas_usuario():
 
       print("\n")
 
-      aceito_9 = formato_data(data)
+      aceito_9 = formato_data(data)  # Verificação do formato da data
       if aceito_9 == True:
-        aceito_9 = presenca_data(data, df)
+        aceito_9 = presenca_data(data, df) # Verificação da presença da data no dataframe
       if data != None:
-        df = df[df['Data'] == data]
+        df = df[df['Data'] == data]  # Filtra os dataframe para a data escolhida
         df.drop(columns=['Data'], inplace = True)
 
 
 
 
-  elif indicador == "2":
+  elif indicador == "2": # Se o indicador é Média, é perguntado sobre a escolha de estação
+    # Escolha automática de outros argumentos
     data = None
+
     while aceito_7 == False:
       estacoes_dict = {
         '1': 'Verão',
@@ -230,11 +246,13 @@ def perguntas_usuario():
 
       estacao = estacoes_dict[estacao]
 
+      # Filtra os dataframe para a estação escolhida
       if estacao in ['Verão', 'Outono', 'Inverno', 'Primavera']:
         df = df[df['Estação_do_Ano'] == estacao]
         df.drop(columns=['Estação_do_Ano'], inplace = True)
 
-      # Escolha do ano
+
+      # Qual ano deve ser escolhido
       while aceito_8 == False:
         ano = input(
             '''Qual ano deseja observar? (Digite 0 caso queira incluir todos os anos) \n \n
@@ -244,6 +262,8 @@ def perguntas_usuario():
         print("\n")
 
         aceito_8, ano = verifica_ano(ano, df)
+
+        # Filtra os dataframe para o ano escolhido
         if ano not in ['0', 'Todos']:
           df['Ano'] = df['Data'].str[:4]
           df = df[df['Ano'] == ano]
@@ -252,11 +272,12 @@ def perguntas_usuario():
 
 
 
+  # Recebe o nome real da opção escolhida
   variavel = variaveis_dict[variavel]
   modo = modo_dict[modo]
   indicador = indicador_dict[indicador]
 
-
+  # Dipõe os argomentos em um dicionário
   argumentos = dict(
       variavel = variavel,
       modo = modo,
@@ -297,23 +318,21 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
     indicador = 'Diário'
     estacao = 'Geral'
 
+  # Verifica a validade do ano e filtra o dataframe
   aceito_ano, ano = verifica_ano(ano, df, dica = True, nome_variavel = 'ano')
   if aceito_ano == False:
     return None
-
   if ano not in ['0', 'Todos']:
     df['Ano'] = df['Data'].str[:4]
     df = df[df['Ano'] == ano]
     df.drop(columns=['Ano'], inplace = True)
 
-
-
+  # Verifica o formato, a presença da data e filtra o dataframe
   aceito_data = formato_data(data)
   if aceito_data == True:
     aceito_data = presenca_data(data, df)
   if aceito_data == False:
     return None
-
   if data != None:
     df = df[df['Data'] == data]
     df.drop(columns=['Data'], inplace = True)
@@ -334,7 +353,6 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
   estacao = valores_nao_aceitos(estacao, ["Verão", "Outono", "Inverno", "Primavera", "Todas", "Geral"], dica = True, nome_variavel = 'estacao')
   if estacao == False:
     return None
-
   if estacao in ['Verão', 'Outono', 'Inverno', 'Primavera']:
     df = df[df['Estação_do_Ano'] == estacao]
     df.drop(columns=['Estação_do_Ano'], inplace = True)
@@ -342,6 +360,7 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
   indicador = valores_nao_aceitos(indicador, ["Diário", "Média"], dica = True, nome_variavel = 'indicador')
   if indicador == False:
     return None
+
 
   argumentos = dict(
         variavel = variavel,
