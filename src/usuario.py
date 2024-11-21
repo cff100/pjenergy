@@ -286,7 +286,7 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
     df['Ano'] = df['Data'].str[:4]
     df = df[df['Ano'] == ano]
     df.drop(columns=['Ano'], inplace = True)
-    if data != None:
+
       
 
   aceito_data = formato_data(data)
