@@ -3,7 +3,6 @@ from datetime import datetime
 from .simplifica import simplifica_plat
 from .valores_nao_aceitos import valores_nao_aceitos
 
-pd.set_option('display.expand_frame_repr', True)  # Não quebrar linhas
 
 def dataframe_plataforma_escolhida(plataforma):
   df = pd.read_csv(f'/content/pjenergy/data/dataframes_ventos_por_plataforma/Era5_Vento_CAMPOS-{plataforma}.csv', index_col=0)
@@ -275,6 +274,7 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
 
   # Escolhe o dataframe da plataforma escolhida
   df = dataframe_plataforma_escolhida(plataforma)
+  df.drop(columns=['Plataforma'], inplace = True)
 
   aceito_data = formato_data(data)
   if aceito_data == True:
@@ -282,9 +282,19 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
   if aceito_data == False:
     return None
 
+  if data != None:
+    df = df[df['Data'] == data]
+    df.drop(columns=['Data'], inplace = True)
+
+
   aceito_ano, ano = verifica_ano(ano, dica = True, nome_variavel = 'ano')
   if aceito_ano == False:
     return None
+
+  if ano not in ['0', 'Todos']:
+    df['Ano'] = df['Data'].str[:4]
+    df = df[df['Ano'] == ano]
+    df.drop(columns=['Ano'], inplace = True)
 
   variavel = valores_nao_aceitos(variavel, ["Velocidade", "Temperatura", "Ambos"], dica = True, nome_variavel = 'variavel')
   if variavel == False:
@@ -301,6 +311,10 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
   estacao = valores_nao_aceitos(estacao, ["Verão", "Outono", "Inverno", "Primavera", "Todas", "Geral"], dica = True, nome_variavel = 'estacao')
   if estacao == False:
     return None
+
+  if estacao in ['Verão', 'Outono', 'Inverno', 'Primavera']:
+    df = df[df['Estação_do_Ano'] == estacao]
+    df.drop(columns=['Estação_do_Ano'], inplace = True)
 
   indicador = valores_nao_aceitos(indicador, ["Diário", "Média"], dica = True, nome_variavel = 'indicador')
   if indicador == False:
