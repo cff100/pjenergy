@@ -16,4 +16,4 @@ def dataframe_media(df, estacoes_separadas):
     'Data': 'first',
     }).reset_index()'''
 
-  return 'teste'
+  return df
