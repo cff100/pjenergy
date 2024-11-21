@@ -37,7 +37,7 @@ def presenca_data(data_escolhida, df):
     return False
 
 
-def verifica_ano(ano, dica = False, nome_variavel = None, df):
+def verifica_ano(ano, df, dica = False, nome_variavel = None):
 
   '''Verifica se o ano escolhido está presente no dataframe ou se não há escolha específica para ano'''
 
@@ -278,7 +278,7 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
 
   
 
-  aceito_ano, ano = verifica_ano(ano, dica = True, nome_variavel = 'ano', df)
+  aceito_ano, ano = verifica_ano(ano, df, dica = True, nome_variavel = 'ano')
   if aceito_ano == False:
     return None
 
