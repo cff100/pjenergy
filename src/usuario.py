@@ -198,7 +198,7 @@ def perguntas_usuario():
         df = df[df['Data'] == data]
         df.drop(columns=['Data'], inplace = True)
 
-      
+
 
 
   elif indicador == "2":
@@ -291,7 +291,11 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
   df = dataframe_plataforma_escolhida(plataforma)
   df.drop(columns=['Plataforma'], inplace = True)
 
-  
+  # Para alterar argumentos a partir da escolha do argumento prioritário data.
+  if data != None:
+    ano = '0'
+    indicador = 'Diário'
+    estacao = 'Geral'
 
   aceito_ano, ano = verifica_ano(ano, df, dica = True, nome_variavel = 'ano')
   if aceito_ano == False:
@@ -302,7 +306,7 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
     df = df[df['Ano'] == ano]
     df.drop(columns=['Ano'], inplace = True)
 
-      
+
 
   aceito_data = formato_data(data)
   if aceito_data == True:
