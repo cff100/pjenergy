@@ -1,28 +1,9 @@
 import pandas as pd
 from datetime import datetime
+from .simplifica import simplifica_plat
 
 #Dataframe com todos os dados
 df = pd.read_csv('/content/pjenergy/data/Era5_Vento_CAMPOS.csv')
-
-
-def valores_nao_aceitos(valor_escolhido, valores_aceitos, dica = False, nome_variavel = None):
-
-  '''Função que garante que a pergunta será repetida caso o usuário responda diferente das alternativas'''
-  
-  #print(dica)
-  #print(f"Checando valor: {valor_escolhido}")
-  if valor_escolhido not in valores_aceitos:
-    if dica == True:
-      print(f"ERRO: Valor não aceito para {nome_variavel}")
-      print(f"Valores aceitos: {valores_aceitos} \n")
-    else:
-      print("ERRO: Valor não aceito")
-      print('\n')
-    return False
-  else:
-    #print(f"Valor escolhido: {valor_escolhido} \n")
-    return valor_escolhido
-
 
 
 def formato_data(data_escolhida, dica = False):
@@ -247,7 +228,7 @@ def perguntas_usuario():
         print("\n")
 
         aceito_8, ano = verifica_ano(ano)
-        
+
 
 
   variavel = variaveis_dict[variavel]
@@ -272,7 +253,6 @@ def perguntas_usuario():
 
 
 
-from .simplifica import simplifica_plat
 
 def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, estacao, indicador, data, ano):
 
@@ -332,9 +312,9 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
 
 
 def argumentos_usuario(perguntas = True, variavel = "Ambos", modo = "Original", componente_velocidade = "Resultante", plataforma = "7", estacao = "Geral", indicador = "Média", data = None, ano = "Todos"):
-  
+
   '''Inicia a busca pelos argumentos do usuário'''
-  
+
   if perguntas == True:
     argumentos = perguntas_usuario()
   else:
