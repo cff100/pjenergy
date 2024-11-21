@@ -181,7 +181,7 @@ def perguntas_usuario():
 
   if indicador == "1":
     estacao = None
-
+    ano = 'Todos'
     while aceito_9 == False:
       data = input(
         '''Qual dia deseja observar? Escreva no formato yyyy-mm-dd \n
