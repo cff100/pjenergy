@@ -5,7 +5,7 @@ from .valores_nao_aceitos import valores_nao_aceitos
 
 
 def dataframe_plataforma_escolhida(plataforma):
-  df = pd.read_csv(f'/content/pjenergy/data/dataframes_ventos_por_plataforma/Era5_Vento_CAMPOS-{plataforma}.csv')
+  df = pd.read_csv(f'/content/pjenergy/data/dataframes_ventos_por_plataforma/Era5_Vento_CAMPOS-{plataforma}.csv', index_col=0)
   return df
 
 
