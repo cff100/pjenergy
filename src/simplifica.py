@@ -1,4 +1,4 @@
-from .usuario import valores_nao_aceitos
+from .valores_nao_aceitos import valores_nao_aceitos
 
 
 # Para facilitar a escolha da plataforma

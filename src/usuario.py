@@ -1,9 +1,14 @@
 import pandas as pd
 from datetime import datetime
 from .simplifica import simplifica_plat
+from .valores_nao_aceitos import valores_nao_aceitos
 
 #Dataframe com todos os dados
 df = pd.read_csv('/content/pjenergy/data/Era5_Vento_CAMPOS.csv')
+
+def dataframe_plataforma_escolhida(plataforma):
+  df = pd.read_csv(f'/content/pjenergy/data/dataframes_ventos_por_plataforma/Era5_Vento_CAMPOS-{plataforma}.csv')
+  return df
 
 
 def formato_data(data_escolhida, dica = False):
@@ -23,7 +28,7 @@ def formato_data(data_escolhida, dica = False):
 
 
 
-def presenca_data(data_escolhida):
+def presenca_data(data_escolhida, df):
 
   '''Verifica se a data escolhida está presente no dataframe'''
 
@@ -156,6 +161,9 @@ def perguntas_usuario():
 
     aceito_4 = valores_nao_aceitos(plataforma, ["1", "2", "3", "4", "5", "6", "7", "8", "9"])
 
+    plataforma = plataformas_dict[plataforma]
+    df = dataframe_plataforma_escolhida(plataforma)
+
   while aceito_5 == False:
     indicador_dict = {
         '1': 'Diário',
@@ -233,7 +241,6 @@ def perguntas_usuario():
 
   variavel = variaveis_dict[variavel]
   modo = modo_dict[modo]
-  plataforma = plataformas_dict[plataforma]
   indicador = indicador_dict[indicador]
 
 
@@ -245,8 +252,8 @@ def perguntas_usuario():
       estacao = estacao,
       indicador = indicador,
       data = data,
-      ano = ano
-
+      ano = ano,
+      df = df
   )
 
   return argumentos
@@ -267,9 +274,12 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
   if plataforma == False:
     return None
 
+  # Escolhe o dataframe da plataforma escolhida
+  df = dataframe_plataforma_escolhida(plataforma)
+
   aceito_data = formato_data(data)
   if aceito_data == True:
-    aceito_data = presenca_data(data)
+    aceito_data = presenca_data(data, df)
   if aceito_data == False:
     return None
 
@@ -305,7 +315,8 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
         estacao = estacao,
         indicador = indicador,
         data = data,
-        ano = ano
+        ano = ano,
+        df = df
     )
 
   return argumentos
