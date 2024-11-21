@@ -193,7 +193,7 @@ def perguntas_usuario():
 
       aceito_9 = formato_data(data)
       if aceito_9 == True:
-        aceito_9 = presenca_data(data)
+        aceito_9 = presenca_data(data, df)
       if data != None:
         df = df[df['Data'] == data]
         df.drop(columns=['Data'], inplace = True)
