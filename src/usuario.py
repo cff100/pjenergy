@@ -3,6 +3,7 @@ from datetime import datetime
 from .simplifica import simplifica_plat
 from .valores_nao_aceitos import valores_nao_aceitos
 
+pd.set_option('display.expand_frame_repr', False)  # Não quebrar linhas
 
 def dataframe_plataforma_escolhida(plataforma):
   df = pd.read_csv(f'/content/pjenergy/data/dataframes_ventos_por_plataforma/Era5_Vento_CAMPOS-{plataforma}.csv', index_col=0)
