@@ -446,7 +446,7 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
 
 
 # Quando estacao e data são None ao mesmo tempo, o dataframe não seria processado o suficiente para plotagem, mas ainda serve para visualização da tabela
-def argumentos_usuario(perguntas = True, variavel = "Ambos", modo = "Original", componente_velocidade = "Resultante", plataforma = "7", estacao = "Geral", indicador = "Média", data = None, ano = "Todos"):
+def argumentos_usuario(perguntas, variavel, modo, componente_velocidade, plataforma, estacao, indicador, data, ano):
 
   '''Inicia a busca pelos argumentos do usuário'''
 
