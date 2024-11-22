@@ -5,4 +5,6 @@ def main(perguntas = True, variavel = "Ambos", modo = "Original", componente_vel
   
   dicionario_argumentos = us.argumentos_usuario(perguntas, variavel, modo, componente_velocidade, plataforma, estacao, indicador, data, ano)
   ncl.linhas_colunas(dicionario_argumentos)
+
+  print('passa')
   
