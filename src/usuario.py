@@ -274,10 +274,10 @@ def perguntas_usuario():
           print("Devido à escolha das estações como 'Todas':")
           if modo != 'Original':
             modo = 'Original'
-            print(f"- Modo foi alterado para {modo}")
+            print(f"- Modo foi alterado para {modo} \n")
           if variavel != 'Velocidade':
             variavel = 'Velocidade'
-            print(f"- Variável precisa ser 'Velocidade' ou 'Temperatura'. Variável foi alterada automaticamente para {variavel}")
+            print(f"- Variável precisa ser 'Velocidade' ou 'Temperatura'. Variável foi alterada automaticamente para {variavel} \n")
 
 
 
@@ -355,13 +355,13 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
       print("Devido a escolha de uma data específica:")
       if estacao != None:
         estacao = None
-        print(f'- Estação foi alterada para {estacao}')
+        print(f'- Estação foi alterada para {estacao} \n')
       if ano != 'Todos':
         ano = 'Todos'
-        print(f'- Ano foi alterado para {ano}')
+        print(f'- Ano foi alterado para {ano} \n')
       if indicador != 'Diário':
         indicador = 'Diário'
-        print(f'- Indicador foi alterado para {indicador}')
+        print(f'- Indicador foi alterado para {indicador} \n')
 
 
   # Verifica a validade do ano e filtra o dataframe
@@ -409,10 +409,10 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
       print("Devido à escolha das estações como 'Todas':")
       if modo != 'Original':
         modo = 'Original'
-        print(f"- Modo foi alterado para {modo}")
+        print(f"- Modo foi alterado para {modo} \n")
       if variavel != 'Velocidade':
         variavel = 'Velocidade'
-        print(f"- Variável precisa ser 'Velocidade' ou 'Temperatura'. Variável foi alterada automaticamente para {variavel}")
+        print(f"- Variável precisa ser 'Velocidade' ou 'Temperatura'. Variável foi alterada automaticamente para {variavel} \n")
 
 
   indicador = valores_nao_aceitos(indicador, ["Diário", "Média", 'Sem_filtros'], dica = True, nome_variavel = 'indicador')
