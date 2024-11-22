@@ -18,7 +18,7 @@ def formato_data(data_escolhida, dica = False):
     return True
 
   try:
-    datetime.strptime(data_escolhida, '%Y-%m-%d')  
+    datetime.strptime(data_escolhida, '%Y-%m-%d')
     return True     # Caso a string da data escolhida aceite a mudança de formato
   except ValueError:
     print("ERRO: Formato de data inválido \n")
@@ -57,6 +57,7 @@ def verifica_ano(ano, df, dica = False, nome_variavel = None):
   return aceito_8, ano
 
 
+
 def perguntas_usuario():
 
   '''
@@ -89,7 +90,8 @@ def perguntas_usuario():
 
     aceito_1 = valores_nao_aceitos(variavel, ["1", "2", "3"]) # Verifica se é um valor aceito
 
-
+    variavel = variaveis_dict[variavel]
+  
 
 
 
@@ -108,10 +110,13 @@ def perguntas_usuario():
 
     print("\n")
 
-    aceito_2 = valores_nao_aceitos(modo, ["1", "2"]) 
+    aceito_2 = valores_nao_aceitos(modo, ["1", "2"])
+
+    modo = modo_dict[modo]
+  
 
 
-  if variavel in ['1','3']: # Caso a variável escolhida inclua velocidade
+  if variavel in ["Velocidade","Ambos"]: # Caso a variável escolhida inclua velocidade
 
     while aceito_3 == False:
       componente_velocidade_dict = {
@@ -129,7 +134,7 @@ def perguntas_usuario():
 
       print("\n")
 
-      aceito_3 = valores_nao_aceitos(componente_velocidade, ["1", "2", "3"]) 
+      aceito_3 = valores_nao_aceitos(componente_velocidade, ["1", "2", "3"])
       componente_velocidade = componente_velocidade_dict[componente_velocidade] # Recebe o nome real da opção escolhida
 
   else:
@@ -194,12 +199,15 @@ def perguntas_usuario():
 
     aceito_5 = valores_nao_aceitos(indicador, ['1', '2', '3'])
 
-  if indicador == "3":
+    indicador = indicador_dict[indicador]
+
+  if indicador == 'Sem_filtros':
+    # Escolha automática de outros argumentos
     estacao = None
     ano = 'Todos'
     data = None
 
-  elif indicador == "1":  # Se o indicador é Diário, é pedido para escolher um dia
+  elif indicador == 'Diário':  # Se o indicador é Diário, é pedido para escolher um dia
     # Escolha automática de outros argumentos
     estacao = None
     ano = 'Todos'
@@ -224,7 +232,7 @@ def perguntas_usuario():
 
 
 
-  elif indicador == "2": # Se o indicador é Média, é perguntado sobre a escolha de estação
+  elif indicador == 'Média': # Se o indicador é Média, é perguntado sobre a escolha de estação
     # Escolha automática de outros argumentos
     data = None
 
@@ -260,6 +268,18 @@ def perguntas_usuario():
         df = df[df['Estação_do_Ano'] == estacao]
         df.drop(columns=['Estação_do_Ano'], inplace = True)
 
+      # Para garantir um número limite de subplots gerados, escolher todas estações pode causar modificações em outros argumentos.
+      elif estacao == 'Todas':
+        if modo != 'Original' or variavel != 'Velocidade':
+          print("Devido à escolha das estações como 'Todas':")
+          if modo != 'Original':
+            modo = 'Original'
+            print(f"- Modo foi alterado para {modo}")
+          if variavel != 'Velocidade':
+            variavel = 'Velocidade'
+            print(f"- Variável precisa ser 'Velocidade' ou 'Temperatura'. Variável foi alterada automaticamente para {variavel}")
+
+
 
       # Qual ano deve ser escolhido
       while aceito_8 == False:
@@ -278,7 +298,7 @@ def perguntas_usuario():
           df = df[df['Ano'] == ano]
           df.drop(columns=['Ano'], inplace = True)
 
-      if estacao == None: # Sempre vai ocorrer quando uma data específica for escolhida ou simplesmente quando o usuário não escolher filtrar estação 
+      if estacao == None: # Sempre vai ocorrer quando uma data específica for escolhida ou simplesmente quando o usuário não escolher filtrar estação
         pass
       else:   # Chama a função que faz a média
         if estacao == 'Todas':
@@ -289,10 +309,7 @@ def perguntas_usuario():
 
 
 
-  # Recebe o nome real da opção escolhida
-  variavel = variaveis_dict[variavel]
-  modo = modo_dict[modo]
-  indicador = indicador_dict[indicador]
+
 
   # Dipõe os argomentos em um dicionário
   argumentos = dict(
@@ -345,7 +362,7 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
       if indicador != 'Diário':
         indicador = 'Diário'
         print(f'- Indicador foi alterado para {indicador}')
-    
+
 
   # Verifica a validade do ano e filtra o dataframe
   aceito_ano, ano = verifica_ano(ano, df, dica = True, nome_variavel = 'ano')
