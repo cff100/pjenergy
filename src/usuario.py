@@ -417,7 +417,7 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
     if data == None and indicador != 'Sem_filtros':
       print("Devido à escolha de data e estacao como None:")
       indicador = 'Sem_filtros'
-      print(f"- Indicador foi alterado para {indicador} \n
+      print(f"- Indicador foi alterado para {indicador} \n")
       
     
 
