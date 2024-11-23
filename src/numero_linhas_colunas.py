@@ -13,12 +13,18 @@ def linhas_colunas(dicionario_argumentos):
           n_lin, n_col = 1,1
         else: 
           n_lin, n_col = 2,2
-    else:
+      elif indicador == 'Diário':
+        n_lin, n_col = 1,1
+    elif modo == "Original-Derivada":
       if indicador == 'Média':
         n_lin, n_col = 1,2
+      elif indicador == 'Diário':
+        n_lin, n_col = 1,2
 
-  else:
+  elif variavel == "Ambas"
     if indicador == 'Média':
+      n_lin, n_col = 1,2
+    elif indicador == 'Diário':
       n_lin, n_col = 1,2
         
 
