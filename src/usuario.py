@@ -91,7 +91,7 @@ def perguntas_usuario():
     aceito_1 = valores_nao_aceitos(variavel, ["1", "2", "3"]) # Verifica se é um valor aceito
 
     variavel = variaveis_dict[variavel]
-  
+
 
 
 
@@ -113,7 +113,7 @@ def perguntas_usuario():
     aceito_2 = valores_nao_aceitos(modo, ["1", "2"])
 
     modo = modo_dict[modo]
-  
+
 
 
   if variavel in ["Velocidade","Ambos"]: # Caso a variável escolhida inclua velocidade
@@ -399,11 +399,11 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
   estacao = valores_nao_aceitos(estacao, ["Verão", "Outono", "Inverno", "Primavera", "Todas", "Geral", None], dica = True, nome_variavel = 'estacao')
   if estacao == False:
     return None
+
   if estacao in ['Verão', 'Outono', 'Inverno', 'Primavera', 'Geral']:
     if estacao != 'Geral':
       df = df[df['Estação_do_Ano'] == estacao]
     df.drop(columns=['Estação_do_Ano'], inplace = True)
-  
   elif estacao == 'Todas': # Para garantir um número limite de subplots gerados, escolher todas estações pode causar modificações em outros argumentos.
     if modo != 'Original' or variavel != 'Velocidade':
       print("Devido à escolha das estações como 'Todas':")
@@ -413,6 +413,13 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
       if variavel != 'Velocidade':
         variavel = 'Velocidade'
         print(f"- Variável precisa ser 'Velocidade' ou 'Temperatura'. Variável foi alterada automaticamente para {variavel} \n")
+  else: # estacao == None
+    if data == None and indicador != 'Sem_filtros':
+      print("Devido à escolha de data e estacao como None:")
+      indicador = 'Sem_filtros'
+      print(f"- Indicador foi alterado para {indicador} \n
+      
+    
 
 
   indicador = valores_nao_aceitos(indicador, ["Diário", "Média", 'Sem_filtros'], dica = True, nome_variavel = 'indicador')
