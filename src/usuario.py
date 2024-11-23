@@ -381,8 +381,7 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
     return None
   if data != None:
     df = df[df['Data'] == data]
-    df.drop(columns=['Data'], inplace = True)
-    df.reset_index()
+    df.drop(columns=['Data'], inplace = True).reset_index()
 
 
   variavel = valores_nao_aceitos(variavel, ["Velocidade", "Temperatura", "Ambos"], dica = True, nome_variavel = 'variavel')
