@@ -75,7 +75,7 @@ def perguntas_usuario():
     variaveis_dict = {
         "1": "Velocidade",
         "2": "Temperatura",
-        "3": "Ambos"
+        "3": "Ambas"
     }
 
     # Pergunta para o usuário
@@ -83,7 +83,7 @@ def perguntas_usuario():
         '''Qual variável deseja observar? \n
         1 - Velocidade \n
         2 - Temperatura \n
-        3 - Ambos \n \n'''
+        3 - Ambas \n \n'''
         )
 
     print("\n")
@@ -116,7 +116,7 @@ def perguntas_usuario():
 
 
 
-  if variavel in ["Velocidade","Ambos"]: # Caso a variável escolhida inclua velocidade
+  if variavel in ["Velocidade","Ambas"]: # Caso a variável escolhida inclua velocidade
 
     while aceito_3 == False:
       componente_velocidade_dict = {
@@ -384,7 +384,7 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
     df.drop(columns=['Data'], inplace = True)
     df = df.reset_index(drop = True)
 
-  variavel = valores_nao_aceitos(variavel, ["Velocidade", "Temperatura", "Ambos"], dica = True, nome_variavel = 'variavel')
+  variavel = valores_nao_aceitos(variavel, ["Velocidade", "Temperatura", "Ambas"], dica = True, nome_variavel = 'variavel')
   if variavel == False:
     return None
 
@@ -417,6 +417,7 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
       print("Devido à escolha de data e estacao como None:")
       indicador = 'Sem_filtros'
       print(f"- Indicador foi alterado para {indicador} \n")
+      return df
       
     
 
