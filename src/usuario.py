@@ -382,6 +382,7 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
   if data != None:
     df = df[df['Data'] == data]
     df.drop(columns=['Data'], inplace = True)
+    df.reset_index()
 
 
   variavel = valores_nao_aceitos(variavel, ["Velocidade", "Temperatura", "Ambos"], dica = True, nome_variavel = 'variavel')
@@ -399,7 +400,6 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
   estacao = valores_nao_aceitos(estacao, ["Verão", "Outono", "Inverno", "Primavera", "Todas", "Geral", None], dica = True, nome_variavel = 'estacao')
   if estacao == False:
     return None
-  print(estacao)
   if estacao in ['Verão', 'Outono', 'Inverno', 'Primavera', 'Geral']:
     if estacao != 'Geral':
       df = df[df['Estação_do_Ano'] == estacao]
@@ -414,7 +414,6 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
         variavel = 'Velocidade'
         print(f"- Variável precisa ser 'Velocidade' ou 'Temperatura'. Variável foi alterada automaticamente para {variavel} \n")
   else:
-    print(estacao)
     if data == None and indicador != 'Sem_filtros':
       print("Devido à escolha de data e estacao como None:")
       indicador = 'Sem_filtros'
