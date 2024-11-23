@@ -413,7 +413,8 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
       if variavel != 'Velocidade':
         variavel = 'Velocidade'
         print(f"- Variável precisa ser 'Velocidade' ou 'Temperatura'. Variável foi alterada automaticamente para {variavel} \n")
-  elif estacao == None: # estacao == None
+  else:
+    print(estacao)
     if data == None and indicador != 'Sem_filtros':
       print("Devido à escolha de data e estacao como None:")
       indicador = 'Sem_filtros'
