@@ -399,7 +399,7 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
   estacao = valores_nao_aceitos(estacao, ["Verão", "Outono", "Inverno", "Primavera", "Todas", "Geral", None], dica = True, nome_variavel = 'estacao')
   if estacao == False:
     return None
-
+  print(estacao)
   if estacao in ['Verão', 'Outono', 'Inverno', 'Primavera', 'Geral']:
     if estacao != 'Geral':
       df = df[df['Estação_do_Ano'] == estacao]
