@@ -7,6 +7,6 @@ def main(perguntas = True, variavel = "Ambas", modo = "Original", componente_vel
   if not isinstance(dicionario_argumentos, dict):
     print('Não é possível criar um gráfico com essa combinação de data e estação \n Dataframe gerado:')
     return dicionario_argumentos
-  a = nlc.linhas_colunas(dicionario_argumentos)
+  n_lin, n_col = nlc.linhas_colunas(dicionario_argumentos)
 
-  return a
+  return n_lin, n_col
