@@ -27,7 +27,7 @@ def iteracao_grafico(dicionario_argumentos):
 
     if estacao == "Todas":
       for est in list(df_hora['Estação_do_Ano'].unique()):
-        print(es)
+        print(est)
 
     # Coluna de alturas para o eixo Y do gráfico
     Y = df_hora['Altitude_m']
