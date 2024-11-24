@@ -26,8 +26,12 @@ def iteracao_grafico(dicionario_argumentos):
     print(df_hora)
 
     if estacao == "Todas":
-      for est in list(df_hora['Estação_do_Ano'].unique()):
-        print(est)
+      for est in ["Verão", "Outono", "Inverno", "Primavera"]:
+        df_hora_estacao = df_hora[df_hora['Estação'] == est]
+        dicionario_argumentos['df'] = df_hora_estacao
+        dicionario_argumentos['estacao'] = est
+        X_smooth_velocidade, Y_smooth, cores[c] = iteracao_grafico(dicionario_argumentos)
+      return X_smooth_velocidade, Y_smooth, cores[c]
 
     # Coluna de alturas para o eixo Y do gráfico
     Y = df_hora['Altitude_m']
