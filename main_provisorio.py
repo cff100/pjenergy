@@ -1,5 +1,6 @@
 import src.usuario as us
 import src.numero_linhas_colunas as nlc
+import matplotlib.pyplot as plt
 
 def main(perguntas = True, variavel = "Ambas", modo = "Original", componente_velocidade = "Resultante", plataforma = "7", estacao = "Geral", indicador = "Média", data = None, ano = "Todos"):
 
