@@ -25,7 +25,7 @@ def iteracao_grafico(dicionario_argumentos):
 
     print(df_hora)
 
-    if estacao = "Todas":
+    if estacao == "Todas":
       for est in list(df_hora['Estação_do_Ano'].unique()):
         print(estacao)
 
