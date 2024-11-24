@@ -315,7 +315,7 @@ def perguntas_usuario():
   argumentos = dict(
       variavel = variavel,
       modo = modo,
-      componente = componente_velocidade,
+      componente_velocidade = componente_velocidade,
       plataforma = plataforma,
       estacao = estacao,
       indicador = indicador,
@@ -418,8 +418,8 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
       indicador = 'Sem_filtros'
       print(f"- Indicador foi alterado para {indicador} \n")
       return df
-      
-    
+
+
 
 
   indicador = valores_nao_aceitos(indicador, ["Diário", "Média", 'Sem_filtros'], dica = True, nome_variavel = 'indicador')
@@ -440,7 +440,7 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
   argumentos = dict(
         variavel = variavel,
         modo = modo,
-        componente = componente_velocidade,
+        componente_velocidade = componente_velocidade,
         plataforma = plataforma,
         estacao = estacao,
         indicador = indicador,
