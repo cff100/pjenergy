@@ -1,3 +1,6 @@
+import numpy as np
+from scipy.interpolate import make_interp_spline
+
 def iteracao_grafico(dicionario_argumentos):
 
   df = dicionario_argumentos['df']
