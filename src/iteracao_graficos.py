@@ -6,6 +6,7 @@ def iteracao_grafico(dicionario_argumentos):
   df = dicionario_argumentos['df']
   variavel = dicionario_argumentos['variavel']
   componente_velocidade = dicionario_argumentos['componente_velocidade']
+  estacao = dicionario_argumentos['estacao']
 
   # Lista de horários únicos no DataFrame
   horarios = list(df['Horário_Brasília'].unique())
@@ -23,6 +24,10 @@ def iteracao_grafico(dicionario_argumentos):
     df_hora = df_hora.reset_index(drop=True)
 
     print(df_hora)
+
+    if estacao = "Todas":
+      for est in list(df_hora['Estação_do_Ano'].unique()):
+        print(estacao)
 
     # Coluna de alturas para o eixo Y do gráfico
     Y = df_hora['Altitude_m']
