@@ -2,7 +2,6 @@ def iteracao_grafico(dicionario_argumentos):
 
   df = dicionario_argumentos['df']
   variavel = dicionario_argumentos['variavel']
-  direcao = dicionario_argumentos['direcao']
   componente_velocidade = dicionario_argumentos['componente_velocidade']
 
   # Lista de horários únicos no DataFrame
