@@ -20,7 +20,9 @@ def iteracao_grafico(dicionario_argumentos):
     df_hora = df[df['Horário_Brasília'] == horario]
     # Ordena os dados filtrados pela coluna que contém as alturas, garantindo que os valores de altura estejam em ordem crescente
     df_hora = df_hora.sort_values('Altitude_m')
+    df_hora = df_hora.reset_index(drop=True)
 
+    print(df_hora)
 
     # Coluna de alturas para o eixo Y do gráfico
     Y = df_hora['Altitude_m']
