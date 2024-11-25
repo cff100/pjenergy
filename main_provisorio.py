@@ -7,7 +7,7 @@ import numpy as np
 def main(perguntas = True, variavel = "Ambas", modo = "Original", componente_velocidade = "Resultante", plataforma = "7", estacao = "Geral", indicador = "Média", data = None, ano = "Todos"):
 
   dicionario_argumentos = us.argumentos_usuario(perguntas, variavel, modo, componente_velocidade, plataforma, estacao, indicador, data, ano)
-  print(argumentos)
+  print(dicionario_argumentos)
   
   if not isinstance(dicionario_argumentos, dict):
     print('Não é possível criar um gráfico com essa combinação de data e estação \n Dataframe gerado:')
