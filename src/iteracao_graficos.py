@@ -63,7 +63,7 @@ def iteracao_grafico(dicionario_argumentos):
       # Interpolação suave dos valores de velocidade do vento em relação aos valores suavizados de altura
       X_smooth_velocidade = make_interp_spline(Y, X_velocidade)(Y_smooth)
 
-      if modo = 'Original':
+      if modo == 'Original':
         if e == None:
           m = 0
         else:
@@ -72,7 +72,7 @@ def iteracao_grafico(dicionario_argumentos):
         # Cria o gráfico para os dados originais de velocidade do vento
         criacao_grafico(lista_eixos[m], cores[c], Y, X_velocidade, Y_smooth, X_smooth_velocidade, 'original', plataforma, estacao, horario, variavel, componente_velocidade, data)
 
-      elif modo = 'Original-Derivada':
+      elif modo == 'Original-Derivada':
         m = 0
         n = 1
         print(f'm:{m}')
