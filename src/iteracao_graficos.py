@@ -46,14 +46,14 @@ def iteracao_grafico(dicionario_argumentos):
     # Verifica se o modo inclui a velocidade do vento ('velocidade' ou 'ambos')
     if variavel in ['Velocidade', 'Ambas']:
 
-      '''
+      
       if componente_velocidade == 'u':
         nome_velocidade_vento = 'Velocidade_Vento_u_m/s'
       elif componente_velocidade == 'v':
         nome_velocidade_vento = 'Velocidade_Vento_v_m/s'
       elif componente_velocidade == 'Resultante':
         nome_velocidade_vento = 'Velocidade_Vento_resultante_m/s'
-      '''
+      
 
       # Coluna de velocidade do vento para o eixo X do gráfico
       X_velocidade = df_hora[nome_velocidade_vento]
