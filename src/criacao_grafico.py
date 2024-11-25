@@ -16,15 +16,15 @@ def criacao_grafico(ax, cor, Y, X, Y_smooth, X_smooth, grafico, plataforma, esta
     # Configuração do título e do eixo X de acordo com o tipo de dado (velocidade ou temperatura)
     if variavel == 'velocidade':
       if data == None:
-        ax.set_title(f'Perfil de Velocidade do Vento - {plataforma} - Estação: {estacao} - Direção: {componente_velocidade}')  # Define o título para perfis de velocidade
+        ax.set_title(f'Perfil de Velocidade do Vento - {plataforma} - Est: {estacao} - Dir: {componente_velocidade}')  # Define o título para perfis de velocidade
       else:
-        ax.set_title(f'Perfil de Velocidade do Vento - {plataforma} - Estação: {estacao} - Data: {data} - Direção: {componente_velocidade}')  # Define o título para perfis de velocidade
+        ax.set_title(f'Perfil de Velocidade do Vento - {plataforma} - Est: {estacao} - Data: {data} - Dir: {componente_velocidade}')  # Define o título para perfis de velocidade
       ax.set_xlabel('Velocidade do Vento (m/s)')  # Nome do eixo X para velocidade
     elif variavel == 'temperatura':
       if data == None:
-        ax.set_title(f'Perfil de Temperatura - {plataforma} (Estação: {estacao})')  # Define o título para perfis de temperatura
+        ax.set_title(f'Perfil de Temperatura - {plataforma} - Est: {estacao}')  # Define o título para perfis de temperatura
       else:
-        ax.set_title(f'Perfil de Temperatura - {plataforma} (Estação: {estacao}) - Data: {data}')  # Define o título para perfis de temperatura
+        ax.set_title(f'Perfil de Temperatura - {plataforma} - Est: {estacao} - Data: {data}')  # Define o título para perfis de temperatura
       ax.set_xlabel('Temperatura (°C)') # Nome do eixo X para temperatura
 
   elif grafico == 'derivada':
@@ -41,16 +41,16 @@ def criacao_grafico(ax, cor, Y, X, Y_smooth, X_smooth, grafico, plataforma, esta
     # Configuração do título e do eixo X de acordo com o tipo de dado (derivada de velocidade ou de temperatura)
     if variavel == 'velocidade':
       if data == None:
-        ax.set_title(f'Derivada do Perfil de Velocidade - {plataforma} (Estação: {estacao}) - {componente_velocidade}')  # Título para derivada de velocidade
+        ax.set_title(f'Derivada do Perfil de Velocidade - {plataforma} - Est: {estacao}) - - Dir: {componente_velocidade}')  # Título para derivada de velocidade
       else:
-        ax.set_title(f'Derivada do Perfil de Velocidade - {plataforma} (Estação: {estacao}) - Data: {data} - {componente_velocidade}')  # Título para derivada de velocidade
+        ax.set_title(f'Derivada do Perfil de Velocidade - {plataforma} - Est: {estacao} - Data: {data} - - Dir: {componente_velocidade}')  # Título para derivada de velocidade
 
       ax.set_xlabel('Derivada da Velocidade do Vento')  # Nome do eixo X para derivada de velocidade
     elif variavel == 'temperatura':
       if data == None:
-        ax.set_title(f'Derivada do Perfil de Temperatura - {plataforma} (Estação: {estacao})')  # Título para derivada de temperatura
+        ax.set_title(f'Derivada do Perfil de Temperatura - {plataforma} - Est: {estacao}')  # Título para derivada de temperatura
       else:
-        ax.set_title(f'Derivada do Perfil de Temperatura - {plataforma} (Estação: {estacao}) - Data: {data}')  # Título para derivada de temperatura
+        ax.set_title(f'Derivada do Perfil de Temperatura - {plataforma} - Est: {estacao} - Data: {data}')  # Título para derivada de temperatura
 
       ax.set_xlabel('Derivada da Temperatura') # Nome do eixo X para derivada de temperatura
 
