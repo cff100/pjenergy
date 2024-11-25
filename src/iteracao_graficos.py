@@ -35,7 +35,7 @@ def iteracao_grafico(dicionario_argumentos, axs):
         df_hora_estacao = df_hora[df_hora['Estação_do_Ano'] == est]
         dicionario_argumentos['df'] = df_hora_estacao
         dicionario_argumentos['estacao'] = est
-        X_smooth_velocidade, Y_smooth, cores[c] = iteracao_grafico(dicionario_argumentos)
+        X_smooth_velocidade, Y_smooth, cores[c] = iteracao_grafico(dicionario_argumentos, axs)
       return X_smooth_velocidade, Y_smooth, cores[c]
     else:
       e = None
