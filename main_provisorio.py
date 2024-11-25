@@ -22,6 +22,6 @@ def main(perguntas = True, variavel = "Ambas", modo = "Original", componente_vel
   else:  # Se houver apenas um subplot (caso de 1x1)
     axs = [axs]  # Coloca o único subplot em uma lista
 
-  itg.iteracao_grafico(dicionario_argumentos)
+  itg.iteracao_grafico(dicionario_argumentos, axs)
 
   #return x
