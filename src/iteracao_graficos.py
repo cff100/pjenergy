@@ -2,7 +2,7 @@ import numpy as np
 from scipy.interpolate import make_interp_spline
 from .criacao_grafico import criacao_grafico
 
-def iteracao_grafico(dicionario_argumentos, axs):
+def iteracao_grafico(dicionario_argumentos, axs, e = None):
 
   df = dicionario_argumentos['df']
   variavel = dicionario_argumentos['variavel']
@@ -11,6 +11,16 @@ def iteracao_grafico(dicionario_argumentos, axs):
   modo = dicionario_argumentos['modo']
   plataforma = dicionario_argumentos['plataforma']
   data = dicionario_argumentos['data']
+
+  if estacao == "Todas":
+    for e, est in enumerate(["Verão", "Outono", "Inverno", "Primavera"]):
+      df_estacao = df[df['Estação_do_Ano'] == est].copy()
+      dicionario_argumentos['df'] = df_estacao
+      dicionario_argumentos['estacao'] = est
+      print(dicionario_argumentos)
+      iteracao_grafico(dicionario_argumentos, axs, e)
+  else:
+    pass
 
 
   # Lista de horários únicos no DataFrame
@@ -29,17 +39,6 @@ def iteracao_grafico(dicionario_argumentos, axs):
     df_hora = df_hora.reset_index(drop=True)
 
     #print(df_hora)
-
-    if estacao == "Todas":
-      for e, est in enumerate(["Verão", "Outono", "Inverno", "Primavera"]):
-        df_hora_estacao = df_hora[df_hora['Estação_do_Ano'] == est]
-        dicionario_argumentos['df'] = df_hora_estacao
-        dicionario_argumentos['estacao'] = est
-        print(dicionario_argumentos)
-        iteracao_grafico(dicionario_argumentos, axs)
-      #return X_smooth_velocidade, Y_smooth, cores[c]
-    else:
-      e = None
 
     # Coluna de alturas para o eixo Y do gráfico
     Y = df_hora['Altitude_m']
