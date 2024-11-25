@@ -12,12 +12,13 @@ def iteracao_grafico(dicionario_argumentos, axs, e = None):
   plataforma = dicionario_argumentos['plataforma']
   data = dicionario_argumentos['data']
 
+  print(dicionario_argumentos)
+
   if estacao == "Todas":
     for e, est in enumerate(["Verão", "Outono", "Inverno", "Primavera"]):
       df_estacao = df[df['Estação_do_Ano'] == est].copy()
       dicionario_argumentos['df'] = df_estacao
       dicionario_argumentos['estacao'] = est
-      print(dicionario_argumentos)
       iteracao_grafico(dicionario_argumentos, axs, e)
   else:
     pass
