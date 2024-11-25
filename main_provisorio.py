@@ -14,6 +14,12 @@ def main(perguntas = True, variavel = "Ambas", modo = "Original", componente_vel
   n_lin, n_col = nlc.linhas_colunas(dicionario_argumentos)
   fig, axs = plt.subplots(n_lin, n_col, figsize=(9*n_col, 6*n_lin))
 
+  # Garante que axs seja uma lista
+  if isinstance(axs, np.ndarray):  # Se 'axs' for um array
+    axs = axs.flatten().tolist()  # Converte para lista
+  else:  # Se houver apenas um subplot (caso de 1x1)
+    axs = [axs]  # Coloca o único subplot em uma lista
+
   x = itg.iteracao_grafico(dicionario_argumentos)
 
 
