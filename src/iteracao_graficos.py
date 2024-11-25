@@ -7,6 +7,10 @@ def iteracao_grafico(dicionario_argumentos):
   variavel = dicionario_argumentos['variavel']
   componente_velocidade = dicionario_argumentos['componente_velocidade']
   estacao = dicionario_argumentos['estacao']
+  modo = dicionario_argumentos['modo']
+  plataforma = dicionario_argumentos['plataforma']
+  data = dicionario_argumentos['data']
+
 
   # Lista de horários únicos no DataFrame
   horarios = list(df['Horário_Brasília'].unique())
@@ -23,7 +27,7 @@ def iteracao_grafico(dicionario_argumentos):
     df_hora = df_hora.sort_values('Altitude_m')
     df_hora = df_hora.reset_index(drop=True)
 
-    print(df_hora)
+    #print(df_hora)
 
     if estacao == "Todas":
       for est in ["Verão", "Outono", "Inverno", "Primavera"]:
@@ -42,12 +46,12 @@ def iteracao_grafico(dicionario_argumentos):
     # Verifica se o modo inclui a velocidade do vento ('velocidade' ou 'ambos')
     if variavel in ['Velocidade', 'Ambas']:
 
-      if componente_velocidade == 'u':
+      '''if componente_velocidade == 'u':
         nome_velocidade_vento = 'Velocidade_Vento_u_m/s'
       elif componente_velocidade == 'v':
         nome_velocidade_vento = 'Velocidade_Vento_v_m/s'
       elif componente_velocidade == 'Resultante':
-        nome_velocidade_vento = 'Velocidade_Vento_resultante_m/s'
+        nome_velocidade_vento = 'Velocidade_Vento_resultante_m/s''''
 
       # Coluna de velocidade do vento para o eixo X do gráfico
       X_velocidade = df_hora[nome_velocidade_vento]

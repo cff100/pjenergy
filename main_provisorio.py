@@ -13,9 +13,9 @@ def main(perguntas = True, variavel = "Ambas", modo = "Original", componente_vel
 
   n_lin, n_col = nlc.linhas_colunas(dicionario_argumentos)
   fig, axs = plt.subplots(n_lin, n_col, figsize=(9*n_col, 6*n_lin))
-  
+
   x = itg.iteracao_grafico(dicionario_argumentos)
 
 
 
-  return x #axs, (n_lin, n_col), fig, dicionario_argumentos
+  return axs
