@@ -43,6 +43,7 @@ def iteracao_grafico(dicionario_argumentos, axs, e = None):
 
     # Coluna de alturas para o eixo Y do gráfico
     Y = df_hora['Altitude_m']
+    print(Y)
     # Gera uma sequência de valores suavizados para Y, a ser usada para interpolação nos gráficos
     Y_smooth = np.linspace(Y.min(), Y.max(), 400)
     print(Y_smooth)
@@ -51,14 +52,14 @@ def iteracao_grafico(dicionario_argumentos, axs, e = None):
     # Verifica se o modo inclui a velocidade do vento ('velocidade' ou 'ambos')
     if variavel in ['Velocidade', 'Ambas']:
 
-      
+
       if componente_velocidade == 'u':
         nome_velocidade_vento = 'Velocidade_Vento_u_m/s'
       elif componente_velocidade == 'v':
         nome_velocidade_vento = 'Velocidade_Vento_v_m/s'
       elif componente_velocidade == 'Resultante':
         nome_velocidade_vento = 'Velocidade_Vento_resultante_m/s'
-      
+
 
       # Coluna de velocidade do vento para o eixo X do gráfico
       X_velocidade = df_hora[nome_velocidade_vento]
@@ -86,4 +87,4 @@ def iteracao_grafico(dicionario_argumentos, axs, e = None):
         criacao_grafico(axs[n], cores[c], Y, X_velocidade, Y_smooth, X_smooth_velocidade, 'derivada', plataforma, estacao, horario, variavel, componente_velocidade, data)
 
 
-      
+
