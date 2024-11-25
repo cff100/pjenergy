@@ -73,7 +73,7 @@ def iteracao_grafico(dicionario_argumentos, axs, e = None):
           m = e
         print(f'm:{m}')
         # Cria o gráfico para os dados originais de velocidade do vento
-        criacao_grafico(axs[m], cores[c], Y, X_velocidade, Y_smooth, X_smooth_velocidade, 'original', plataforma, estacao, horario, variavel, componente_velocidade, data)
+        criacao_grafico(axs[m], cores[c], Y, X_velocidade, Y_smooth, X_smooth_velocidade, 'original', plataforma, estacao, horario, 'velocidade', componente_velocidade, data)
 
       elif modo == 'Original-Derivada':
         m = 0
@@ -82,9 +82,9 @@ def iteracao_grafico(dicionario_argumentos, axs, e = None):
         print(f'n:{n}')
 
         # Cria o gráfico para os dados originais de velocidade do vento
-        criacao_grafico(axs[m], cores[c], Y, X_velocidade, Y_smooth, X_smooth_velocidade, 'original', plataforma, estacao, horario, variavel, componente_velocidade, data)
+        criacao_grafico(axs[m], cores[c], Y, X_velocidade, Y_smooth, X_smooth_velocidade, 'original', plataforma, estacao, horario, 'velocidade', componente_velocidade, data)
         # Cria o gráfico para a derivada da velocidade do vento
-        criacao_grafico(axs[n], cores[c], Y, X_velocidade, Y_smooth, X_smooth_velocidade, 'derivada', plataforma, estacao, horario, variavel, componente_velocidade, data)
+        criacao_grafico(axs[n], cores[c], Y, X_velocidade, Y_smooth, X_smooth_velocidade, 'derivada', plataforma, estacao, horario, 'velocidade', componente_velocidade, data)
 
 
 
