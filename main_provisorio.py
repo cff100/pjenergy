@@ -7,7 +7,8 @@ import numpy as np
 def main(perguntas = True, variavel = "Ambas", modo = "Original", componente_velocidade = "Resultante", plataforma = "7", estacao = "Geral", indicador = "Média", data = None, ano = "Todos"):
 
   dicionario_argumentos = us.argumentos_usuario(perguntas, variavel, modo, componente_velocidade, plataforma, estacao, indicador, data, ano)
-
+  print(argumentos)
+  
   if not isinstance(dicionario_argumentos, dict):
     print('Não é possível criar um gráfico com essa combinação de data e estação \n Dataframe gerado:')
     return dicionario_argumentos
@@ -21,8 +22,6 @@ def main(perguntas = True, variavel = "Ambas", modo = "Original", componente_vel
   else:  # Se houver apenas um subplot (caso de 1x1)
     axs = [axs]  # Coloca o único subplot em uma lista
 
-  x = itg.iteracao_grafico(dicionario_argumentos)
+  itg.iteracao_grafico(dicionario_argumentos)
 
-
-
-  return axs
+  #return x

@@ -1,5 +1,6 @@
 import numpy as np
 from scipy.interpolate import make_interp_spline
+from .criacao_grafico import criacao_grafico
 
 def iteracao_grafico(dicionario_argumentos):
 
@@ -30,12 +31,14 @@ def iteracao_grafico(dicionario_argumentos):
     #print(df_hora)
 
     if estacao == "Todas":
-      for est in ["Verão", "Outono", "Inverno", "Primavera"]:
+      for e, est in enumerate(["Verão", "Outono", "Inverno", "Primavera"]):
         df_hora_estacao = df_hora[df_hora['Estação_do_Ano'] == est]
         dicionario_argumentos['df'] = df_hora_estacao
         dicionario_argumentos['estacao'] = est
         X_smooth_velocidade, Y_smooth, cores[c] = iteracao_grafico(dicionario_argumentos)
       return X_smooth_velocidade, Y_smooth, cores[c]
+    else:
+      e = None
 
     # Coluna de alturas para o eixo Y do gráfico
     Y = df_hora['Altitude_m']
@@ -60,4 +63,25 @@ def iteracao_grafico(dicionario_argumentos):
       # Interpolação suave dos valores de velocidade do vento em relação aos valores suavizados de altura
       X_smooth_velocidade = make_interp_spline(Y, X_velocidade)(Y_smooth)
 
-      return X_smooth_velocidade, Y_smooth, cores[c]
+      if modo = 'Original':
+        if e == None:
+          m = 0
+        else:
+          m = e
+        print(f'm:{m}')
+        # Cria o gráfico para os dados originais de velocidade do vento
+        criacao_grafico(lista_eixos[m], cores[c], Y, X_velocidade, Y_smooth, X_smooth_velocidade, 'original', plataforma, estacao, horario, variavel, componente_velocidade, data)
+
+      elif modo = 'Original-Derivada':
+        m = 0
+        n = 1
+        print(f'm:{m}')
+        print(f'n:{n}')
+
+        # Cria o gráfico para os dados originais de velocidade do vento
+        criacao_grafico(lista_eixos[m], cores[c], Y, X_velocidade, Y_smooth, X_smooth_velocidade, 'original', plataforma, estacao, horario, variavel, componente_velocidade, data)
+        # Cria o gráfico para a derivada da velocidade do vento
+        criacao_grafico(lista_eixos[n], cores[c], Y, X_velocidade, Y_smooth, X_smooth_velocidade, 'derivada', plataforma, estacao, horario, variavel, componente_velocidade, data)
+
+
+      
