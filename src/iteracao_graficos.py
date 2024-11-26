@@ -20,8 +20,9 @@ def iteracao_grafico(dicionario_argumentos, axs, e = None):
       dicionario_argumentos['df'] = df_estacao
       dicionario_argumentos['estacao'] = est
       iteracao_grafico(dicionario_argumentos, axs, e)
+    return
   else:
-    continue
+    pass
 
 
   # Lista de horários únicos no DataFrame
@@ -45,16 +46,6 @@ def iteracao_grafico(dicionario_argumentos, axs, e = None):
     Y = df_hora['Altitude_m']
     #print(Y)
 
-    # Supondo que Y seja o array com as altitudes
-    valores_duplicados, contagens = np.unique(Y, return_counts=True)
-
-    # Filtra os valores duplicados (aqueles que aparecem mais de uma vez)
-    duplicados = valores_duplicados[contagens > 1]
-    contagem_duplicados = contagens[contagens > 1]
-
-    # Exibe os valores duplicados e quantas vezes aparecem
-    for val, count in zip(duplicados, contagem_duplicados):
-      print(f"Valor duplicado: {val}, Ocorrências: {count}")
 
     # Gera uma sequência de valores suavizados para Y, a ser usada para interpolação nos gráficos
     Y_smooth = np.linspace(Y.min(), Y.max(), 400)
