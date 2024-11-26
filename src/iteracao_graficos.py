@@ -70,19 +70,19 @@ def iteracao_grafico(dicionario_argumentos, axs, e = None):
       X_smooth_velocidade = make_interp_spline(Y, X_velocidade)(Y_smooth)
 
       if modo == 'Original':
-        if e == None:
+        if e == None: # Ou seja, se estacao = Todas
           m = 0
         else:
           m = e
-        print(f'm:{m}')
+        #print(f'm:{m}')
         # Cria o gráfico para os dados originais de velocidade do vento
         criacao_grafico(axs[m], cores[c], Y, X_velocidade, Y_smooth, X_smooth_velocidade, 'original', plataforma, estacao, horario, 'velocidade', componente_velocidade, data)
 
       elif modo == 'Original-Derivada':
         m = 0
         n = 1
-        print(f'm:{m}')
-        print(f'n:{n}')
+        #print(f'm:{m}')
+        #print(f'n:{n}')
 
         # Cria o gráfico para os dados originais de velocidade do vento
         criacao_grafico(axs[m], cores[c], Y, X_velocidade, Y_smooth, X_smooth_velocidade, 'original', plataforma, estacao, horario, 'velocidade', componente_velocidade, data)
@@ -90,4 +90,37 @@ def iteracao_grafico(dicionario_argumentos, axs, e = None):
         criacao_grafico(axs[n], cores[c], Y, X_velocidade, Y_smooth, X_smooth_velocidade, 'derivada', plataforma, estacao, horario, 'velocidade', componente_velocidade, data)
 
 
+    # Verifica se o modo inclui a temperatura ('temperatura' ou 'ambos')
+    if variavel in ['Temperatura', 'Ambas']:
+
+      # Coluna de temperatura para o eixo X do gráfico
+      X_temperatura = df_hora['Temperatura_C']
+      # Interpolação suave dos valores de temperatura em relação aos valores suavizados de altura
+      X_smooth_temperatura = make_interp_spline(Y, X_temperatura)(Y_smooth)
+
+      # Verifica se o tipo de gráfico solicitado é 'original' ou 'derivada'
+      if modo == 'Original':
+        if e == None: # Ou seja, se estacao = Todas
+          if variavel == 'Ambas':
+            m = 1
+          elif variavel == 'Temperatura':
+            m = 0
+
+        else:
+          m = e
+
+        # Cria o gráfico para os dados originais de temperatura
+        criacao_grafico(axs[m], cores[c], Y, X_temperatura, Y_smooth, X_smooth_temperatura, 'original', plataforma, estacao, horario, 'temperatura', componente_velocidade, data)
+
+      # Caso o tipo seja 'ambos' (original e derivada), cria dois gráficos: um para os dados originais e outro para a derivada
+      elif modo == 'Original-Derivada':
+        # Sempre variavel = Temperatura
+        m = 0
+        n = 1
+
+
+        # Cria o gráfico para os dados originais de temperatura
+        criacao_grafico(axs[m], cores[c], Y, X_temperatura, Y_smooth, X_smooth_temperatura, 'original', plataforma, estacao, horario, 'temperatura', componente_velocidade, data)
+        # Cria o gráfico para a derivada da temperatura
+        criacao_grafico(axs[n], cores[c], Y, X_temperatura, Y_smooth, X_smooth_temperatura, 'derivada', plataforma, estacao, horario, 'temperatura', componente_velocidade, data)
 
