@@ -44,9 +44,18 @@ def iteracao_grafico(dicionario_argumentos, axs, e = None):
     # Coluna de alturas para o eixo Y do gráfico
     Y = df_hora['Altitude_m']
     #print(Y)
-    # Verificar se há duplicados em Y (altitude)
-    if len(Y) != len(np.unique(Y)):
-      print("Há valores duplicados em Y.")
+    
+    # Supondo que Y seja o array com as altitudes
+    valores_duplicados, contagens = np.unique(Y, return_counts=True)
+
+    # Filtra os valores duplicados (aqueles que aparecem mais de uma vez)
+    duplicados = valores_duplicados[contagens > 1]
+    contagem_duplicados = contagens[contagens > 1]
+
+    # Exibe os valores duplicados e quantas vezes aparecem
+    for val, count in zip(duplicados, contagem_duplicados):
+      print(f"Valor duplicado: {val}, Ocorrências: {count}")
+
     # Gera uma sequência de valores suavizados para Y, a ser usada para interpolação nos gráficos
     Y_smooth = np.linspace(Y.min(), Y.max(), 400)
     print(Y_smooth)
