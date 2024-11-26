@@ -58,7 +58,7 @@ def iteracao_grafico(dicionario_argumentos, axs, e = None):
 
     # Gera uma sequência de valores suavizados para Y, a ser usada para interpolação nos gráficos
     Y_smooth = np.linspace(Y.min(), Y.max(), 400)
-    print(Y_smooth)
+    #print(Y_smooth)
 
 
     # Verifica se o modo inclui a velocidade do vento ('velocidade' ou 'ambos')
