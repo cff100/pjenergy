@@ -40,7 +40,7 @@ def iteracao_grafico(dicionario_argumentos, axs, e = None):
     df_hora = df_hora.sort_values('Altitude_m')
     df_hora = df_hora.reset_index(drop=True)
 
-    print(df_hora)
+    #print(df_hora)
 
     # Coluna de alturas para o eixo Y do gráfico
     Y = df_hora['Altitude_m']
