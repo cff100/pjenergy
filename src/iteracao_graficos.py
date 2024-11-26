@@ -12,7 +12,7 @@ def iteracao_grafico(dicionario_argumentos, axs, e = None):
   plataforma = dicionario_argumentos['plataforma']
   data = dicionario_argumentos['data']
 
-  print(dicionario_argumentos)
+  #print(dicionario_argumentos)
 
   if estacao == "Todas":
     for e, est in enumerate(["Verão", "Outono", "Inverno", "Primavera"]):
@@ -44,7 +44,7 @@ def iteracao_grafico(dicionario_argumentos, axs, e = None):
     # Coluna de alturas para o eixo Y do gráfico
     Y = df_hora['Altitude_m']
     #print(Y)
-    
+
     # Supondo que Y seja o array com as altitudes
     valores_duplicados, contagens = np.unique(Y, return_counts=True)
 
