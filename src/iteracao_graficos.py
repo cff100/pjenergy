@@ -20,7 +20,7 @@ def iteracao_grafico(dicionario_argumentos, axs, e = None):
       dicionario_argumentos['df'] = df_estacao
       dicionario_argumentos['estacao'] = est
       iteracao_grafico(dicionario_argumentos, axs, e)
-    return
+    return # A execução da função é interrompida aqui
   else:
     pass
 
