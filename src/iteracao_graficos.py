@@ -21,7 +21,7 @@ def iteracao_grafico(dicionario_argumentos, axs, e = None):
       dicionario_argumentos['estacao'] = est
       iteracao_grafico(dicionario_argumentos, axs, e)
   else:
-    pass
+    continue
 
 
   # Lista de horários únicos no DataFrame
