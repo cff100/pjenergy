@@ -43,7 +43,10 @@ def iteracao_grafico(dicionario_argumentos, axs, e = None):
 
     # Coluna de alturas para o eixo Y do gráfico
     Y = df_hora['Altitude_m']
-    print(Y)
+    #print(Y)
+    # Verificar se há duplicados em Y (altitude)
+    if len(Y) != len(np.unique(Y)):
+      print("Há valores duplicados em Y.")
     # Gera uma sequência de valores suavizados para Y, a ser usada para interpolação nos gráficos
     Y_smooth = np.linspace(Y.min(), Y.max(), 400)
     print(Y_smooth)
