@@ -452,7 +452,7 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
         indicador = indicador,
         data = data,
         ano = ano,
-        df = df
+        df = df,
         df_para_interpolacao = df_para_interpolacao
     )
   print(argumentos)
