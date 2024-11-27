@@ -1,4 +1,4 @@
-def dataframe_media(df, estacoes_separadas):
+def dataframe_media(df, estacoes_separadas, estacao):
   if estacoes_separadas == True:
     categorias_agrupar = ['Estação_do_Ano', 'Altitude_m', 'Horário_Brasília']
     colunas_ordem = ['Nível_de_Pressão_hPa', 'Altitude_m', 'Estação_do_Ano',
