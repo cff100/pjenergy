@@ -24,10 +24,11 @@ def celsius_para_kelvin(celsius):
   return celsius + 273.15
 
 
-
 def interpolacao(dicionario_argumentos):
   df_para_interpolacao = dicionario_argumentos['df_para_interpolacao']
-  componente_velocidade = dicionario_argumentos['componente_velocidade']
+  plataforma = dicionario_argumentos['plataforma']
+
+
 
   df_interpolado = pd.DataFrame()
 
@@ -48,15 +49,8 @@ def interpolacao(dicionario_argumentos):
       # Gera uma sequência de valores suavizados para Y, a ser usada para interpolação nos gráficos
       Y_smooth = np.linspace(Y.min(), Y.max(), 400)
 
-      if componente_velocidade == 'u':
-        nome_velocidade_vento = 'Velocidade_Vento_u_m/s'
-      elif componente_velocidade == 'v':
-        nome_velocidade_vento = 'Velocidade_Vento_v_m/s'
-      elif componente_velocidade == 'Resultante':
-        nome_velocidade_vento = 'Velocidade_Vento_resultante_m/s'
-
       # Coluna de velocidade do vento para o eixo X do gráfico
-      X_velocidade = df_hora[nome_velocidade_vento]
+      X_velocidade = df_hora['Velocidade_Vento_resultante_m/s']
       X_temperatura = df_hora["Temperatura_C"]
 
       # Interpolação suave dos valores de velocidade do vento em relação aos valores suavizados de altura
@@ -67,16 +61,15 @@ def interpolacao(dicionario_argumentos):
       df_local["Altitude_m"] = Y_smooth
       df_local["Nível_de_Pressão_hPa"] = altura_para_pressao(Y_smooth)
       df_local['Estação_do_Ano'] = df_dia['Estação_do_Ano'].iloc[0]
-      # CONTINUAR A PARTIR DAQUI
-      df_local[nome_h_brasilia] = horario
-      df_local[nome_h_utc] = brasilia_para_utc(horario)
+      df_local["Horário_Brasília"] = horario
+      df_local["Horário_UTC"] = brasilia_para_utc(horario)
       df_local["Data"] = d
-      df_local[nome_velocidade_vento_media] = X_smooth_velocidade
-      df_local['Plataforma'] = plataforma_escolhida
-      df_local[nome_temperatura] = X_smooth_temperatura
-      df_local[nome_temperatura_K] = celsius_para_kelvin(X_smooth_temperatura)
-      #print(f'df_local_0: {df_local}')
+      df_local['Velocidade_Vento_resultante_m/s'] = X_smooth_velocidade
+      df_local['Plataforma'] = plataforma
+      df_local["Temperatura_C"] = X_smooth_temperatura
+      df_local["Temperatura_K"] = celsius_para_kelvin(X_smooth_temperatura)
 
+      # CONTINUAR A PARTIR DAQUI
       df_local = df_local[df_local[nome_altura] <= 350]
       #print(f'df_local_1: {df_local}')
 
