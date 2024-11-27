@@ -298,6 +298,7 @@ def perguntas_usuario():
           df = df[df['Ano'] == ano]
           df.drop(columns=['Ano'], inplace = True)
 
+      df_para_interpolacao = df.copy()
       if estacao == None: # Sempre vai ocorrer quando uma data específica for escolhida ou simplesmente quando o usuário não escolher filtrar estação
         pass
       else:   # Chama a função que faz a média
@@ -321,7 +322,8 @@ def perguntas_usuario():
       indicador = indicador,
       data = data,
       ano = ano,
-      df = df
+      df = df,
+      df_para_interpolacao = df_para_interpolacao
   )
 
   return argumentos
@@ -427,7 +429,9 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
   indicador = valores_nao_aceitos(indicador, ["Diário", "Média", 'Sem_filtros'], dica = True, nome_variavel = 'indicador')
   if indicador == False:
     return None
-  print(df)
+  
+  df_para_interpolacao = df.copy()
+
   # Verificar se é necessário fazer uma média e chamar a função que o faz
   if estacao == None: # Sempre vai ocorrer quando uma data específica for escolhida ou simplesmente quando o usuário não escolher filtrar estação
     pass
@@ -449,8 +453,9 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
         data = data,
         ano = ano,
         df = df
+        df_para_interpolacao = df_para_interpolacao
     )
-  
+  print(argumentos)
   return argumentos
 
 

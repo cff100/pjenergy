@@ -1,6 +1,7 @@
 import src.usuario as us
 import src.numero_linhas_colunas as nlc
 import src.iteracao_graficos as itg
+import src.tabela_interpolacao as ti
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -25,5 +26,10 @@ def main(perguntas = True, variavel = "Ambas", modo = "Original", componente_vel
   #print(axs)
 
   itg.iteracao_grafico(dicionario_argumentos, axs)
+'''
+  if dicionario_argumentos['data'] != None:
+    ti.interpolacao(dicionario_argumentos)
+
+'''
 
   #return x
