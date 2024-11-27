@@ -29,6 +29,8 @@ def dataframe_media(df, estacoes_separadas):
     'Temperatura_C': 'mean',
     'Nível_de_Pressão_hPa': 'first',
     'Horário_UTC': 'first',
+    'Estação_do_Ano': 'first'
     }).reset_index()
+
 
   return df_media[colunas_ordem]
