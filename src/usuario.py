@@ -427,7 +427,7 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
   indicador = valores_nao_aceitos(indicador, ["Diário", "Média", 'Sem_filtros'], dica = True, nome_variavel = 'indicador')
   if indicador == False:
     return None
-
+  print(df)
   # Verificar se é necessário fazer uma média e chamar a função que o faz
   if estacao == None: # Sempre vai ocorrer quando uma data específica for escolhida ou simplesmente quando o usuário não escolher filtrar estação
     pass
@@ -450,7 +450,7 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
         ano = ano,
         df = df
     )
-  print(argumentos)
+  
   return argumentos
 
 
