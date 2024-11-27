@@ -1,60 +1,52 @@
+import pandas as pd
 import numpy as np
 from scipy.interpolate import make_interp_spline
-from .criacao_grafico import criacao_grafico
+import matplotlib.pyplot as plt
+from datetime import datetime, timedelta
 
-def iteracao_grafico(dicionario_argumentos, axs, e = None):
+horarios = ['03:00', '09:00', '15:00', '21:00']
 
-  df = dicionario_argumentos['df']
-  variavel = dicionario_argumentos['variavel']
+def altura_para_pressao(altura):
+  # Constantes
+  PA = 101.325  # Pressão atmosférica ao nível do mar em kPa
+  k = 1.21e-5   # Constante em s²/m²
+  g = 9.81      # Aceleração gravitacional em m/s²
+
+  p = P_h = PA * np.exp(-altura * k * g )
+  return p * 10
+
+def brasilia_para_utc(hour_brasilia):
+  brasilia_time = datetime.strptime(hour_brasilia, '%H:%M')
+  utc_time = brasilia_time + timedelta(hours=3)
+  return utc_time.strftime('%H:%M')
+
+def celsius_para_kelvin(celsius):
+  return celsius + 273.15
+
+
+
+def interpolacao(dicionario_argumentos):
+  df_para_interpolacao = dicionario_argumentos['df_para_interpolacao']
   componente_velocidade = dicionario_argumentos['componente_velocidade']
-  estacao = dicionario_argumentos['estacao']
-  modo = dicionario_argumentos['modo']
-  plataforma = dicionario_argumentos['plataforma']
-  data = dicionario_argumentos['data']
 
-  #print(dicionario_argumentos)
+  df_interpolado = pd.DataFrame()
 
-  if estacao == "Todas":
-    for e, est in enumerate(["Verão", "Outono", "Inverno", "Primavera"]):
-      df_estacao = df[df['Estação_do_Ano'] == est].copy()
-      dicionario_argumentos['df'] = df_estacao
-      dicionario_argumentos['estacao'] = est
-      iteracao_grafico(dicionario_argumentos, axs, e)
-    return # A execução da função é interrompida aqui
-  else:
-    pass
+  for d in df_para_interpolacao['Data'].unique():
+    df_dia = df_para_interpolacao[df_para_interpolacao['Data'] == d]
 
+    # Loop para iterar pelos horários definidos
+    for c, horario in enumerate(horarios):
 
-  # Lista de horários únicos no DataFrame
-  horarios = list(df['Horário_Brasília'].unique())
+      # Filtra dados para o horário específico
+      df_hora = df_dia[df_dia["Horário_Brasília"] == horario]
+      # Ordena os dados filtrados pela coluna que contém as alturas, garantindo que os valores de altura estejam em ordem crescente
+      df_hora = df_hora.sort_values("Altitude_m")
 
-  # Lista de cores para os gráficos, onde cada cor será usada para horários diferentes
-  cores = ['blue', 'green', 'red', 'purple']
+      # Coluna de alturas para o eixo Y do gráfico
+      Y = df_hora["Altitude_m"]
 
-  # Loop para iterar pelos horários definidos
-  for c, horario in enumerate(horarios):
-
-    # Filtra dados para o horário específico
-    df_hora = df[df['Horário_Brasília'] == horario]
-    # Ordena os dados filtrados pela coluna que contém as alturas, garantindo que os valores de altura estejam em ordem crescente
-    df_hora = df_hora.sort_values('Altitude_m')
-    df_hora = df_hora.reset_index(drop=True)
-
-    #print(df_hora)
-
-    # Coluna de alturas para o eixo Y do gráfico
-    Y = df_hora['Altitude_m']
-    #print(Y)
-
-
-    # Gera uma sequência de valores suavizados para Y, a ser usada para interpolação nos gráficos
-    Y_smooth = np.linspace(Y.min(), Y.max(), 400)
-    #print(Y_smooth)
-
-
-    # Verifica se o modo inclui a velocidade do vento ('velocidade' ou 'ambos')
-    if variavel in ['Velocidade', 'Ambas']:
-
+      # Gera uma sequência de valores suavizados para Y, a ser usada para interpolação nos gráficos
+      Y_smooth = np.linspace(Y.min(), Y.max(), 400)
 
       if componente_velocidade == 'u':
         nome_velocidade_vento = 'Velocidade_Vento_u_m/s'
@@ -63,64 +55,71 @@ def iteracao_grafico(dicionario_argumentos, axs, e = None):
       elif componente_velocidade == 'Resultante':
         nome_velocidade_vento = 'Velocidade_Vento_resultante_m/s'
 
-
       # Coluna de velocidade do vento para o eixo X do gráfico
       X_velocidade = df_hora[nome_velocidade_vento]
+      X_temperatura = df_hora["Temperatura_C"]
+
       # Interpolação suave dos valores de velocidade do vento em relação aos valores suavizados de altura
       X_smooth_velocidade = make_interp_spline(Y, X_velocidade)(Y_smooth)
-
-      if modo == 'Original':
-        if e == None: # Ou seja, se estacao = Todas
-          m = 0
-        else:
-          m = e
-        #print(f'm:{m}')
-        # Cria o gráfico para os dados originais de velocidade do vento
-        criacao_grafico(axs[m], cores[c], Y, X_velocidade, Y_smooth, X_smooth_velocidade, 'original', plataforma, estacao, horario, 'velocidade', componente_velocidade, data)
-
-      elif modo == 'Original-Derivada':
-        m = 0
-        n = 1
-        #print(f'm:{m}')
-        #print(f'n:{n}')
-
-        # Cria o gráfico para os dados originais de velocidade do vento
-        criacao_grafico(axs[m], cores[c], Y, X_velocidade, Y_smooth, X_smooth_velocidade, 'original', plataforma, estacao, horario, 'velocidade', componente_velocidade, data)
-        # Cria o gráfico para a derivada da velocidade do vento
-        criacao_grafico(axs[n], cores[c], Y, X_velocidade, Y_smooth, X_smooth_velocidade, 'derivada', plataforma, estacao, horario, 'velocidade', componente_velocidade, data)
-
-
-    # Verifica se o modo inclui a temperatura ('temperatura' ou 'ambos')
-    if variavel in ['Temperatura', 'Ambas']:
-
-      # Coluna de temperatura para o eixo X do gráfico
-      X_temperatura = df_hora['Temperatura_C']
-      # Interpolação suave dos valores de temperatura em relação aos valores suavizados de altura
       X_smooth_temperatura = make_interp_spline(Y, X_temperatura)(Y_smooth)
 
-      # Verifica se o tipo de gráfico solicitado é 'original' ou 'derivada'
-      if modo == 'Original':
-        if e == None: # Ou seja, se estacao = Todas
-          if variavel == 'Ambas':
-            m = 1
-          elif variavel == 'Temperatura':
-            m = 0
+      df_local = pd.DataFrame()
+      df_local["Altitude_m"] = Y_smooth
+      df_local["Nível_de_Pressão_hPa"] = altura_para_pressao(Y_smooth)
+      df_local['Estação_do_Ano'] = df_dia['Estação_do_Ano'].iloc[0]
+      # CONTINUAR A PARTIR DAQUI
+      df_local[nome_h_brasilia] = horario
+      df_local[nome_h_utc] = brasilia_para_utc(horario)
+      df_local["Data"] = d
+      df_local[nome_velocidade_vento_media] = X_smooth_velocidade
+      df_local['Plataforma'] = plataforma_escolhida
+      df_local[nome_temperatura] = X_smooth_temperatura
+      df_local[nome_temperatura_K] = celsius_para_kelvin(X_smooth_temperatura)
+      #print(f'df_local_0: {df_local}')
 
-        else:
-          m = e
+      df_local = df_local[df_local[nome_altura] <= 350]
+      #print(f'df_local_1: {df_local}')
 
-        # Cria o gráfico para os dados originais de temperatura
-        criacao_grafico(axs[m], cores[c], Y, X_temperatura, Y_smooth, X_smooth_temperatura, 'original', plataforma, estacao, horario, 'temperatura', componente_velocidade, data)
+      df_local[nome_pressao] = df_local[nome_pressao].round()
+      #print(f'df_local_2: {df_local}')
+      #print('\n \n')
 
-      # Caso o tipo seja 'ambos' (original e derivada), cria dois gráficos: um para os dados originais e outro para a derivada
-      elif modo == 'Original-Derivada':
-        # Sempre variavel = Temperatura
-        m = 0
-        n = 1
+      categorias_agrupar = ['Nível_de_Pressão_hPa', 'Horário_Brasília', 'Data']
+      colunas_ordem = ['Plataforma', 'Nível_de_Pressão_hPa', 'Altitude_m', 'Estação_do_Ano',
+                      'Horário_Brasília', 'Horário_UTC', 'Data', 'Velocidade_Vento_resultante_m/s', 'Temperatura_C', 'Temperatura_K']
+
+      df_local = df_local.groupby(categorias_agrupar).agg({
+      'Velocidade_Vento_resultante_m/s': 'mean',
+      'Temperatura_C': 'mean',
+      'Temperatura_K': 'mean',
+      'Altitude_m': 'mean',
+      'Horário_UTC': 'first',
+      'Estação_do_Ano': 'first',
+      'Plataforma': 'first'
+      }).reset_index()
+
+      df_local.reset_index(drop=True, inplace=True)
+      df_local = df_local[colunas_ordem]
+
+      #print(f'df_local_3: {df_local}')
+
+      '''n = 3
+      df_local = df_local.iloc[::n]  # Mantém apenas 1 a cada 'n' linhas
+
+      print(f'df_local_4: {df_local}')'''
 
 
-        # Cria o gráfico para os dados originais de temperatura
-        criacao_grafico(axs[m], cores[c], Y, X_temperatura, Y_smooth, X_smooth_temperatura, 'original', plataforma, estacao, horario, 'temperatura', componente_velocidade, data)
-        # Cria o gráfico para a derivada da temperatura
-        criacao_grafico(axs[n], cores[c], Y, X_temperatura, Y_smooth, X_smooth_temperatura, 'derivada', plataforma, estacao, horario, 'temperatura', componente_velocidade, data)
+      df_interpolado = pd.concat([df_interpolado, df_local],ignore_index=True)
 
+
+
+  #df_local = df_local[df_local[nome_pressao] % 1 == 0]  # Mantém apenas valores inteiros de pressão
+  #print(f'df_local: {df_local}')
+  #df_local = df_local.groupby(nome_pressao, as_index=False).mean()
+
+
+  #print(f'df_interpolado: {df_interpolado}')
+
+
+
+  df_interpolado.to_csv('df_interpolado.csv', index=False)
