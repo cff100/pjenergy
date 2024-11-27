@@ -437,7 +437,7 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
     else:
       estacoes_separadas = False
     df = dataframe_media(df, estacoes_separadas)
-
+  
 
   argumentos = dict(
         variavel = variavel,
@@ -450,7 +450,7 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
         ano = ano,
         df = df
     )
-
+  print(argumentos)
   return argumentos
 
 
