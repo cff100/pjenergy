@@ -406,7 +406,7 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
   if estacao in ['Verão', 'Outono', 'Inverno', 'Primavera', 'Geral']:
     if estacao != 'Geral':
       df = df[df['Estação_do_Ano'] == estacao]
-    df.drop(columns=['Estação_do_Ano'], inplace = True)
+    #df.drop(columns=['Estação_do_Ano'], inplace = True)
   elif estacao == 'Todas': # Para garantir um número limite de subplots gerados, escolher todas estações pode causar modificações em outros argumentos.
     if modo != 'Original' or variavel != 'Velocidade':
       print("Devido à escolha das estações como 'Todas':")
