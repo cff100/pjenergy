@@ -440,7 +440,7 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
       estacoes_separadas = True
     else:
       estacoes_separadas = False
-    df = dataframe_media(df, estacoes_separadas, estacao)
+    df = dataframe_media(df, estacoes_separadas)
   
 
   argumentos = dict(
