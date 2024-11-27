@@ -35,7 +35,5 @@ def main(perguntas = True, variavel = "Ambas", modo = "Original", componente_vel
     elif dicionario_argumentos['componente_velocidade'] == 'Velocidade_Vento_resultante_m/s':
       print('Não é gerada uma tabela de interpolação para tabelas de componentes específicas')
 '''
-  plt.show()
-
 
   #return x
