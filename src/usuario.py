@@ -322,8 +322,8 @@ def perguntas_usuario():
       indicador = indicador,
       data = data,
       ano = ano,
-      df = df#,
-      #df_para_interpolacao = df_para_interpolacao
+      df = df,
+      df_para_interpolacao = df_para_interpolacao
   )
 
   return argumentos
