@@ -464,8 +464,8 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
   keys_dict1 = ['df']
 
   # Separar os dicionários
-  dict1 = {k: d.pop(k) for k in keys_dict1 if k in d}
-  dict2 = d
+  dict1 = {k: argumentos.pop(k) for k in keys_dict1 if k in argumentos}
+  dict2 = argumentos
 
   print(dict1)  
   print('\n')
