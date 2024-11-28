@@ -270,12 +270,12 @@ def perguntas_usuario():
 
       # Para garantir um número limite de subplots gerados, escolher todas estações pode causar modificações em outros argumentos.
       elif estacao == 'Todas':
-        if modo != 'Original' or variavel != 'Velocidade':
+        if modo != 'Original' or variavel == 'Ambas':
           print("Devido à escolha das estações como 'Todas':")
           if modo != 'Original':
             modo = 'Original'
             print(f"- Modo foi alterado para {modo} \n")
-          if variavel != 'Velocidade':
+          if variavel == 'Ambas':
             variavel = 'Velocidade'
             print(f"- Variável precisa ser 'Velocidade' ou 'Temperatura'. Variável foi alterada automaticamente para {variavel} \n")
 
@@ -429,7 +429,7 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
   indicador = valores_nao_aceitos(indicador, ["Diário", "Média", 'Sem_filtros'], dica = True, nome_variavel = 'indicador')
   if indicador == False:
     return None
-  
+
   df_para_interpolacao = df.copy()
 
   # Verificar se é necessário fazer uma média e chamar a função que o faz
@@ -441,7 +441,7 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
     else:
       estacoes_separadas = False
     df = dataframe_media(df, estacoes_separadas)
-  
+
 
   argumentos = dict(
         variavel = variavel,
