@@ -408,12 +408,12 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
       df = df[df['Estação_do_Ano'] == estacao]
     #df.drop(columns=['Estação_do_Ano'], inplace = True)
   elif estacao == 'Todas': # Para garantir um número limite de subplots gerados, escolher todas estações pode causar modificações em outros argumentos.
-    if modo != 'Original' or variavel != 'Velocidade':
+    if modo != 'Original' or variavel == 'Ambas':
       print("Devido à escolha das estações como 'Todas':")
       if modo != 'Original':
         modo = 'Original'
         print(f"- Modo foi alterado para {modo} \n")
-      if variavel != 'Velocidade':
+      if variavel == 'Ambas':
         variavel = 'Velocidade'
         print(f"- Variável precisa ser 'Velocidade' ou 'Temperatura'. Variável foi alterada automaticamente para {variavel} \n")
   else:
@@ -452,8 +452,8 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
         indicador = indicador,
         data = data,
         ano = ano,
-        df = df,
-        df_para_interpolacao = df_para_interpolacao
+        df = df#,
+        #df_para_interpolacao = df_para_interpolacao
     )
   print(argumentos)
   return argumentos
