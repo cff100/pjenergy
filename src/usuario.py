@@ -206,6 +206,7 @@ def perguntas_usuario():
     estacao = None
     ano = 'Todos'
     data = None
+    df_para_interpolacao = df.copy()
 
   elif indicador == 'Diário':  # Se o indicador é Diário, é pedido para escolher um dia
     # Escolha automática de outros argumentos
@@ -228,6 +229,8 @@ def perguntas_usuario():
       if data != None:
         df = df[df['Data'] == data]  # Filtra os dataframe para a data escolhida
         df.drop(columns=['Data'], inplace = True)
+
+    df_para_interpolacao = df.copy()
 
 
 
