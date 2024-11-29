@@ -103,8 +103,8 @@ def interpolacao(dicionario_argumentos):
       # Concatenar com o DataFrame interpolado
       df_interpolado = pd.concat([df_interpolado, df_local], ignore_index=True)
 
-      # Imprimir o DataFrame resultante
-      print(f'df_interpolado: {df_interpolado}')
+  # Imprimir o DataFrame resultante
+  print(f'df_interpolado: {df_interpolado}')
 
       
       '''df_local = df_local[df_local["Altitude_m"] <= 350]
