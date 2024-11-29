@@ -132,8 +132,12 @@ def perguntas_usuario():
     modo = modo_dict[modo]
 
 
+  if variavel in ["Velocidade", "Ambas"]: # Caso a variável escolhida inclua velocidade
 
-  if variavel in ["Velocidade","Ambas"]: # Caso a variável escolhida inclua velocidade
+    if variavel == "Ambas" and modo = 'Original-Derivada':
+      print("Devido à escolha de ambas variáveis:")
+      modo = 'Original'
+      print(f"- Modo foi alterado para {modo} \n")
 
     while aceito_3 == False:
       componente_velocidade_dict = {
