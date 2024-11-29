@@ -1,7 +1,7 @@
 import pandas as pd
 from datetime import datetime
 from .simplifica import simplifica_plat
-from src.perfis.valores_nao_aceitos import valores_nao_aceitos
+from .valores_nao_aceitos import valores_nao_aceitos
 from .dataframe_media import dataframe_media
 
 
