@@ -105,14 +105,7 @@ def interpolacao(dicionario_argumentos):
       df_interpolado = pd.concat([df_interpolado, df_local],ignore_index=True)
 
 
-
-  #df_local = df_local[df_local[nome_pressao] % 1 == 0]  # Mantém apenas valores inteiros de pressão
-  #print(f'df_local: {df_local}')
-  #df_local = df_local.groupby(nome_pressao, as_index=False).mean()
+  print(f'df_interpolado: {df_interpolado}')
 
 
-  #print(f'df_interpolado: {df_interpolado}')
-
-
-
-  df_interpolado.to_csv('df_interpolado.csv', index=False)
+  #df_interpolado.to_csv('df_interpolado.csv', index=False)

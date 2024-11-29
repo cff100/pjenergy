@@ -26,7 +26,7 @@ def main(perguntas = True, variavel = "Ambas", modo = "Original", componente_vel
   #print(axs)
 
   itg.iteracao_grafico(dicionario_argumentos, axs)
-'''
+
   if dicionario_argumentos['data'] != None and dicionario_argumentos['componente_velocidade'] == 'Velocidade_Vento_resultante_m/s':
     ti.interpolacao(dicionario_argumentos)
   else:
@@ -34,6 +34,6 @@ def main(perguntas = True, variavel = "Ambas", modo = "Original", componente_vel
       print('Quando uma data específica é escolhida, não é gerada uma tabela de interpolação')
     elif dicionario_argumentos['componente_velocidade'] == 'Velocidade_Vento_resultante_m/s':
       print('Não é gerada uma tabela de interpolação para tabelas de componentes específicas')
-'''
+
 
   #return x
