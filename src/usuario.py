@@ -462,7 +462,7 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
 
   # Lista de chaves para o primeiro dicionário
   keys_dict1 = ['df']
-
+  print(argumentos.keys())
   # Separar os dicionários
   dict2 = {k: argumentos.pop(k) for k in keys_dict1 if k in argumentos}
   print(argumentos)
