@@ -458,8 +458,8 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
         df = df,
         df_para_interpolacao = df_para_interpolacao
     )
-  
-  '''# Exemplo de dicionário
+
+
   # Lista de chaves para o primeiro dicionário
   keys_dict1 = ['df']
 
@@ -467,10 +467,10 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
   dict2 = {k: argumentos.pop(k) for k in keys_dict1 if k in argumentos}
   dict1 = argumentos.pop('df').pop('df_para_interpolacao')
 
-  print(dict1)  
+  print(dict1)
   print('\n')
   print(dict2)
-  #print(argumentos)'''
+  #print(argumentos)
   return argumentos
 
 
