@@ -106,37 +106,6 @@ def interpolacao(dicionario_argumentos):
   # Imprimir o DataFrame resultante
   print(f'df_interpolado: {df_interpolado}')
 
-      
-'''df_local = df_local[df_local["Altitude_m"] <= 350]
-#print(f'df_local_1: {df_local}')
-
-df_local["Nível_de_Pressão_hPa"] = df_local["Nível_de_Pressão_hPa"].round()
-#print(f'df_local_2: {df_local}')
-#print('\n \n')
-
-categorias_agrupar = ['Nível_de_Pressão_hPa', 'Horário_Brasília', 'Data']
-colunas_ordem = ['Plataforma', 'Nível_de_Pressão_hPa', 'Altitude_m', 'Estação_do_Ano',
-              'Horário_Brasília', 'Horário_UTC', 'Data', 'Velocidade_Vento_resultante_m/s', 'Temperatura_C', 'Temperatura_K']
-
-df_local = df_local.groupby(categorias_agrupar).agg({
-'Velocidade_Vento_resultante_m/s': 'mean',
-'Temperatura_C': 'mean',
-'Temperatura_K': 'mean',
-'Altitude_m': 'mean',
-'Horário_UTC': 'first',
-'Estação_do_Ano': 'first',
-'Plataforma': 'first'
-}).reset_index()
-
-df_local.reset_index(drop=True, inplace=True)
-df_local = df_local[colunas_ordem]
-
-#print(f'df_local_3: {df_local}')
-
-df_interpolado = pd.concat([df_interpolado, df_local],ignore_index=True)
-
-
-print(f'df_interpolado: {df_interpolado}')'''
-
+    
 
   #df_interpolado.to_csv('df_interpolado.csv', index=False)
