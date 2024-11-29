@@ -461,16 +461,20 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
 
 
   # Lista de chaves para o primeiro dicionário
-  keys_dict2 = ['df', 'df_para_interpolacao']
+  keys_dict2 = ['df']
+  keys_dict3 = ['df_para_interpolacao']
 
   # Separar os dicionários
-  dict1 = {k: v for k, v in argumentos.items() if k not in keys_dict2}
+  dict1 = {k: v for k, v in argumentos.items() if k not in keys_dict2 + keys_dict3}
   dict2 = {k: v for k, v in argumentos.items() if k in keys_dict2}
+  dict3 = {k: v for k, v in argumentos.items() if k in keys_dict3}
 
   print(dict1)
-  print('\n')
+  print('\n \n')
   print(dict2)
-  print(argumentos)
+  print('\n \n')
+  print(dict3)
+  #print(argumentos)
   return argumentos
 
 
