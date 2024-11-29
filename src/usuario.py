@@ -419,6 +419,10 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
   modo = valores_nao_aceitos(modo, ["Original", "Original-Derivada"], dica = True, nome_variavel = 'modo')
   if modo == False:
     return None
+  if variavel == "Ambas" and modo == 'Original-Derivada':
+    print("Devido à escolha de ambas variáveis:")
+    modo = 'Original'
+    print(f"- Modo foi alterado para {modo} \n")
 
   componente_velocidade = valores_nao_aceitos(componente_velocidade, ["Resultante", "u", "v", None], dica = True, nome_variavel = 'componente_velocidade')
   if componente_velocidade == False:
