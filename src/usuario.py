@@ -459,18 +459,17 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
         df_para_interpolacao = df_para_interpolacao
     )
 
-
+  dict_copia = argumentos.copy()
   # Lista de chaves para o primeiro dicionário
-  keys_dict1 = ['df']
-  print(argumentos.keys())
+  keys_dict1 = ['df', 'df_para_interpolacao']
+
   # Separar os dicionários
-  dict2 = {k: argumentos.pop(k) for k in keys_dict1 if k in argumentos}
-  print(argumentos)
-  dict1 = argumentos.pop('df') #.pop('df_para_interpolacao')
+  dict1 = {k: dict_copia.pop(k) for k in keys_dict1}
+  #dict2 = argumentos.pop('df') #.pop('df_para_interpolacao')
 
   print(dict1)
   print('\n')
-  print(dict2)
+  #print(dict2)
   #print(argumentos)
   return argumentos
 
