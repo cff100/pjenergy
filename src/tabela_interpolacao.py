@@ -70,10 +70,10 @@ def interpolacao(dicionario_argumentos):
       df_local["Temperatura_K"] = celsius_para_kelvin(X_smooth_temperatura)
 
       # CONTINUAR A PARTIR DAQUI
-      df_local = df_local[df_local[nome_altura] <= 350]
+      df_local = df_local[df_local["Altitude_m"] <= 350]
       #print(f'df_local_1: {df_local}')
 
-      df_local[nome_pressao] = df_local[nome_pressao].round()
+      df_local[nome_pressao] = df_local["Nível_de_Pressão_hPa"].round()
       #print(f'df_local_2: {df_local}')
       #print('\n \n')
 
@@ -102,4 +102,4 @@ def interpolacao(dicionario_argumentos):
   print(f'df_interpolado: {df_interpolado}')
 
 
-  #df_interpolado.to_csv('df_interpolado.csv', index=False)
+  df_interpolado.to_csv('df_interpolado.csv', index=False)
