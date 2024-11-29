@@ -29,7 +29,7 @@ horarios = ['03:00', '09:00', '15:00', '21:00']
 plataforma_escolhida = "PETROBRAS XXXIII"
 
 
-def interpolacao(dicionario_argumentos):
+def interpolacao():
 
   df = pd.read_csv(f'/content/pjenergy/data/dataframes_ventos_por_plataforma/Era5_Vento_CAMPOS-{plataforma_escolhida}.csv', index_col=0)
 
