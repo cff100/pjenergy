@@ -73,7 +73,7 @@ def interpolacao(dicionario_argumentos):
       df_local = df_local[df_local["Altitude_m"] <= 350]
       #print(f'df_local_1: {df_local}')
 
-      df_local[nome_pressao] = df_local["Nível_de_Pressão_hPa"].round()
+      df_local["Nível_de_Pressão_hPa"] = df_local["Nível_de_Pressão_hPa"].round()
       #print(f'df_local_2: {df_local}')
       #print('\n \n')
 
