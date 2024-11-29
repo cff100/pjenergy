@@ -1,4 +1,4 @@
-# Gera uma tabela de valores interpolados 
+# Gera uma tabela de valores interpolados
 
 import pandas as pd
 import numpy as np
@@ -68,7 +68,7 @@ def interpolacao():
       df_local["Horário_UTC"] = brasilia_para_utc(horario)
       df_local["Data"] = d
       df_local['Velocidade_Vento_resultante_m/s'] = X_smooth_velocidade
-      df_local['Plataforma'] = plataforma
+      df_local['Plataforma'] = plataforma_escolhida
       df_local["Temperatura_C"] = X_smooth_temperatura
       df_local["Temperatura_K"] = celsius_para_kelvin(X_smooth_temperatura)
 
