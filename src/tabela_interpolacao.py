@@ -96,12 +96,6 @@ def interpolacao(dicionario_argumentos):
 
       #print(f'df_local_3: {df_local}')
 
-      '''n = 3
-      df_local = df_local.iloc[::n]  # Mantém apenas 1 a cada 'n' linhas
-
-      print(f'df_local_4: {df_local}')'''
-
-
       df_interpolado = pd.concat([df_interpolado, df_local],ignore_index=True)
 
 
