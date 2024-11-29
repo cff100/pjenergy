@@ -32,7 +32,7 @@ def main(perguntas = True, variavel = "Ambas", modo = "Original", componente_vel
   else:
     if dicionario_argumentos['data'] != None:
       print('Quando uma data específica é escolhida, não é gerada uma tabela de interpolação')
-    elif dicionario_argumentos['componente_velocidade'] != 'Velocidade_Vento_resultante_m/s':
+    if dicionario_argumentos['componente_velocidade'] != 'Velocidade_Vento_resultante_m/s':
       print('Não é gerada uma tabela de interpolação para tabelas de componentes específicas')
 
 
