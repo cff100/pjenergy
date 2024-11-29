@@ -69,8 +69,45 @@ def interpolacao(dicionario_argumentos):
       df_local["Temperatura_C"] = X_smooth_temperatura
       df_local["Temperatura_K"] = celsius_para_kelvin(X_smooth_temperatura)
 
-      # CONTINUAR A PARTIR DAQUI
-      df_local = df_local[df_local["Altitude_m"] <= 350]
+
+      # Filtrar os dados com altitude menor ou igual a 350 metros
+      df_local = (
+        df_local.loc[df_local["Altitude_m"] <= 350]
+        .assign(Nível_de_Pressão_hPa=lambda x: x["Nível_de_Pressão_hPa"].round())
+      )
+
+      # Categorias para agrupamento e ordem das colunas finais
+      categorias_agrupar = ['Nível_de_Pressão_hPa', 'Horário_Brasília', 'Data']
+      colunas_ordem = [
+        'Plataforma', 'Nível_de_Pressão_hPa', 'Altitude_m', 'Estação_do_Ano',
+        'Horário_Brasília', 'Horário_UTC', 'Data', 
+        'Velocidade_Vento_resultante_m/s', 'Temperatura_C', 'Temperatura_K'
+      ]
+
+      # Realizar o agrupamento, calcular métricas e reorganizar as colunas
+      df_local = (
+        df_local
+        .groupby(categorias_agrupar)
+        .agg({
+          'Velocidade_Vento_resultante_m/s': 'mean',
+          'Temperatura_C': 'mean',
+          'Temperatura_K': 'mean',
+          'Altitude_m': 'mean',
+          'Horário_UTC': 'first',
+          'Estação_do_Ano': 'first',
+          'Plataforma': 'first'
+        })
+        .reset_index()[colunas_ordem]  # Reordenar as colunas
+      )
+
+      # Concatenar com o DataFrame interpolado
+      df_interpolado = pd.concat([df_interpolado, df_local], ignore_index=True)
+
+      # Imprimir o DataFrame resultante
+      print(f'df_interpolado: {df_interpolado}')
+
+      
+      '''df_local = df_local[df_local["Altitude_m"] <= 350]
       #print(f'df_local_1: {df_local}')
 
       df_local["Nível_de_Pressão_hPa"] = df_local["Nível_de_Pressão_hPa"].round()
@@ -99,7 +136,7 @@ def interpolacao(dicionario_argumentos):
       df_interpolado = pd.concat([df_interpolado, df_local],ignore_index=True)
 
 
-  print(f'df_interpolado: {df_interpolado}')
+  print(f'df_interpolado: {df_interpolado}')'''
 
 
-  df_interpolado.to_csv('df_interpolado.csv', index=False)
+  #df_interpolado.to_csv('df_interpolado.csv', index=False)
