@@ -30,7 +30,7 @@ def main(perguntas = True, variavel = "Ambas", modo = "Original", componente_vel
 
   #return x
 
-
+'''
 def criacao_interpolacao(perguntas = True, variavel = "Ambas", modo = "Original", componente_velocidade = "Resultante", plataforma = "7", estacao = "Geral", indicador = "Média", data = None, ano = "Todos"):
   # Função que cria um dataframe com os valores interpolados (demora bastante de serconstruído)
 
@@ -43,3 +43,4 @@ def criacao_interpolacao(perguntas = True, variavel = "Ambas", modo = "Original"
       print('Quando uma data específica é escolhida, não é gerada uma tabela de interpolação')
     if dicionario_argumentos['componente_velocidade'] not in ['Resultante', None]:
       print('Não é gerada uma tabela de interpolação para tabelas de componentes específicas')
+'''
