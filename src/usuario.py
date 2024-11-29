@@ -459,7 +459,7 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
         df_para_interpolacao = df_para_interpolacao
     )
 
-  #dict_copia = argumentos.copy()
+  dict_copia = argumentos.copy()
   # Lista de chaves para o primeiro dicionário
   keys_dict1 = ['df', 'df_para_interpolacao']
 
