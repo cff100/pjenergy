@@ -134,7 +134,7 @@ def perguntas_usuario():
 
   if variavel in ["Velocidade", "Ambas"]: # Caso a variável escolhida inclua velocidade
 
-    if variavel == "Ambas" and modo = 'Original-Derivada':
+    if variavel == "Ambas" and modo == 'Original-Derivada':
       print("Devido à escolha de ambas variáveis:")
       modo = 'Original'
       print(f"- Modo foi alterado para {modo} \n")
