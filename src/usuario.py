@@ -57,6 +57,23 @@ def verifica_ano(ano, df, dica = False, nome_variavel = None):
   return aceito_8, ano
 
 
+def print_argumentos(argumentos):
+  # Lista de chaves para o primeiro dicionário
+  keys_dict2 = ['df']
+  keys_dict3 = ['df_para_interpolacao']
+
+  # Separar os dicionários
+  dict1 = {k: v for k, v in argumentos.items() if k not in keys_dict2 + keys_dict3}
+  dict2 = {k: v for k, v in argumentos.items() if k in keys_dict2}
+  dict3 = {k: v for k, v in argumentos.items() if k in keys_dict3}
+
+  print(dict1)
+  print('\n \n')
+  print(dict2)
+  print('\n \n')
+  print(dict3)
+
+
 
 def perguntas_usuario():
 
@@ -313,8 +330,6 @@ def perguntas_usuario():
 
 
 
-
-
   # Dipõe os argomentos em um dicionário
   argumentos = dict(
       variavel = variavel,
@@ -328,6 +343,8 @@ def perguntas_usuario():
       df = df,
       df_para_interpolacao = df_para_interpolacao
   )
+
+  print_argumentos(argumentos)
 
   return argumentos
 
@@ -459,21 +476,7 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
         df_para_interpolacao = df_para_interpolacao
     )
 
-
-  # Lista de chaves para o primeiro dicionário
-  keys_dict2 = ['df']
-  keys_dict3 = ['df_para_interpolacao']
-
-  # Separar os dicionários
-  dict1 = {k: v for k, v in argumentos.items() if k not in keys_dict2 + keys_dict3}
-  dict2 = {k: v for k, v in argumentos.items() if k in keys_dict2}
-  dict3 = {k: v for k, v in argumentos.items() if k in keys_dict3}
-
-  print(dict1)
-  print('\n \n')
-  print(dict2)
-  print('\n \n')
-  print(dict3)
+  print_argumentos(argumentos)
   #print(argumentos)
   return argumentos
 
