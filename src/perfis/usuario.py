@@ -69,9 +69,9 @@ def print_argumentos(argumentos):
 
   print(dict1)
   print('\n \n')
-  print(dict2)
+  #print(dict2)
   print('\n \n')
-  print(dict3)
+  #print(dict3)
 
 
 
