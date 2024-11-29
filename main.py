@@ -27,16 +27,15 @@ def main(perguntas = True, variavel = "Ambas", modo = "Original", componente_vel
 
   itg.iteracao_grafico(dicionario_argumentos, axs)
 
-  
-
 
   #return x
 
 
 def criacao_interpolacao(perguntas = True, variavel = "Ambas", modo = "Original", componente_velocidade = "Resultante", plataforma = "7", estacao = "Geral", indicador = "Média", data = None, ano = "Todos"):
+  # Função que cria um dataframe com os valores interpolados (demora bastante de serconstruído)
 
   dicionario_argumentos = us.argumentos_usuario(perguntas, variavel, modo, componente_velocidade, plataforma, estacao, indicador, data, ano)
-  
+
   if dicionario_argumentos['data'] == None and dicionario_argumentos['componente_velocidade'] in ['Resultante', None]:
     ti.interpolacao(dicionario_argumentos)
   else:
