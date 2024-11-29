@@ -105,7 +105,8 @@ def interpolacao():
 
       # Concatenar com o DataFrame interpolado
       df_interpolado = pd.concat([df_interpolado, df_local], ignore_index=True)
-
+      
+    print(d)
   # Imprimir o DataFrame resultante
   #print(f'df_interpolado: {df_interpolado}')
 
