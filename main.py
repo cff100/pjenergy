@@ -1,7 +1,7 @@
 import src.usuario as us
 import src.numero_linhas_colunas as nlc
 import src.iteracao_graficos as itg
-import src.tabela_interpolacao as ti
+import src.interpolacao.tabela_interpolacao as ti
 import matplotlib.pyplot as plt
 import numpy as np
 
