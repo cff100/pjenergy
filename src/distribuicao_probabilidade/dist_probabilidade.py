@@ -16,12 +16,12 @@ def plot_weibull_velocidade(pressao, estacao, ano):
 
   df = pd.read_csv(f'/content/pjenergy/data/dados_interpolados/df_interpolado_{est}.csv')
   #print(df)
-  if ano not in ['Todos','0']:
+  if ano not in ['Todos',0]:
     df['Data'] = pd.to_datetime(df['Data'])
     df_ano = df[df['Data'].dt.year == int(ano)]
   else:
     df_ano = df
-    if ano == '0':
+    if ano == 0:
       ano = 'Todos'
 
   #print(df_ano)
