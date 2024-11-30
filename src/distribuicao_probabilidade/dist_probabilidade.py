@@ -24,6 +24,8 @@ def plot_weibull_velocidade(pressao, estacao, ano):
 
       # Junta todos os DataFrames da lista em um só
       df = pd.concat(dfs, ignore_index=True)
+    df.sort_values(by = 'Data', inplace = True)
+    df.reset_index(drop = True, inplace = True)
     if estacao == '0':
       estacao = 'Todas'
 
