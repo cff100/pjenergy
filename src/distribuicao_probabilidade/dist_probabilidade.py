@@ -21,7 +21,7 @@ def plot_weibull_velocidade(pressao, estacao, ano):
     df_ano = df[df['Data'].dt.year == int(ano)]
   else:
     df_ano = df
-    if ano = '0':
+    if ano == '0':
       ano = 'Todos'
 
   #print(df_ano)
