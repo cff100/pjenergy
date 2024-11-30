@@ -29,7 +29,7 @@ def plot_weibull_velocidade(pressao, estacao, ano):
 
 
       
-  if estacao in "Todas":
+  if estacao not in "Todas":
     df = pd.read_csv(f'/content/pjenergy/data/dados_interpolados/df_interpolado_{est}.csv')
 
   print(df)
