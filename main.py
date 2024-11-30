@@ -1,7 +1,7 @@
 import src.perfis.usuario as us
 import src.perfis.numero_linhas_colunas as nlc
 import src.perfis.iteracao_graficos as itg
-import src.interpolacao.gera_tabela_interpolacao as gti
+import src.distribuicao_probabilidade.dist_probabilidade as dp
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -27,20 +27,12 @@ def main(perguntas = True, variavel = "Ambas", modo = "Original", componente_vel
 
   itg.iteracao_grafico(dicionario_argumentos, axs)
 
+def prob_potencia(pressao, estacao, ano):
+  dp.plot_weibull_velocidade()
+  
+
+'''
 
   #return x
 
-'''
-def criacao_interpolacao(perguntas = True, variavel = "Ambas", modo = "Original", componente_velocidade = "Resultante", plataforma = "7", estacao = "Geral", indicador = "Média", data = None, ano = "Todos"):
-  # Função que cria um dataframe com os valores interpolados (demora bastante de serconstruído)
-
-  dicionario_argumentos = us.argumentos_usuario(perguntas, variavel, modo, componente_velocidade, plataforma, estacao, indicador, data, ano)
-
-  if dicionario_argumentos['data'] == None and dicionario_argumentos['componente_velocidade'] in ['Resultante', None]:
-    ti.interpolacao(dicionario_argumentos)
-  else:
-    if dicionario_argumentos['data'] != None:
-      print('Quando uma data específica é escolhida, não é gerada uma tabela de interpolação')
-    if dicionario_argumentos['componente_velocidade'] not in ['Resultante', None]:
-      print('Não é gerada uma tabela de interpolação para tabelas de componentes específicas')
 '''
