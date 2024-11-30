@@ -13,16 +13,23 @@ def plot_weibull_velocidade(pressao, estacao, ano):
     est = "Verao"
   elif estacao in ["Outono", "Inverno", "Primavera"]:
     est = estacao
-
+  
   df = pd.read_csv(f'/content/pjenergy/data/dados_interpolados/df_interpolado_{est}.csv')
   #print(df)
-  if ano not in ['Todos',0]:
+  if ano not in ['Todos', 0]:
     df['Data'] = pd.to_datetime(df['Data'])
     df_ano = df[df['Data'].dt.year == int(ano)]
   else:
     df_ano = df
     if ano == 0:
       ano = 'Todos'
+
+  if pressao not in ['Todas', 0]:
+    df_ano[df_ano['Nível_de_Pressão_hPa'] == pressao]
+  else:
+    df_pressao = df_ano
+    if pressao == 0:
+      pressao = 'Todas'
 
   #print(df_ano)
 
@@ -34,7 +41,7 @@ def plot_weibull_velocidade(pressao, estacao, ano):
 
   for i, horario in enumerate(horarios):
     # Filtrar os dados por horário
-    df_horario = df_ano[df_ano['Horário_Brasília'] == horario]['Velocidade_Vento_resultante_m/s']
+    df_horario = df_pressao[df_pressao['Horário_Brasília'] == horario]['Velocidade_Vento_resultante_m/s']
     #print(df_horario)
     # Verificar se existem dados suficientes para o horário
     if df_horario.empty:
@@ -69,7 +76,7 @@ def plot_weibull_velocidade(pressao, estacao, ano):
 
 
     texto = plataforma_escolhida
-    ax.text(0.73, 0.95, f'Plataforma: {texto}', transform=ax.transAxes, fontsize=8, verticalalignment='top')
+    ax.text(0.73, 0.95, f'Plataforma: {texto}', transform=ax.transAxes, fontsize=9, verticalalignment='top')
 
     # Criar tabela de probabilidades
     df_tabela = pd.DataFrame({
