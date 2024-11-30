@@ -51,7 +51,7 @@ def plot_weibull_velocidade(pressao, estacao, ano):
     if pressao == '0':
       pressao = 'Todas'
 
-  #print(df_ano)
+  print(f'df_pressao:'{df_pressao})
 
   # Criando um DataFrame para armazenar as probabilidades
   tabela_probabilidades = pd.DataFrame()
