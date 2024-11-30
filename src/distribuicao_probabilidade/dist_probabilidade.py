@@ -16,7 +16,7 @@ def plot_weibull_velocidade(pressao, estacao, ano):
     est = "Verao"
   elif estacao in ["Outono", "Inverno", "Primavera"]:
     est = estacao
-  elif estacao in ["Todas", 0]:
+  elif estacao in ["Todas", '0']:
     # Loop para carregar e armazenar os DataFrames
     for est in ["Verao", "Outono", "Inverno", "Primavera"]:
       df_cada_estacao = pd.read_csv(f'/content/pjenergy/data/dados_interpolados/df_interpolado_{est}.csv')
@@ -24,29 +24,29 @@ def plot_weibull_velocidade(pressao, estacao, ano):
 
       # Junta todos os DataFrames da lista em um só
       df = pd.concat(dfs, ignore_index=True)
-    if estacao == 0:
+    if estacao == '0':
       estacao = 'Todas'
 
-  print(estacao)
+
       
-  if estacao in ["Verao", "Outono", "Inverno", "Primavera"]:
+  if estacao in "Todas":
     df = pd.read_csv(f'/content/pjenergy/data/dados_interpolados/df_interpolado_{est}.csv')
 
   #print(df)
 
-  if ano not in ['Todos', 0]:
+  if ano not in ['Todos', '0']:
     df['Data'] = pd.to_datetime(df['Data'])
     df_ano = df[df['Data'].dt.year == int(ano)]
   else:
     df_ano = df
-    if ano == 0:
+    if ano == '0':
       ano = 'Todos'
 
-  if pressao not in ['Todas', 0]:
+  if pressao not in ['Todas', '0']:
     df_pressao = df_ano[df_ano['Nível_de_Pressão_hPa'] == pressao]
   else:
     df_pressao = df_ano
-    if pressao == 0:
+    if pressao == '0':
       pressao = 'Todas'
 
   #print(df_ano)
