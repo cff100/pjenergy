@@ -69,7 +69,7 @@ def plot_weibull_velocidade(pressao, estacao, ano):
 
 
     texto = plataforma_escolhida
-    ax.text(0.73, 0.95, f'Plataforma: {texto}', transform=ax.transAxes, fontsize=9, verticalalignment='top')
+    ax.text(0.73, 0.95, f'Plataforma: {texto}', transform=ax.transAxes, fontsize=8, verticalalignment='top')
 
     # Criar tabela de probabilidades
     df_tabela = pd.DataFrame({
