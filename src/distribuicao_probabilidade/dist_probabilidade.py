@@ -84,6 +84,9 @@ def plot_weibull_velocidade(pressao, estacao, ano):
       'Densidade de Probabilidade': weibull_pdf
       })
     df_tabela['Horário'] = horario
+    df_tabela['Pressão'] = pressao
+    df_tabela['Estação'] = estacao
+    df_tabela['Ano'] = ano
     tabela_probabilidades = pd.concat([tabela_probabilidades, df_tabela], ignore_index=True)
 
   # Ajustar espaçamento entre os subplots
