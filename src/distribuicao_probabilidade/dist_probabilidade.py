@@ -1,78 +1,81 @@
+horarios = ['03:00', '09:00', '15:00', '21:00']
+
+
 def plot_weibull_velocidade(pressao, estacao, ano):
 
-  fig, axs = plt.subplots(2, 2, figsize=(15, 10))  # Cria uma grade 2x2 para os gráficos
+  if estacao == "Verão":
+    est = "Verao"
+  elif estacao in ["Outono", "Inverno", "Primavera"]:
+    est = estacao
+  
+  df = pd.read_csv(f'/content/pjenergy/data/dados_interpolados/dF_interpolado_{est}.csv', index_col=0)
+
+  if ano not in ['Todos','0']:
+    df_ano = df[df['Ano'] == ano]
+    df = df_ano
+
+  # Criando um DataFrame para armazenar as probabilidades
   tabela_probabilidades = pd.DataFrame()
 
+  # Criando subplots para 4 horários
+  fig, axs = plt.subplots(2, 2, figsize=(15, 10))  # Cria uma grade 2x2 para os gráficos
+
   for i, horario in enumerate(horarios):
-      # Filtrar os dados por horário
-      df_horario = df[df['Horário_Brasília'] == horario]['Velocidade_Vento_resultante_m/s']
+    # Filtrar os dados por horário
+    df_horario = df[df['Horário_Brasília'] == horario]['Velocidade_Vento_resultante_m/s']
+    #print(df_horario)
+    # Verificar se existem dados suficientes para o horário
+    if df_horario.empty:
+        print(f'Nenhum dado disponível para {horario}')
+        continue
 
-      # Verificar se existem dados suficientes para o horário
-      if df_horario.empty:
-          print(f'Nenhum dado disponível para {horario}')
-          continue
+    # Seleciona o eixo correspondente
+    ax = axs[i//2, i % 2]  # Coloca na posição correta o gráfico
 
-      # Ajustar a distribuição de Weibull
-      params = weibull_min.fit(df_horario)
-      shape, loc, scale = params
+    # Plotar a distribuição (histograma com estimativa de densidade)
+    sns.histplot(df_horario, kde=False, stat='density', ax=ax, color='lightgray', alpha=0.5, bins = 20)
 
-      # Gerar pontos para a função CDF
-      x = np.linspace(min(df_horario), max(df_horario), 100)
-      weibull_cdf = weibull_min.cdf(x, shape, loc, scale)
+    # Ajustar a distribuição de Weibull
+    params = weibull_min.fit(df_horario)
+    x = np.linspace(min(df_horario), max(df_horario), 100)
+    weibull_pdf = weibull_min.pdf(x, *params)
 
-      # Seleciona o eixo correspondente
-      ax = axs[i//2, i % 2]
+    # Plotar a curva ajustada sobre o histograma
+    ax.plot(x, weibull_pdf, label='Ajuste de Weibull', color='r')
+    ax.set_xlabel('Velocidade do Vento (m/s)')
+    ax.set_ylabel('Densidade de Probabilidade')
 
-      # Plotar a CDF no gráfico
-      ax.plot(x, weibull_cdf, label=f'CDF Weibull ({horario})', color='b')
-      ax.set_xlabel('Velocidade do Vento (m/s)')
-      ax.set_ylabel('Probabilidade Acumulada')
-
-      if pressao or estacao:
-        if not estacao:
-          ax.set_title(f'Ajuste de Distribuição Weibull - {horario} - Pressão: {pressao} hPa')
-        elif not pressao:
-          ax.set_title(f'Ajuste de Distribuição Weibull - {horario} - Estação: {estacao}')
-        else:
-          ax.set_title(f'Ajuste de Distribuição Weibull - {horario} - Pressão: {pressao} hPa - Estação: {estacao}')
+    if pressao or estacao:
+      if not estacao:
+        ax.set_title(f'Ajuste de Distribuição Weibull - {horario} - Pressão: {pressao} hPa')
+      elif not pressao:
+        ax.set_title(f'Ajuste de Distribuição Weibull - {horario} - Estação: {estacao}')
       else:
-        ax.set_title(f'Ajuste de Distribuição Weibull - {horario}')
+        ax.set_title(f'Ajuste de Distribuição Weibull - {horario} - Pressão: {pressao} hPa - Estação: {estacao}')
+    else:
+      ax.set_title(f'Ajuste de Distribuição Weibull - {horario}')
 
-      ax.grid(True)  # Grid para major e minor ticks
-      ax.minorticks_on()  # Habilitar minor ticks
-      ax.grid(True, which='minor', alpha=0.3)
 
-      if mediana_show == True:
+    texto = plataforma_escolhida
+    ax.text(0.73, 0.95, f'Plataforma: {texto}', transform=ax.transAxes, fontsize=9, verticalalignment='top')
 
-        # Calcular a mediana (probabilidade acumulada = 0.5)
-        mediana = weibull_min.ppf(0.5, shape, loc, scale)
-
-        # Marcar a mediana no gráfico
-        ax.axvline(x=mediana, color='g', linestyle='-', label=f'Mediana: {mediana:.2f}m/s')
-        ax.text(mediana, 0.5, f'{mediana:.2f}', color='g', ha='right')
-
-      if valor_especifico is not None:
-        # Marcar o valor específico no gráfico e sua probabilidade
-        probabilidade_especifica = weibull_min.cdf(valor_especifico, shape, loc, scale)
-        ax.axvline(x=valor_especifico, color='r', linestyle='--', label=f'P(x ≤ {valor_especifico} m/s)')
-        ax.text(valor_especifico, probabilidade_especifica, f'{probabilidade_especifica:.2f}', color='r', ha='right')
-
-      # Adicionar a probabilidade ao gráfico
-      ax.legend()
-
-      # Criar uma tabela com as probabilidades
-      df_tabela = pd.DataFrame({
-          'Velocidade do Vento (m/s)': x,
-          'Probabilidade Acumulada (CDF)': weibull_cdf
+    # Criar tabela de probabilidades
+    df_tabela = pd.DataFrame({
+      'Velocidade do Vento (m/s)': x,
+      'Densidade de Probabilidade': weibull_pdf
       })
-      df_tabela['Horário'] = horario
-      tabela_probabilidades = pd.concat([tabela_probabilidades, df_tabela], ignore_index=True)
+    df_tabela['Horário'] = horario
+    tabela_probabilidades = pd.concat([tabela_probabilidades, df_tabela], ignore_index=True)
 
-  # Ajustar o espaçamento entre os subplots
+  # Ajustar espaçamento entre os subplots
   plt.tight_layout()
   plt.show()
 
   print('\n')
+
+  # Exibir a tabela de probabilidades
+  print(tabela_probabilidades)
+
 
   if nome_tabela:
     nome_tabela = '_' + nome_tabela
@@ -80,4 +83,6 @@ def plot_weibull_velocidade(pressao, estacao, ano):
     nome_tabela = ''
 
   # Salvar a tabela em um arquivo CSV, se desejado
-  tabela_probabilidades.to_csv(f'Velocidade_Tabela_probabilidades_CDF_weibull{nome_tabela}.csv', index=False)
+  tabela_probabilidades.to_csv(f'Velocidade_Tabela_Probabilidades_Weibull.csv', index=False)
+
+  #return tabela_probabilidades
