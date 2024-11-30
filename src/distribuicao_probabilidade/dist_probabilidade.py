@@ -1,3 +1,9 @@
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+from scipy.stats import weibull_min
+import numpy as np
+
 horarios = ['03:00', '09:00', '15:00', '21:00']
 
 
