@@ -21,6 +21,8 @@ def plot_weibull_velocidade(pressao, estacao, ano):
     df_ano = df[df['Data'].dt.year == int(ano)]
   else:
     df_ano = df
+    if ano = '0':
+      ano = 'Todos'
 
   #print(df_ano)
 
@@ -57,13 +59,13 @@ def plot_weibull_velocidade(pressao, estacao, ano):
 
     if pressao or estacao:
       if not estacao:
-        ax.set_title(f'Ajuste de Distribuição Weibull - {horario} - Pressão: {pressao} hPa')
+        ax.set_title(f'Ajuste de Distribuição Weibull - {horario} - Pressão: {pressao} hPa - Ano: {ano}')
       elif not pressao:
-        ax.set_title(f'Ajuste de Distribuição Weibull - {horario} - Estação: {estacao}')
+        ax.set_title(f'Ajuste de Distribuição Weibull - {horario} - Estação: {estacao} - Ano: {ano}')
       else:
-        ax.set_title(f'Ajuste de Distribuição Weibull - {horario} - Pressão: {pressao} hPa - Estação: {estacao}')
+        ax.set_title(f'Ajuste de Distribuição Weibull - {horario} - Pressão: {pressao} hPa - Estação: {estacao} - Ano: {ano}')
     else:
-      ax.set_title(f'Ajuste de Distribuição Weibull - {horario}')
+      ax.set_title(f'Ajuste de Distribuição Weibull - {horario} - Ano: {ano}')
 
 
     texto = plataforma_escolhida
@@ -87,12 +89,6 @@ def plot_weibull_velocidade(pressao, estacao, ano):
   print(tabela_probabilidades)
 
 
-  if nome_tabela:
-    nome_tabela = '_' + nome_tabela
-  else:
-    nome_tabela = ''
-
   # Salvar a tabela em um arquivo CSV, se desejado
   tabela_probabilidades.to_csv(f'Velocidade_Tabela_Probabilidades_Weibull.csv', index=False)
 
-  #return tabela_probabilidades
