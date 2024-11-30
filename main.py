@@ -27,9 +27,9 @@ def main(perguntas = True, variavel = "Ambas", modo = "Original", componente_vel
 
   itg.iteracao_grafico(dicionario_argumentos, axs)
 
-def prob_potencia(pressao, estacao, ano):
+def prob_potencia(pressao = 'Todas', estacao = 'Todas', ano = 'Todos'):
   dp.plot_weibull_velocidade(pressao, estacao, ano)
-  
+
 
 '''
 
