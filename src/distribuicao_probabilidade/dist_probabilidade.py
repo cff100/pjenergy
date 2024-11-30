@@ -114,7 +114,7 @@ def plot_weibull_velocidade(pressao, estacao, ano):
   print('\n')
 
   # Exibir a tabela de probabilidades
-  print(tabela_probabilidades)
+  #print(tabela_probabilidades)
 
 
   # Salvar a tabela em um arquivo CSV, se desejado
@@ -122,3 +122,20 @@ def plot_weibull_velocidade(pressao, estacao, ano):
 
   return tabela_probabilidades
 
+
+def usuario_weibull_velocidade(perguntas, pressao, estacao, ano):
+
+  '''Inicia a busca pelos argumentos do usuário'''
+
+  if perguntas == True:
+    pressao = input('Qual pressão deseja observar (em HPa)? Escolha um número inteiro entre 972 e 1000. Escreva Todas ou 0 para não filtrar nenhuma pressão específica. \n')
+    estacao = input('Qual estação deseja observar? Escolha entre Verão, Outono, Inverno ou Primavera. Escreva Todas ou 0 para não filtrar nenhuma estação específica. \n')
+    ano = input('Qual ano deseja observar? Escolha um número inteiro entre 2010 e 2023. Escreva Todos ou 0 para não filtrar nenhum ano específico. \n')
+    
+  else:
+    pass
+  
+  tabela = plot_weibull_velocidade(pressao, estacao, ano)
+
+
+  return tabela
