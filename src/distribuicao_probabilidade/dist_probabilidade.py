@@ -14,7 +14,7 @@ def plot_weibull_velocidade(pressao, estacao, ano):
   elif estacao in ["Outono", "Inverno", "Primavera"]:
     est = estacao
 
-  df = pd.read_csv(f'/content/pjenergy/data/dados_interpolados/df_interpolado_{est}.csv', index_col=0)
+  df = pd.read_csv(f'/content/pjenergy/data/dados_interpolados/df_interpolado_{est}.csv')
   print(df)
   if ano not in ['Todos','0']:
     '''
@@ -26,7 +26,7 @@ def plot_weibull_velocidade(pressao, estacao, ano):
   else:
     df_ano = df
 
-  print(df)
+  print(df_ano)
 
   # Criando um DataFrame para armazenar as probabilidades
   tabela_probabilidades = pd.DataFrame()
