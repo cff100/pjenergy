@@ -18,6 +18,7 @@ def plot_weibull_velocidade(pressao, estacao, ano):
 
   if ano not in ['Todos','0']:
     df_ano = df[df['Data'][:4] == ano]
+    print(df['Data'][:4])
     df = df_ano
 
   # Criando um DataFrame para armazenar as probabilidades
