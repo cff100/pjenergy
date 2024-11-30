@@ -9,13 +9,27 @@ plataforma_escolhida = "PETROBRAS XXXIII"
 
 def plot_weibull_velocidade(pressao, estacao, ano):
 
+  # Lista para armazenar os DataFrames temporariamente
+  dfs = []
+
   if estacao == "Verão":
     est = "Verao"
   elif estacao in ["Outono", "Inverno", "Primavera"]:
     est = estacao
-  
-  df = pd.read_csv(f'/content/pjenergy/data/dados_interpolados/df_interpolado_{est}.csv')
+  elif estacao == "Todas":
+    # Loop para carregar e armazenar os DataFrames
+    for est in ["Verao", "Outono", "Inverno", "Primavera"]:
+      df_cada_estacao = pd.read_csv(f'/content/pjenergy/data/dados_interpolados/df_interpolado_{est}.csv')
+      dfs.append(df_cada_estacao)  # Adiciona cada DataFrame à lista
+
+      # Junta todos os DataFrames da lista em um só
+      df = pd.concat(dfs, ignore_index=True)
+      
+  if estacao != "Todas":
+    df = pd.read_csv(f'/content/pjenergy/data/dados_interpolados/df_interpolado_{est}.csv')
+
   #print(df)
+
   if ano not in ['Todos', 0]:
     df['Data'] = pd.to_datetime(df['Data'])
     df_ano = df[df['Data'].dt.year == int(ano)]
@@ -101,4 +115,6 @@ def plot_weibull_velocidade(pressao, estacao, ano):
 
   # Salvar a tabela em um arquivo CSV, se desejado
   tabela_probabilidades.to_csv(f'Velocidade_Tabela_Probabilidades_Weibull.csv', index=False)
+
+  return tabela_probabilidades
 
