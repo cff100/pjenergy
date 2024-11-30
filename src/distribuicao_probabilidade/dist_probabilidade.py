@@ -27,7 +27,7 @@ def plot_weibull_velocidade(pressao, estacao, ano):
     if estacao == 0:
       estacao = 'Todas'
 
-
+  print(estacao)
       
   if estacao in ["Verao", "Outono", "Inverno", "Primavera"]:
     df = pd.read_csv(f'/content/pjenergy/data/dados_interpolados/df_interpolado_{est}.csv')
