@@ -5,7 +5,7 @@ from scipy.stats import weibull_min
 import numpy as np
 
 horarios = ['03:00', '09:00', '15:00', '21:00']
-
+plataforma_escolhida = "PETROBRAS XXXIII"
 
 def plot_weibull_velocidade(pressao, estacao, ano):
 
@@ -15,18 +15,14 @@ def plot_weibull_velocidade(pressao, estacao, ano):
     est = estacao
 
   df = pd.read_csv(f'/content/pjenergy/data/dados_interpolados/df_interpolado_{est}.csv')
-  print(df)
+  #print(df)
   if ano not in ['Todos','0']:
-    '''
-    df_ano = df[df['Data'].str[:4] == ano]
-    df = df_ano
-    '''
     df['Data'] = pd.to_datetime(df['Data'])
     df_ano = df[df['Data'].dt.year == int(ano)]
   else:
     df_ano = df
 
-  print(df_ano)
+  #print(df_ano)
 
   # Criando um DataFrame para armazenar as probabilidades
   tabela_probabilidades = pd.DataFrame()
@@ -36,7 +32,7 @@ def plot_weibull_velocidade(pressao, estacao, ano):
 
   for i, horario in enumerate(horarios):
     # Filtrar os dados por horário
-    df_horario = df[df['Horário_Brasília'] == horario]['Velocidade_Vento_resultante_m/s']
+    df_horario = df_ano[df_ano['Horário_Brasília'] == horario]['Velocidade_Vento_resultante_m/s']
     #print(df_horario)
     # Verificar se existem dados suficientes para o horário
     if df_horario.empty:
