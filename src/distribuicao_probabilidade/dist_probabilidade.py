@@ -44,6 +44,8 @@ def plot_weibull_velocidade(pressao, estacao, ano):
     if ano == '0':
       ano = 'Todos'
 
+  print(f'df_ano:{df_ano}')
+
   if pressao not in ['Todas', '0']:
     df_pressao = df_ano[df_ano['Nível_de_Pressão_hPa'] == pressao]
   else:
