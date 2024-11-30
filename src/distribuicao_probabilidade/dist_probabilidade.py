@@ -16,7 +16,7 @@ def plot_weibull_velocidade(pressao, estacao, ano):
     est = "Verao"
   elif estacao in ["Outono", "Inverno", "Primavera"]:
     est = estacao
-  elif estacao == "Todas":
+  elif estacao in ["Todas", 0]:
     # Loop para carregar e armazenar os DataFrames
     for est in ["Verao", "Outono", "Inverno", "Primavera"]:
       df_cada_estacao = pd.read_csv(f'/content/pjenergy/data/dados_interpolados/df_interpolado_{est}.csv')
@@ -24,6 +24,10 @@ def plot_weibull_velocidade(pressao, estacao, ano):
 
       # Junta todos os DataFrames da lista em um só
       df = pd.concat(dfs, ignore_index=True)
+    if estacao == 0:
+      estacao = 'Todas'
+
+
       
   if estacao != "Todas":
     df = pd.read_csv(f'/content/pjenergy/data/dados_interpolados/df_interpolado_{est}.csv')
