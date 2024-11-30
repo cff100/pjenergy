@@ -13,8 +13,8 @@ def plot_weibull_velocidade(pressao, estacao, ano):
     est = "Verao"
   elif estacao in ["Outono", "Inverno", "Primavera"]:
     est = estacao
-  
-  df = pd.read_csv(f'/content/pjenergy/data/dados_interpolados/df_interpolado_{est}.csv', index_col=0)
+
+  df = pd.read_csv(f'/content/pjenergy/data/dados_interpolados/df_interpolado_{est}.csv')
 
   if ano not in ['Todos','0']:
     df_ano = df[df['Data'].str[:4] == ano]
