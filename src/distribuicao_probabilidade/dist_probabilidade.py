@@ -30,11 +30,11 @@ def plot_weibull_velocidade(pressao, estacao, ano):
       estacao = 'Todas'
 
 
-      
+
   if estacao not in "Todas":
     df = pd.read_csv(f'/content/pjenergy/data/dados_interpolados/df_interpolado_{est}.csv')
 
-  print(df)
+  #print(df)
 
   if ano not in ['Todos', '0']:
     df['Data'] = pd.to_datetime(df['Data'])
@@ -44,7 +44,7 @@ def plot_weibull_velocidade(pressao, estacao, ano):
     if ano == '0':
       ano = 'Todos'
 
-  print(f'df_ano:{df_ano}')
+  #print(f'df_ano:{df_ano}')
 
   if pressao not in ['Todas', '0']:
     df_pressao = df_ano[df_ano['Nível_de_Pressão_hPa'] == float(pressao)]
@@ -53,7 +53,7 @@ def plot_weibull_velocidade(pressao, estacao, ano):
     if pressao == '0':
       pressao = 'Todas'
 
-  print(f'df_pressao:{df_pressao}')
+  #print(f'df_pressao:{df_pressao}')
 
   # Criando um DataFrame para armazenar as probabilidades
   tabela_probabilidades = pd.DataFrame()
@@ -135,10 +135,10 @@ def usuario_weibull_velocidade(perguntas, pressao, estacao, ano):
     pressao = input('Qual pressão deseja observar (em HPa)? Escolha um número inteiro entre 972 e 1000. Escreva Todas ou 0 para não filtrar nenhuma pressão específica. \n')
     estacao = input('Qual estação deseja observar? Escolha entre Verão, Outono, Inverno ou Primavera. Escreva Todas ou 0 para não filtrar nenhuma estação específica. \n')
     ano = input('Qual ano deseja observar? Escolha um número inteiro entre 2010 e 2023. Escreva Todos ou 0 para não filtrar nenhum ano específico. \n')
-    
+
   else:
     pass
-  
+
   tabela = plot_weibull_velocidade(pressao, estacao, ano)
 
 
