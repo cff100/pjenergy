@@ -60,17 +60,14 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario):
 
   # Ajustar a distribuição de Weibull
   params = weibull_min.fit(velocidades)
-  #x = np.linspace(min(df_velocidade), max(df_velocidade), 100)
   weibull_pdf = weibull_min.pdf(velocidades, *params)
 
-  #df_combinado['x'] = velocidades
   df_combinado['Densidade_de_Probabilidade'] = weibull_pdf
 
   # Calcular a soma das probabilidades usando integração
   prob_sum = np.trapz(weibull_pdf, velocidades)  # Aproximação da integral
-  #print(f'A soma aproximada da probabilidade (integral): {prob_sum}')
 
-  print(df_combinado)
+  #print(df_combinado)
 
   # Plotar a curva ajustada
   plt.plot(velocidades, weibull_pdf, label='Ajuste de Weibull', color='r', linewidth=2)
@@ -82,7 +79,6 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario):
   # Configurações do gráfico
   plt.xlabel('Velocidade do Vento (m/s)', fontsize=14)
   plt.ylabel('Densidade de Probabilidade', fontsize=14)
-  #plt.title('Histograma e Ajuste de Weibull', fontsize=16)
   plt.legend(fontsize=12)
   plt.grid(axis='y', linestyle='--', alpha=0.7)
   plt.tight_layout()
@@ -90,11 +86,11 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario):
 
   # Verificar se a integral está próxima de 1
   if np.isclose(prob_sum, 1, atol=5e-2):
-    print(f'A soma das probabilidades está correta: {prob_sum}')
+    print(f'A soma das probabilidades está correta (próxima de 1): {prob_sum}')
   else:
     print(f'⚠️ A soma das probabilidades não está próxima 1: {prob_sum}')
 
-
+  return df_combinado
 
 def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario):
 
