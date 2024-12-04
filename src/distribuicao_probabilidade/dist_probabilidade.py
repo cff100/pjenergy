@@ -68,7 +68,7 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario):
 
   # Calcular a soma das probabilidades usando integração
   prob_sum = np.trapz(weibull_pdf, velocidades)  # Aproximação da integral
-  print(f'A soma aproximada da probabilidade (integral): {prob_sum}')
+  #print(f'A soma aproximada da probabilidade (integral): {prob_sum}')
 
   print(df_combinado)
 
