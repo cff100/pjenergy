@@ -5,7 +5,7 @@ import src.distribuicao_probabilidade.dist_probabilidade as dp
 import matplotlib.pyplot as plt
 import numpy as np
 
-def main(perguntas = True, variavel = "Ambas", modo = "Original", componente_velocidade = "Resultante", plataforma = "7", estacao = "Geral", indicador = "Média", data = None, ano = "Todos"):
+def graf(perguntas = True, variavel = "Ambas", modo = "Original", componente_velocidade = "Resultante", plataforma = "7", estacao = "Geral", indicador = "Média", data = None, ano = "Todos"):
 
   dicionario_argumentos = us.argumentos_usuario(perguntas, variavel, modo, componente_velocidade, plataforma, estacao, indicador, data, ano)
   #print(dicionario_argumentos)
@@ -27,7 +27,7 @@ def main(perguntas = True, variavel = "Ambas", modo = "Original", componente_vel
 
   itg.iteracao_grafico(dicionario_argumentos, axs)
 
-def prob_potencia(perguntas = True, pressao = 'Todas', estacao = 'Todas', ano = 'Todos', horario = 'Todos'):
+def prob(perguntas = True, pressao = 'Todas', estacao = 'Todas', ano = 'Todos', horario = 'Todos'):
   dp.usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario)
 
 
