@@ -79,6 +79,13 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario):
   plt.grid(axis='y', linestyle='--', alpha=0.7)
   plt.show()
 
+  prob_sum = df_combinado['Densidade de Probabilidade'].sum()
+  if np.isclose(prob_sum, 1, atol=1e-6):  # atol define a margem de erro aceitável
+      print(f'A soma das probabilidades para o horário {horario} está correta: {prob_sum}')
+  else:
+      print(f'⚠️ A soma das probabilidades para o horário {horario} não é 1: {prob_sum}')
+
+
   '''df_tabela_probabilidades = pd.DataFrame({
     'Velocidade do Vento (m/s)': x,
     'Densidade de Probabilidade': weibull_pdf
