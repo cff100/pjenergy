@@ -62,6 +62,11 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario):
   x = np.linspace(min(df_velocidade), max(df_velocidade), 100)
   weibull_pdf = weibull_min.pdf(x, *params)
 
+  df_combinado['x'] = x
+  df_combinado['weibull_pdf'] = weibull_pdf
+
+  print(df_combinado)
+
   # Plotar a curva ajustada
   plt.plot(x, weibull_pdf, label='Ajuste de Weibull', color='r', linewidth=2)
 
@@ -72,6 +77,11 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario):
   plt.legend(fontsize=12)
   plt.grid(axis='y', linestyle='--', alpha=0.7)
   plt.show()
+
+'''  df_tabela_probabilidades = pd.DataFrame({
+    'Velocidade do Vento (m/s)': x,
+    'Densidade de Probabilidade': weibull_pdf
+  })'''
 
   '''# Lista para armazenar os DataFrames temporariamente
   dfs = []
