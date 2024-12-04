@@ -49,20 +49,20 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario):
 
   #print(df_combinado)
 
-  df_velocidade = df_combinado['Velocidade_Vento_resultante_m/s']
+  velocidades = df_combinado['Velocidade_Vento_resultante_m/s']
 
   # Criar a figura
   plt.figure(figsize=(10, 6))
 
   # Plotar o histograma
-  sns.histplot(df_velocidade, kde=False, stat='density', color='lightgray', alpha=0.5, bins=20, label='Dados')
+  sns.histplot(velocidades, kde=False, stat='density', color='lightgray', alpha=0.5, bins=20, label='Dados')
 
   # Ajustar a distribuição de Weibull
-  params = weibull_min.fit(df_velocidade)
+  params = weibull_min.fit(velocidades)
   #x = np.linspace(min(df_velocidade), max(df_velocidade), 100)
-  weibull_pdf = weibull_min.pdf(df_velocidade, *params)
+  weibull_pdf = weibull_min.pdf(velocidades, *params)
 
-  df_combinado['x'] = df_velocidade
+  #df_combinado['x'] = velocidades
   df_combinado['weibull_pdf'] = weibull_pdf
 
   print(df_combinado)
