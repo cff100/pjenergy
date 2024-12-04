@@ -47,9 +47,31 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario):
   # Resetar o índice após todos os filtros
   df_combinado.reset_index(drop=True, inplace=True)
 
-  print(df_combinado)
+  #print(df_combinado)
 
-  
+  df_velocidade = df_combinado['Velocidade_Vento_resultante_m/s']
+
+  # Criar a figura
+  plt.figure(figsize=(10, 6))
+
+  # Plotar o histograma
+  sns.histplot(df_velocidade, kde=False, stat='density', color='lightgray', alpha=0.5, bins=20, label='Dados')
+
+  # Ajustar a distribuição de Weibull
+  params = weibull_min.fit(df_velocidade)
+  x = np.linspace(min(df_velocidade), max(df_velocidade), 100)
+  weibull_pdf = weibull_min.pdf(x, *params)
+
+  # Plotar a curva ajustada
+  plt.plot(x, weibull_pdf, label='Ajuste de Weibull', color='r', linewidth=2)
+
+  # Configurações do gráfico
+  plt.xlabel('Velocidade do Vento (m/s)', fontsize=14)
+  plt.ylabel('Densidade de Probabilidade', fontsize=14)
+  plt.title('Histograma e Ajuste de Weibull', fontsize=16)
+  plt.legend(fontsize=12)
+  plt.grid(axis='y', linestyle='--', alpha=0.7)
+  plt.show()
 
   '''# Lista para armazenar os DataFrames temporariamente
   dfs = []
