@@ -53,7 +53,7 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario):
   velocidades.sort_values(inplace=True)
 
   # Criar a figura
-  plt.figure(figsize=(10, 6))
+  fig, ax = plt.subplots(figsize=(10, 6))
 
   # Plotar o histograma
   sns.histplot(velocidades, kde=False, stat='density', color='lightgray', alpha=0.5, bins=20, label='Dados')
