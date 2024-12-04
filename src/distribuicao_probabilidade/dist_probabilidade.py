@@ -49,7 +49,7 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario):
 
   #print(df_combinado)
 
-  velocidades = df_combinado['Velocidade_Vento_resultante_m/s']
+  velocidades = df_combinado['Velocidade_Vento_resultante_m/s'].copy()
   velocidades.sort_values(inplace=True)
 
   # Criar a figura
