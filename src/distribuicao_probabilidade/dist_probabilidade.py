@@ -44,7 +44,12 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario):
     if horario == '0':
       horario = 'Todos'
 
+  # Resetar o índice após todos os filtros
+  df_combinado.reset_index(drop=True, inplace=True)
+
   print(df_combinado)
+
+  
 
   '''# Lista para armazenar os DataFrames temporariamente
   dfs = []
