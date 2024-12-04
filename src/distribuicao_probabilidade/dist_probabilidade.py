@@ -59,8 +59,8 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario):
 
   # Ajustar a distribuição de Weibull
   params = weibull_min.fit(df_velocidade)
-  x = np.linspace(min(df_velocidade), max(df_velocidade), 100)
-  weibull_pdf = weibull_min.pdf(x, *params)
+  #x = np.linspace(min(df_velocidade), max(df_velocidade), 100)
+  weibull_pdf = weibull_min.pdf(df_velocidade, *params)
 
   df_combinado['x'] = x
   df_combinado['weibull_pdf'] = weibull_pdf
