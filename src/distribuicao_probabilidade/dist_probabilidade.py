@@ -77,7 +77,7 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario):
 
   ax.set_title(f'Ajuste de Distribuição Weibull - Horário: {horario} - Pressão: {pressao} hPa - Estação: {estacao} - Ano: {ano}')
   texto = plataforma_escolhida
-  ax.text(0.73, 0.75, f'Plataforma: {texto}', transform=ax.transAxes, fontsize=9, verticalalignment='top')
+  ax.text(0.75, 0.85, f'Plataforma: {texto}', transform=ax.transAxes, fontsize=9, verticalalignment='top')
 
   # Configurações do gráfico
   plt.xlabel('Velocidade do Vento (m/s)', fontsize=14)
