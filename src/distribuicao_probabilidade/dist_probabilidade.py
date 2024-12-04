@@ -62,13 +62,13 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario):
   #x = np.linspace(min(df_velocidade), max(df_velocidade), 100)
   weibull_pdf = weibull_min.pdf(df_velocidade, *params)
 
-  df_combinado['x'] = x
+  df_combinado['x'] = df_velocidade
   df_combinado['weibull_pdf'] = weibull_pdf
 
   print(df_combinado)
 
   # Plotar a curva ajustada
-  plt.plot(x, weibull_pdf, label='Ajuste de Weibull', color='r', linewidth=2)
+  plt.plot(df_velocidade, weibull_pdf, label='Ajuste de Weibull', color='r', linewidth=2)
 
   # Configurações do gráfico
   plt.xlabel('Velocidade do Vento (m/s)', fontsize=14)
