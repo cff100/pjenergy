@@ -75,12 +75,17 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario):
   # Plotar a curva ajustada
   plt.plot(velocidades, weibull_pdf, label='Ajuste de Weibull', color='r', linewidth=2)
 
+  ax.set_title(f'Ajuste de Distribuição Weibull - Horário: {horario} - Pressão: {pressao} hPa - Estação: {estacao} - Ano: {ano}')
+  texto = plataforma_escolhida
+  ax.text(0.73, 0.95, f'Plataforma: {texto}', transform=ax.transAxes, fontsize=9, verticalalignment='top')
+
   # Configurações do gráfico
   plt.xlabel('Velocidade do Vento (m/s)', fontsize=14)
   plt.ylabel('Densidade de Probabilidade', fontsize=14)
   plt.title('Histograma e Ajuste de Weibull', fontsize=16)
   plt.legend(fontsize=12)
   plt.grid(axis='y', linestyle='--', alpha=0.7)
+  plt.tight_layout()
   plt.show()
 
   # Verificar se a integral está próxima de 1
@@ -89,43 +94,6 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario):
   else:
     print(f'⚠️ A soma das probabilidades não está próxima 1: {prob_sum}')
 
-
-  '''
-    if pressao or estacao:
-      if not estacao:
-        ax.set_title(f'Ajuste de Distribuição Weibull - {horario} - Pressão: {pressao} hPa - Ano: {ano}')
-      elif not pressao:
-        ax.set_title(f'Ajuste de Distribuição Weibull - {horario} - Estação: {estacao} - Ano: {ano}')
-      else:
-        ax.set_title(f'Ajuste de Distribuição Weibull - {horario} - Pressão: {pressao} hPa - Estação: {estacao} - Ano: {ano}')
-    else:
-      ax.set_title(f'Ajuste de Distribuição Weibull - {horario} - Ano: {ano}')
-
-
-    texto = plataforma_escolhida
-    ax.text(0.73, 0.95, f'Plataforma: {texto}', transform=ax.transAxes, fontsize=9, verticalalignment='top')
-
-  # Ajustar espaçamento entre os subplots
-  plt.tight_layout()
-  plt.show()
-
-  print('\n')
-
-  # Exibir a tabela de probabilidades
-  #print(tabela_probabilidades)
-  # Verificar se a soma da densidade de probabilidade está próxima de 1 para cada horário
-  for horario in horarios:
-    prob_sum = tabela_probabilidades[tabela_probabilidades['Horário'] == horario]['Densidade de Probabilidade'].sum()
-    if np.isclose(prob_sum, 1, atol=1e-6):  # atol define a margem de erro aceitável
-        print(f'A soma das probabilidades para o horário {horario} está correta: {prob_sum}')
-    else:
-        print(f'⚠️ A soma das probabilidades para o horário {horario} não é 1: {prob_sum}')
-
-
-  # Salvar a tabela em um arquivo CSV, se desejado
-  tabela_probabilidades.to_csv(f'Velocidade_Tabela_Probabilidades_Weibull.csv', index=False)
-
-  return tabela_probabilidades'''
 
 
 def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario):
