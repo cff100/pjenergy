@@ -78,7 +78,7 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario):
   plt.grid(axis='y', linestyle='--', alpha=0.7)
   plt.show()
 
-'''  df_tabela_probabilidades = pd.DataFrame({
+  '''df_tabela_probabilidades = pd.DataFrame({
     'Velocidade do Vento (m/s)': x,
     'Densidade de Probabilidade': weibull_pdf
   })'''
