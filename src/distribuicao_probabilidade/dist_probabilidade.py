@@ -64,7 +64,7 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario):
   weibull_pdf = weibull_min.pdf(velocidades, *params)
 
   #df_combinado['x'] = velocidades
-  df_combinado['weibull_pdf'] = weibull_pdf
+  df_combinado['Densidade_de_Probabilidade'] = weibull_pdf
 
   print(df_combinado)
 
@@ -79,7 +79,7 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario):
   plt.grid(axis='y', linestyle='--', alpha=0.7)
   plt.show()
 
-  prob_sum = df_combinado['Densidade de Probabilidade'].sum()
+  prob_sum = df_combinado['Densidade_de_Probabilidade'].sum()
   if np.isclose(prob_sum, 1, atol=1e-6):  # atol define a margem de erro aceitável
       print(f'A soma das probabilidades para o horário {horario} está correta: {prob_sum}')
   else:
