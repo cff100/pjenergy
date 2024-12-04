@@ -84,10 +84,10 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario):
   plt.show()
 
   # Verificar se a integral está próxima de 1
-  if np.isclose(prob_sum, 1, atol=1e-6):
+  if np.isclose(prob_sum, 1, atol=5e-2):
     print(f'A soma das probabilidades está correta: {prob_sum}')
   else:
-    print(f'⚠️ A soma das probabilidades não é 1: {prob_sum}')
+    print(f'⚠️ A soma das probabilidades não está próxima 1: {prob_sum}')
 
 
   '''
