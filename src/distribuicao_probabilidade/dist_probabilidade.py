@@ -68,7 +68,7 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario):
   print(df_combinado)
 
   # Plotar a curva ajustada
-  plt.plot(df_velocidade, weibull_pdf, label='Ajuste de Weibull', color='r', linewidth=2)
+  plt.plot(velocidades, weibull_pdf, label='Ajuste de Weibull', color='r', linewidth=2)
 
   # Configurações do gráfico
   plt.xlabel('Velocidade do Vento (m/s)', fontsize=14)
