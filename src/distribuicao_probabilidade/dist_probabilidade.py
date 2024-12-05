@@ -7,7 +7,7 @@ import numpy as np
 horarios = ['03:00', '09:00', '15:00', '21:00']
 plataforma_escolhida = "PETROBRAS XXXIII"
 
-def plot_weibull_velocidade(pressao, estacao, ano, horario):
+def plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico=True):
 
 
   # Lista de caminhos para os arquivos CSV
@@ -52,12 +52,6 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario):
   velocidades = df_combinado['Velocidade_Vento_resultante_m/s'].copy()
   velocidades.sort_values(inplace=True)
 
-  # Criar a figura
-  fig, ax = plt.subplots(figsize=(10, 6))
-
-  # Plotar o histograma
-  sns.histplot(velocidades, kde=False, stat='density', color='lightgray', alpha=0.5, bins=20, label='Dados')
-
   # Ajustar a distribuição de Weibull
   params = weibull_min.fit(velocidades)
   weibull_pdf = weibull_min.pdf(velocidades, *params)
@@ -69,27 +63,37 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario):
 
   #print(df_combinado)
 
-  # Plotar a curva ajustada
-  plt.plot(velocidades, weibull_pdf, label='Ajuste de Weibull', color='r', linewidth=2)
-
-  ax.set_title(f'Histograma e Ajuste de Distribuição Weibull - Horário: {horario} - Pressão: {pressao} hPa - Estação: {estacao} - Ano: {ano}')
-  texto = plataforma_escolhida
-  ax.text(0.77, 0.85, f'Plataforma: {texto}', transform=ax.transAxes, fontsize=9, verticalalignment='top')
-
-  # Configurações do gráfico
-  plt.xlabel('Velocidade do Vento (m/s)', fontsize=14)
-  plt.ylabel('Densidade de Probabilidade', fontsize=14)
-  plt.legend(fontsize=12)
-  plt.grid(axis='y', linestyle='--', alpha=0.7)
-  plt.tight_layout()
-  plt.show()
-  
   # Verificar se a integral está próxima de 1
   if np.isclose(prob_sum, 1, atol=5e-2):
     print(f'A soma das probabilidades está correta (próxima de 1): {prob_sum}')
   else:
     print(f'⚠️ A soma das probabilidades não está próxima 1: {prob_sum}')
 
+
+  if exibir_grafico:
+    # Criar a figura
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    # Plotar o histograma
+    sns.histplot(velocidades, kde=False, stat='density', color='lightgray', alpha=0.5, bins=20, label='Dados')
+
+
+    # Plotar a curva ajustada
+    plt.plot(velocidades, weibull_pdf, label='Ajuste de Weibull', color='r', linewidth=2)
+
+    ax.set_title(f'Histograma e Ajuste de Distribuição Weibull - Horário: {horario} - Pressão: {pressao} hPa - Estação: {estacao} - Ano: {ano}')
+    texto = plataforma_escolhida
+    ax.text(0.77, 0.85, f'Plataforma: {texto}', transform=ax.transAxes, fontsize=9, verticalalignment='top')
+
+    # Configurações do gráfico
+    plt.xlabel('Velocidade do Vento (m/s)', fontsize=14)
+    plt.ylabel('Densidade de Probabilidade', fontsize=14)
+    plt.legend(fontsize=12)
+    plt.grid(axis='y', linestyle='--', alpha=0.7)
+    plt.tight_layout()
+    plt.show()
+  
+  
   return df_combinado
 
 def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario):
