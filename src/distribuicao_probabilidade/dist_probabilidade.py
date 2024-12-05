@@ -7,7 +7,7 @@ import numpy as np
 horarios = ['03:00', '09:00', '15:00', '21:00']
 plataforma_escolhida = "PETROBRAS XXXIII"
 
-def plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico=True):
+def plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico):
 
 
   # Lista de caminhos para os arquivos CSV
@@ -96,7 +96,7 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico=True)
   
   return df_combinado
 
-def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario):
+def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir_grafico):
 
   '''Inicia a busca pelos argumentos do usuário'''
 
@@ -109,7 +109,7 @@ def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario):
   else:
     pass
 
-  tabela = plot_weibull_velocidade(pressao, estacao, ano, horario)
+  tabela = plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico)
 
 
   return tabela
