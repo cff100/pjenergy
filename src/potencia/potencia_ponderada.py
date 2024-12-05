@@ -5,6 +5,13 @@ import pandas as pd
 
 def potencia(pressao, estacao, ano, horario):
 
+  # Lista de caminhos para os arquivos CSV
+  arquivos_csv = ['/content/pjenergy/data/dados_interpolados/df_interpolado_Verao.csv', '/content/pjenergy/data/dados_interpolados/df_interpolado_Outono.csv', '/content/pjenergy/data/dados_interpolados/df_interpolado_Inverno.csv', '/content/pjenergy/data/dados_interpolados/df_interpolado_Primavera.csv']
+  # Lista para armazenar os DataFrames
+  dataframes = [pd.read_csv(arquivo) for arquivo in arquivos_csv]
+  # Concatenar todos os DataFrames em um único
+  df_base = pd.concat(dataframes, ignore_index=True)
+
   variaveis_dict = {'Pressão': pressao, 'Estação': estacao, 'Ano': ano, 'Horário': horario}
 
   # Substituindo valores '0' usando cz.zero_para_todos
@@ -14,21 +21,36 @@ def potencia(pressao, estacao, ano, horario):
 
   df_mestre = pd.DataFrame(columns=['Pressão', 'Estação', 'Ano', 'Horário', 'Dataframe_Probabilidade'])
 
-  variaveis_todos = []
-  variaveis_especifico = []
+  df_base['Ano'] = df_base['Data'].dt.year
 
   for chave, valor in variaveis_dict.items():
     if valor in ['Todos', 'Todas']:
-      variaveis_todos.append(chave)
+      pressao_lista = df_base['Nível_de_Pressão_hPa'].unique().tolist()
+      estacao_lista = df_base['Estação_do_Ano'].unique().tolist()
+      ano_lista = df_base['Ano'].unique().tolist()
+      horario_lista = df_base['Horário_Brasília'].unique().tolist()
+      
     else:
-      variaveis_especifico.append(chave)
+      if chave == 'Pressão':
+        pressao_lista = [float(valor)]
+      elif chave == 'Estação':
+        estacao_lista = [valor]
+      elif chave == 'Ano':
+        ano_lista = [int(valor)]
+      elif chave == 'Horário':
+        horario_lista = [valor]
 
-    # Realizando os loops para variáveis em 'variaveis_todos'
-    for chave_todos in variaveis_todos:
-      for chave_especifico in variaveis_especifico:
-        # Aqui você pode executar sua lógica de combinação entre as variáveis
-        print(f"Processando {chave_todos} com {chave_especifico}")
 
+  for p in pressao_lista:
+    for est in estacao_lista:
+      for an in ano_lista:
+        for hor in horario_lista:
+          df_prob_local = mp.prob(perguntas = False, pressao, estacao, ano, horario)
+          nova_linha = {'Pressão': p, 'Estação': est, 'Ano': an, 'Horário': hor, 'Dataframe_Probabilidade': df_prob_local}
+
+          df_mestre = pd.concat([df_mestre, pd.DataFrame([nova_linha])], ignore_index=True)
+
+  return df_mestre
 
 def usuario_potencia(perguntas, pressao, estacao, ano, horario):
 
