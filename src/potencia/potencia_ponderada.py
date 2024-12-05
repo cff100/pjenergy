@@ -27,6 +27,7 @@ def potencia(pressao, estacao, ano, horario):
   contagem_todos = 0
 
   for chave, valor in variaveis_dict.items():
+    print(f'chave: {chave}, valor: {valor}')
     if valor in ['Todos', 'Todas']:
       print(f'chave: {chave}, valor: {valor}')
       pressao_lista = df_base['Nível_de_Pressão_hPa'].unique().tolist()
