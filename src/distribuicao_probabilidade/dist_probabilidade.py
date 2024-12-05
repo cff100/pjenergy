@@ -82,9 +82,7 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario):
   plt.legend(fontsize=12)
   plt.grid(axis='y', linestyle='--', alpha=0.7)
   plt.tight_layout()
-  plt.show()
-
-  %%capture
+  #plt.show()
   
   # Verificar se a integral está próxima de 1
   if np.isclose(prob_sum, 1, atol=5e-2):
