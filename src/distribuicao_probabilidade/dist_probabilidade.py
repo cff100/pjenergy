@@ -1,102 +1,59 @@
+import pjenergy.main as mp
+import src.outras.caso_zero as cz
 import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-from scipy.stats import weibull_min
-import numpy as np
 
-horarios = ['03:00', '09:00', '15:00', '21:00']
-plataforma_escolhida = "PETROBRAS XXXIII"
 
-def plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico):
-
+def potencia(pressao, estacao, ano, horario):
 
   # Lista de caminhos para os arquivos CSV
   arquivos_csv = ['/content/pjenergy/data/dados_interpolados/df_interpolado_Verao.csv', '/content/pjenergy/data/dados_interpolados/df_interpolado_Outono.csv', '/content/pjenergy/data/dados_interpolados/df_interpolado_Inverno.csv', '/content/pjenergy/data/dados_interpolados/df_interpolado_Primavera.csv']
-
   # Lista para armazenar os DataFrames
   dataframes = [pd.read_csv(arquivo) for arquivo in arquivos_csv]
-
   # Concatenar todos os DataFrames em um único
-  df_combinado = pd.concat(dataframes, ignore_index=True)
+  df_base = pd.concat(dataframes, ignore_index=True)
 
-  if pressao not in ['Todas', '0']:
-    df_combinado = df_combinado[df_combinado['Nível_de_Pressão_hPa'] == float(pressao)]
-  else:
-    if pressao == '0':
-      pressao = 'Todas'
+  variaveis_dict = {'Pressão': pressao, 'Estação': estacao, 'Ano': ano, 'Horário': horario}
 
-  if estacao not in ['Todas', '0']:
-    df_combinado = df_combinado[df_combinado['Estação_do_Ano'] == estacao]
-  else:
-    if estacao == '0':
-      estacao = 'Todas'
+  # Substituindo valores '0' usando cz.zero_para_todos
+  for chave, valor in variaveis_dict.items():
+    if valor == '0':
+      variaveis_dict[chave] = cz.zero_para_todos(valor, chave)
 
-  if ano not in ['Todos', '0']:
-    df_combinado['Data'] = pd.to_datetime(df_combinado['Data'])
-    df_combinado = df_combinado[df_combinado['Data'].dt.year == int(ano)]
-  else:
-    if ano == '0':
-      ano = 'Todos'
-
-  if horario not in ['Todos', '0']:
-    df_combinado = df_combinado[df_combinado['Horário_Brasília'] == horario]
-  else:
-    if horario == '0':
-      horario = 'Todos'
-
-  # Resetar o índice após todos os filtros
-  df_combinado.reset_index(drop=True, inplace=True)
-
-  #print(df_combinado)
-
-  velocidades = df_combinado['Velocidade_Vento_resultante_m/s'].copy()
-  velocidades.sort_values(inplace=True)
-
-  # Ajustar a distribuição de Weibull
-  params = weibull_min.fit(velocidades)
-  weibull_pdf = weibull_min.pdf(velocidades, *params)
-
-  df_combinado['Densidade_de_Probabilidade'] = weibull_pdf
-
-  # Calcular a soma das probabilidades usando integração
-  prob_sum = np.trapz(weibull_pdf, velocidades)  # Aproximação da integral
-
-  #print(df_combinado)
-
-  # Verificar se a integral está próxima de 1
-  if np.isclose(prob_sum, 1, atol=5e-2):
-    print(f'A soma das probabilidades está correta (próxima de 1): {prob_sum}')
-  else:
-    print(f'⚠️ A soma das probabilidades não está próxima 1: {prob_sum}')
-
-
-  if exibir_grafico:
-    # Criar a figura
-    fig, ax = plt.subplots(figsize=(10, 6))
-
-    # Plotar o histograma
-    sns.histplot(velocidades, kde=False, stat='density', color='lightgray', alpha=0.5, bins=20, label='Dados')
-
-
-    # Plotar a curva ajustada
-    plt.plot(velocidades, weibull_pdf, label='Ajuste de Weibull', color='r', linewidth=2)
-
-    ax.set_title(f'Histograma e Ajuste de Distribuição Weibull - Horário: {horario} - Pressão: {pressao} hPa - Estação: {estacao} - Ano: {ano}')
-    texto = plataforma_escolhida
-    ax.text(0.77, 0.85, f'Plataforma: {texto}', transform=ax.transAxes, fontsize=9, verticalalignment='top')
-
-    # Configurações do gráfico
-    plt.xlabel('Velocidade do Vento (m/s)', fontsize=14)
-    plt.ylabel('Densidade de Probabilidade', fontsize=14)
-    plt.legend(fontsize=12)
-    plt.grid(axis='y', linestyle='--', alpha=0.7)
-    plt.tight_layout()
-    plt.show()
+  df_mestre = pd.DataFrame(columns=['Pressão', 'Estação', 'Ano', 'Horário', 'Dataframe_Probabilidade'])
   
-  
-  return df_combinado
+  df_base['Data'] = pd.to_datetime(df_base['Data'])
+  df_base['Ano'] = df_base['Data'].dt.year
 
-def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir_grafico):
+  for chave, valor in variaveis_dict.items():
+    if valor in ['Todos', 'Todas']:
+      pressao_lista = df_base['Nível_de_Pressão_hPa'].unique().tolist()
+      estacao_lista = df_base['Estação_do_Ano'].unique().tolist()
+      ano_lista = df_base['Ano'].unique().tolist()
+      horario_lista = df_base['Horário_Brasília'].unique().tolist()
+      
+    else:
+      if chave == 'Pressão':
+        pressao_lista = [float(valor)]
+      elif chave == 'Estação':
+        estacao_lista = [valor]
+      elif chave == 'Ano':
+        ano_lista = [int(valor)]
+      elif chave == 'Horário':
+        horario_lista = [valor]
+
+
+  for p in pressao_lista:
+    for est in estacao_lista:
+      for an in ano_lista:
+        for hor in horario_lista:
+          df_prob_local = mp.prob(perguntas = False, pressao = p, estacao = est, ano = an, horario = hor, exibir_grafico=False)
+          nova_linha = {'Pressão': p, 'Estação': est, 'Ano': an, 'Horário': hor, 'Dataframe_Probabilidade': df_prob_local}
+
+          df_mestre = pd.concat([df_mestre, pd.DataFrame([nova_linha])], ignore_index=True)
+
+  return df_mestre
+
+def usuario_potencia(perguntas, pressao, estacao, ano, horario):
 
   '''Inicia a busca pelos argumentos do usuário'''
 
@@ -109,7 +66,7 @@ def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir
   else:
     pass
 
-  tabela = plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico)
+  tabela = potencia(pressao, estacao, ano, horario)
 
 
   return tabela
