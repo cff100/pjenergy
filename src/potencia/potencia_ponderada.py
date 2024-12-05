@@ -28,7 +28,7 @@ def potencia(pressao, estacao, ano, horario):
 
   for chave, valor in variaveis_dict.items():
     if valor in ['Todos', 'Todas']:
-      print(f'chave: {valor}')
+      print(f'chave: {chave}, valor: {valor}')
       pressao_lista = df_base['Nível_de_Pressão_hPa'].unique().tolist()
       estacao_lista = df_base['Estação_do_Ano'].unique().tolist()
       ano_lista = df_base['Ano'].unique().tolist()
