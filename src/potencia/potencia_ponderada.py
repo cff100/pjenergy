@@ -20,7 +20,8 @@ def potencia(pressao, estacao, ano, horario):
       variaveis_dict[chave] = cz.zero_para_todos(valor, chave)
 
   df_mestre = pd.DataFrame(columns=['Pressão', 'Estação', 'Ano', 'Horário', 'Dataframe_Probabilidade'])
-
+  
+  df_base['Data'] = pd.to_datetime(df_base['Data'])
   df_base['Ano'] = df_base['Data'].dt.year
 
   for chave, valor in variaveis_dict.items():

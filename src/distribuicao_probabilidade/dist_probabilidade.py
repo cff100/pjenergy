@@ -37,7 +37,7 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario):
   else:
     if ano == '0':
       ano = 'Todos'
-  
+
   if horario not in ['Todos', '0']:
     df_combinado = df_combinado[df_combinado['Horário_Brasília'] == horario]
   else:
@@ -84,6 +84,8 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario):
   plt.tight_layout()
   plt.show()
 
+  %%capture
+  
   # Verificar se a integral está próxima de 1
   if np.isclose(prob_sum, 1, atol=5e-2):
     print(f'A soma das probabilidades está correta (próxima de 1): {prob_sum}')
