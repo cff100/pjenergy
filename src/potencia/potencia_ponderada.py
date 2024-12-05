@@ -43,6 +43,7 @@ def potencia(pressao, estacao, ano, horario):
 
 
   for p in pressao_lista:
+    print(p)
     for est in estacao_lista:
       for an in ano_lista:
         for hor in horario_lista:
