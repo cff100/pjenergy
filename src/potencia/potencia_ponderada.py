@@ -51,6 +51,7 @@ def potencia(pressao, estacao, ano, horario):
   for p in pressao_lista:
     for est in estacao_lista:
       print(est)
+      print(estacao_lista)
       for an in ano_lista:
         for hor in horario_lista:
           df_prob_local = mp.prob(perguntas = False, pressao = p, estacao = est, ano = an, horario = hor, exibir_grafico=False)
