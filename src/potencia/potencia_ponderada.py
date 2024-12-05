@@ -24,12 +24,16 @@ def potencia(pressao, estacao, ano, horario):
   df_base['Data'] = pd.to_datetime(df_base['Data'])
   df_base['Ano'] = df_base['Data'].dt.year
 
+  contagem_todos = 0
+
   for chave, valor in variaveis_dict.items():
     if valor in ['Todos', 'Todas']:
       pressao_lista = df_base['Nível_de_Pressão_hPa'].unique().tolist()
       estacao_lista = df_base['Estação_do_Ano'].unique().tolist()
       ano_lista = df_base['Ano'].unique().tolist()
       horario_lista = df_base['Horário_Brasília'].unique().tolist()
+
+      contagem_todos += 1
       
     else:
       if chave == 'Pressão':
@@ -41,9 +45,10 @@ def potencia(pressao, estacao, ano, horario):
       elif chave == 'Horário':
         horario_lista = [valor]
 
+  if contagem_todos > 3:
+    return 'Variáveis demais com o valor "Todas" ou "0"'
 
   for p in pressao_lista:
-    print(p)
     for est in estacao_lista:
       for an in ano_lista:
         for hor in horario_lista:
