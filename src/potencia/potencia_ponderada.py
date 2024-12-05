@@ -18,7 +18,7 @@ def potencia(pressao, estacao, ano, horario):
   for chave, valor in variaveis_dict.items():
     if valor == '0':
       variaveis_dict[chave] = cz.zero_para_todos(valor, chave)
-
+  print(estacao)
   df_mestre = pd.DataFrame(columns=['Pressão', 'Estação', 'Ano', 'Horário', 'Dataframe_Probabilidade'])
   
   df_base['Data'] = pd.to_datetime(df_base['Data'])
@@ -28,6 +28,7 @@ def potencia(pressao, estacao, ano, horario):
 
   for chave, valor in variaveis_dict.items():
     if valor in ['Todos', 'Todas']:
+      print(f'chave: {valor}')
       pressao_lista = df_base['Nível_de_Pressão_hPa'].unique().tolist()
       estacao_lista = df_base['Estação_do_Ano'].unique().tolist()
       ano_lista = df_base['Ano'].unique().tolist()
