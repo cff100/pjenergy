@@ -45,8 +45,8 @@ def potencia(pressao, estacao, ano, horario):
       elif chave == 'Horário':
         horario_lista = [valor]
 
-  if contagem_todos > 3:
-    return 'Variáveis demais com o valor "Todas" ou "0"'
+  if contagem_todos > 2:
+    return 'Variáveis demais com o valor "Todas" ou "0". Precisam ser no máximo duas.'
 
   for p in pressao_lista:
     for est in estacao_lista:
