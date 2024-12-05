@@ -47,7 +47,7 @@ def potencia(pressao, estacao, ano, horario):
     for est in estacao_lista:
       for an in ano_lista:
         for hor in horario_lista:
-          df_prob_local = mp.prob(perguntas = False, pressao = p, estacao = est, ano = an, horario = hor)
+          df_prob_local = mp.prob(perguntas = False, pressao = p, estacao = est, ano = an, horario = hor, , exibir_grafico=False)
           nova_linha = {'Pressão': p, 'Estação': est, 'Ano': an, 'Horário': hor, 'Dataframe_Probabilidade': df_prob_local}
 
           df_mestre = pd.concat([df_mestre, pd.DataFrame([nova_linha])], ignore_index=True)
