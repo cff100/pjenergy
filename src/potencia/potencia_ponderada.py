@@ -7,14 +7,27 @@ def potencia(pressao, estacao, ano, horario):
 
   variaveis_dict = {'Pressão': pressao, 'Estação': estacao, 'Ano': ano, 'Horário': horario}
 
-  for valores in variaveis_dict.values():
-    if valores == '0':
-      chave = next((k for k, v in variaveis_dict.items() if v == valores), None)
-      variaveis_dict[chave] = cz.zero_para_todos(valores, chave)
-    else:
-      pass
+  # Substituindo valores '0' usando cz.zero_para_todos
+  for chave, valor in variaveis_dict.items():
+    if valor == '0':
+      variaveis_dict[chave] = cz.zero_para_todos(valor, chave)
 
-  df_mestre = pd.DataFrame(columns=['Pressão', 'Estação', 'Ano', 'Horário', 'Dataframe'])
+  df_mestre = pd.DataFrame(columns=['Pressão', 'Estação', 'Ano', 'Horário', 'Dataframe_Probabilidade'])
+
+  variaveis_todos = []
+  variaveis_especifico = []
+
+  for chave, valor in variaveis_dict.items():
+    if valor in ['Todos', 'Todas']:
+      variaveis_todos.append(chave)
+    else:
+      variaveis_especifico.append(chave)
+
+    # Realizando os loops para variáveis em 'variaveis_todos'
+    for chave_todos in variaveis_todos:
+      for chave_especifico in variaveis_especifico:
+        # Aqui você pode executar sua lógica de combinação entre as variáveis
+        print(f"Processando {chave_todos} com {chave_especifico}")
 
 
 def usuario_potencia(perguntas, pressao, estacao, ano, horario):
