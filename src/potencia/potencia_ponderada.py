@@ -18,27 +18,27 @@ def potencia(pressao, estacao, ano, horario):
   for chave, valor in variaveis_dict.items():
     if valor == '0':
       variaveis_dict[chave] = cz.zero_para_todos(valor, chave)
-  print(estacao)
+  #print(estacao)
   df_mestre = pd.DataFrame(columns=['Pressão', 'Estação', 'Ano', 'Horário', 'Dataframe_Probabilidade'])
-  
+
   df_base['Data'] = pd.to_datetime(df_base['Data'])
   df_base['Ano'] = df_base['Data'].dt.year
 
   contagem_todos = 0
 
   for chave, valor in variaveis_dict.items():
-    #print(f'chave: {chave}, valor: {valor}')
+    print(f'1 -> chave: {chave}, valor: {valor}')
     if valor in ['Todos', 'Todas']:
-      print(f'chave: {chave}, valor: {valor}')
+      print(f'2 -> chave: {chave}, valor: {valor}')
       pressao_lista = df_base['Nível_de_Pressão_hPa'].unique().tolist()
       estacao_lista = df_base['Estação_do_Ano'].unique().tolist()
       ano_lista = df_base['Ano'].unique().tolist()
       horario_lista = df_base['Horário_Brasília'].unique().tolist()
 
       contagem_todos += 1
-      
+
     else:
-      print(f'chave: {chave}, valor: {valor}')
+      print(f'3 -> chave: {chave}, valor: {valor}')
       if chave == 'Pressão':
         pressao_lista = [float(valor)]
       elif chave == 'Estação':
@@ -48,13 +48,18 @@ def potencia(pressao, estacao, ano, horario):
       elif chave == 'Horário':
         horario_lista = [valor]
 
+      print(f'pressao_lista: {pressao_lista}')
+      print(f'estacao_lista: {estacao_lista}')
+      print(f'ano_lista: {ano_lista}')
+      print(f'horario_lista: {horario_lista}')
+
   if contagem_todos > 2:
     return 'Variáveis demais com o valor "Todas" ou "0". Precisam ser no máximo duas.'
 
   for p in pressao_lista:
     for est in estacao_lista:
-      print(est)
-      print(estacao_lista)
+      #print(est)
+      #print(estacao_lista)
       for an in ano_lista:
         for hor in horario_lista:
           df_prob_local = mp.prob(perguntas = False, pressao = p, estacao = est, ano = an, horario = hor, exibir_grafico=False)
