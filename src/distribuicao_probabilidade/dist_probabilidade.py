@@ -55,6 +55,7 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico):
   params = weibull_min.fit(velocidades)
   weibull_pdf = weibull_min.pdf(velocidades, *params)
 
+  df_combinado['Velocidade_Vento_resultante_m/s'] = velocidades
   df_combinado['Densidade_de_Probabilidade'] = weibull_pdf
 
   # Calcular a soma das probabilidades usando integração
