@@ -30,10 +30,14 @@ def potencia(pressao, estacao, ano, horario):
     print(f'1 -> chave: {chave}, valor: {valor}')
     if valor in ['Todos', 'Todas']:
       print(f'2 -> chave: {chave}, valor: {valor}')
-      pressao_lista = df_base['Nível_de_Pressão_hPa'].unique().tolist()
-      estacao_lista = df_base['Estação_do_Ano'].unique().tolist()
-      ano_lista = df_base['Ano'].unique().tolist()
-      horario_lista = df_base['Horário_Brasília'].unique().tolist()
+      if chave == 'Pressão':
+        pressao_lista = df_base['Nível_de_Pressão_hPa'].unique().tolist()
+      elif chave == 'Estação':
+        estacao_lista = df_base['Estação_do_Ano'].unique().tolist()
+      elif chave == 'Ano':
+        ano_lista = df_base['Ano'].unique().tolist()
+      elif chave == 'Horário':
+        horario_lista = df_base['Horário_Brasília'].unique().tolist()
 
       contagem_todos += 1
 
