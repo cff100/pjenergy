@@ -75,7 +75,7 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
   handles = []
   labels = []
   linestyle = '-'  # Default linestyle
-  cor = 'black'  # Default color
+  color = 'black'  # Default color
 
   i = identificacao(pressao_lista, estacao_lista, ano_lista, horario_lista)
 
@@ -101,7 +101,7 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
     if i == [0, 0, 1, 1]:
       titulo = f'Potência Ponderada: Ano {ano} - Horário: {horario}'
       label = f'Pr: {pressao} - Est: {estacao}'
-      color = color = cores_est.get(estacao)
+      color = cores_est.get(estacao)
 
     elif i == [0, 1, 0, 1]:
       pass
@@ -134,9 +134,10 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
       pass
 
     # Plotar a curva
-    line, = ax.plot(df['Velocidade_Vento_resultante_m/s'], df['Potência_Ponderada'], color=color, linestyle = linestyle)
+    line, = ax.plot(df['Velocidade_Vento_resultante_m/s'], df['Potência_Ponderada'], color = color, linestyle = linestyle)
     if label not in labels:  # Evita duplicação na legenda
       handles.append(line)
+      print(handles)
       labels.append(label)
 
   # Configurar o gráfico
@@ -145,6 +146,8 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
   ax.set_ylabel('Potência Ponderada (kW/m^2)')
   ax.legend(handles=handles, labels=labels, title="Legenda")  # Adiciona a legenda com os handles e labels armazenados)
   ax.grid(True)
+  ax.minorticks_on()
+  ax.grid(True, which='minor', alpha=0.3)
 
   # Exibir o gráfico
   plt.tight_layout()
