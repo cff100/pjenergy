@@ -85,6 +85,10 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
 
   # Iterar sobre os DataFrames na coluna do DataFrame mestre
   for idx, df in enumerate(df_mestre['Dataframe_Probabilidade']):
+
+    # Resetar o índice do DataFrame
+    df = df.reset_index(drop=True)
+    
     # Calcular a potência
     df['Potência'] = 0.5 * rho * A * (df['Velocidade_Vento_resultante_m/s'] ** 3) / 10**3  # Em kW
     # Calcular a potência ponderada
@@ -100,16 +104,9 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
     estacao = df_mestre.loc[idx, 'Estação']
     horario = df_mestre.loc[idx, 'Horário']
 
-    # Garantir que não há valores nulos ou inválidos no eixo X ou Y
-    x_values = df['Velocidade_Vento_resultante_m/s'].dropna()
-    y_values = df['Potência_Ponderada'].dropna()
-
-    # Plotar a curva apenas com os dados relevantes
-    ax.plot(x_values, y_values,
-            label=f'Estação: {estacao}, Horário: {horario}', linestyle=linestyle)
-    '''# Plotar a curva
+    # Plotar a curva
     ax.plot(df['Velocidade_Vento_resultante_m/s'], df['Potência_Ponderada'],
-            label=f'Estação: {estacao}, Horário: {horario}', linestyle=linestyle)'''
+            label=f'Estação: {estacao}, Horário: {horario}', linestyle=linestyle)
 
   # Configurar o gráfico
   ax.set_title('Potência Ponderada para Diferentes Condições')
