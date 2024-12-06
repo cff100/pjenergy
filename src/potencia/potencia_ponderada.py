@@ -98,6 +98,8 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
     pressao = df_mestre.loc[idx, 'Pressão']
     ano = df_mestre.loc[idx, 'Ano']
 
+    lista_contagem = []
+    
     if i == [0, 0, 1, 1]:
       titulo = f'Potência Ponderada: Ano {ano} - Horário: {horario}  (Diversas Pressões)'
       label = f'Est: {estacao}'
@@ -105,14 +107,13 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
 
       line, = ax.plot(df['Velocidade_Vento_resultante_m/s'], df['Potência_Ponderada'], color = color, linestyle = linestyle)
 
-      lista_contagem = []
       if estacao not in lista_contagem:  # Evita repetição na legenda
         lista_contagem.append(estacao) 
         handles.append(line)
         labels.append(label)
-        print(f'lista_contagem: {lista_contagem}')
-        print(f'handles: {handles}')
-        print(f'labels: {labels}')
+      print(f'lista_contagem: {lista_contagem}')
+      print(f'handles: {handles}')
+      print(f'labels: {labels}')
 
     elif i == [0, 1, 0, 1]:
       pass
