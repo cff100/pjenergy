@@ -110,6 +110,7 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
         lista_contagem.append(estacao) 
         handles.append(line)
         labels.append(label)
+        print(f'lista_contagem: {lista_contagem}')
         print(f'handles: {handles}')
         print(f'labels: {labels}')
 
