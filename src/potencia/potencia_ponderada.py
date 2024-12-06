@@ -110,6 +110,7 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
     horario = df_mestre.loc[idx, 'Horário']
     pressao = df_mestre.loc[idx, 'Pressão']
     ano = df_mestre.loc[idx, 'Ano']
+    print(ano)
 
     # Plotar a curva
     ax.plot(df['Velocidade_Vento_resultante_m/s'], df['Potência_Ponderada'])
