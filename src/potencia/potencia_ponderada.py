@@ -92,7 +92,7 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
     df['Potência_Ponderada'] = df['Potência'] * df['Densidade_de_Probabilidade']
     
     df = df.sort_values(by='Velocidade_Vento_resultante_m/s')
-    print(df.head(30))
+    print(df.head(40))
     print('\n')
     
     '''# Identificar estilo com base em critérios (substitua conforme necessário)

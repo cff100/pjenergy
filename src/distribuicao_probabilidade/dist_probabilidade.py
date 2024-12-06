@@ -9,7 +9,6 @@ plataforma_escolhida = "PETROBRAS XXXIII"
 
 def plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico):
 
-
   # Lista de caminhos para os arquivos CSV
   arquivos_csv = ['/content/pjenergy/data/dados_interpolados/df_interpolado_Verao.csv', '/content/pjenergy/data/dados_interpolados/df_interpolado_Outono.csv', '/content/pjenergy/data/dados_interpolados/df_interpolado_Inverno.csv', '/content/pjenergy/data/dados_interpolados/df_interpolado_Primavera.csv']
 
@@ -63,7 +62,7 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico):
 
   #print(df_combinado)
 
-  
+
 
 
   if exibir_grafico:
@@ -96,8 +95,9 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico):
     plt.grid(axis='y', linestyle='--', alpha=0.7)
     plt.tight_layout()
     plt.show()
-  
-  
+
+  df_combinado = df_combinado.sort_values(by='Velocidade_Vento_resultante_m/s')
+  print(df_combinado.head(40))
   return df_combinado
 
 def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir_grafico):
