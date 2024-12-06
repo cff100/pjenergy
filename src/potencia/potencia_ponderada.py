@@ -103,7 +103,7 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
       label = f'Est: {estacao}'
       color = cores_est.get(estacao)
 
-      line, = ax.plot(df['Velocidade_Vento_resultante_m/s'], df['Potência_Ponderada'], color = color, linestyle = linestyle)
+      line, = ax.plot(df['Velocidade_Vento_resultante_m/s'], df['Potência_Ponderada'])
 
       lista_contagem = []
       if estacao not in lista_contagem:  # Evita repetição na legenda
@@ -141,12 +141,12 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
     elif i == [1, 1, 1, 1]:
       pass
 
-    # Plotar a curva
+    '''# Plotar a curva
     line, = ax.plot(df['Velocidade_Vento_resultante_m/s'], df['Potência_Ponderada'], color = color, linestyle = linestyle)
     if label not in labels:  # Evita duplicação na legenda
       handles.append(line)
       print(handles)
-      labels.append(label)
+      labels.append(label)'''
 
   # Configurar o gráfico
   ax.set_title(titulo)
