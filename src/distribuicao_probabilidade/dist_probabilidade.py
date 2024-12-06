@@ -45,17 +45,17 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico):
 
   # Resetar o índice após todos os filtros
   df_combinado.reset_index(drop=True, inplace=True)
+  df_combinado = df_combinado.sort_values(by='Velocidade_Vento_resultante_m/s')
 
   #print(df_combinado)
 
   velocidades = df_combinado['Velocidade_Vento_resultante_m/s'].copy()
-  velocidades.sort_values(inplace=True)
+  #velocidades.sort_values(inplace=True)
 
   # Ajustar a distribuição de Weibull
   params = weibull_min.fit(velocidades)
   weibull_pdf = weibull_min.pdf(velocidades, *params)
 
-  df_combinado['Velocidade_Vento_resultante_m/s'] = velocidades
   df_combinado['Densidade_de_Probabilidade'] = weibull_pdf
 
   # Calcular a soma das probabilidades usando integração
