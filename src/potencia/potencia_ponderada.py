@@ -110,6 +110,8 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
         lista_contagem.append(estacao) 
         handles.append(line)
         labels.append(label)
+        print(f'handles: {handles}')
+        print(f'labels: {labels}')
 
     elif i == [0, 1, 0, 1]:
       pass
