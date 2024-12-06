@@ -79,13 +79,6 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
 
   i = identificacao(pressao_lista, estacao_lista, ano_lista, horario_lista)
 
-  '''for df in df_mestre['Dataframe_Probabilidade']:
-    # Calcular a potência para cada velocidade
-    df['Potência'] = 0.5 * rho * A * (df['Velocidade_Vento_resultante_m/s'] ** 3) / 10**3  # Em kW
-    # Calcula a potência ponderada pela distribuição de probabilidade
-    df['Potência_Ponderada'] = df['Potência'] * df['Densidade_de_Probabilidade']
-    print(df)'''
-
   # Iterar sobre os DataFrames na coluna do DataFrame mestre
   for idx, df in enumerate(df_mestre['Dataframe_Probabilidade']):
 
@@ -99,26 +92,58 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
     #print('\n')
     #print(df.tail(40))
 
-    '''# Identificar estilo com base em critérios (substitua conforme necessário)
-    estacao = estacao_lista[idx] if idx < len(estacao_lista) else 'Outono'
-    horario = horario_lista[idx] if idx < len(horario_lista) else '15:00'
-    cor = cores_est.get(estacao, 'black')
-    linestyle = linestyles_hor.get(horario, '-')'''
-
     # Identificar a estação e o horário correspondentes
     estacao = df_mestre.loc[idx, 'Estação']
     horario = df_mestre.loc[idx, 'Horário']
     pressao = df_mestre.loc[idx, 'Pressão']
     ano = df_mestre.loc[idx, 'Ano']
 
+    if i == [0, 0, 1, 1]:
+      titulo = f'Potência Ponderada: Ano {ano} - Horário: {horario}'
+      label = f'Pr: {pressao} - Est: {estacao}'
+      color = color = cores_est.get(estacao)
+
+    elif i == [0, 1, 0, 1]:
+      pass
+
+    elif i == [0, 1, 1, 0]:
+      pass
+
+    elif i == [1, 0, 0, 1]:
+      pass
+
+    elif i == [1, 0, 1, 0]:
+      pass
+
+    elif i == [1, 1, 0, 0]:
+      pass
+
+    elif i == [0, 1, 1, 1]:
+      pass
+
+    elif i == [1, 0, 1, 1]:
+      pass
+
+    elif i == [1, 1, 0, 1]:
+      pass
+
+    elif i == [1, 1, 1, 0]:
+      pass
+
+    elif i == [1, 1, 1, 1]:
+      pass
+
     # Plotar a curva
-    ax.plot(df['Velocidade_Vento_resultante_m/s'], df['Potência_Ponderada'])
+    line, = ax.plot(df['Velocidade_Vento_resultante_m/s'], df['Potência_Ponderada'], color=color, linestyle = linestyle)
+    if label not in labels:  # Evita duplicação na legenda
+      handles.append(line)
+      labels.append(label)
 
   # Configurar o gráfico
-  ax.set_title('Potência Ponderada para Diferentes Condições')
+  ax.set_title(titulo)
   ax.set_xlabel('Velocidade do Vento (m/s)')
   ax.set_ylabel('Potência Ponderada (kW/m^2)')
-  ax.legend()
+  ax.legend(handles=handles, labels=labels, title="Legenda")  # Adiciona a legenda com os handles e labels armazenados)
   ax.grid(True)
 
   # Exibir o gráfico
