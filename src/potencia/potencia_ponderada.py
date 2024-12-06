@@ -102,8 +102,7 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
 
     # Plotar a curva
     ax.plot(df['Velocidade_Vento_resultante_m/s'], df['Potência_Ponderada'],
-            label=f'Estação: {estacao}, Horário: {horario}',
-            color=cor, linestyle=linestyle)
+            label=f'Estação: {estacao}, Horário: {horario}', linestyle=linestyle)
 
   # Configurar o gráfico
   ax.set_title('Potência Ponderada para Diferentes Condições')
