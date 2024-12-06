@@ -3,6 +3,7 @@ import src.outras.caso_zero as cz
 import pandas as pd
 import matplotlib.pyplot as plt
 
+
 def identificacao(pressao_lista, estacao_lista, ano_lista, horario_lista):
 
   # Todos -> 0, Valor específico -> 1
@@ -27,7 +28,9 @@ def identificacao(pressao_lista, estacao_lista, ano_lista, horario_lista):
   else:
     i_hor = 0
 
-  return [i_pr, i_est, i_ano, i_hor]
+  i = [i_pr, i_est, i_ano, i_hor]
+
+  return i
 
 def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_lista):
 
@@ -74,7 +77,7 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
   linestyle = '-'  # Default linestyle
   cor = 'black'  # Default color
 
-  identificacao(pressao_lista, estacao_lista, ano_lista, horario_lista)
+  i = identificacao(pressao_lista, estacao_lista, ano_lista, horario_lista)
 
   '''for df in df_mestre['Dataframe_Probabilidade']:
     # Calcular a potência para cada velocidade
@@ -107,8 +110,7 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
     horario = df_mestre.loc[idx, 'Horário']
 
     # Plotar a curva
-    ax.plot(df['Velocidade_Vento_resultante_m/s'], df['Potência_Ponderada'],
-            label=f'Estação: {estacao}, Horário: {horario}', linestyle=linestyle)
+    ax.plot(df['Velocidade_Vento_resultante_m/s'], df['Potência_Ponderada'])
 
   # Configurar o gráfico
   ax.set_title('Potência Ponderada para Diferentes Condições')
