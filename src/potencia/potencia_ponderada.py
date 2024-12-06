@@ -64,7 +64,7 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
     '15:00': '-.',        # Linha pontilhada e traçada, sugerindo a variação da tarde
     '21:00': ':'          # Linha pontilhada para simbolizar o cair da noite
   }
-  
+
   # Criar o gráfico
   fig, ax = plt.subplots(figsize=(12, 6))
 
@@ -80,22 +80,22 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
     # Calcular a potência para cada velocidade
     df['Potência'] = 0.5 * rho * A * (df['Velocidade_Vento_resultante_m/s'] ** 3) / 10**3  # Em kW
     # Calcula a potência ponderada pela distribuição de probabilidade
-    df['Potência_Ponderada'] = df['Potência'] * df['Densidade_de_Probabilidade']  
+    df['Potência_Ponderada'] = df['Potência'] * df['Densidade_de_Probabilidade']
     print(df)'''
 
   # Iterar sobre os DataFrames na coluna do DataFrame mestre
   for idx, df in enumerate(df_mestre['Dataframe_Probabilidade']):
-    
+
     # Calcular a potência
     df['Potência'] = 0.5 * rho * A * (df['Velocidade_Vento_resultante_m/s'] ** 3) / 10**3  # Em kW
     # Calcular a potência ponderada
     df['Potência_Ponderada'] = df['Potência'] * df['Densidade_de_Probabilidade']
-    
+
     df = df.sort_values(by='Velocidade_Vento_resultante_m/s')
-    print(df.head(40))
-    print('\n')
-    print(df.tail(40))
-    
+    #print(df.head(40))
+    #print('\n')
+    #print(df.tail(40))
+
     '''# Identificar estilo com base em critérios (substitua conforme necessário)
     estacao = estacao_lista[idx] if idx < len(estacao_lista) else 'Outono'
     horario = horario_lista[idx] if idx < len(horario_lista) else '15:00'
@@ -211,7 +211,7 @@ def usuario_potencia(perguntas, pressao, estacao, ano, horario):
   except:
     print('Variáveis demais com o valor "Todas" ou "0". Precisam ser no máximo duas.')
     return
-    
+
   pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_lista)
 
   #return tabela
