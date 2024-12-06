@@ -98,8 +98,6 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico):
 
   df_combinado = df_combinado.sort_values(by='Velocidade_Vento_resultante_m/s')
   print(df_combinado.head(40))
-  print('\n')
-  print(df_combinado.tail(40))
   return df_combinado
 
 def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir_grafico):
