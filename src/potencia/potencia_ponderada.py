@@ -10,6 +10,9 @@ def pond_potencia(df_mestre, pressao, estacao, ano, horario):
   A = 1       # Área da unitária da turbina (m^2)
 
   for df in df_mestre['Dataframe_Probabilidade']:
+    # Calcular a potência para cada velocidade
+    df['Potência'] = 0.5 * rho * A * (df['Velocidade_Vento_resultante_m/s'] ** 3) / 10**3  # Em kW
+    df['Potência_Ponderada'] = df['Potência'] * df['Densidade_de_Probabilidade']
     print(df)
 
 def potencia(pressao, estacao, ano, horario):
