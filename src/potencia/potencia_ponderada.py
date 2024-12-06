@@ -72,6 +72,7 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
   handles = []
   labels = []
   linestyle = '-'  # Default linestyle
+  cor = 'black'  # Default color
 
   identificacao(pressao_lista, estacao_lista, ano_lista, horario_lista)
 
@@ -89,15 +90,15 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
     # Calcular a potência ponderada
     df['Potência_Ponderada'] = df['Potência'] * df['Densidade_de_Probabilidade']
 
-    # Identificar estilo com base em critérios (substitua conforme necessário)
+    '''# Identificar estilo com base em critérios (substitua conforme necessário)
     estacao = estacao_lista[idx] if idx < len(estacao_lista) else 'Outono'
     horario = horario_lista[idx] if idx < len(horario_lista) else '15:00'
     cor = cores_est.get(estacao, 'black')
-    linestyle = linestyles_hor.get(horario, '-')
+    linestyle = linestyles_hor.get(horario, '-')'''
 
     # Plotar a curva
     ax.plot(df['Velocidade_Vento_resultante_m/s'], df['Potência_Ponderada'],
-            label=f'Estação: {estacao}, Horário: {horario}',
+            label=f'Estação: {estacao_lista}, Horário: {horario_lista}',
             color=cor, linestyle=linestyle)
 
   # Configurar o gráfico
