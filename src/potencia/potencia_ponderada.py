@@ -48,10 +48,10 @@ def potencia(pressao, estacao, ano, horario):
       elif chave == 'Horário':
         horario_lista = [valor]
 
-    print(f'pressao_lista: {pressao_lista}')
-    print(f'estacao_lista: {estacao_lista}')
-    print(f'ano_lista: {ano_lista}')
-    print(f'horario_lista: {horario_lista}')
+  print(f'pressao_lista: {pressao_lista}')
+  print(f'estacao_lista: {estacao_lista}')
+  print(f'ano_lista: {ano_lista}')
+  print(f'horario_lista: {horario_lista}')
 
   if contagem_todos > 2:
     return 'Variáveis demais com o valor "Todas" ou "0". Precisam ser no máximo duas.'
