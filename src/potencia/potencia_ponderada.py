@@ -94,6 +94,7 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
     df = df.sort_values(by='Velocidade_Vento_resultante_m/s')
     print(df.head(40))
     print('\n')
+    print(df.tail(40))
     
     '''# Identificar estilo com base em critérios (substitua conforme necessário)
     estacao = estacao_lista[idx] if idx < len(estacao_lista) else 'Outono'
