@@ -85,38 +85,37 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
 
   # Iterar sobre os DataFrames na coluna do DataFrame mestre
   for idx, df in enumerate(df_mestre['Dataframe_Probabilidade']):
-
     # Resetar o índice do DataFrame
     df = df.reset_index(drop=True)
-    
+
     # Calcular a potência
     df['Potência'] = 0.5 * rho * A * (df['Velocidade_Vento_resultante_m/s'] ** 3) / 10**3  # Em kW
     # Calcular a potência ponderada
     df['Potência_Ponderada'] = df['Potência'] * df['Densidade_de_Probabilidade']
 
-    '''# Identificar estilo com base em critérios (substitua conforme necessário)
-    estacao = estacao_lista[idx] if idx < len(estacao_lista) else 'Outono'
-    horario = horario_lista[idx] if idx < len(horario_lista) else '15:00'
-    cor = cores_est.get(estacao, 'black')
-    linestyle = linestyles_hor.get(horario, '-')'''
-
     # Identificar a estação e o horário correspondentes
     estacao = df_mestre.loc[idx, 'Estação']
     horario = df_mestre.loc[idx, 'Horário']
 
-    # Plotar a curva
-    ax.plot(df['Velocidade_Vento_resultante_m/s'], df['Potência_Ponderada'],
-            label=f'Estação: {estacao}, Horário: {horario}', linestyle=linestyle)
+    # Definir cor e estilo de linha com base na estação e horário
+    cor = cores_est.get(estacao, 'black')
+    linestyle = linestyles_hor.get(horario, '-')
 
-  # Configurar o gráfico
-  ax.set_title('Potência Ponderada para Diferentes Condições')
+    # Garantir que não há valores nulos ou inválidos
+    x_values = df['Velocidade_Vento_resultante_m/s'].dropna()
+    y_values = df['Potência_Ponderada'].dropna()
+
+    # Inserir um "ponto fantasma" para evitar conexões
+    ax.plot([], [], label=f'Estação: {estacao}, Horário: {horario}', color=cor, linestyle=linestyle)
+
+    # Plotar a curva
+    ax.plot(x_values, y_values, color=cor, linestyle=linestyle)
+
+  # Exibir legenda e título
+  ax.legend()
+  ax.set_title('Potência Ponderada por Velocidade do Vento')
   ax.set_xlabel('Velocidade do Vento (m/s)')
   ax.set_ylabel('Potência Ponderada (kW/m^2)')
-  ax.legend()
-  ax.grid(True)
-
-  # Exibir o gráfico
-  plt.tight_layout()
   plt.show()
 
 
