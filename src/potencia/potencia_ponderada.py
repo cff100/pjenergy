@@ -135,10 +135,10 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
 
     # Plotar a curva
     ax.plot(df['Velocidade_Vento_resultante_m/s'], df['Potência_Ponderada'], color = color, linestyle = linestyle)
-    if label not in labels:  # Evita duplicação na legenda
+    '''if label not in labels:  # Evita duplicação na legenda
       handles.append(line)
       print(handles)
-      labels.append(label)
+      labels.append(label)'''
 
   # Configurar o gráfico
   ax.set_title(titulo)
