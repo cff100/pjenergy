@@ -3,6 +3,15 @@ import src.outras.caso_zero as cz
 import pandas as pd
 
 
+def pond_potencia(df_mestre, pressao, estacao, ano, horario):
+
+  # Parâmetros iniciais
+  rho = 1.225  # Densidade do ar (kg/m^3)
+  A = 1       # Área da unitária da turbina (m^2)
+
+  for df in df_mestre['Dataframe_Probabilidade']:
+    print(df)
+
 def potencia(pressao, estacao, ano, horario):
 
   # Lista de caminhos para os arquivos CSV
@@ -87,7 +96,7 @@ def usuario_potencia(perguntas, pressao, estacao, ano, horario):
   else:
     pass
 
-  tabela = potencia(pressao, estacao, ano, horario)
+  df_mestre = potencia(pressao, estacao, ano, horario)
+  pond_potencia(df_mestre, pressao, estacao, ano, horario)
 
-
-  return tabela
+  #return tabela
