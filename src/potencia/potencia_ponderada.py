@@ -90,8 +90,9 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
     df['Potência'] = 0.5 * rho * A * (df['Velocidade_Vento_resultante_m/s'] ** 3) / 10**3  # Em kW
     # Calcular a potência ponderada
     df['Potência_Ponderada'] = df['Potência'] * df['Densidade_de_Probabilidade']
+    
+    df = df.sort_values(by='Velocidade_Vento_resultante_m/s')
     print(df)
-
     '''# Identificar estilo com base em critérios (substitua conforme necessário)
     estacao = estacao_lista[idx] if idx < len(estacao_lista) else 'Outono'
     horario = horario_lista[idx] if idx < len(horario_lista) else '15:00'
