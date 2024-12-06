@@ -104,10 +104,12 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
     x_values = df['Velocidade_Vento_resultante_m/s'].dropna()
     y_values = df['Potência_Ponderada'].dropna()
 
-
-    # Plotar a curva
-    ax.plot(df['Velocidade_Vento_resultante_m/s'], df['Potência_Ponderada'],
+    # Plotar a curva apenas com os dados relevantes
+    ax.plot(x_values, y_values,
             label=f'Estação: {estacao}, Horário: {horario}', linestyle=linestyle)
+    '''# Plotar a curva
+    ax.plot(df['Velocidade_Vento_resultante_m/s'], df['Potência_Ponderada'],
+            label=f'Estação: {estacao}, Horário: {horario}', linestyle=linestyle)'''
 
   # Configurar o gráfico
   ax.set_title('Potência Ponderada para Diferentes Condições')
