@@ -96,9 +96,13 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
     cor = cores_est.get(estacao, 'black')
     linestyle = linestyles_hor.get(horario, '-')'''
 
+    # Identificar a estação e o horário correspondentes
+    estacao = df_mestre.loc[idx, 'Estação']
+    horario = df_mestre.loc[idx, 'Horário']
+
     # Plotar a curva
     ax.plot(df['Velocidade_Vento_resultante_m/s'], df['Potência_Ponderada'],
-            label=f'Estação: {estacao_lista}, Horário: {horario_lista}',
+            label=f'Estação: {estacao}, Horário: {horario}',
             color=cor, linestyle=linestyle)
 
   # Configurar o gráfico
