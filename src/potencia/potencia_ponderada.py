@@ -70,6 +70,7 @@ def potencia(pressao, estacao, ano, horario):
           nova_linha = {'Pressão': p, 'Estação': est, 'Ano': an, 'Horário': hor, 'Dataframe_Probabilidade': df_prob_local}
 
           df_mestre = pd.concat([df_mestre, pd.DataFrame([nova_linha])], ignore_index=True)
+  print(df_mestre['Dataframe_Probabilidade'][0])
 
   return df_mestre
 
