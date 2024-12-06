@@ -99,8 +99,8 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
     ano = df_mestre.loc[idx, 'Ano']
 
     if i == [0, 0, 1, 1]:
-      titulo = f'Potência Ponderada: Ano {ano} - Horário: {horario}'
-      label = f'Pr: {pressao} - Est: {estacao}'
+      titulo = f'Potência Ponderada: Ano {ano} - Horário: {horario}  (Diversas Pressões)'
+      label = f'Est: {estacao}'
       color = cores_est.get(estacao)
 
     elif i == [0, 1, 0, 1]:
@@ -134,7 +134,7 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
       pass
 
     # Plotar a curva
-    line, = ax.plot(df['Velocidade_Vento_resultante_m/s'], df['Potência_Ponderada'], color = color, linestyle = linestyle)
+    ax.plot(df['Velocidade_Vento_resultante_m/s'], df['Potência_Ponderada'], color = color, linestyle = linestyle)
     if label not in labels:  # Evita duplicação na legenda
       handles.append(line)
       print(handles)
@@ -179,9 +179,9 @@ def potencia(pressao, estacao, ano, horario):
   contagem_todos = 0
 
   for chave, valor in variaveis_dict.items():
-    print(f'1 -> chave: {chave}, valor: {valor}')
+    #print(f'1 -> chave: {chave}, valor: {valor}')
     if valor in ['Todos', 'Todas']:
-      print(f'2 -> chave: {chave}, valor: {valor}')
+      #print(f'2 -> chave: {chave}, valor: {valor}')
       if chave == 'Pressão':
         pressao_lista = df_base['Nível_de_Pressão_hPa'].unique().tolist()
       elif chave == 'Estação':
@@ -194,7 +194,7 @@ def potencia(pressao, estacao, ano, horario):
       contagem_todos += 1
 
     else:
-      print(f'3 -> chave: {chave}, valor: {valor}')
+      #print(f'3 -> chave: {chave}, valor: {valor}')
       if chave == 'Pressão':
         pressao_lista = [float(valor)]
       elif chave == 'Estação':
