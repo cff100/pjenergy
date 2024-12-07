@@ -175,6 +175,7 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
     elif i == [1, 1, 1, 1]:
       titulo = f'Potência Ponderada: Pressão: {pressao} - Estação: {estacao} - Ano: {ano} - Horário: {horario}'
       variavel_contada = None
+      titulo_legenda = None
 
     line, = ax.plot(df['Velocidade_Vento_resultante_m/s'], df['Potência_Ponderada'], color = color, linestyle = linestyle)
 
@@ -182,13 +183,6 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
       lista_contagem.append(variavel_contada)
       handles.append(line)
       labels.append(label)
-
-    '''# Plotar a curva
-    line, = ax.plot(df['Velocidade_Vento_resultante_m/s'], df['Potência_Ponderada'], color = color, linestyle = linestyle)
-    if label not in labels:  # Evita duplicação na legenda
-      handles.append(line)
-      print(handles)
-      labels.append(label)'''
 
   # Configurar o gráfico
   ax.set_title(titulo)
