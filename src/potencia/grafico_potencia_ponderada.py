@@ -100,6 +100,7 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
 
     if gerar_pot_media == True:
       potencia_media = simps(df['Potência_Ponderada'], df['Velocidade_Vento_resultante_m/s'])
+      df_mestre.loc[idx, 'Potência_Média'] = potencia_media
       print(f'Potência Ponderada Média: {potencia_media} kW/m^2')
 
     #print(f'df: {df}')
@@ -194,6 +195,8 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
       labels.append(label)
 
   #print(df_mestre['Dataframe_Probabilidade'][0]['Velocidade_Vento_resultante_m/s'])
+  potencia_media_total = df_mestre['Potência_Média'].sum()
+  print(f'Potência Total: {potencia_media_total} kW/m^2')
 
   # Configurar o gráfico
   ax.set_title(titulo)
