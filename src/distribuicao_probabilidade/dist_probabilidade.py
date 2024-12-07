@@ -15,8 +15,10 @@ plataforma_escolhida = "PETROBRAS XXXIII"
 def plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico):
 
   # Lista de caminhos para os arquivos CSV
-  arquivos_csv = ['/content/pjenergy/data/dados_interpolados/df_interpolado_Verao.csv', '/content/pjenergy/data/dados_interpolados/df_interpolado_Outono.csv', '/content/pjenergy/data/dados_interpolados/df_interpolado_Inverno.csv', '/content/pjenergy/data/dados_interpolados/df_interpolado_Primavera.csv']
-
+  arquivos_csv = ['/content/pjenergy/data/dados_interpolados/df_interpolado_Verao.csv', 
+                  '/content/pjenergy/data/dados_interpolados/df_interpolado_Outono.csv', 
+                  '/content/pjenergy/data/dados_interpolados/df_interpolado_Inverno.csv', 
+                  '/content/pjenergy/data/dados_interpolados/df_interpolado_Primavera.csv']
   # Lista para armazenar os DataFrames
   dataframes = [pd.read_csv(arquivo) for arquivo in arquivos_csv]
 
