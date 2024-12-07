@@ -102,7 +102,7 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
 
 
     if i == [0, 0, 1, 1]:  # i = [i_pr, i_est, i_ano, i_hor]
-      titulo = f'Potência Ponderada: Ano {ano} - Horário: {horario}  (Diversas Pressões)'
+      titulo = f'Potência Ponderada: Ano: {ano} - Horário: {horario}  (Diversas Pressões)'
       titulo_legenda = 'Estações'
       label = f'{estacao}'
       color = cores_est.get(estacao)
@@ -110,7 +110,7 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
       
 
     elif i == [0, 1, 0, 1]:
-      titulo = f'Potência Ponderada: Estação {estacao} - Horário: {horario}  (Diversas Pressões)'
+      titulo = f'Potência Ponderada: Estação: {estacao} - Horário: {horario}  (Diversas Pressões)'
       titulo_legenda = 'Anos'
       label = f'{ano}'
       color = cores_hor.get(horario)
@@ -118,7 +118,7 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
 
 
     elif i == [0, 1, 1, 0]:
-      titulo = f'Potência Ponderada: Estação {estacao} - Ano: {ano}  (Diversas Pressões)'
+      titulo = f'Potência Ponderada: Estação: {estacao} - Ano: {ano}  (Diversas Pressões)'
       titulo_legenda = 'Horários'
       label = f'{horario}'
       color = cores_hor.get(horario)
@@ -126,21 +126,25 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
 
 
     elif i == [1, 0, 0, 1]:
-      titulo = f'Potência Ponderada: Pressão {pressao} - Horário: {horario}  (Diversos Anos)'
+      titulo = f'Potência Ponderada: Pressão: {pressao} - Horário: {horario}  (Diversos Anos)'
       titulo_legenda = 'Estações'
       label = f'{estacao}'
       color = cores_est.get(estacao)
       variavel_contada = estacao
 
     elif i == [1, 0, 1, 0]:
-      titulo = f'Potência Ponderada: Pressão {pressao} - Ano: {ano}  (Diversos Horários)'
+      titulo = f'Potência Ponderada: Pressão: {pressao} - Ano: {ano}  (Diversos Horários)'
       titulo_legenda = 'Estações'
       label = f'{estacao}'
       color = cores_est.get(estacao)
       variavel_contada = estacao
 
     elif i == [1, 1, 0, 0]:
-      pass
+      titulo = f'Potência Ponderada: Pressão: {pressao} - Estação: {estacao}  (Diversos Anos)'
+      titulo_legenda = 'Horários'
+      label = f'{horario}'
+      color = cores_hor.get(horario)
+      variavel_contada = horario
 
     elif i == [0, 1, 1, 1]:
       pass
