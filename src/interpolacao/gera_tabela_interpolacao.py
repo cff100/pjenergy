@@ -35,7 +35,7 @@ horarios = ['03:00', '09:00', '15:00', '21:00']
 plataforma_escolhida = "PETROBRAS XXXIII"
 
 
-def interpolacao():
+def interpolacao(n_pontos = 400):
 
   df = pd.read_csv(f'/content/pjenergy/data/dataframe_ventos/dataframes_ventos_por_plataforma/Era5_Vento_CAMPOS-{plataforma_escolhida}.csv', index_col=0)
 
@@ -56,8 +56,7 @@ def interpolacao():
       Y = df_hora["Altitude_m"]
 
       # Gera uma sequência de valores suavizados para Y, a ser usada para interpolação nos gráficos
-      #Y_smooth = np.linspace(Y.min(), Y.max(), 400)
-      Y_smooth = np.linspace(Y.min(), Y.max(), 500) # Testando mais pontos
+      Y_smooth = np.linspace(Y.min(), Y.max(), n_pontos)
 
       # Coluna de velocidade do vento para o eixo X do gráfico
       X_velocidade = df_hora['Velocidade_Vento_resultante_m/s']
