@@ -100,7 +100,7 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
 
     if gerar_pot_media == True:
       potencia_media = simps(df['Potência_Ponderada'], df['Velocidade_Vento_resultante_m/s'])
-      print(f'Potência Ponderada Média: {potencia_ponderada_media} kW/m^2')
+      print(f'Potência Ponderada Média: {potencia_media} kW/m^2')
 
     #print(f'df: {df}')
     # Identificar a estação e o horário correspondentes
