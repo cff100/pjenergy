@@ -160,7 +160,10 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
       variavel_contada = estacao
 
     elif i == [1, 1, 0, 1]:
-      pass
+      titulo = f'Potência Ponderada: Pressão: {pressao} - Estação: {estacao} - Horário: {horario}'
+      titulo_legenda = 'Ano'
+      label = f'{ano}'
+      variavel_contada = ano
 
     elif i == [1, 1, 1, 0]:
       pass
