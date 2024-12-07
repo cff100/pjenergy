@@ -1,3 +1,8 @@
+''' INFO
+Gera um histograma e a distribuição de Weibull para a velocidade do vento,
+além de uma tabela com os pontos dessa distribuição.
+'''
+
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
