@@ -1,7 +1,7 @@
 import pjenergy.main as mp
 import src.outras.caso_zero as cz
 import pandas as pd
-import .potencia_ponderada_grafico as ppg
+import .grafico_potencia_ponderada as ppg
 
 
 def potencia(pressao, estacao, ano, horario):
