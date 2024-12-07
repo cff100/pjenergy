@@ -1,1 +1,5 @@
-#Esses dataframes foram gerados por dois códigos. Uma para a geração da interpolação e 
+''' INFO
+Esses dataframes foram gerados por dois códigos. 
+Uma para a geração de um dataframe de interpolação 
+e outro para a divisão desse dataframe em um diferente para cada estação.
+'''
