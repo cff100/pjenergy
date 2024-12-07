@@ -80,7 +80,7 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
   i = identificacao(pressao_lista, estacao_lista, ano_lista, horario_lista)
 
   lista_contagem = []
-  
+
   # Iterar sobre os DataFrames na coluna do DataFrame mestre
   for idx, df in enumerate(df_mestre['Dataframe_Probabilidade']):
 
@@ -101,7 +101,7 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
     ano = df_mestre.loc[idx, 'Ano']
 
 
-    if i == [0, 0, 1, 1]:
+    if i == [0, 0, 1, 1]:  # i = [i_pr, i_est, i_ano, i_hor]
       titulo = f'Potência Ponderada: Ano {ano} - Horário: {horario}  (Diversas Pressões)'
       label = f'Est: {estacao}'
       color = cores_est.get(estacao)
@@ -117,7 +117,16 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
       print(f'labels: {labels}')
 
     elif i == [0, 1, 0, 1]:
-      pass
+      titulo = f'Potência Ponderada: Estação {estacao} - Horário: {horario}  (Diversas Pressões)'
+      label = f'Ano: {ano}'
+      color = None
+
+      line, = ax.plot(df['Velocidade_Vento_resultante_m/s'], df['Potência_Ponderada'], color = color, linestyle = linestyle)
+
+      if ano not in lista_contagem:  # Evita repetição na legenda
+        lista_contagem.append(ano)
+        handles.append(line)
+        labels.append(label)
 
     elif i == [0, 1, 1, 0]:
       pass
