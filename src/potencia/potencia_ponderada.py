@@ -1,7 +1,7 @@
 import pjenergy.main as mp
 import src.outras.caso_zero as cz
 import pandas as pd
-import .grafico_potencia_ponderada as ppg
+from .grafico_potencia_ponderada import pond_potencia
 
 
 def potencia(pressao, estacao, ano, horario):
@@ -104,6 +104,4 @@ def usuario_potencia(perguntas, pressao, estacao, ano, horario):
     print('Variáveis demais com o valor "Todas" ou "0". Precisam ser no máximo duas.')
     return
 
-  ppg.pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_lista)
-
-  #return tabela
+  pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_lista)
