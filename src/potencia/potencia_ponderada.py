@@ -1,5 +1,5 @@
 import pjenergy.main as mp
-import src.auxiliares.caso_zero as cz
+import src.outras.caso_zero as cz
 import pandas as pd
 from .grafico_potencia_ponderada import pond_potencia
 
@@ -105,3 +105,5 @@ def usuario_potencia(perguntas, pressao, estacao, ano, horario):
     return
 
   pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_lista)
+
+  return df_mestre

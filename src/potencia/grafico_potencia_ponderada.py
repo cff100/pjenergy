@@ -88,7 +88,6 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
   print(f'df_mestre: {df_mestre}')
   # Iterar sobre os DataFrames na coluna do DataFrame mestre
   for idx, df in enumerate(df_mestre['Dataframe_Probabilidade']):
-    print(f'df: {df}')
     # Calcular a potência
     df['Potência'] = 0.5 * rho * A * (df['Velocidade_Vento_resultante_m/s'] ** 3) / 10**3  # Em kW
     # Calcular a potência ponderada
@@ -99,6 +98,7 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
     #print('\n')
     #print(df.tail(40))
 
+    print(f'df: {df}')
     # Identificar a estação e o horário correspondentes
     estacao = df_mestre.loc[idx, 'Estação']
     horario = df_mestre.loc[idx, 'Horário']
@@ -201,3 +201,4 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
   # Exibir o gráfico
   plt.tight_layout()
   plt.show()
+

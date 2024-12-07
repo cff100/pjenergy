@@ -33,5 +33,5 @@ def prob(perguntas = True, pressao = 'Todas', estacao = 'Todas', ano = 'Todos', 
   return tabela_probabilidade
 
 def pot(perguntas = True, pressao = 'Todas', estacao = 'Todas', ano = 'Todos', horario = 'Todos'):
-  tabela_potencial = pp.usuario_potencia(perguntas, pressao, estacao, ano, horario)
-  #return tabela_potencial
+  df_mestre = pp.usuario_potencia(perguntas, pressao, estacao, ano, horario)
+  #return df_mestre
