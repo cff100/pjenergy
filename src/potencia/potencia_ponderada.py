@@ -166,14 +166,19 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
       variavel_contada = ano
 
     elif i == [1, 1, 1, 0]:
-      pass
+      titulo = f'Potência Ponderada: Pressão: {pressao} - Estação: {estacao} - Ano: {ano}'
+      titulo_legenda = 'Horário'
+      label = f'{horario}'
+      color = cores_hor.get(horario)
+      variavel_contada = horario
 
     elif i == [1, 1, 1, 1]:
-      pass
+      titulo = f'Potência Ponderada: Pressão: {pressao} - Estação: {estacao} - Ano: {ano} - Horário: {horario}'
+      variavel_contada = None
 
     line, = ax.plot(df['Velocidade_Vento_resultante_m/s'], df['Potência_Ponderada'], color = color, linestyle = linestyle)
 
-    if variavel_contada not in lista_contagem:  # Evita repetição na legenda
+    if variavel_contada not in lista_contagem and i != [1, 1, 1, 1]:  # Evita repetição na legenda
       lista_contagem.append(variavel_contada)
       handles.append(line)
       labels.append(label)
