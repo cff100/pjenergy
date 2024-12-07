@@ -189,7 +189,7 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
       handles.append(line)
       labels.append(label)
 
-  print(df_mestre['Dataframe_Probabilidade'][0]['Plataforma'])
+  print(df_mestre['Dataframe_Probabilidade'][0]['Potência_Ponderada'])
 
   # Configurar o gráfico
   ax.set_title(titulo)
