@@ -75,7 +75,7 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
   handles = []
   labels = []
   linestyle = '-'  # Default linestyle
-  color = 'black'  # Default color
+  color = None  # Default color
 
   i = identificacao(pressao_lista, estacao_lista, ano_lista, horario_lista)
 
@@ -103,33 +103,49 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
 
     if i == [0, 0, 1, 1]:  # i = [i_pr, i_est, i_ano, i_hor]
       titulo = f'Potência Ponderada: Ano {ano} - Horário: {horario}  (Diversas Pressões)'
-      label = f'Est: {estacao}'
+      titulo_legenda = 'Estações'
+      label = f'{estacao}'
       color = cores_est.get(estacao)
+      variavel_contada = estacao
 
-      line, = ax.plot(df['Velocidade_Vento_resultante_m/s'], df['Potência_Ponderada'], color = color, linestyle = linestyle)
+      '''line, = ax.plot(df['Velocidade_Vento_resultante_m/s'], df['Potência_Ponderada'], color = color, linestyle = linestyle)
 
       if estacao not in lista_contagem:  # Evita repetição na legenda
         lista_contagem.append(estacao)
         handles.append(line)
-        labels.append(label)
-      print(f'lista_contagem: {lista_contagem}')
-      print(f'handles: {handles}')
-      print(f'labels: {labels}')
+        labels.append(label)'''
+      
 
     elif i == [0, 1, 0, 1]:
       titulo = f'Potência Ponderada: Estação {estacao} - Horário: {horario}  (Diversas Pressões)'
-      label = f'Ano: {ano}'
-      color = None
+      titulo_legenda = 'Anos'
+      label = f'{ano}'
+      color = cores_hor.get(horario)
+      variavel_contada = ano
 
-      line, = ax.plot(df['Velocidade_Vento_resultante_m/s'], df['Potência_Ponderada'], color = color, linestyle = linestyle)
+      '''line, = ax.plot(df['Velocidade_Vento_resultante_m/s'], df['Potência_Ponderada'], color = color, linestyle = linestyle)
 
       if ano not in lista_contagem:  # Evita repetição na legenda
         lista_contagem.append(ano)
         handles.append(line)
-        labels.append(label)
+        labels.append(label)'''
 
     elif i == [0, 1, 1, 0]:
-      pass
+      titulo = f'Potência Ponderada: Estação {estacao} - Ano: {ano}  (Diversas Pressões)'
+      titulo_legenda = 'Horários'
+      label = f'{horario}'
+      color = cores_hor.get(horario)
+      variavel_contada = horario
+
+      '''line, = ax.plot(df['Velocidade_Vento_resultante_m/s'], df['Potência_Ponderada'], color = color, linestyle = linestyle)
+
+      if horario not in lista_contagem:  # Evita repetição na legenda
+        lista_contagem.append(horario)
+        handles.append(line)
+        labels.append(label)
+      print(f'lista_contagem: {lista_contagem}')
+      print(f'handles: {handles}')
+      print(f'labels: {labels}')'''
 
     elif i == [1, 0, 0, 1]:
       pass
@@ -155,6 +171,13 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
     elif i == [1, 1, 1, 1]:
       pass
 
+    line, = ax.plot(df['Velocidade_Vento_resultante_m/s'], df['Potência_Ponderada'], color = color, linestyle = linestyle)
+
+    if variavel_contada not in lista_contagem:  # Evita repetição na legenda
+      lista_contagem.append(variavel_contada)
+      handles.append(line)
+      labels.append(label)
+
     '''# Plotar a curva
     line, = ax.plot(df['Velocidade_Vento_resultante_m/s'], df['Potência_Ponderada'], color = color, linestyle = linestyle)
     if label not in labels:  # Evita duplicação na legenda
@@ -166,7 +189,7 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
   ax.set_title(titulo)
   ax.set_xlabel('Velocidade do Vento (m/s)')
   ax.set_ylabel('Potência Ponderada (kW/m^2)')
-  ax.legend(handles=handles, labels=labels, title="Legenda")  # Adiciona a legenda com os handles e labels armazenados)
+  ax.legend(handles=handles, labels=labels, title=titulo_legenda)  # Adiciona a legenda com os handles e labels armazenados)
   ax.grid(True)
   ax.minorticks_on()
   ax.grid(True, which='minor', alpha=0.3)
