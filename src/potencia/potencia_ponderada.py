@@ -1,5 +1,5 @@
 import pjenergy.main as mp
-import src.outras.caso_zero as cz
+import src.auxiliares.caso_zero as cz
 import pandas as pd
 from .grafico_potencia_ponderada import pond_potencia
 
