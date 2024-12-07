@@ -107,13 +107,6 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
       label = f'{estacao}'
       color = cores_est.get(estacao)
       variavel_contada = estacao
-
-      '''line, = ax.plot(df['Velocidade_Vento_resultante_m/s'], df['Potência_Ponderada'], color = color, linestyle = linestyle)
-
-      if estacao not in lista_contagem:  # Evita repetição na legenda
-        lista_contagem.append(estacao)
-        handles.append(line)
-        labels.append(label)'''
       
 
     elif i == [0, 1, 0, 1]:
@@ -123,12 +116,6 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
       color = cores_hor.get(horario)
       variavel_contada = ano
 
-      '''line, = ax.plot(df['Velocidade_Vento_resultante_m/s'], df['Potência_Ponderada'], color = color, linestyle = linestyle)
-
-      if ano not in lista_contagem:  # Evita repetição na legenda
-        lista_contagem.append(ano)
-        handles.append(line)
-        labels.append(label)'''
 
     elif i == [0, 1, 1, 0]:
       titulo = f'Potência Ponderada: Estação {estacao} - Ano: {ano}  (Diversas Pressões)'
@@ -137,18 +124,13 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
       color = cores_hor.get(horario)
       variavel_contada = horario
 
-      '''line, = ax.plot(df['Velocidade_Vento_resultante_m/s'], df['Potência_Ponderada'], color = color, linestyle = linestyle)
-
-      if horario not in lista_contagem:  # Evita repetição na legenda
-        lista_contagem.append(horario)
-        handles.append(line)
-        labels.append(label)
-      print(f'lista_contagem: {lista_contagem}')
-      print(f'handles: {handles}')
-      print(f'labels: {labels}')'''
 
     elif i == [1, 0, 0, 1]:
-      pass
+      titulo = f'Potência Ponderada: Pressão {pressao} - Horário: {horario}  (Diversos Anos)'
+      titulo_legenda = 'Estações'
+      label = f'{estacao}'
+      color = cores_est.get(estacao)
+      variavel_contada = estacao
 
     elif i == [1, 0, 1, 0]:
       pass
