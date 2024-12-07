@@ -147,10 +147,17 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
       variavel_contada = horario
 
     elif i == [0, 1, 1, 1]:
-      pass
+      titulo = f'Potência Ponderada: Estação: {estacao} - Ano: {ano} - Horário: {horario}'
+      titulo_legenda = 'Pressões'
+      label = f'{pressao}'
+      variavel_contada = pressao
 
     elif i == [1, 0, 1, 1]:
-      pass
+      titulo = f'Potência Ponderada: Pressão: {pressao} - Ano: {ano} - Horário: {horario}'
+      titulo_legenda = 'Estações'
+      label = f'{estacao}'
+      color = cores_est.get(estacao)
+      variavel_contada = estacao
 
     elif i == [1, 1, 0, 1]:
       pass
