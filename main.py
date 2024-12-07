@@ -32,6 +32,11 @@ def prob(perguntas = True, pressao = 'Todas', estacao = 'Todas', ano = 'Todos', 
   tabela_probabilidade = dp.usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir_grafico)
   return tabela_probabilidade
 
-def pot(perguntas = True, pressao = 'Todas', estacao = 'Todas', ano = 'Todos', horario = 'Todos'):
-  df_mestre = pp.usuario_potencia(perguntas, pressao, estacao, ano, horario)
-  #return df_mestre
+def pot(perguntas = True, pressao = 'Todas', estacao = 'Todas', ano = 'Todos', horario = 'Todos', gerar_pot_media = False):
+  df_mestre = pp.usuario_potencia(perguntas, pressao, estacao, ano, horario, gerar_pot_media)
+  return df_mestre
+
+def pot_media(perguntas = True, pressao = 'Todas', estacao = 'Todas', ano = 'Todos', horario = 'Todos'):
+  gerar_pot_media = True
+  df_mestre = pot(perguntas, pressao, estacao, ano, horario, gerar_pot_media)
+

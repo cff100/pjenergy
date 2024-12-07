@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-
+from scipy.integrate import simps
 
 
 def identificacao(pressao_lista, estacao_lista, ano_lista, horario_lista):
@@ -36,7 +36,7 @@ def identificacao(pressao_lista, estacao_lista, ano_lista, horario_lista):
 
 
 
-def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_lista):
+def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_lista, gerar_pot_media):
 
   # Parâmetros iniciais
   rho = 1.225  # Densidade do ar (kg/m^3)
@@ -97,6 +97,10 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
     #print(df.head(40))
     #print('\n')
     #print(df.tail(40))
+
+    if gerar_pot_media == True:
+      potencia_media = simps(df['Potência_Ponderada'], df['Velocidade_Vento_resultante_m/s'])
+      print(f'Potência Ponderada Média: {potencia_ponderada_media} kW/m^2')
 
     #print(f'df: {df}')
     # Identificar a estação e o horário correspondentes
@@ -189,7 +193,7 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
       handles.append(line)
       labels.append(label)
 
-  print(df_mestre['Dataframe_Probabilidade'][0]['Velocidade_Vento_resultante_m/s'])
+  #print(df_mestre['Dataframe_Probabilidade'][0]['Velocidade_Vento_resultante_m/s'])
 
   # Configurar o gráfico
   ax.set_title(titulo)
