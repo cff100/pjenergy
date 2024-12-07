@@ -1,0 +1,5 @@
+''' INFO
+Esses dataframes foram obtidos a partir do código na pasta Obtenção_de_dados. 
+Os dataframes (separados por anos) obtidos nesse código foram unidos, 
+para depois serem separados pelo nome da plataforma.
+'''
