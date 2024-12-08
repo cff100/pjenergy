@@ -1,3 +1,8 @@
+''' INFO
+Recebe o input do usuário e o usa para filtrar e calcular médias do banco de dados, quando necessário.
+'''
+
+
 import pandas as pd
 from datetime import datetime
 from .simplifica import simplifica_plat
