@@ -3,7 +3,7 @@ import src.perfis.numero_linhas_colunas as nlc
 import src.perfis.iteracao_graficos as itg
 import src.distribuicao_probabilidade.dist_probabilidade as dp
 import src.potencia.potencia_ponderada as pp
-import src.potencia.potencia_altura as pa
+import src.potencia.potencia_comparacao_alturas as pca
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -38,5 +38,5 @@ def pot(perguntas = True, pressao = 'Todas', estacao = 'Todas', ano = 'Todos', h
   return df_mestre
 
 def pot_media(l_vel_inf = 3, l_vel_sup = 24):
-  pa.potencia_altura(l_vel_inf, l_vel_sup)
+  pca.potencia_altura(l_vel_inf, l_vel_sup)
   #return
