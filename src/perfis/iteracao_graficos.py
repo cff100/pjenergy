@@ -1,3 +1,7 @@
+''' INFO
+Define a interpolação dos pontos e categoriza cada tipo de combinação de argumentos para gerar os gráficos.
+'''
+
 import numpy as np
 from scipy.interpolate import make_interp_spline
 from .criacao_grafico import criacao_grafico
