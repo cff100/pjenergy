@@ -6,9 +6,8 @@ from .dataframe_media import dataframe_media
 
 
 def dataframe_plataforma_escolhida(plataforma):
-  df = pd.read_csv(f'/content/pjenergy/dataframe_ventos/dataframes_ventos_por_plataforma/Era5_Vento_CAMPOS-{plataforma}.csv', index_col=0)
+  df = pd.read_csv(f'/content/pjenergy/data/dataframe_ventos/dataframes_ventos_por_plataforma/Era5_Vento_CAMPOS-{plataforma}.csv', index_col=0)
   return df
-
 
 def formato_data(data_escolhida, dica = False):
 
