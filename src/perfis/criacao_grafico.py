@@ -1,10 +1,15 @@
+''' INFO
+Gera os gráficos de perfil de velocidade e tempertura.
+'''
+
+
 import matplotlib.pyplot as plt
 import numpy as np
 
 def criacao_grafico(ax, cor, Y, X, Y_smooth, X_smooth, grafico, plataforma, estacao, horario, variavel, componente_velocidade, data):
-  
+
   horarios = ['03:00', '09:00', '15:00', '21:00']
-  
+
   # Verifica o tipo de gráfico a ser gerado
   if grafico == 'original':
 
