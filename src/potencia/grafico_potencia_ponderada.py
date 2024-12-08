@@ -1,3 +1,8 @@
+''' INFO
+Calcula a potência pondera e cria um gráfico para ela.
+'''
+
+
 import matplotlib.pyplot as plt
 from scipy.integrate import simps
 

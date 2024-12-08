@@ -1,3 +1,8 @@
+''' INFO
+Recebe o input do usuário, filtra e cria o dataframe que será utilizado para a plotagem dos gráficos.
+'''
+
+
 import pjenergy.main as mp
 import src.auxiliares.caso_zero as cz
 import pandas as pd
