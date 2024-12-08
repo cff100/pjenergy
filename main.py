@@ -36,7 +36,6 @@ def pot(perguntas = True, pressao = 'Todas', estacao = 'Todas', ano = 'Todos', h
   df_mestre = pp.usuario_potencia(perguntas, pressao, estacao, ano, horario, gerar_pot_media)
   return df_mestre
 
-def pot_media(perguntas = True, pressao = 'Todas', estacao = 'Todas', ano = 'Todos', horario = 'Todos'):
-  gerar_pot_media = True
-  df_mestre = pot(perguntas, pressao, estacao, ano, horario, gerar_pot_media)
-
+def pot_media():
+  #df_mestre = pot(gerar_pot_media = True)
+  return
