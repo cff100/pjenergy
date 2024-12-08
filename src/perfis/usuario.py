@@ -6,7 +6,7 @@ Recebe o input do usuário e o usa para filtrar e calcular médias do banco de d
 import pandas as pd
 from datetime import datetime
 from .simplifica import simplifica_plat
-from .valores_nao_aceitos import valores_nao_aceitos
+from src.auxiliares.valores_nao_aceitos import valores_nao_aceitos
 from .dataframe_media import dataframe_media
 
 
