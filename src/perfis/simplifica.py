@@ -1,3 +1,7 @@
+'''INFO
+Lida com a simplificação das opções de plataforma (de nomes para números)
+'''
+
 from .valores_nao_aceitos import valores_nao_aceitos
 
 

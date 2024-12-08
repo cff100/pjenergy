@@ -1,3 +1,7 @@
+''' INFO
+Define qual será o número de linhas e colunas que serão utilizadas no gráfico, de acordo com os argumentos passados.
+'''
+
 def linhas_colunas(dicionario_argumentos):
 
   variavel = dicionario_argumentos['variavel']
