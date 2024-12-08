@@ -1,3 +1,7 @@
+''' INFO
+Verifica se o valor escolhido para o argumento está entre os válidos.
+'''
+
 def valores_nao_aceitos(valor_escolhido, valores_aceitos, dica = False, nome_variavel = None):
 
   '''Função que garante que a pergunta será repetida caso o usuário responda diferente das alternativas'''
