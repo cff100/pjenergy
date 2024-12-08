@@ -3,6 +3,7 @@ import src.perfis.numero_linhas_colunas as nlc
 import src.perfis.iteracao_graficos as itg
 import src.distribuicao_probabilidade.dist_probabilidade as dp
 import src.potencia.potencia_ponderada as pp
+import src.potencia.potencia_altura as pa
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -32,10 +33,10 @@ def prob(perguntas = True, pressao = 'Todas', estacao = 'Todas', ano = 'Todos', 
   tabela_probabilidade = dp.usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir_grafico)
   return tabela_probabilidade
 
-def pot(perguntas = True, pressao = 'Todas', estacao = 'Todas', ano = 'Todos', horario = 'Todos', gerar_pot_media = False):
-  df_mestre = pp.usuario_potencia(perguntas, pressao, estacao, ano, horario, gerar_pot_media)
+def pot(perguntas = True, pressao = 'Todas', estacao = 'Todas', ano = 'Todos', horario = 'Todos'):
+  df_mestre = pp.usuario_potencia(perguntas, pressao, estacao, ano, horario)
   return df_mestre
 
-def pot_media():
-  #df_mestre = pot(gerar_pot_media = True)
-  return
+def pot_media(l_vel_inf = 3, l_vel_sup = 24):
+  pa.potencia_altura(l_vel_inf, l_vel_sup)
+  #return
