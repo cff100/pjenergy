@@ -121,6 +121,11 @@ def usuario_potencia(perguntas, pressao, estacao, ano, horario, plotar_graficos)
     df_mestre, pressao_lista, estacao_lista, ano_lista, horario_lista = potencia(pressao, estacao, ano, horario, plotar_graficos)
   except:
     print('Variáveis demais com o valor "Todas" ou "0". Precisam ser no máximo duas.')
+    print(f'df_mestre: {df_mestre}')
+    print(f'pressao_lista: {pressao_lista}')
+    print(f'estacao_lista: {estacao_lista}')
+    print(f'ano_lista: {ano_lista}')
+    print(f'horario_lista: {horario_lista}')
     print('x')
     return 
 
