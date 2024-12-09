@@ -67,7 +67,7 @@ def potencia(pressao, estacao, ano, horario):
     return 'Variáveis demais com o valor "Todas" ou "0". Precisam ser no máximo duas.'
 
   # Inicializar o DataFrame corretamente
-df_mestre = pd.DataFrame(columns=['Pressão', 'Estação', 'Ano', 'Horário', 'Dataframe_Probabilidade'])
+  df_mestre = pd.DataFrame(columns=['Pressão', 'Estação', 'Ano', 'Horário', 'Dataframe_Probabilidade'])
 
   for p in pressao_lista:
     for est in estacao_lista:
