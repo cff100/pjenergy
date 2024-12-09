@@ -27,7 +27,7 @@ def potencia_altura(perguntas, l_vel_inf, l_vel_sup, plotar_graficos):
 
     df = df.sort_values(by='Velocidade_Vento_resultante_m/s')
 
-    df_mestre_limitado['Dataframe_Probabilidade'].iloc[idx] = df
+    df_mestre_limitado.at[idx, 'Dataframe_Probabilidade'] = df
 
     potencia_media_local = simps(df['Potência_Ponderada'], df['Velocidade_Vento_resultante_m/s'])
 
