@@ -4,7 +4,6 @@ Calcula a potência pondera e cria um gráfico para ela.
 
 
 import matplotlib.pyplot as plt
-from scipy.integrate import simps
 
 
 def identificacao(pressao_lista, estacao_lista, ano_lista, horario_lista):
@@ -99,11 +98,10 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
     df['Potência_Ponderada'] = df['Potência'] * df['Densidade_de_Probabilidade']
 
     df = df.sort_values(by='Velocidade_Vento_resultante_m/s')
-    #print(df.head(40))
-    #print('\n')
-    #print(df.tail(40))
 
-    #print(f'df: {df}')
+    # Reatribuir o DataFrame modificado ao df_mestre
+    df_mestre['Dataframe_Probabilidade'].iloc[idx] = df
+
     # Identificar a estação e o horário correspondentes
     estacao = df_mestre.loc[idx, 'Estação']
     horario = df_mestre.loc[idx, 'Horário']
