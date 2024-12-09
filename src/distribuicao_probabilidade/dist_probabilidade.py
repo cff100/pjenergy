@@ -38,21 +38,20 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico):
       estacao = 'Todas'
 
   if ano not in ['Todos', '0']:
-    print(df_combinado['Data'].head(10))  # Ver os primeiros valores
-    print(df_combinado['Data'].unique())  # Ver valores únicos
-    # Tentar converter a coluna 'Data' para datetime
+    # Converter a coluna 'Data' para datetime, forçando valores inválidos a NaT
     df_combinado.loc[:, 'Data'] = pd.to_datetime(df_combinado['Data'], errors='coerce')
-    print(df_combinado['Data'].head(10))  # Ver os primeiros valores
-    print(df_combinado['Data'].unique())  # Ver valores únicos
-    # Remover valores inválidos (NaT)
-    df_combinado = df_combinado.dropna(subset=['Data'])
 
-    # Verificar se a conversão foi bem-sucedida
-    if df_combinado['Data'].dtype == 'datetime64[ns]':
-      # Aplicar o filtro pelo ano
-      df_combinado = df_combinado[df_combinado['Data'].dt.year == int(ano)]
-    else:
-      print("Erro: Coluna 'Data' não está no formato datetime.")
+    # Garantir que não há valores inválidos antes de aplicar o filtro
+    if df_combinado['Data'].isna().any():
+      print("Aviso: Alguns valores na coluna 'Data' são inválidos e serão removidos.")
+      df_combinado = df_combinado.dropna(subset=['Data'])
+
+    # Verificar o tipo da coluna para evitar erros
+    if not pd.api.types.is_datetime64_any_dtype(df_combinado['Data']):
+      raise TypeError("Erro: A coluna 'Data' não está no formato datetime após a conversão.")
+
+    # Aplicar o filtro por ano, agora com segurança
+    df_combinado = df_combinado[df_combinado['Data'].dt.year == int(ano)]
 
   else:
     if ano == '0':
