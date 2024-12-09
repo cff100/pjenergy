@@ -3,6 +3,7 @@ import pandas as pd
 
 def potencia_altura(perguntas, l_vel_inf, l_vel_sup):
 
+  df_mestre = pd.DataFrame()
   for an in range(2021, 2024):
     for est in ['Verão', 'Outono', 'Inverno', 'Primavera']:
       df_mestre = pd.concat([df_mestre, mp.pot(perguntas = False, pressao = 'Todas', estacao = est, ano = an, horario = 'Todos')])
