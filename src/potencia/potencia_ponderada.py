@@ -9,7 +9,7 @@ import pandas as pd
 from .grafico_potencia_ponderada import pond_potencia
 
 
-def potencia(pressao, estacao, ano, horario):
+def potencia(pressao, estacao, ano, horario, plotar_graficos):
 
   # Lista de caminhos para os arquivos CSV
   arquivos_csv = ['/content/pjenergy/data/dados_interpolados/df_interpolado_Verao.csv', '/content/pjenergy/data/dados_interpolados/df_interpolado_Outono.csv', '/content/pjenergy/data/dados_interpolados/df_interpolado_Inverno.csv', '/content/pjenergy/data/dados_interpolados/df_interpolado_Primavera.csv']
@@ -58,10 +58,11 @@ def potencia(pressao, estacao, ano, horario):
       elif chave == 'Horário':
         horario_lista = [valor]
 
-  print(f'pressao_lista: {pressao_lista}')
-  print(f'estacao_lista: {estacao_lista}')
-  print(f'ano_lista: {ano_lista}')
-  print(f'horario_lista: {horario_lista}')
+  if plotar_graficos == True:
+    print(f'pressao_lista: {pressao_lista}')
+    print(f'estacao_lista: {estacao_lista}')
+    print(f'ano_lista: {ano_lista}')
+    print(f'horario_lista: {horario_lista}')
 
   if contagem_todos > 2:
     return 'Variáveis demais com o valor "Todas" ou "0". Precisam ser no máximo duas.'
@@ -106,7 +107,7 @@ def usuario_potencia(perguntas, pressao, estacao, ano, horario, plotar_graficos)
 
   '''Inicia a busca pelos argumentos do usuário'''
 
-  if perguntas == True and plotar_graficos == True:
+  if perguntas == True:
     pressao = input('Qual pressão deseja observar (em HPa)? Escolha um número inteiro entre 972 e 1000. Escreva Todas ou 0 para não filtrar nenhuma pressão específica. \n')
     estacao = input('Qual estação deseja observar? Escolha entre Verão, Outono, Inverno ou Primavera. Escreva Todas ou 0 para não filtrar nenhuma estação específica. \n')
     ano = input('Qual ano deseja observar? Escolha um número inteiro entre 2010 e 2023. Escreva Todos ou 0 para não filtrar nenhum ano específico. \n')
@@ -116,7 +117,7 @@ def usuario_potencia(perguntas, pressao, estacao, ano, horario, plotar_graficos)
     pass
 
   try:
-    df_mestre, pressao_lista, estacao_lista, ano_lista, horario_lista = potencia(pressao, estacao, ano, horario)
+    df_mestre, pressao_lista, estacao_lista, ano_lista, horario_lista = potencia(pressao, estacao, ano, horario, plotar_graficos)
   except:
     print('Variáveis demais com o valor "Todas" ou "0". Precisam ser no máximo duas.')
     return
