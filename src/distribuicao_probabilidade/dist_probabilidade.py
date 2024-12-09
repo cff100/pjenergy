@@ -39,31 +39,9 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico):
 
   
   if ano not in ['Todos', '0']:
-    # Converter a coluna 'Data' para datetime, forçando valores inválidos a NaT
-    df_combinado.loc[:, 'Data'] = pd.to_datetime(df_combinado['Data'], errors='coerce')
 
-    # Verificar se há valores NaT
-    if df_combinado['Data'].isna().any():
-      print("Aviso: Alguns valores na coluna 'Data' são inválidos e foram removidos.")
-      # Mostrar valores inválidos para depuração
-      invalid_data = df_combinado[df_combinado['Data'].isna()]
-      print(invalid_data)
-      
-      # Remover valores inválidos
-      df_combinado = df_combinado.dropna(subset=['Data'])
-
-    # Verificar se a coluna 'Data' tem o tipo datetime
-    if not pd.api.types.is_datetime64_any_dtype(df_combinado['Data']):
-      raise TypeError("Erro: A coluna 'Data' não está no formato datetime após a conversão.")
-    
-    # Aplicar o filtro por ano
-    try:
-      ano_int = int(ano)
-    except ValueError:
-      print("Erro: O ano fornecido não é um número válido.")
-      return None
-
-    df_combinado = df_combinado[df_combinado['Data'].dt.year == ano_int]
+    df_combinado.loc[:, 'Data'] = pd.to_datetime(df_combinado['Data'])
+    df_combinado = df_combinado[df_combinado['Data'].dt.year == ano]
 
   else:
     if ano == '0':
