@@ -15,9 +15,9 @@ plataforma_escolhida = "PETROBRAS XXXIII"
 def plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico):
 
   # Lista de caminhos para os arquivos CSV
-  arquivos_csv = ['/content/pjenergy/data/dados_interpolados/df_interpolado_Verao.csv', 
-                  '/content/pjenergy/data/dados_interpolados/df_interpolado_Outono.csv', 
-                  '/content/pjenergy/data/dados_interpolados/df_interpolado_Inverno.csv', 
+  arquivos_csv = ['/content/pjenergy/data/dados_interpolados/df_interpolado_Verao.csv',
+                  '/content/pjenergy/data/dados_interpolados/df_interpolado_Outono.csv',
+                  '/content/pjenergy/data/dados_interpolados/df_interpolado_Inverno.csv',
                   '/content/pjenergy/data/dados_interpolados/df_interpolado_Primavera.csv']
   # Lista para armazenar os DataFrames
   dataframes = [pd.read_csv(arquivo) for arquivo in arquivos_csv]
@@ -38,7 +38,7 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico):
       estacao = 'Todas'
 
   if ano not in ['Todos', '0']:
-    df_combinado['Data'] = pd.to_datetime(df_combinado['Data'])
+    df_combinado.loc[:, 'Data'] = pd.to_datetime(df_combinado['Data'])
     df_combinado = df_combinado[df_combinado['Data'].dt.year == int(ano)]
   else:
     if ano == '0':

@@ -13,6 +13,10 @@ def potencia_altura(perguntas, l_vel_inf, l_vel_sup, plotar_graficos):
   for an in range(2021, 2024):
     for est in ['Verão', 'Outono', 'Inverno', 'Primavera']:
       df_mestre_limitado = pd.concat([df_mestre_limitado, mp.pot(perguntas = False, pressao = 'Todas', estacao = est, ano = an, horario = 'Todos', plotar_graficos = plotar_graficos)])
+      
+  # Remover todas as linhas com NaN na coluna 'Dataframe_Probabilidade'
+  df_mestre_limitado = df_mestre_limitado.dropna(subset=['Dataframe_Probabilidade'])
+  
   print(f'df_mestre_limitado: {df_mestre_limitado}')
 
   for idx, df in enumerate(df_mestre_limitado['Dataframe_Probabilidade']):
@@ -45,7 +49,7 @@ def potencia_altura(perguntas, l_vel_inf, l_vel_sup, plotar_graficos):
 
     df_mestre_limitado.loc[idx, 'Altitude'] = df_limitado['Altitude_m'].iloc[0]
 
-  print(f'df_mestre_limitado: {df_mestre_agrupado}')
+  print(f'df_mestre_limitado: {df_mestre_limitado}')
 
   df_mestre_limitado.groupby('Pressão')
 

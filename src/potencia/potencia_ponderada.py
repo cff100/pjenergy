@@ -66,16 +66,28 @@ def potencia(pressao, estacao, ano, horario):
   if contagem_todos > 2:
     return 'Variáveis demais com o valor "Todas" ou "0". Precisam ser no máximo duas.'
 
+  # Inicializar o DataFrame corretamente
+df_mestre = pd.DataFrame(columns=['Pressão', 'Estação', 'Ano', 'Horário', 'Dataframe_Probabilidade'])
+
   for p in pressao_lista:
     for est in estacao_lista:
-      #print(est)
-      #print(estacao_lista)
       for an in ano_lista:
         for hor in horario_lista:
-          df_prob_local = mp.prob(perguntas = False, pressao = p, estacao = est, ano = an, horario = hor, exibir_grafico=False)
-          nova_linha = {'Pressão': p, 'Estação': est, 'Ano': an, 'Horário': hor, 'Dataframe_Probabilidade': df_prob_local}
+          # Gerar o DataFrame local
+          df_prob_local = mp.prob(perguntas=False, pressao=p, estacao=est, ano=an, horario=hor, exibir_grafico=False)
 
-          df_mestre = pd.concat([df_mestre, pd.DataFrame([nova_linha])], ignore_index=True)
+          # Verificar se é válido antes de adicionar
+          if df_prob_local is not None:  
+            nova_linha = {
+                'Pressão': p,
+                'Estação': est,
+                'Ano': an,
+                'Horário': hor,
+                'Dataframe_Probabilidade': df_prob_local
+            }
+            # Concatenar a nova linha
+            df_mestre = pd.concat([df_mestre, pd.DataFrame([nova_linha])], ignore_index=True)
+
 
   return df_mestre, pressao_lista, estacao_lista, ano_lista, horario_lista
 
@@ -94,7 +106,7 @@ def usuario_potencia(perguntas, pressao, estacao, ano, horario, plotar_graficos)
 
   '''Inicia a busca pelos argumentos do usuário'''
 
-  if perguntas == True:
+  if perguntas == True and plotar_graficos == True:
     pressao = input('Qual pressão deseja observar (em HPa)? Escolha um número inteiro entre 972 e 1000. Escreva Todas ou 0 para não filtrar nenhuma pressão específica. \n')
     estacao = input('Qual estação deseja observar? Escolha entre Verão, Outono, Inverno ou Primavera. Escreva Todas ou 0 para não filtrar nenhuma estação específica. \n')
     ano = input('Qual ano deseja observar? Escolha um número inteiro entre 2010 e 2023. Escreva Todos ou 0 para não filtrar nenhum ano específico. \n')
