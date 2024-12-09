@@ -65,6 +65,7 @@ def potencia(pressao, estacao, ano, horario, plotar_graficos):
     print(f'horario_lista: {horario_lista}')
 
   if contagem_todos > 2:
+    print(f'contagem_todos: {contagem_todos}')
     return 'Variáveis demais com o valor "Todas" ou "0". Precisam ser no máximo duas.'
 
   # Inicializar o DataFrame corretamente
