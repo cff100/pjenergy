@@ -76,8 +76,7 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
     '21:00': ':'          # Linha pontilhada para simbolizar o cair da noite
   }
 
-  # Criar o gráfico
-  fig, ax = plt.subplots(figsize=(12, 6))
+  
 
   # Lista para armazenar handles e labels para a legenda
   handles = []
@@ -111,6 +110,8 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
     pressao = df_mestre.loc[idx, 'Pressão']
     ano = df_mestre.loc[idx, 'Ano']
 
+    # Criar o gráfico
+    fig, ax = plt.subplots(figsize=(12, 6))
 
     if i == [0, 0, 1, 1]:  # i = [i_pr, i_est, i_ano, i_hor]
       titulo = f'Potência Ponderada: Ano: {ano} - Horário: {horario}  (Diversas Pressões)'
