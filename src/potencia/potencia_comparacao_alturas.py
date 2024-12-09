@@ -14,7 +14,7 @@ def potencia_altura(perguntas, l_vel_inf, l_vel_sup, plotar_graficos):
       df_mestre_limitado = pd.concat([df_mestre_limitado, mp.pot(perguntas = False, pressao = 'Todas', estacao = est, ano = an, horario = 'Todos', plotar_graficos = plotar_graficos)])
 
   for idx, df in enumerate(df_mestre_limitado['Dataframe_Probabilidade']):
-
+    print(f"Type of df: {type(df)}, Value: {df}")  # Add this line for debugging
     df = df.loc[
         (df['Velocidade_Vento_resultante_m/s'] >= l_vel_inf) &
         (df['Velocidade_Vento_resultante_m/s'] <= l_vel_sup)
