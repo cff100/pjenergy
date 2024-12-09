@@ -101,7 +101,7 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
 
     # Reatribuir o DataFrame modificado ao df_mestre
     df_mestre.at[idx, 'Dataframe_Probabilidade'] = df
-    
+
     # Identificar a estação e o horário correspondentes
     estacao = df_mestre.loc[idx, 'Estação']
     horario = df_mestre.loc[idx, 'Horário']
@@ -192,7 +192,7 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
       handles.append(line)
       labels.append(label)
 
-
+  print(f'df: {df}')
 
   # Configurar o gráfico
   ax.set_title(titulo)
