@@ -192,7 +192,7 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
       handles.append(line)
       labels.append(label)
 
-  print(f'df: {df}')
+  #print(f'df: {df}')
 
   # Configurar o gráfico
   ax.set_title(titulo)
