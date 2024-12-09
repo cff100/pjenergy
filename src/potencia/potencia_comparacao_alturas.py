@@ -9,6 +9,7 @@ def potencia_altura(perguntas, l_vel_inf, l_vel_sup, plotar_graficos):
   A = 1       # Área da unitária da turbina (m^2)
 
   df_mestre_limitado = pd.DataFrame()
+
   for an in range(2021, 2024):
     for est in ['Verão', 'Outono', 'Inverno', 'Primavera']:
       df_mestre_limitado = pd.concat([df_mestre_limitado, mp.pot(perguntas = False, pressao = 'Todas', estacao = est, ano = an, horario = 'Todos', plotar_graficos = plotar_graficos)])
@@ -32,7 +33,9 @@ def potencia_altura(perguntas, l_vel_inf, l_vel_sup, plotar_graficos):
     # Calcular a potência ponderada
     df_limitado['Potência_Ponderada'] = df_limitado['Potência'] * df_limitado['Densidade_de_Probabilidade']
 
-    df_limitado = df.sort_values(by='Velocidade_Vento_resultante_m/s')
+    df_limitado = df_limitado.sort_values(by='Velocidade_Vento_resultante_m/s')
+
+    #print(f'df_limitado: {df_limitado}')
 
     df_mestre_limitado.at[idx, 'Dataframe_Probabilidade'] = df_limitado
 
