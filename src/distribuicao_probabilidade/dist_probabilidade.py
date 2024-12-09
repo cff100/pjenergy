@@ -38,8 +38,19 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico):
       estacao = 'Todas'
 
   if ano not in ['Todos', '0']:
-    df_combinado.loc[:, 'Data'] = pd.to_datetime(df_combinado['Data'])
-    df_combinado = df_combinado[df_combinado['Data'].dt.year == int(ano)]
+    # Tentar converter a coluna 'Data' para datetime
+    df_combinado.loc[:, 'Data'] = pd.to_datetime(df_combinado['Data'], errors='coerce')
+
+    # Remover valores inválidos (NaT)
+    df_combinado = df_combinado.dropna(subset=['Data'])
+
+    # Verificar se a conversão foi bem-sucedida
+    if df_combinado['Data'].dtype == 'datetime64[ns]':
+      # Aplicar o filtro pelo ano
+      df_combinado = df_combinado[df_combinado['Data'].dt.year == int(ano)]
+    else:
+      print("Erro: Coluna 'Data' não está no formato datetime.")
+      
   else:
     if ano == '0':
       ano = 'Todos'
