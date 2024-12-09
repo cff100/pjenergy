@@ -8,6 +8,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from scipy.stats import weibull_min
 import numpy as np
+import warnings
 
 horarios = ['03:00', '09:00', '15:00', '21:00']
 plataforma_escolhida = "PETROBRAS XXXIII"
@@ -40,9 +41,11 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico):
   
   if ano not in ['Todos', '0']:
     
-    df_combinado['Data'] = pd.to_datetime(df_combinado['Data'])
-    #df_combinado.loc[:, 'Data'] = pd.to_datetime(df_combinado['Data'])
-    df_combinado = df_combinado[df_combinado['Data'].dt.year == ano]
+    with warnings.catch_warnings():
+      warnings.filterwarnings("ignore", category=UserWarning, message="Parsing .*")  # Exemplo para pandas
+      df_combinado['Data'] = pd.to_datetime(df_combinado['Data'])
+      #df_combinado.loc[:, 'Data'] = pd.to_datetime(df_combinado['Data'])
+      df_combinado = df_combinado[df_combinado['Data'].dt.year == ano]
 
   else:
     if ano == '0':

@@ -7,6 +7,7 @@ import pjenergy.main as mp
 import src.auxiliares.caso_zero as cz
 import pandas as pd
 from .grafico_potencia_ponderada import pond_potencia
+import warnings
 
 
 def potencia(pressao, estacao, ano, horario, plotar_graficos):
@@ -87,8 +88,17 @@ def potencia(pressao, estacao, ano, horario, plotar_graficos):
                 'Horário': hor,
                 'Dataframe_Probabilidade': df_prob_local
             }
-            # Concatenar a nova linha
-            df_mestre = pd.concat([df_mestre, pd.DataFrame([nova_linha])], ignore_index=True)
+
+            with warnings.catch_warnings():
+              warnings.filterwarnings(
+                  "ignore",
+                  category=FutureWarning,
+                  message="The behavior of DataFrame concatenation with empty or all-NA entries is deprecated."
+              )
+              
+              # Concatenar a nova linha
+              df_mestre = pd.concat([df_mestre, pd.DataFrame([nova_linha])], ignore_index=True)
+            
 
 
   return df_mestre, pressao_lista, estacao_lista, ano_lista, horario_lista
@@ -123,11 +133,11 @@ def usuario_potencia(perguntas, pressao, estacao, ano, horario, plotar_graficos)
     df_mestre, pressao_lista, estacao_lista, ano_lista, horario_lista = potencia(pressao, estacao, ano, horario, plotar_graficos)
 
   except Exception as e:
-    print('Erro ocorrido:')
+    '''print('Erro ocorrido:')
     print(f'Tipo do erro: {type(e).__name__}')
     print(f'Mensagem do erro: {e}')
     print('Detalhes do traceback:')
-    traceback.print_exc()  # Exibe a sequência de chamadas que causou o erro
+    traceback.print_exc()  # Exibe a sequência de chamadas que causou o erro'''
     print('Variáveis demais com o valor "Todas" ou "0". Precisam ser no máximo duas.')
     return
 
