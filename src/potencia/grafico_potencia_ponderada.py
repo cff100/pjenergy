@@ -101,7 +101,7 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
     df = df.sort_values(by='Velocidade_Vento_resultante_m/s')
     #print(df.head(40))
     #print('\n')
-    #print(df.tail(40))    
+    #print(df.tail(40))
 
     #print(f'df: {df}')
     # Identificar a estação e o horário correspondentes

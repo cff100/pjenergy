@@ -37,6 +37,6 @@ def pot(perguntas = True, pressao = 'Todas', estacao = 'Todas', ano = 'Todos', h
   df_mestre = pp.usuario_potencia(perguntas, pressao, estacao, ano, horario)
   return df_mestre
 
-def pot_media(l_vel_inf = 3, l_vel_sup = 24):
-  pca.potencia_altura(l_vel_inf, l_vel_sup)
+def pot_media(perguntas = True, l_vel_inf = 3, l_vel_sup = 24):
+  pca.potencia_altura(perguntas, l_vel_inf, l_vel_sup)
   #return
