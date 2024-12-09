@@ -2,7 +2,7 @@ import pjenergy.main as mp
 import pandas as pd
 from scipy.integrate import simps
 
-def potencia_altura(perguntas, l_vel_inf, l_vel_sup):
+def potencia_altura(perguntas, l_vel_inf, l_vel_sup, plotar_graficos):
 
   # Parâmetros iniciais
   rho = 1.225  # Densidade do ar (kg/m^3)
@@ -11,7 +11,7 @@ def potencia_altura(perguntas, l_vel_inf, l_vel_sup):
   df_mestre_limitado = pd.DataFrame()
   for an in range(2021, 2024):
     for est in ['Verão', 'Outono', 'Inverno', 'Primavera']:
-      df_mestre_limitado = pd.concat([df_mestre_limitado, mp.pot(perguntas = False, pressao = 'Todas', estacao = est, ano = an, horario = 'Todos')])
+      df_mestre_limitado = pd.concat([df_mestre_limitado, mp.pot(perguntas = False, pressao = 'Todas', estacao = est, ano = an, horario = 'Todos', plotar_graficos = plotar_graficos)])
 
   for idx, df in enumerate(df_mestre_limitado['Dataframe_Probabilidade']):
 

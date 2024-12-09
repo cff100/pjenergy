@@ -90,7 +90,7 @@ def potencia(pressao, estacao, ano, horario):
 
 
 
-def usuario_potencia(perguntas, pressao, estacao, ano, horario):
+def usuario_potencia(perguntas, pressao, estacao, ano, horario, plotar_graficos):
 
   '''Inicia a busca pelos argumentos do usuário'''
 
@@ -109,6 +109,6 @@ def usuario_potencia(perguntas, pressao, estacao, ano, horario):
     print('Variáveis demais com o valor "Todas" ou "0". Precisam ser no máximo duas.')
     return
 
-  df_mestre = pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_lista)
+  df_mestre = pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_lista, plotar_graficos)
 
   return df_mestre

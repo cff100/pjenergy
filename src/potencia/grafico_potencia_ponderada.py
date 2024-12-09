@@ -40,7 +40,7 @@ def identificacao(pressao_lista, estacao_lista, ano_lista, horario_lista):
 
 
 
-def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_lista):
+def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_lista, plotar_graficos):
 
   # Parâmetros iniciais
   rho = 1.225  # Densidade do ar (kg/m^3)
@@ -101,6 +101,9 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
 
     # Reatribuir o DataFrame modificado ao df_mestre
     df_mestre.at[idx, 'Dataframe_Probabilidade'] = df
+
+    if plotar_graficos == False:
+      return df_mestre
 
     # Identificar a estação e o horário correspondentes
     estacao = df_mestre.loc[idx, 'Estação']
