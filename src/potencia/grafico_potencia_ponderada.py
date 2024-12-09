@@ -100,8 +100,8 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
     df = df.sort_values(by='Velocidade_Vento_resultante_m/s')
 
     # Reatribuir o DataFrame modificado ao df_mestre
-    df_mestre['Dataframe_Probabilidade'].iloc[idx] = df
-
+    df_mestre.at[idx, 'Dataframe_Probabilidade'] = df
+    
     # Identificar a estação e o horário correspondentes
     estacao = df_mestre.loc[idx, 'Estação']
     horario = df_mestre.loc[idx, 'Horário']
