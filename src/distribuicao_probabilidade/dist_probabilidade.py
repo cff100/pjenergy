@@ -196,9 +196,15 @@ def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir
       else:
         pass
 
-    print(f'Pressão: {pressao} hPa')
+    if pressao == '0':
+      print('Pressão: Todas')
+    else:
+      print(f'Pressão: {pressao} hPa')
     print(f'Estação: {estacao}')
-    print(f'Ano: {ano}')
+    if ano == '0':
+      print('Ano: Todos')
+    else:
+      print(f'Ano: {ano}')
     print(f'Horário: {horario}')
 
   else:
