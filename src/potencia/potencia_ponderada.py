@@ -77,7 +77,7 @@ def potencia(pressao, estacao, ano, horario, plotar_graficos):
       for an in ano_lista:
         for hor in horario_lista:
           # Gerar o DataFrame local
-          df_prob_local = mp.prob(perguntas=False, pressao=int(p), estacao=est, ano=an, horario=hor, exibir_grafico=False)
+          df_prob_local = mp.prob(perguntas=False, pressao=p, estacao=est, ano=an, horario=hor, exibir_grafico=False)
 
           # Verificar se é válido antes de adicionar
           if df_prob_local is not None:

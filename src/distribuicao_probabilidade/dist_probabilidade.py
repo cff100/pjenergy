@@ -129,7 +129,7 @@ def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir
       valores_aceitos = [str(va) if va not in ('Todas', '0') else va for va in valores_aceitos]
       pressao = input('Qual pressão deseja observar (em HPa)? Escolha um número inteiro entre 972 e 1000. Escreva Todas ou 0 para não filtrar nenhuma pressão específica. \n')
       aceito_1 = vna.valores_nao_aceitos(pressao, valores_aceitos) # Verifica se é um valor aceito
-      
+
       print('\n')
 
     while aceito_2 == False:
@@ -143,7 +143,7 @@ def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir
 
       estacao = input(
           '''Qual estação deseja observar? \n
-          0 - Todas \n 
+          0 - Todas \n
           1 - Verão \n
           2 - Outono \n
           3 - Inverno \n
@@ -179,7 +179,7 @@ def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir
 
       horario = input(
           '''Qual horário deseja observar? \n
-          0 - Todos \n 
+          0 - Todos \n
           1 - 03:00 \n
           2 - 09:00 \n
           3 - 15:00 \n
@@ -208,7 +208,11 @@ def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir
     print(f'Horário: {horario}')
 
   else:
-    
+
+    if type(pressao) != str or type(ano) != str:
+      pressao = str(pressao)
+      ano = str(ano)
+      
     valores_aceitos = list(range(972,1001)) + ['0', 'Todas']
     valores_aceitos = [str(va) if va not in ('Todas', '0') else va for va in valores_aceitos]
     aceito = vna.valores_nao_aceitos(pressao, valores_aceitos, dica = True, nome_variavel = 'pressão')
