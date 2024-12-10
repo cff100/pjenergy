@@ -5,6 +5,7 @@ Recebe o input do usuário, filtra e cria o dataframe que será utilizado para a
 
 import pjenergy.main as mp
 import src.auxiliares.caso_zero as cz
+import src.auxiliares.valores_nao_aceitos as vna
 import pandas as pd
 from .grafico_potencia_ponderada import pond_potencia
 import traceback
