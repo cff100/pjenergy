@@ -221,7 +221,7 @@ def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir
 
     valores_aceitos = list(range(2010,2024)) + ['0', 'Todos']
     valores_aceitos = [str(va) if va not in ('Todos', '0') else va for va in valores_aceitos]
-    aceito = vna.valores_nao_aceitos(ano, valores_aceitos, dica = True, nome_variavel = 'ano')
+    aceito = vna.valores_nao_aceitos(str(ano), valores_aceitos, dica = True, nome_variavel = 'ano')
     if aceito == False:
       return None
 
