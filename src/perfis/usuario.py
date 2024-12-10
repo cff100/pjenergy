@@ -111,7 +111,8 @@ def perguntas_usuario():
 
     aceito_1 = vna.valores_nao_aceitos(variavel, ["1", "2", "3"]) # Verifica se é um valor aceito
 
-    variavel = variaveis_dict[variavel]
+    if aceito_1 == True:
+      variavel = variaveis_dict[variavel]
 
 
 
@@ -133,7 +134,8 @@ def perguntas_usuario():
 
     aceito_2 = vna.valores_nao_aceitos(modo, ["1", "2"])
 
-    modo = modo_dict[modo]
+    if aceito_2 == True:
+      modo = modo_dict[modo]
 
 
   if variavel in ["Velocidade", "Ambas"]: # Caso a variável escolhida inclua velocidade
@@ -160,7 +162,9 @@ def perguntas_usuario():
       print("\n")
 
       aceito_3 = vna.valores_nao_aceitos(componente_velocidade, ["1", "2", "3"])
-      componente_velocidade = componente_velocidade_dict[componente_velocidade] # Recebe o nome real da opção escolhida
+      
+      if aceito_3 == True:
+        componente_velocidade = componente_velocidade_dict[componente_velocidade] # Recebe o nome real da opção escolhida
 
   else:
     componente_velocidade = None   # Caso a variável escolhida seja apenas temperatura
@@ -199,9 +203,10 @@ def perguntas_usuario():
 
     aceito_4 = vna.valores_nao_aceitos(plataforma, ["1", "2", "3", "4", "5", "6", "7", "8", "9"])
 
-    plataforma = plataformas_dict[plataforma]
-    df = dataframe_plataforma_escolhida(plataforma)  # Para escolher o arquivo csv específico da plataforma escolhida
-    df.drop(columns=['Plataforma'], inplace = True)  # Exclui a coluna de plataformas
+    if aceito_4 == True:
+      plataforma = plataformas_dict[plataforma]
+      df = dataframe_plataforma_escolhida(plataforma)  # Para escolher o arquivo csv específico da plataforma escolhida
+      df.drop(columns=['Plataforma'], inplace = True)  # Exclui a coluna de plataformas
 
 
 
@@ -224,7 +229,8 @@ def perguntas_usuario():
 
     aceito_5 = vna.valores_nao_aceitos(indicador, ['1', '2', '3'])
 
-    indicador = indicador_dict[indicador]
+    if aceito_5 == True:
+      indicador = indicador_dict[indicador]
 
   if indicador == 'Sem_filtros':
     # Escolha automática de outros argumentos
@@ -289,6 +295,9 @@ def perguntas_usuario():
 
       aceito_7 = vna.valores_nao_aceitos(estacao, ['1', '2', '3', '4', '5', '6'])
 
+      if aceito_7 == False:
+        continue
+
       estacao = estacoes_dict[estacao]
 
       # Filtra os dataframe para a estação escolhida
@@ -319,6 +328,9 @@ def perguntas_usuario():
         print("\n")
 
         aceito_8, ano = verifica_ano(ano, df)
+
+        if aceito_8 == False:
+          continue
 
         # Filtra os dataframe para o ano escolhido
         if ano not in ['0', 'Todos']:
@@ -414,28 +426,28 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
     df.drop(columns=['Data'], inplace = True)
     df = df.reset_index(drop = True)
 
-  variavel = vna.valores_nao_aceitos(variavel, ["Velocidade", "Temperatura", "Ambas"], dica = True, nome_variavel = 'variavel')
-  if variavel == False:
+  aceito = vna.valores_nao_aceitos(variavel, ["Velocidade", "Temperatura", "Ambas"], dica = True, nome_variavel = 'variavel')
+  if aceito == False:
     return None
-  if variavel == "Temperatura":
+  elif variavel == "Temperatura":
     componente_velocidade = None
 
-  modo = vna.valores_nao_aceitos(modo, ["Original", "Original-Derivada"], dica = True, nome_variavel = 'modo')
-  if modo == False:
+  aceito = vna.valores_nao_aceitos(modo, ["Original", "Original-Derivada"], dica = True, nome_variavel = 'modo')
+  if aceito == False:
     return None
-  if variavel == "Ambas" and modo == 'Original-Derivada':
+  elif variavel == "Ambas" and modo == 'Original-Derivada':
     print("Devido à escolha de ambas variáveis:")
     modo = 'Original'
     print(f"- Modo foi alterado para {modo} \n")
 
-  componente_velocidade = vna.valores_nao_aceitos(componente_velocidade, ["Resultante", "u", "v", None], dica = True, nome_variavel = 'componente_velocidade')
-  if componente_velocidade == False:
+  aceito = vna.valores_nao_aceitos(componente_velocidade, ["Resultante", "u", "v", None], dica = True, nome_variavel = 'componente_velocidade')
+  if aceito == False:
     return None
 
-  estacao = vna.valores_nao_aceitos(estacao, ["Verão", "Outono", "Inverno", "Primavera", "Todas", "Geral", None], dica = True, nome_variavel = 'estacao')
-  if estacao == False:
+  aceito = vna.valores_nao_aceitos(estacao, ["Verão", "Outono", "Inverno", "Primavera", "Todas", "Geral", None], dica = True, nome_variavel = 'estacao')
+  if aceito == False:
     return None
-  if estacao in ['Verão', 'Outono', 'Inverno', 'Primavera', 'Geral']:
+  elif estacao in ['Verão', 'Outono', 'Inverno', 'Primavera', 'Geral']:
     if estacao != 'Geral':
       df = df[df['Estação_do_Ano'] == estacao]
     #df.drop(columns=['Estação_do_Ano'], inplace = True)
@@ -458,8 +470,8 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
 
 
 
-  indicador = vna.valores_nao_aceitos(indicador, ["Diário", "Média", 'Sem_filtros'], dica = True, nome_variavel = 'indicador')
-  if indicador == False:
+  aceito = vna.valores_nao_aceitos(indicador, ["Diário", "Média", 'Sem_filtros'], dica = True, nome_variavel = 'indicador')
+  if aceito == False:
     return None
 
   df_para_interpolacao = df.copy()
