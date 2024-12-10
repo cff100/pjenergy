@@ -59,6 +59,7 @@ def potencia_altura(perguntas, l_vel_inf, l_vel_sup, plotar_graficos):
 
   df_mestre_agrupado = df_mestre_limitado.groupby('Pressão').agg({'Altitude': 'first', 'Potência_Média': 'sum'}).reset_index()
   df_mestre_agrupado = df_mestre_agrupado.sort_values(by='Altitude')
+  df_mestre_agrupado['Potência_Média'] = df_mestre_agrupado['Potência_Média'] / 3
 
   print(df_mestre_agrupado)
 
@@ -74,9 +75,9 @@ def potencia_altura(perguntas, l_vel_inf, l_vel_sup, plotar_graficos):
   )
 
   # Configurações adicionais
-  plt.title('Potência Média vs Altura', fontsize=14)
+  plt.title('Potência Média Anual x Altura', fontsize=14)
   plt.xlabel('Altura (m)', fontsize=12)
-  plt.ylabel('Potência Média (kW/m^2)', fontsize=12)
+  plt.ylabel('Potência Média Anual (kW/m^2)', fontsize=12)
   plt.grid(True, linestyle='--', alpha=0.7)
   plt.legend(fontsize=12)
   plt.tight_layout()
