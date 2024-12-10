@@ -228,7 +228,8 @@ def usuario_potencia(perguntas, pressao, estacao, ano, horario, plotar_graficos)
       return None
 
   try:
-    pressao = float(pressao)
+    if pressao not in ['Todas', '0']:
+      pressao = float(pressao)
   except:
     pass
 
