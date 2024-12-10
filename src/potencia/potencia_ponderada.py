@@ -7,7 +7,7 @@ import pjenergy.main as mp
 import src.auxiliares.caso_zero as cz
 import pandas as pd
 from .grafico_potencia_ponderada import pond_potencia
-import warnings
+import traceback
 
 
 def potencia(pressao, estacao, ano, horario, plotar_graficos):
@@ -77,10 +77,10 @@ def potencia(pressao, estacao, ano, horario, plotar_graficos):
       for an in ano_lista:
         for hor in horario_lista:
           # Gerar o DataFrame local
-          df_prob_local = mp.prob(perguntas=False, pressao=p, estacao=est, ano=an, horario=hor, exibir_grafico=False)
+          df_prob_local = mp.prob(perguntas=False, pressao=int(p), estacao=est, ano=an, horario=hor, exibir_grafico=False)
 
           # Verificar se é válido antes de adicionar
-          if df_prob_local is not None:  
+          if df_prob_local is not None:
             nova_linha = {
                 'Pressão': p,
                 'Estação': est,
@@ -89,16 +89,11 @@ def potencia(pressao, estacao, ano, horario, plotar_graficos):
                 'Dataframe_Probabilidade': df_prob_local
             }
 
-            with warnings.catch_warnings():
-              warnings.filterwarnings(
-                  "ignore",
-                  category=FutureWarning,
-                  message="The behavior of DataFrame concatenation with empty or all-NA entries is deprecated."
-              )
-              
-              # Concatenar a nova linha
-              df_mestre = pd.concat([df_mestre, pd.DataFrame([nova_linha])], ignore_index=True)
-            
+
+
+            # Concatenar a nova linha
+            df_mestre = pd.concat([df_mestre, pd.DataFrame([nova_linha])], ignore_index=True)
+
 
 
   return df_mestre, pressao_lista, estacao_lista, ano_lista, horario_lista
@@ -127,7 +122,7 @@ def usuario_potencia(perguntas, pressao, estacao, ano, horario, plotar_graficos)
   else:
     pass
 
-  import traceback
+  
 
   try:
     df_mestre, pressao_lista, estacao_lista, ano_lista, horario_lista = potencia(pressao, estacao, ano, horario, plotar_graficos)
