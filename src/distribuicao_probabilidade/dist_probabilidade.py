@@ -193,8 +193,8 @@ def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir
       else:
         pass
 
-  argumentos_escolhidos = [pressao, estacao, ano, horario]
-  print(argumentos_escolhidos)
+    argumentos_escolhidos = [pressao, estacao, ano, horario]
+    print(argumentos_escolhidos)
 
   else:
     pass
