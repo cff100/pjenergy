@@ -139,14 +139,12 @@ def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir
       }
 
       estacao = input(
-          '''
-          Qual estação deseja observar? \n
+          '''Qual estação deseja observar? \n
           0 - Todas \n 
           1 - Verão \n
           2 - Outono \n
           3 - Inverno \n
-          4 - Primavera \n \n
-          '''
+          4 - Primavera \n \n'''
           )
 
       print("\n")
@@ -175,14 +173,12 @@ def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir
       }
 
       horario = input(
-          '''
-          Qual horário deseja observar? \n
+          '''Qual horário deseja observar? \n
           0 - Todos \n 
           1 - 03:00 \n
           2 - 09:00 \n
           3 - 15:00 \n
-          4 - 21:00 \n \n
-          '''
+          4 - 21:00 \n \n'''
           )
 
       print("\n")
