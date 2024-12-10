@@ -60,7 +60,7 @@ def potencia_altura(perguntas, l_vel_inf, l_vel_sup, plotar_graficos):
   df_mestre_agrupado = df_mestre_limitado.groupby('Pressão').agg({'Altitude': 'first', 'Potência_Média': 'sum'}).reset_index()
   df_mestre_agrupado = df_mestre_agrupado.sort_values(by='Altitude')
 
-  #print(df_mestre_agrupado)
+  print(df_mestre_agrupado)
 
   # Configurar o gráfico
   plt.figure(figsize=(10, 6))
