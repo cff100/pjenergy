@@ -156,6 +156,7 @@ def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir
       aceito_2 = vna.valores_nao_aceitos(estacao, ['0', '1', '2', '3', '4']) # Verifica se é um valor aceito
       if aceito_2 == True:
         estacao = estacoes_dict[estacao]
+        print(estacao)
       else:
         pass
       #aceito_2 = vna.valores_nao_aceitos(estacao, ['Verão', 'Outono', 'Inverno', 'Primavera', '0', 'Todas']) # Verifica se é um valor aceito
