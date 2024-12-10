@@ -126,7 +126,12 @@ def usuario_potencia(perguntas, pressao, estacao, ano, horario, plotar_graficos)
 
   #try:
   df_mestre, pressao_lista, estacao_lista, ano_lista, horario_lista = potencia(pressao, estacao, ano, horario, plotar_graficos)
-
+  print(f'df_mestre: {df_mestre}')
+  print(f'pressao_lista: {pressao_lista}')
+  print(f'estacao_lista: {estacao_lista}')
+  print(f'ano_lista: {ano_lista}')
+  print(f'horario_lista: {horario_lista}')
+  
   #except Exception as e:
   '''print('Erro ocorrido:')
   print(f'Tipo do erro: {type(e).__name__}')
