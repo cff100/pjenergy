@@ -241,6 +241,9 @@ def usuario_potencia(perguntas, pressao, estacao, ano, horario, plotar_graficos)
 
 
   df_mestre, pressao_lista, estacao_lista, ano_lista, horario_lista = potencia(pressao, estacao, ano, horario, plotar_graficos)
+
+  if pressao_lista is None:
+    return df_mestre
   
   df_mestre = pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_lista, plotar_graficos)
 
