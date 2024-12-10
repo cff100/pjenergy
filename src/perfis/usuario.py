@@ -287,7 +287,7 @@ def perguntas_usuario():
 
       print("\n")
 
-      aceito_7 = vna.valores_nao_aceitos(estacao, ['1', '2', '3', '4', '5'])
+      aceito_7 = vna.valores_nao_aceitos(estacao, ['1', '2', '3', '4', '5', '6'])
 
       estacao = estacoes_dict[estacao]
 

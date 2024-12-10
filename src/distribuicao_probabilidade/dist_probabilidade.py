@@ -3,6 +3,7 @@ Gera um histograma e a distribuição de Weibull para a velocidade do vento,
 além de uma tabela com os pontos dessa distribuição.
 '''
 
+import src.auxiliares.valores_nao_aceitos as vna
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -38,11 +39,11 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico):
     if estacao == '0':
       estacao = 'Todas'
 
-  
+
   if ano not in ['Todos', '0']:
-    
+
     with warnings.catch_warnings():
-      warnings.filterwarnings("ignore", category=UserWarning, message="Parsing .*")  # Exemplo para pandas
+      warnings.filterwarnings("ignore", category=SettingWithCopyWarning)
       df_combinado['Data'] = pd.to_datetime(df_combinado['Data'])
       #df_combinado.loc[:, 'Data'] = pd.to_datetime(df_combinado['Data'])
       df_combinado = df_combinado[df_combinado['Data'].dt.year == ano]
@@ -121,16 +122,83 @@ def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir
 
   '''Inicia a busca pelos argumentos do usuário'''
 
+  aceito_1, aceito_2, aceito_3, aceito_4 = [False] * 4
+
   if perguntas == True:
-    pressao = input('Qual pressão deseja observar (em HPa)? Escolha um número inteiro entre 972 e 1000. Escreva Todas ou 0 para não filtrar nenhuma pressão específica. \n')
-    estacao = input('Qual estação deseja observar? Escolha entre Verão, Outono, Inverno ou Primavera. Escreva Todas ou 0 para não filtrar nenhuma estação específica. \n')
-    ano = input('Qual ano deseja observar? Escolha um número inteiro entre 2010 e 2023. Escreva Todos ou 0 para não filtrar nenhum ano específico. \n')
-    horario = input('Qual horário deseja observar? Escolha entre 03:00, 09:00, 15:00 ou 21:00. Escreva Todos ou 0 para não filtrar nenhum horário específico. \n')
+    while aceito_1 == False:
+      pressao = input('Qual pressão deseja observar (em HPa)? Escolha um número inteiro entre 972 e 1000. Escreva Todas ou 0 para não filtrar nenhuma pressão específica. \n')
+      aceito_1 = vna.valores_nao_aceitos(pressao, list(range(972,1001)) + ['0', 'Todos']) # Verifica se é um valor aceito
+
+    while aceito_2 == False:
+      estacoes_dict = {
+        '0': 'Todas',
+        '1': 'Verão',
+        '2': 'Outono',
+        '3': 'Inverno',
+        '4': 'Primavera',
+      }
+
+      estacao = input(
+          '''
+          Qual estação deseja observar? \n
+          0 - Todas \n 
+          1 - Verão \n
+          2 - Outono \n
+          3 - Inverno \n
+          4 - Primavera \n \n
+          '''
+          )
+
+      print("\n")
+      #estacao = input('Qual estação deseja observar? Escolha entre Verão, Outono, Inverno ou Primavera. Escreva Todas ou 0 para não filtrar nenhuma estação específica. \n')
+      #estacao = estacoes_dict[estacao]
+      aceito_2 = vna.valores_nao_aceitos(estacao, ['0', '1', '2', '3', '4']) # Verifica se é um valor aceito
+      if aceito_2 == True:
+        estacao = estacoes_dict[estacao]
+      else:
+        pass
+      #aceito_2 = vna.valores_nao_aceitos(estacao, ['Verão', 'Outono', 'Inverno', 'Primavera', '0', 'Todas']) # Verifica se é um valor aceito
+
+    while aceito_3 == False:
+      valores_aceitos = list(range(2010,2024)) + ['0', 'Todos']
+      valores_aceitos = [int(va) if va not in ('Todos', '0') else va for va in valores_aceitos]
+      ano = input('Qual ano deseja observar? Escolha um número inteiro entre 2010 e 2023. Escreva Todos ou 0 para não filtrar nenhum ano específico. \n')
+      aceito_3 = vna.valores_nao_aceitos(ano, valores_aceitos) # Verifica se é um valor aceito
+
+    while aceito_4 == False:
+      horario_dict = {
+        '0': 'Todos',
+        '1': '03:00',
+        '2': '09:00',
+        '3': '15:00',
+        '4': '21:00',
+      }
+
+      horario = input(
+          '''
+          Qual horário deseja observar? \n
+          0 - Todos \n 
+          1 - 03:00 \n
+          2 - 09:00 \n
+          3 - 15:00 \n
+          4 - 21:00 \n \n
+          '''
+          )
+
+      print("\n")
+
+      #horario = input('Qual horário deseja observar? Escolha entre 03:00, 09:00, 15:00 ou 21:00. Escreva Todos ou 0 para não filtrar nenhum horário específico. \n')
+      aceito_4 = vna.valores_nao_aceitos(horario, ['0', '1', '2', '3', '4']) # Verifica se é um valor aceito
+      if aceito_4 == True:
+        horario = horario_dict[horario]
+      else:
+        pass
 
   else:
     pass
 
   tabela = plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico)
 
+  print('\n')
 
   return tabela
