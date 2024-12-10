@@ -153,7 +153,7 @@ def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir
       print("\n")
       #estacao = input('Qual estação deseja observar? Escolha entre Verão, Outono, Inverno ou Primavera. Escreva Todas ou 0 para não filtrar nenhuma estação específica. \n')
       #estacao = estacoes_dict[estacao]
-      aceito_2 = vna.valores_nao_aceitos(estacao, ['0', '1', '2', '3', '4']) # Verifica se é um valor aceito
+      aceito_2 = vna.valores_nao_aceitos(estacao, ['0', '1', '2', '3', '4', 'Todas']) # Verifica se é um valor aceito
       if aceito_2 == True:
         if estacao != 'Todas':
           estacao = estacoes_dict[estacao]
@@ -189,7 +189,7 @@ def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir
       print("\n")
 
       #horario = input('Qual horário deseja observar? Escolha entre 03:00, 09:00, 15:00 ou 21:00. Escreva Todos ou 0 para não filtrar nenhum horário específico. \n')
-      aceito_4 = vna.valores_nao_aceitos(horario, ['0', '1', '2', '3', '4']) # Verifica se é um valor aceito
+      aceito_4 = vna.valores_nao_aceitos(horario, ['0', '1', '2', '3', '4', 'Todos']) # Verifica se é um valor aceito
       if aceito_4 == True:
         if horario != 'Todos':
           horario = horario_dict[horario]
