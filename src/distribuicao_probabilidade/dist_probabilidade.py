@@ -234,8 +234,17 @@ def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir
     if aceito == False:
       return None
 
-  pressao = float(pressao)
-  ano = int(ano)
+  try:
+    pressao = float(pressao)
+  except:
+    pass
+
+  try:
+    ano = int(ano)
+  except:
+    pass
+
+
 
   tabela = plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico)
 
