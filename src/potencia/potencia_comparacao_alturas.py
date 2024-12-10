@@ -73,13 +73,13 @@ def potencia_altura(perguntas, l_vel_inf, l_vel_sup, plotar_graficos):
       label='Potência Média'
   )
 
-    # Configurações adicionais
-    plt.title('Potência Média vs Altura', fontsize=14)
-    plt.xlabel('Altura (m)', fontsize=12)
-    plt.ylabel('Potência Média (kW/m^2)', fontsize=12)
-    plt.grid(True, linestyle='--', alpha=0.7)
-    plt.legend(fontsize=12)
-    plt.tight_layout()
+  # Configurações adicionais
+  plt.title('Potência Média vs Altura', fontsize=14)
+  plt.xlabel('Altura (m)', fontsize=12)
+  plt.ylabel('Potência Média (kW/m^2)', fontsize=12)
+  plt.grid(True, linestyle='--', alpha=0.7)
+  plt.legend(fontsize=12)
+  plt.tight_layout()
 
-    # Mostrar o gráfico
-    plt.show()
+  # Mostrar o gráfico
+  plt.show()
