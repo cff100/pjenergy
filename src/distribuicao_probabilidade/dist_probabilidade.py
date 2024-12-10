@@ -125,7 +125,7 @@ def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir
   if perguntas == True:
     while aceito_1 == False:
       valores_aceitos = list(range(972,1001)) + ['0', 'Todos']
-      valores_aceitos = [int(va) if va not in ('Todos', '0') else va for va in valores_aceitos]
+      valores_aceitos = [str(va) if va not in ('Todos', '0') else va for va in valores_aceitos]
       pressao = input('Qual pressão deseja observar (em HPa)? Escolha um número inteiro entre 972 e 1000. Escreva Todas ou 0 para não filtrar nenhuma pressão específica. \n')
       aceito_1 = vna.valores_nao_aceitos(pressao, valores_aceitos) # Verifica se é um valor aceito
 
@@ -161,7 +161,7 @@ def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir
 
     while aceito_3 == False:
       valores_aceitos = list(range(2010,2024)) + ['0', 'Todos']
-      valores_aceitos = [int(va) if va not in ('Todos', '0') else va for va in valores_aceitos]
+      valores_aceitos = [str(va) if va not in ('Todos', '0') else va for va in valores_aceitos]
       ano = input('Qual ano deseja observar? Escolha um número inteiro entre 2010 e 2023. Escreva Todos ou 0 para não filtrar nenhum ano específico. \n')
       aceito_3 = vna.valores_nao_aceitos(ano, valores_aceitos) # Verifica se é um valor aceito
 
