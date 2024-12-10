@@ -87,6 +87,7 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
   i = identificacao(pressao_lista, estacao_lista, ano_lista, horario_lista)
 
   lista_contagem = []
+  contagem_grafico = 0
 
   #print(f'df_mestre: {df_mestre}')
   # Iterar sobre os DataFrames na coluna do DataFrame mestre
@@ -103,15 +104,17 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
 
     if plotar_graficos == False:
       return df_mestre
-    print('?!!!!')
     # Identificar a estação e o horário correspondentes
     estacao = df_mestre.loc[idx, 'Estação']
     horario = df_mestre.loc[idx, 'Horário']
     pressao = df_mestre.loc[idx, 'Pressão']
     ano = df_mestre.loc[idx, 'Ano']
 
-    # Criar o gráfico
-    fig, ax = plt.subplots(figsize=(12, 6))
+    if contagem_grafico == 0:
+      # Criar o gráfico
+      fig, ax = plt.subplots(figsize=(12, 6))
+      contagem_grafico += 1
+
 
     if i == [0, 0, 1, 1]:  # i = [i_pr, i_est, i_ano, i_hor]
       titulo = f'Potência Ponderada: Ano: {ano} - Horário: {horario}  (Diversas Pressões)'

@@ -248,6 +248,5 @@ def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir
 
   tabela = plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico)
 
-  print('\n')
 
   return tabela
