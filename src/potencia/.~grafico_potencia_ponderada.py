@@ -76,7 +76,7 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
     '21:00': ':'          # Linha pontilhada para simbolizar o cair da noite
   }
 
-
+  
 
   # Lista para armazenar handles e labels para a legenda
   handles = []
@@ -103,7 +103,7 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
 
     if plotar_graficos == False:
       return df_mestre
-    print('?!!!!')
+
     # Identificar a estação e o horário correspondentes
     estacao = df_mestre.loc[idx, 'Estação']
     horario = df_mestre.loc[idx, 'Horário']
