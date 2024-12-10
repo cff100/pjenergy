@@ -68,7 +68,7 @@ def potencia(pressao, estacao, ano, horario, plotar_graficos):
 
   if contagem_todos > 2:
     print(f'contagem_todos: {contagem_todos}')
-    return 'Variáveis demais com o valor "Todas" ou "0". Precisam ser no máximo duas.'
+    return 'Variáveis demais com o valor "Todas" ou "0". Precisam ser no máximo duas.', None, None, None, None
 
   # Inicializar o DataFrame corretamente
   df_mestre = pd.DataFrame(columns=['Pressão', 'Estação', 'Ano', 'Horário', 'Dataframe_Probabilidade'])
