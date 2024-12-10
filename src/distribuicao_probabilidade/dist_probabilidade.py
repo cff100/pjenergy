@@ -157,7 +157,7 @@ def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir
       if aceito_2 == True:
         if estacao != 'Todas':
           estacao = estacoes_dict[estacao]
-        print(estacao)
+        #print(estacao)
       else:
         pass
       #aceito_2 = vna.valores_nao_aceitos(estacao, ['Verão', 'Outono', 'Inverno', 'Primavera', '0', 'Todas']) # Verifica se é um valor aceito
@@ -196,8 +196,10 @@ def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir
       else:
         pass
 
-    argumentos_escolhidos = [pressao, estacao, ano, horario]
-    print(argumentos_escolhidos)
+    print(f'Pressão: {pressao} hPa')
+    print(f'Estação: {estacao}')
+    print(f'Ano: {ano}')
+    print(f'Horário: {horario}')
 
   else:
     pass
