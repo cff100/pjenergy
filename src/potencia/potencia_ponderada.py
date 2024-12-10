@@ -232,11 +232,11 @@ def usuario_potencia(perguntas, pressao, estacao, ano, horario, plotar_graficos)
   except:
     pass
 
-  try:
+  '''try:
     ano = int(ano)
   except:
     pass
-
+  '''
   
 
 
