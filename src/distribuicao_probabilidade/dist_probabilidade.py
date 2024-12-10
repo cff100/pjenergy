@@ -128,6 +128,8 @@ def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir
       valores_aceitos = [str(va) if va not in ('Todos', '0') else va for va in valores_aceitos]
       pressao = input('Qual pressão deseja observar (em HPa)? Escolha um número inteiro entre 972 e 1000. Escreva Todas ou 0 para não filtrar nenhuma pressão específica. \n')
       aceito_1 = vna.valores_nao_aceitos(pressao, valores_aceitos) # Verifica se é um valor aceito
+      
+      print('\n')
 
     while aceito_2 == False:
       estacoes_dict = {
