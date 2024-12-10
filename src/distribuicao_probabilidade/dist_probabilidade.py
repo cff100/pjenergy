@@ -1,3 +1,4 @@
+from ast import arguments
 ''' INFO
 Gera um histograma e a distribuição de Weibull para a velocidade do vento,
 além de uma tabela com os pontos dessa distribuição.
@@ -191,6 +192,9 @@ def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir
         horario = horario_dict[horario]
       else:
         pass
+
+  argumentos_escolhidos = [pressao, estacao, ano, horario]
+  print(argumentos_escolhidos)
 
   else:
     pass
