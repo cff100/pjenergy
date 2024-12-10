@@ -42,11 +42,9 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico):
 
   if ano not in ['Todos', '0']:
 
-    with warnings.catch_warnings():
-      warnings.filterwarnings("ignore", category=SettingWithCopyWarning)
-      df_combinado['Data'] = pd.to_datetime(df_combinado['Data'])
-      #df_combinado.loc[:, 'Data'] = pd.to_datetime(df_combinado['Data'])
-      df_combinado = df_combinado[df_combinado['Data'].dt.year == ano]
+    df_combinado['Data'] = pd.to_datetime(df_combinado['Data'])
+    #df_combinado.loc[:, 'Data'] = pd.to_datetime(df_combinado['Data'])
+    df_combinado = df_combinado[df_combinado['Data'].dt.year == ano]
 
   else:
     if ano == '0':
