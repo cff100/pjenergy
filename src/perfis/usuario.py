@@ -52,7 +52,8 @@ def verifica_ano(ano, df, dica = False, nome_variavel = None):
     # Cria uma lista dos anos existentes no dataframe
     anos_dataframe = pd.to_datetime(df['Data']).dt.year.unique()
     set_trace()
-    anos_dataframe = [str(a) for a in anos_dataframe]
+    anos_dataframe = [a for a in anos_dataframe]
+    print(anos_dataframe)
     # Ordena os anos
     anos_dataframe.sort()
     # Verifica se é um valor aceito
