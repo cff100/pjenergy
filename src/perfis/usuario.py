@@ -57,6 +57,7 @@ def verifica_ano(ano, df, dica = False, nome_variavel = None):
     anos_dataframe.sort()
     # Verifica se é um valor aceito
     aceito_8 = vna.valores_nao_aceitos(ano, anos_dataframe, dica, nome_variavel)
+    print(aceito_8)
   return aceito_8, ano
 
 
