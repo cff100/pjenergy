@@ -8,6 +8,7 @@ from datetime import datetime
 from .simplifica import simplifica_plat
 import src.auxiliares.valores_nao_aceitos as vna
 from .dataframe_media import dataframe_media
+from IPython.core.debugger import set_trace
 
 
 def dataframe_plataforma_escolhida(plataforma):
@@ -17,9 +18,6 @@ def dataframe_plataforma_escolhida(plataforma):
 def formato_data(data_escolhida, dica = False):
 
   '''Verifica se a data escolhida está no formato aceito'''
-
-  if data_escolhida == None:   #Caso não haja data específica escolhida, não há avaliação do formato da data
-    return True
 
   try:
     datetime.strptime(data_escolhida, '%Y-%m-%d')
@@ -36,7 +34,7 @@ def presenca_data(data_escolhida, df):
 
   '''Caso seja escolhida uma data, verifica se a data escolhida está presente no dataframe'''
 
-  if (df['Data'] == data_escolhida).any() or data_escolhida == None:
+  if (df['Data'] == data_escolhida).any():
     return True
   else:
     print(f"ERRO: A string '{data_escolhida}' não está presente no dataframe. \n")
@@ -58,6 +56,7 @@ def verifica_ano(ano, df, dica = False, nome_variavel = None):
     anos_dataframe.sort()
     # Verifica se é um valor aceito
     aceito_8 = vna.valores_nao_aceitos(ano, anos_dataframe, dica, nome_variavel)
+    set_trace()
   return aceito_8, ano
 
 
@@ -162,7 +161,7 @@ def perguntas_usuario():
       print("\n")
 
       aceito_3 = vna.valores_nao_aceitos(componente_velocidade, ["1", "2", "3"])
-      
+
       if aceito_3 == True:
         componente_velocidade = componente_velocidade_dict[componente_velocidade] # Recebe o nome real da opção escolhida
 
@@ -242,7 +241,7 @@ def perguntas_usuario():
   elif indicador == 'Diário':  # Se o indicador é Diário, é pedido para escolher um dia
     # Escolha automática de outros argumentos
     estacao = None
-    ano = 'Todos'
+    ano = 'Todos' # Para que o ano correspondente a data não seja deixado de fora
 
 
     while aceito_9 == False:
@@ -254,14 +253,17 @@ def perguntas_usuario():
 
       print("\n")
 
-      aceito_9 = formato_data(data)  # Verificação do formato da data
-      if aceito_9 == True:
-        aceito_9 = presenca_data(data, df) # Verificação da presença da data no dataframe
       if data != None:
-        df = df[df['Data'] == data]  # Filtra os dataframe para a data escolhida
-        df.drop(columns=['Data'], inplace = True)
+        aceito_9 = formato_data(data)  # Verificação do formato da data
+        if aceito_9 == True:
+          aceito_9 = presenca_data(data, df) # Verificação da presença da data no dataframe
+          df = df[df['Data'] == data]  # Filtra os dataframe para a data escolhida
+          df.drop(columns=['Data'], inplace = True)
+      else:
+        aceito_9 = True
 
-    df_para_interpolacao = df.copy()
+
+    df_para_interpolacao = df.copy() #?
 
 
 
@@ -307,9 +309,9 @@ def perguntas_usuario():
 
       # Para garantir um número limite de subplots gerados, escolher todas estações pode causar modificações em outros argumentos.
       elif estacao == 'Todas':
-        if modo != 'Original' or variavel == 'Ambas':
+        if modo == 'Original-Derivada' or variavel == 'Ambas':
           print("Devido à escolha das estações como 'Todas':")
-          if modo != 'Original':
+          if modo == 'Original-Derivada':
             modo = 'Original'
             print(f"- Modo foi alterado para {modo} \n")
           if variavel == 'Ambas':
