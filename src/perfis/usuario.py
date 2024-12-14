@@ -69,10 +69,6 @@ def print_argumentos(argumentos):
   dict3 = {k: v for k, v in argumentos.items() if k in keys_dict3}
 
   print(dict1)
-  print('\n \n')
-  #print(dict2)
-  print('\n \n')
-  #print(dict3)
 
 
 
@@ -255,13 +251,14 @@ def perguntas_usuario():
         aceito_9 = formato_data(data)  # Verificação do formato da data
         if aceito_9 == True:
           aceito_9 = presenca_data(data, df) # Verificação da presença da data no dataframe
-          df = df[df['Data'] == data]  # Filtra os dataframe para a data escolhida
-          df.drop(columns=['Data'], inplace = True)
+          if aceito_9 == True:
+            df = df[df['Data'] == data]  # Filtra os dataframe para a data escolhida
+            df.drop(columns=['Data'], inplace = True)
       else:
         aceito_9 = True
 
 
-    df_para_interpolacao = df.copy() #?
+    df_para_interpolacao = df.copy()
 
 
 
@@ -342,9 +339,11 @@ def perguntas_usuario():
             df.drop(columns=['Ano'], inplace = True)
 
       df_para_interpolacao = df.copy()
+
+      # Verificar se é necessário fazer uma média e chamar a função que o faz
       if estacao == None: # Sempre vai ocorrer quando uma data específica for escolhida ou simplesmente quando o usuário não escolher filtrar estação
         pass
-      else:   # Chama a função que faz a média
+      else:   # Quando é necessário chamar a função para fazer a média
         if estacao == 'Todas':
           estacoes_separadas = True  # Define que a média será para cada estação
         else:
@@ -367,7 +366,7 @@ def perguntas_usuario():
       df_para_interpolacao = df_para_interpolacao
   )
 
-  print_argumentos(argumentos)
+  print_argumentos(argumentos) #Para printar todos os argumentos, menos df e df_para_interpolacao
 
   return argumentos
 
@@ -382,7 +381,7 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
   '''
 
   # Chama uma função que converte o número representativo no nome da plataforma, além de verificar se não foi escolhida uma string invalida.
-  #O nome completo da plataforma também é uma entrada válida.
+  # O nome completo da plataforma ou o número correspondente são entradas válidas.
   plataforma = simplifica_plat(plataforma)
   if plataforma == False:
     return None
@@ -392,48 +391,55 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
   df.drop(columns=['Plataforma'], inplace = True)
 
   # Para alterar argumentos a partir da escolha do argumento prioritário data.
-  if data != None:
-    ano = '0'
-    indicador = 'Diário'
-    estacao = None
-    if estacao != None or ano != '0' and indicador != 'Diário':
-      print("Devido a escolha de uma data específica:")
-      if estacao != None:
-        estacao = None
-        print(f'- Estação foi alterada para {estacao} \n')
-      if ano != 'Todos':
-        ano = 'Todos'
-        print(f'- Ano foi alterado para {ano} \n')
-      if indicador != 'Diário':
-        indicador = 'Diário'
-        print(f'- Indicador foi alterado para {indicador} \n')
+  if data != None and (estacao != None or ano != 'Todos' or indicador != 'Diário'):
+    print("Devido a escolha de uma data específica:")
+    if estacao != None:
+      estacao = None
+      print(f'- Estação foi alterada para {estacao} \n')
+    if ano != 'Todos':
+      ano = 'Todos'
+      print(f'- Ano foi alterado para {ano} \n')
+    if indicador != 'Diário':
+      indicador = 'Diário'
+      print(f'- Indicador foi alterado para {indicador} \n')
 
 
   # Verifica a validade do ano e filtra o dataframe
-  aceito_ano, ano = verifica_ano(ano, df, dica = True, nome_variavel = 'ano')
-  if aceito_ano == False:
-    return None
-  if ano not in ['0', 'Todos']:
-    df['Ano'] = df['Data'].str[:4]
-    df = df[df['Ano'] == ano]
-    df.drop(columns=['Ano'], inplace = True)
+  if ano in ['0', 'Todos']:
+    ano = 'Todos'
+    aceito_8 = True
+  else: # if ano not in ['0', 'Todos']:
+    aceito_ano = verifica_ano(ano, df, dica = True, nome_variavel = 'ano')
+    if aceito_ano == False:
+      return None
+    else:
+      df['Ano'] = df['Data'].str[:4]
+      df = df[df['Ano'] == ano]
+      df.drop(columns=['Ano'], inplace = True)
 
   # Verifica o formato, a presença da data e filtra o dataframe
   if data != None:
     aceito_data = formato_data(data)
     if aceito_data == True:
       aceito_data = presenca_data(data, df)
-    if aceito_data == False:
-      return None
-    df = df[df['Data'] == data]
-    df.drop(columns=['Data'], inplace = True)
-    df = df.reset_index(drop = True)
+      if aceito_data == True:
+        df = df[df['Data'] == data]
+        df.drop(columns=['Data'], inplace = True)
+        df = df.reset_index(drop = True)
+      else:
+        pass
 
+    if aceito_data == False:  # É colocado como um if separado para incluir o resultado do segundo aceito_data
+      return None
+
+    
   aceito = vna.valores_nao_aceitos(variavel, ["Velocidade", "Temperatura", "Ambas"], dica = True, nome_variavel = 'variavel')
   if aceito == False:
     return None
   elif variavel == "Temperatura":
     componente_velocidade = None
+
+
 
   aceito = vna.valores_nao_aceitos(modo, ["Original", "Original-Derivada"], dica = True, nome_variavel = 'modo')
   if aceito == False:
@@ -443,32 +449,36 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
     modo = 'Original'
     print(f"- Modo foi alterado para {modo} \n")
 
+
+
   aceito = vna.valores_nao_aceitos(componente_velocidade, ["Resultante", "u", "v", None], dica = True, nome_variavel = 'componente_velocidade')
   if aceito == False:
     return None
 
+
+
   aceito = vna.valores_nao_aceitos(estacao, ["Verão", "Outono", "Inverno", "Primavera", "Todas", "Geral", None], dica = True, nome_variavel = 'estacao')
   if aceito == False:
     return None
-  elif estacao in ['Verão', 'Outono', 'Inverno', 'Primavera', 'Geral']:
-    if estacao != 'Geral':
-      df = df[df['Estação_do_Ano'] == estacao]
-    #df.drop(columns=['Estação_do_Ano'], inplace = True)
-  elif estacao == 'Todas': # Para garantir um número limite de subplots gerados, escolher todas estações pode causar modificações em outros argumentos.
-    if modo != 'Original' or variavel == 'Ambas':
+  elif estacao in ['Verão', 'Outono', 'Inverno', 'Primavera']:
+    df = df[df['Estação_do_Ano'] == estacao]
+    df.drop(columns=['Estação_do_Ano'], inplace = True)
+  # Para garantir um número limite de subplots gerados, escolher todas estações pode causar modificações em outros argumentos.  
+  elif estacao == 'Todas':
+    if modo == 'Original-Derivada' or variavel == 'Ambas':
       print("Devido à escolha das estações como 'Todas':")
-      if modo != 'Original':
+      if modo == 'Original-Derivada':
         modo = 'Original'
         print(f"- Modo foi alterado para {modo} \n")
       if variavel == 'Ambas':
         variavel = 'Velocidade'
         print(f"- Variável precisa ser 'Velocidade' ou 'Temperatura'. Variável foi alterada automaticamente para {variavel} \n")
-  else:
-    if data == None and indicador != 'Sem_filtros':
-      print("Devido à escolha de data e estacao como None:")
-      indicador = 'Sem_filtros'
-      print(f"- Indicador foi alterado para {indicador} \n")
-      return df
+
+  elif estacao == None and data == None and indicador != 'Sem_filtros':
+    print("Devido à escolha de data e estacao como None:")
+    indicador = 'Sem_filtros'
+    print(f"- Indicador foi alterado para {indicador} \n")
+    return df
 
 
 
@@ -504,7 +514,7 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
     )
 
   print_argumentos(argumentos)
-  #print(argumentos)
+
   return argumentos
 
 
@@ -517,6 +527,5 @@ def argumentos_usuario(perguntas, variavel, modo, componente_velocidade, platafo
     argumentos = perguntas_usuario()
   else:
     argumentos = escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, estacao, indicador, data, ano)
-
 
   return argumentos
