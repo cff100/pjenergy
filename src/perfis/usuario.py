@@ -9,7 +9,7 @@ from .simplifica import simplifica_plat
 import src.auxiliares.valores_nao_aceitos as vna
 from .dataframe_media import dataframe_media
 from IPython.core.debugger import set_trace
-
+#set_trace()
 
 def dataframe_plataforma_escolhida(plataforma):
   df = pd.read_csv(f'/content/pjenergy/data/dataframe_ventos/dataframes_ventos_por_plataforma/Era5_Vento_CAMPOS-{plataforma}.csv', index_col=0)
@@ -56,7 +56,6 @@ def verifica_ano(ano, df, dica = False, nome_variavel = None):
     anos_dataframe.sort()
     # Verifica se é um valor aceito
     aceito_8 = vna.valores_nao_aceitos(ano, anos_dataframe, dica, nome_variavel)
-    set_trace()
   return aceito_8, ano
 
 
@@ -254,6 +253,7 @@ def perguntas_usuario():
       print("\n")
 
       if data != None:
+        set_trace()
         aceito_9 = formato_data(data)  # Verificação do formato da data
         if aceito_9 == True:
           aceito_9 = presenca_data(data, df) # Verificação da presença da data no dataframe
