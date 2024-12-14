@@ -253,7 +253,6 @@ def perguntas_usuario():
       print("\n")
 
       if data != None:
-        set_trace()
         aceito_9 = formato_data(data)  # Verificação do formato da data
         if aceito_9 == True:
           aceito_9 = presenca_data(data, df) # Verificação da presença da data no dataframe
@@ -418,12 +417,12 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
     df.drop(columns=['Ano'], inplace = True)
 
   # Verifica o formato, a presença da data e filtra o dataframe
-  aceito_data = formato_data(data)
-  if aceito_data == True:
-    aceito_data = presenca_data(data, df)
-  if aceito_data == False:
-    return None
   if data != None:
+    aceito_data = formato_data(data)
+    if aceito_data == True:
+      aceito_data = presenca_data(data, df)
+    if aceito_data == False:
+      return None
     df = df[df['Data'] == data]
     df.drop(columns=['Data'], inplace = True)
     df = df.reset_index(drop = True)
