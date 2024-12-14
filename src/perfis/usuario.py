@@ -45,20 +45,17 @@ def verifica_ano(ano, df, dica = False, nome_variavel = None):
 
   '''Verifica se o ano escolhido está presente no dataframe ou se não há escolha específica para ano'''
 
-  if ano == '0' or ano == 'Todos':
-    ano = 'Todos'
-    aceito_8 = True
-  else:
-    ano = int(ano)
-    # Cria uma lista dos anos existentes no dataframe
-    anos_dataframe = pd.to_datetime(df['Data']).dt.year.unique()
-    anos_dataframe = [a for a in anos_dataframe]
-    # Ordena os anos
-    anos_dataframe.sort()
-    # Verifica se é um valor aceito
-    aceito_8 = vna.valores_nao_aceitos(ano, anos_dataframe, dica, nome_variavel)
-    print(aceito_8)
-  return aceito_8, ano
+
+  ano_inteiro = int(ano)
+  # Cria uma lista dos anos existentes no dataframe
+  anos_dataframe = pd.to_datetime(df['Data']).dt.year.unique()
+  anos_dataframe = [a for a in anos_dataframe]
+  # Ordena os anos
+  anos_dataframe.sort()
+  # Verifica se é um valor aceito
+  aceito_8 = vna.valores_nao_aceitos(ano_inteiro, anos_dataframe, dica, nome_variavel)
+
+  return aceito_8
 
 
 def print_argumentos(argumentos):
@@ -330,16 +327,19 @@ def perguntas_usuario():
 
         print("\n")
 
-        aceito_8, ano = verifica_ano(ano, df)
+        if ano in ['0', 'Todos']:
+          ano = 'Todos'
+          aceito_8 = True
+        else: # if ano not in ['0', 'Todos']:
+          aceito_8 = verifica_ano(ano, df)
 
-        if aceito_8 == False:
-          continue
+          if aceito_8 == False:
+            continue
 
-        # Filtra os dataframe para o ano escolhido
-        if ano not in ['0', 'Todos']:
-          df['Ano'] = df['Data'].str[:4]
-          df = df[df['Ano'] == ano]
-          df.drop(columns=['Ano'], inplace = True)
+          # Filtra os dataframe para o ano escolhido
+            df['Ano'] = df['Data'].str[:4]
+            df = df[df['Ano'] == ano]
+            df.drop(columns=['Ano'], inplace = True)
 
       df_para_interpolacao = df.copy()
       if estacao == None: # Sempre vai ocorrer quando uma data específica for escolhida ou simplesmente quando o usuário não escolher filtrar estação
