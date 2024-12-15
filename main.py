@@ -14,7 +14,7 @@ def graf(perguntas = True, variavel = "Ambas", modo = "Original", componente_vel
   if dicionario_argumentos['indicador'] == 'Sem_filtros':
     print('Não é possível criar um gráfico com essa combinação de data e estação \n Dataframe gerado:')
     return dicionario_argumentos
-  if not isinstance(dicionario_argumentos, dict)
+  if not isinstance(dicionario_argumentos, dict):
     return 
 
   n_lin, n_col = nlc.linhas_colunas(dicionario_argumentos)
