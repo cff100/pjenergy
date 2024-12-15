@@ -11,12 +11,11 @@ def graf(perguntas = True, variavel = "Ambas", modo = "Original", componente_vel
 
   dicionario_argumentos = us.argumentos_usuario(perguntas, variavel, modo, componente_velocidade, plataforma, estacao, indicador, data, ano)
 
-  #if not isinstance(dicionario_argumentos, dict):
   if dicionario_argumentos == None:   # Ocorre quando há uma escolha errada de argumentos na escolha direta do usuário
     return 
   elif dicionario_argumentos['indicador'] == 'Sem_filtros':
     print('Não é possível criar um gráfico com essa combinação de data e estação \n Dataframe gerado:')
-    return dicionario_argumentos
+    return dicionario_argumentos['df']
   
 
   n_lin, n_col = nlc.linhas_colunas(dicionario_argumentos)
@@ -27,8 +26,6 @@ def graf(perguntas = True, variavel = "Ambas", modo = "Original", componente_vel
     axs = axs.flatten().tolist()  # Converte para lista
   else:  # Se houver apenas um subplot (caso de 1x1)
     axs = [axs]  # Coloca o único subplot em uma lista
-
-  #print(axs)
 
   itg.iteracao_grafico(dicionario_argumentos, axs)
 

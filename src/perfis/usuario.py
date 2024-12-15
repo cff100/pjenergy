@@ -432,7 +432,7 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
     if aceito_data == False:  # É colocado como um if separado para incluir o resultado do segundo aceito_data
       return None
 
-    
+
   aceito = vna.valores_nao_aceitos(variavel, ["Velocidade", "Temperatura", "Ambas"], dica = True, nome_variavel = 'variavel')
   if aceito == False:
     return None
@@ -463,7 +463,7 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
   elif estacao in ['Verão', 'Outono', 'Inverno', 'Primavera']:
     df = df[df['Estação_do_Ano'] == estacao]
     df.drop(columns=['Estação_do_Ano'], inplace = True)
-  # Para garantir um número limite de subplots gerados, escolher todas estações pode causar modificações em outros argumentos.  
+  # Para garantir um número limite de subplots gerados, escolher todas estações pode causar modificações em outros argumentos.
   elif estacao == 'Todas':
     if modo == 'Original-Derivada' or variavel == 'Ambas':
       print("Devido à escolha das estações como 'Todas':")

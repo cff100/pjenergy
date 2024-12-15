@@ -16,7 +16,7 @@ def linhas_colunas(dicionario_argumentos):
       if indicador == 'Média':
         if estacao in ["Verão", "Outono", "Inverno", "Primavera", "Geral"]:
           n_lin, n_col = 1,1
-        else:
+        else: # estacao = "Todos"
           n_lin, n_col = 2,2
       elif indicador == 'Diário':
         n_lin, n_col = 1,1
@@ -26,7 +26,7 @@ def linhas_colunas(dicionario_argumentos):
       elif indicador == 'Diário':
         n_lin, n_col = 1,2
 
-  elif variavel == "Ambas": # automaticamente o modo é "Original"
+  elif variavel == "Ambas": # Nesse caso, o modo é sempre "Original"
     if indicador == 'Média':
       n_lin, n_col = 1,2
     elif indicador == 'Diário':
