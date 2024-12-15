@@ -11,11 +11,13 @@ def graf(perguntas = True, variavel = "Ambas", modo = "Original", componente_vel
 
   dicionario_argumentos = us.argumentos_usuario(perguntas, variavel, modo, componente_velocidade, plataforma, estacao, indicador, data, ano)
 
-  if dicionario_argumentos['indicador'] == 'Sem_filtros':
+  #if not isinstance(dicionario_argumentos, dict):
+  if dicionario_argumentos == None:   # Ocorre quando há uma escolha errada de argumentos na escolha direta do usuário
+    return 
+  elif dicionario_argumentos['indicador'] == 'Sem_filtros':
     print('Não é possível criar um gráfico com essa combinação de data e estação \n Dataframe gerado:')
     return dicionario_argumentos
-  if not isinstance(dicionario_argumentos, dict):
-    return 
+  
 
   n_lin, n_col = nlc.linhas_colunas(dicionario_argumentos)
   fig, axs = plt.subplots(n_lin, n_col, figsize=(9*n_col, 6*n_lin))
