@@ -83,7 +83,10 @@ def perguntas_usuario():
   aceito_1, aceito_2, aceito_3, aceito_4, aceito_5, aceito_6, aceito_7, aceito_8, aceito_9 = [False] * 9
 
 
-  # Qual variavel a ser escolhida
+  ''' --------------------------------
+  Qual variavel a ser escolhida
+  '''
+
   while aceito_1 == False:
     # Dicionário que indica o nome de cada opção
     variaveis_dict = {
@@ -109,8 +112,10 @@ def perguntas_usuario():
 
 
 
+  ''' --------------------------------
+  Qual o modo a ser escolhido
+  '''
 
-  # Qual o modo a ser escolhido
   while aceito_2 == False:
     modo_dict = {
         "1": "Original",
@@ -130,14 +135,18 @@ def perguntas_usuario():
     if aceito_2 == True:
       modo = modo_dict[modo]
 
-
-  if variavel in ["Velocidade", "Ambas"]: # Caso a variável escolhida inclua velocidade
+  # Caso a variável escolhida inclua velocidade
+  if variavel in ["Velocidade", "Ambas"]: 
 
     if variavel == "Ambas" and modo == 'Original-Derivada':
       print("Devido à escolha de ambas variáveis:")
       modo = 'Original'
       print(f"- Modo foi alterado para {modo} \n")
 
+
+    ''' --------------------------------------------
+    Qual a componente da velocidade a ser escolhida
+    '''
     while aceito_3 == False:
       componente_velocidade_dict = {
           "1": "Resultante",
@@ -164,7 +173,9 @@ def perguntas_usuario():
 
 
 
-
+  ''' ---------------------------------
+  Qual a plataforma a ser escolhida
+  '''
 
   while aceito_4 == False:
     plataformas_dict = {
@@ -202,7 +213,9 @@ def perguntas_usuario():
       df.drop(columns=['Plataforma'], inplace = True)  # Exclui a coluna de plataformas
 
 
-
+  ''' -----------------------------
+  Qual indicador a ser escolhido
+  '''
 
   while aceito_5 == False:
     indicador_dict = {
@@ -238,6 +251,10 @@ def perguntas_usuario():
     ano = 'Todos' # Para que o ano correspondente a data não seja deixado de fora
 
 
+    ''' --------------------------
+    Qual a data a ser escolhida
+    '''
+
     while aceito_9 == False:
       data = input(
         '''Qual dia deseja observar? Escreva no formato yyyy-mm-dd \n
@@ -266,6 +283,10 @@ def perguntas_usuario():
   elif indicador == 'Média': # Se o indicador é Média, é perguntado sobre a escolha de estação
     # Escolha automática de outros argumentos
     data = None
+
+    ''' ----------------------------------
+    Qual a estação do ano a ser escolhida
+    '''
 
     while aceito_7 == False:
       estacoes_dict = {
@@ -315,7 +336,10 @@ def perguntas_usuario():
 
 
 
-      # Qual ano deve ser escolhido
+      ''' --------------------------
+      Qual o ano a ser escolhido
+      '''
+
       while aceito_8 == False:
         ano = input(
             '''Qual ano deseja observar? (Digite 0 caso queira incluir todos os anos) \n \n
@@ -432,7 +456,7 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
     if aceito_data == False:  # É colocado como um if separado para incluir o resultado do segundo aceito_data
       return None
 
-
+  # Verificação da variavel
   aceito = vna.valores_nao_aceitos(variavel, ["Velocidade", "Temperatura", "Ambas"], dica = True, nome_variavel = 'variavel')
   if aceito == False:
     return None
@@ -440,7 +464,7 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
     componente_velocidade = None
 
 
-
+  # Verificação do modo
   aceito = vna.valores_nao_aceitos(modo, ["Original", "Original-Derivada"], dica = True, nome_variavel = 'modo')
   if aceito == False:
     return None
@@ -450,13 +474,13 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
     print(f"- Modo foi alterado para {modo} \n")
 
 
-
+  # Verificação da componente da velocidade
   aceito = vna.valores_nao_aceitos(componente_velocidade, ["Resultante", "u", "v", None], dica = True, nome_variavel = 'componente_velocidade')
   if aceito == False:
     return None
 
 
-
+  # Verificação e filtra do valor escolhido para estação do ano
   aceito = vna.valores_nao_aceitos(estacao, ["Verão", "Outono", "Inverno", "Primavera", "Todas", "Geral", None], dica = True, nome_variavel = 'estacao')
   if aceito == False:
     return None
@@ -482,12 +506,13 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
 
 
 
-
+  # Verificação do indicador
   aceito = vna.valores_nao_aceitos(indicador, ["Diário", "Média", 'Sem_filtros'], dica = True, nome_variavel = 'indicador')
   if aceito == False:
     return None
 
-  df_para_interpolacao = df.copy()
+  # Cópia que é útil para futura obtenção dos pontos interpolados
+  df_para_interpolacao = df.copy() 
 
   # Verificar se é necessário fazer uma média e chamar a função que o faz
   if estacao == None: # Sempre vai ocorrer quando uma data específica for escolhida ou simplesmente quando o usuário não escolher filtrar estação

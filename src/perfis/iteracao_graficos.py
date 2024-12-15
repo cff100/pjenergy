@@ -16,8 +16,6 @@ def iteracao_grafico(dicionario_argumentos, axs, e = None):
   plataforma = dicionario_argumentos['plataforma']
   data = dicionario_argumentos['data']
 
-  #print(dicionario_argumentos)
-
   if estacao == "Todas":
     for e, est in enumerate(["Verão", "Outono", "Inverno", "Primavera"]):
       df_estacao = df[df['Estação_do_Ano'] == est].copy()
@@ -44,21 +42,14 @@ def iteracao_grafico(dicionario_argumentos, axs, e = None):
     df_hora = df_hora.sort_values('Altitude_m')
     df_hora = df_hora.reset_index(drop=True)
 
-    #print(df_hora)
-
     # Coluna de alturas para o eixo Y do gráfico
     Y = df_hora['Altitude_m']
-    #print(Y)
-
 
     # Gera uma sequência de valores suavizados para Y, a ser usada para interpolação nos gráficos
     Y_smooth = np.linspace(Y.min(), Y.max(), 400)
-    #print(Y_smooth)
-
 
     # Verifica se o modo inclui a velocidade do vento ('velocidade' ou 'ambos')
     if variavel in ['Velocidade', 'Ambas']:
-
 
       if componente_velocidade == 'u':
         nome_velocidade_vento = 'Velocidade_Vento_u_m/s'
@@ -74,19 +65,16 @@ def iteracao_grafico(dicionario_argumentos, axs, e = None):
       X_smooth_velocidade = make_interp_spline(Y, X_velocidade)(Y_smooth)
 
       if modo == 'Original':
-        if e == None: # Ou seja, se estacao = Todas
+        if e == None: # Ou seja, se estacao != Todas
           m = 0
         else:
           m = e
-        #print(f'm:{m}')
         # Cria o gráfico para os dados originais de velocidade do vento
         criacao_grafico(axs[m], cores[c], Y, X_velocidade, Y_smooth, X_smooth_velocidade, 'original', plataforma, estacao, horario, 'velocidade', componente_velocidade, data)
 
       elif modo == 'Original-Derivada':
         m = 0
         n = 1
-        #print(f'm:{m}')
-        #print(f'n:{n}')
 
         # Cria o gráfico para os dados originais de velocidade do vento
         criacao_grafico(axs[m], cores[c], Y, X_velocidade, Y_smooth, X_smooth_velocidade, 'original', plataforma, estacao, horario, 'velocidade', componente_velocidade, data)
@@ -104,7 +92,7 @@ def iteracao_grafico(dicionario_argumentos, axs, e = None):
 
       # Verifica se o tipo de gráfico solicitado é 'original' ou 'derivada'
       if modo == 'Original':
-        if e == None: # Ou seja, se estacao = Todas
+        if e == None: # Ou seja, se estacao != Todas
           if variavel == 'Ambas':
             m = 1
           elif variavel == 'Temperatura':
