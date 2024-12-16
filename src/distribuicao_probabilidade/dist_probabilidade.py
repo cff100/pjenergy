@@ -27,7 +27,7 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico):
 
   # Lista para armazenar os DataFrames
   dataframes = [pd.read_csv(arquivo) for arquivo in arquivos_csv]
-  
+
   # Concatenar todos os DataFrames em um único
   df_combinado = pd.concat(dataframes, ignore_index=True)
   print(df_combinado)
@@ -243,13 +243,13 @@ def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir
   else:
 
     if type(pressao) != str:
-      pressao = str(int(pressao))
+      pressao_str = str(int(pressao))
     if type(ano) != str:
-      ano = str(ano)
+      ano_str = str(ano)
 
     valores_aceitos = list(range(972,1001)) + ['0', 'Todas']
     valores_aceitos = [str(va) if va not in ('Todas', '0') else va for va in valores_aceitos]
-    aceito = vna.valores_nao_aceitos(pressao, valores_aceitos, dica = True, nome_variavel = 'pressão')
+    aceito = vna.valores_nao_aceitos(pressao_str, valores_aceitos, dica = True, nome_variavel = 'pressão')
     if aceito == False:
       return None
 
@@ -259,7 +259,7 @@ def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir
 
     valores_aceitos = list(range(2010,2024)) + ['0', 'Todos']
     valores_aceitos = [str(va) if va not in ('Todos', '0') else va for va in valores_aceitos]
-    aceito = vna.valores_nao_aceitos(str(ano), valores_aceitos, dica = True, nome_variavel = 'ano')
+    aceito = vna.valores_nao_aceitos(ano_str, valores_aceitos, dica = True, nome_variavel = 'ano')
     if aceito == False:
       return None
 
@@ -267,17 +267,12 @@ def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir
     if aceito == False:
       return None
 
-  try:
+  if pressao not in ['Todas', '0'] and type(pressao) != float:
     pressao = float(pressao)
-  except:
-    pass
 
-  try:
+  if ano not in ['Todos', '0'] and type(ano) != int:
     ano = int(ano)
-  except:
-    pass
-
-
+  
 
   tabela = plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico)
 
