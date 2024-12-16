@@ -24,7 +24,7 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico):
                   '/content/pjenergy/data/dados_interpolados/df_interpolado_Outono.csv',
                   '/content/pjenergy/data/dados_interpolados/df_interpolado_Inverno.csv',
                   '/content/pjenergy/data/dados_interpolados/df_interpolado_Primavera.csv']
-  
+
   # Lista para armazenar os DataFrames
   dataframes = [pd.read_csv(arquivo) for arquivo in arquivos_csv]
 
@@ -71,6 +71,7 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico):
   # Extrair a coluna de velocidades do vento
   velocidades = df_combinado['Velocidade_Vento_resultante_m/s'].copy()
 
+  '''
   # Ajustar a distribuição de Weibull
   params = weibull_min.fit(velocidades)
   weibull_pdf = weibull_min.pdf(velocidades, *params)
@@ -80,7 +81,8 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico):
 
   # Calcular a soma das probabilidades usando integração
   prob_sum = simps(weibull_pdf, velocidades)  # Aproximação da integral
-  
+
+  '''
 
   if exibir_grafico:
 
@@ -166,7 +168,7 @@ def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir
           )
 
       print("\n")
-      
+
       aceito_2 = vna.valores_nao_aceitos(estacao, ['0', '1', '2', '3', '4', 'Todas']) # Verifica se é um valor aceito
       if aceito_2 == True:
         if estacao != 'Todas':
