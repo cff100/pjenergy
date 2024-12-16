@@ -1,4 +1,6 @@
 from ast import arguments
+from scipy.integrate import simps
+
 ''' INFO
 Gera um histograma e a distribuição de Weibull para a velocidade do vento,
 além de uma tabela com os pontos dessa distribuição.
