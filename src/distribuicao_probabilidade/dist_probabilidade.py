@@ -27,10 +27,10 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico):
 
   # Lista para armazenar os DataFrames
   dataframes = [pd.read_csv(arquivo) for arquivo in arquivos_csv]
-
+  
   # Concatenar todos os DataFrames em um único
   df_combinado = pd.concat(dataframes, ignore_index=True)
-
+  print(df_combinado)
 
   # Filtrar pressão
   if pressao not in ['Todas', '0']:
@@ -38,7 +38,7 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico):
   else:
     if pressao == '0':
       pressao = 'Todas'
-  print(df_combinado)
+  
   # Filtrar estação
   if estacao not in ['Todas', '0']:
     df_combinado = df_combinado[df_combinado['Estação_do_Ano'] == estacao]
