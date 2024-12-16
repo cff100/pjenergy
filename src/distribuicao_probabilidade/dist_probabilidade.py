@@ -99,10 +99,10 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico):
     # Plotar o histograma
     sns.histplot(velocidades, kde=False, stat='density', color='lightgray', alpha=0.5, bins=20, label='Dados')
 
-
+    '''
     # Plotar a curva ajustada
     plt.plot(velocidades, weibull_pdf, label='Ajuste de Weibull', color='r', linewidth=2)
-
+    '''
     ax.set_title(f'Histograma e Ajuste de Distribuição Weibull - Horário: {horario} - Pressão: {pressao} hPa - Estação: {estacao} - Ano: {ano}')
     texto = plataforma_escolhida
     ax.text(0.77, 0.85, f'Plataforma: {texto}', transform=ax.transAxes, fontsize=9, verticalalignment='top')
