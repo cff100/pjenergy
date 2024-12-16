@@ -114,9 +114,6 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico):
     plt.show()
 
   df_combinado = df_combinado.sort_values(by='Velocidade_Vento_resultante_m/s')
-  #print(df_combinado.head(40))
-  #print('\n')
-  #print(df_combinado.tail(40))
   return df_combinado
 
 def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir_grafico):
@@ -125,7 +122,13 @@ def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir
 
   aceito_1, aceito_2, aceito_3, aceito_4 = [False] * 4
 
+  # Para quando o usuário colocar os argumentos por meio das perguntas
   if perguntas == True:
+
+    ''' --------------------------------
+    Qual pressão a ser escolhida
+    '''
+
     while aceito_1 == False:
       valores_aceitos = list(range(972,1001)) + ['0', 'Todas']
       valores_aceitos = [str(va) if va not in ('Todas', '0') else va for va in valores_aceitos]
@@ -133,6 +136,11 @@ def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir
       aceito_1 = vna.valores_nao_aceitos(pressao, valores_aceitos) # Verifica se é um valor aceito
 
       print('\n')
+
+
+    ''' --------------------------------
+    Qual estação a ser escolhida
+    '''
 
     while aceito_2 == False:
       estacoes_dict = {
@@ -153,16 +161,18 @@ def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir
           )
 
       print("\n")
-      #estacao = input('Qual estação deseja observar? Escolha entre Verão, Outono, Inverno ou Primavera. Escreva Todas ou 0 para não filtrar nenhuma estação específica. \n')
-      #estacao = estacoes_dict[estacao]
+      
       aceito_2 = vna.valores_nao_aceitos(estacao, ['0', '1', '2', '3', '4', 'Todas']) # Verifica se é um valor aceito
       if aceito_2 == True:
         if estacao != 'Todas':
           estacao = estacoes_dict[estacao]
-        #print(estacao)
       else:
         pass
-      #aceito_2 = vna.valores_nao_aceitos(estacao, ['Verão', 'Outono', 'Inverno', 'Primavera', '0', 'Todas']) # Verifica se é um valor aceito
+
+
+    ''' --------------------------------
+    Qual ano a ser escolhido
+    '''
 
     while aceito_3 == False:
       valores_aceitos = list(range(2010,2024)) + ['0', 'Todos']
@@ -170,6 +180,10 @@ def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir
       ano = input('Qual ano deseja observar? Escolha um número inteiro entre 2010 e 2023. Escreva Todos ou 0 para não filtrar nenhum ano específico. \n')
       aceito_3 = vna.valores_nao_aceitos(ano, valores_aceitos) # Verifica se é um valor aceito
 
+
+    ''' --------------------------------
+    Qual horário a ser escolhido
+    '''
     while aceito_4 == False:
       horario_dict = {
         '0': 'Todos',
@@ -190,7 +204,6 @@ def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir
 
       print("\n")
 
-      #horario = input('Qual horário deseja observar? Escolha entre 03:00, 09:00, 15:00 ou 21:00. Escreva Todos ou 0 para não filtrar nenhum horário específico. \n')
       aceito_4 = vna.valores_nao_aceitos(horario, ['0', '1', '2', '3', '4', 'Todos']) # Verifica se é um valor aceito
       if aceito_4 == True:
         if horario != 'Todos':
@@ -198,17 +211,26 @@ def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir
       else:
         pass
 
+    # Print os argumentos escolhidos
     if pressao == '0':
       print('Pressão: Todas')
     else:
       print(f'Pressão: {pressao} hPa')
+
     print(f'Estação: {estacao}')
+
     if ano == '0':
       print('Ano: Todos')
+
     else:
       print(f'Ano: {ano}')
+
     print(f'Horário: {horario}')
 
+
+
+
+  # Para quando o usuário colocar os argumentos diretamente
   else:
 
     if type(pressao) != str:
