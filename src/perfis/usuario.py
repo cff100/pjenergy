@@ -136,7 +136,7 @@ def perguntas_usuario():
       modo = modo_dict[modo]
 
   # Caso a variável escolhida inclua velocidade
-  if variavel in ["Velocidade", "Ambas"]: 
+  if variavel in ["Velocidade", "Ambas"]:
 
     if variavel == "Ambas" and modo == 'Original-Derivada':
       print("Devido à escolha de ambas variáveis:")
@@ -433,6 +433,7 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
     ano = 'Todos'
     aceito_8 = True
   else: # if ano not in ['0', 'Todos']:
+    ano = str(ano)
     aceito_ano = verifica_ano(ano, df, dica = True, nome_variavel = 'ano')
     if aceito_ano == False:
       return None
@@ -512,7 +513,7 @@ def escolha_direta_usuario(variavel, modo, componente_velocidade, plataforma, es
     return None
 
   # Cópia que é útil para futura obtenção dos pontos interpolados
-  df_para_interpolacao = df.copy() 
+  df_para_interpolacao = df.copy()
 
   # Verificar se é necessário fazer uma média e chamar a função que o faz
   if estacao == None: # Sempre vai ocorrer quando uma data específica for escolhida ou simplesmente quando o usuário não escolher filtrar estação
