@@ -37,7 +37,7 @@ def criacao_grafico(ax, cor, Y, X, Y_smooth, X_smooth, grafico, plataforma, esta
     # Calcula a derivada dos dados suavizados (gradiente da variável X em relação a Y)
     derivada_X_smooth = np.gradient(X_smooth, Y_smooth)
     # Plota a derivada dos dados
-    ax.plot(Y_smooth, derivada_X_smooth, color=cor, label=f'Horário {horario}', linestyle='--')
+    ax.plot(derivada_X_smooth, Y_smooth, color=cor, label=f'Horário {horario}', linestyle='--')
 
     # Adiciona uma linha vertical em x=0 depois do último horário (ex: 21:00)
     if horario == horarios[-1]:
@@ -50,17 +50,17 @@ def criacao_grafico(ax, cor, Y, X, Y_smooth, X_smooth, grafico, plataforma, esta
       else:
         ax.set_title(f'Derivada do Perfil de Velocidade - {plataforma} - Est: {estacao} - Data: {data} - Dir: {componente_velocidade}')  # Título para derivada de velocidade
 
-      ax.set_ylabel('Derivada da Velocidade do Vento')  # Nome do eixo Y para derivada de velocidade
+      ax.set_xlabel('Derivada da Velocidade do Vento')  # Nome do eixo X para derivada de velocidade
     elif variavel == 'temperatura':
       if data == None:
         ax.set_title(f'Derivada do Perfil de Temperatura - {plataforma} - Est: {estacao} - Ano: {ano}')  # Título para derivada de temperatura
       else:
         ax.set_title(f'Derivada do Perfil de Temperatura - {plataforma} - Est: {estacao} - Data: {data}')  # Título para derivada de temperatura
 
-      ax.set_ylabel('Derivada da Temperatura') # Nome do eixo Y para derivada de temperatura
+      ax.set_xlabel('Derivada da Temperatura') # Nome do eixo X para derivada de temperatura
 
   # Configurações comuns para os eixos dos gráficos (independente do tipo de dado)
-  ax.set_xlabel('Altitude (m)') # Nome do eixo X
+  ax.set_ylabel('Altitude (m)') # Nome do eixo Y
   ax.grid(True)  # Adiciona uma grade ao gráfico
   ax.grid(True, which='both') # Habilita tanto a grade principal quanto a secundária
   ax.minorticks_on() # Ativa as marcas menores nos eixos
