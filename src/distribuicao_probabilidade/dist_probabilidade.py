@@ -79,13 +79,13 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico):
   df_combinado['Densidade_de_Probabilidade'] = weibull_pdf
 
   # Calcular a soma das probabilidades usando integração
-  #prob_sum = np.trapz(weibull_pdf, velocidades)  # Aproximação da integral
-  prob_sum = simps(weibull_pdf, velocidades)
+  prob_sum = simps(weibull_pdf, velocidades)  # Aproximação da integral
+  
 
   if exibir_grafico:
 
     # Verificar se a integral está próxima de 1
-    if np.isclose(prob_sum, 1, atol=5e-2):
+    if np.isclose(prob_sum, 1, atol=0.01):
       print(f'A soma das probabilidades está correta (próxima de 1): {prob_sum}')
     else:
       print(f'⚠️ A soma das probabilidades não está próxima 1: {prob_sum}')
