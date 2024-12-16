@@ -37,8 +37,8 @@ def criacao_grafico(ax, cor, Y, X, Y_smooth, X_smooth, grafico, plataforma, esta
     # Calcula a derivada dos dados suavizados (gradiente da variável X em relação a Y)
     derivada_X_smooth = np.gradient(X_smooth, Y_smooth)
     # Plota a derivada dos dados
-    ax.plot(X_smooth, derivada_X_smooth, color=cor, label=f'Horário {horario}', linestyle='--')
-    
+    ax.plot(Y_smooth, derivada_X_smooth, color=cor, label=f'Horário {horario}', linestyle='--')
+
     # Adiciona uma linha vertical em x=0 depois do último horário (ex: 21:00)
     if horario == horarios[-1]:
       ax.axvline(x=0, color='black', linestyle='-', alpha=0.5, label='x = 0')  # Cria a linha vertical
