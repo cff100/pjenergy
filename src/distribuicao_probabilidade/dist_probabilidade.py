@@ -38,14 +38,14 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico):
   else:
     if pressao == '0':
       pressao = 'Todas'
-
+  print(df_combinado)
   # Filtrar estação
   if estacao not in ['Todas', '0']:
     df_combinado = df_combinado[df_combinado['Estação_do_Ano'] == estacao]
   else:
     if estacao == '0':
       estacao = 'Todas'
-  print(df_combinado)
+  
   # Filtrar ano
   if ano not in ['Todos', '0']:
 
