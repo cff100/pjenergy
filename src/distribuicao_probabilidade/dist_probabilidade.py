@@ -71,7 +71,7 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico):
 
   # Extrair a coluna de velocidades do vento
   velocidades = df_combinado['Velocidade_Vento_resultante_m/s'].copy()
-  print(velocidades)
+  #print(velocidades)
   
   # Ajustar a distribuição de Weibull
   params = weibull_min.fit(velocidades)
