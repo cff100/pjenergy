@@ -116,6 +116,11 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico):
   df_combinado = df_combinado.sort_values(by='Velocidade_Vento_resultante_m/s')
   return df_combinado
 
+
+
+
+
+
 def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir_grafico):
 
   '''Inicia a busca pelos argumentos do usuário'''
@@ -204,6 +209,7 @@ def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir
 
       print("\n")
 
+
       aceito_4 = vna.valores_nao_aceitos(horario, ['0', '1', '2', '3', '4', 'Todos']) # Verifica se é um valor aceito
       if aceito_4 == True:
         if horario != 'Todos':
@@ -228,7 +234,7 @@ def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir
     print(f'Horário: {horario}')
 
 
-
+'''''''''''''''''''''''''''''''''''''''' PAREI AQUI '''''''''''''''''''''''''''''''''''''''
 
   # Para quando o usuário colocar os argumentos diretamente
   else:
