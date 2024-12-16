@@ -22,35 +22,39 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico):
                   '/content/pjenergy/data/dados_interpolados/df_interpolado_Outono.csv',
                   '/content/pjenergy/data/dados_interpolados/df_interpolado_Inverno.csv',
                   '/content/pjenergy/data/dados_interpolados/df_interpolado_Primavera.csv']
+  
   # Lista para armazenar os DataFrames
   dataframes = [pd.read_csv(arquivo) for arquivo in arquivos_csv]
 
   # Concatenar todos os DataFrames em um único
   df_combinado = pd.concat(dataframes, ignore_index=True)
 
+
+  # Filtrar pressão
   if pressao not in ['Todas', '0']:
     df_combinado = df_combinado[df_combinado['Nível_de_Pressão_hPa'] == float(pressao)]
   else:
     if pressao == '0':
       pressao = 'Todas'
 
+  # Filtrar estação
   if estacao not in ['Todas', '0']:
     df_combinado = df_combinado[df_combinado['Estação_do_Ano'] == estacao]
   else:
     if estacao == '0':
       estacao = 'Todas'
 
-
+  # Filtrar ano
   if ano not in ['Todos', '0']:
 
     df_combinado['Data'] = pd.to_datetime(df_combinado['Data'])
     #df_combinado.loc[:, 'Data'] = pd.to_datetime(df_combinado['Data'])
     df_combinado = df_combinado[df_combinado['Data'].dt.year == ano]
-
   else:
     if ano == '0':
       ano = 'Todos'
 
+  # Filtrar horário
   if horario not in ['Todos', '0']:
     df_combinado = df_combinado[df_combinado['Horário_Brasília'] == horario]
   else:
@@ -61,24 +65,20 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico):
   df_combinado.reset_index(drop=True, inplace=True)
   df_combinado = df_combinado.sort_values(by='Velocidade_Vento_resultante_m/s')
 
-  #print(df_combinado)
 
+  # Extrair a coluna de velocidades do vento
   velocidades = df_combinado['Velocidade_Vento_resultante_m/s'].copy()
-  #velocidades.sort_values(inplace=True)
 
   # Ajustar a distribuição de Weibull
   params = weibull_min.fit(velocidades)
   weibull_pdf = weibull_min.pdf(velocidades, *params)
 
+  # Criar uma coluna de densidades de probabilidade
   df_combinado['Densidade_de_Probabilidade'] = weibull_pdf
 
   # Calcular a soma das probabilidades usando integração
-  prob_sum = np.trapz(weibull_pdf, velocidades)  # Aproximação da integral
-
-  #print(df_combinado)
-
-
-
+  #prob_sum = np.trapz(weibull_pdf, velocidades)  # Aproximação da integral
+  prob_sum = simps(weibull_pdf, velocidades)
 
   if exibir_grafico:
 
@@ -213,7 +213,7 @@ def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir
       pressao = str(int(pressao))
     if type(ano) != str:
       ano = str(ano)
-      
+
     valores_aceitos = list(range(972,1001)) + ['0', 'Todas']
     valores_aceitos = [str(va) if va not in ('Todas', '0') else va for va in valores_aceitos]
     aceito = vna.valores_nao_aceitos(pressao, valores_aceitos, dica = True, nome_variavel = 'pressão')
