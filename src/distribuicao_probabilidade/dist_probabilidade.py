@@ -244,8 +244,12 @@ def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir
 
     if type(pressao) != str:
       pressao_str = str(int(pressao))
+    else:
+      pressao_str = pressao
     if type(ano) != str:
       ano_str = str(ano)
+    else:
+      ano_str = ano
 
     valores_aceitos = list(range(972,1001)) + ['0', 'Todas']
     valores_aceitos = [str(va) if va not in ('Todas', '0') else va for va in valores_aceitos]
