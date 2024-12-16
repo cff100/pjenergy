@@ -234,7 +234,7 @@ def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir
     print(f'Horário: {horario}')
 
 
-'''''''''''''''''''''''''''''''''''''''' PAREI AQUI '''''''''''''''''''''''''''''''''''''''
+  '''''''''''''''''''''''''''''''''''''''' PAREI AQUI '''''''''''''''''''''''''''''''''''''''
 
   # Para quando o usuário colocar os argumentos diretamente
   else:
