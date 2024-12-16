@@ -85,13 +85,13 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico):
   '''
 
   if exibir_grafico:
-
+    '''
     # Verificar se a integral está próxima de 1
     if np.isclose(prob_sum, 1, atol=0.01):
       print(f'A soma das probabilidades está correta (próxima de 1): {prob_sum}')
     else:
       print(f'⚠️ A soma das probabilidades não está próxima 1: {prob_sum}')
-
+    '''
 
     # Criar a figura
     fig, ax = plt.subplots(figsize=(10, 6))
