@@ -30,7 +30,7 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico):
 
   # Concatenar todos os DataFrames em um único
   df_combinado = pd.concat(dataframes, ignore_index=True)
-  print(df_combinado)
+  #print(df_combinado)
 
   # Filtrar pressão
   if pressao not in ['Todas', '0']:
@@ -220,6 +220,10 @@ def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir
       else:
         pass
 
+
+
+
+
     # Print os argumentos escolhidos
     if pressao == '0':
       print('Pressão: Todas')
@@ -237,11 +241,11 @@ def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir
     print(f'Horário: {horario}')
 
 
-    '''''''''''''''''''''''''''''''''''''''' PAREI AQUI '''''''''''''''''''''''''''''''''''''''
+
 
   # Para quando o usuário colocar os argumentos diretamente
   else:
-
+    # Converter pressão e ano para str
     if type(pressao) != str:
       pressao_str = str(int(pressao))
     else:
@@ -251,34 +255,38 @@ def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir
     else:
       ano_str = ano
 
+    # Verificação da pressão 
     valores_aceitos = list(range(972,1001)) + ['0', 'Todas']
     valores_aceitos = [str(va) if va not in ('Todas', '0') else va for va in valores_aceitos]
     aceito = vna.valores_nao_aceitos(pressao_str, valores_aceitos, dica = True, nome_variavel = 'pressão')
     if aceito == False:
       return None
 
+    # Verificação da estação
     aceito = vna.valores_nao_aceitos(estacao, ['Verão', 'Outono', 'Inverno', 'Primavera', 'Todas', '0'], dica = True, nome_variavel = 'estação')
     if aceito == False:
       return None
 
+    # Verificação do ano
     valores_aceitos = list(range(2010,2024)) + ['0', 'Todos']
     valores_aceitos = [str(va) if va not in ('Todos', '0') else va for va in valores_aceitos]
     aceito = vna.valores_nao_aceitos(ano_str, valores_aceitos, dica = True, nome_variavel = 'ano')
     if aceito == False:
       return None
 
+    # Verificação do horário
     aceito = vna.valores_nao_aceitos(horario, ['03:00', '09:00', '15:00', '21:00', 'Todos', '0'], dica = True, nome_variavel = 'horário')
     if aceito == False:
       return None
 
+  # Quando necessário, conversão de pressão para float e ano para int
   if pressao not in ['Todas', '0'] and type(pressao) != float:
     pressao = float(pressao)
-
   if ano not in ['Todos', '0'] and type(ano) != int:
     ano = int(ano)
   
-
+  # Chama a função que cria o dataframe com os valores da densidade de probabilidade
   tabela = plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico)
-
+  tabela.reset_index(drop=True, inplace=True)
 
   return tabela
