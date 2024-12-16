@@ -15,7 +15,9 @@ def iteracao_grafico(dicionario_argumentos, axs, e = None):
   modo = dicionario_argumentos['modo']
   plataforma = dicionario_argumentos['plataforma']
   data = dicionario_argumentos['data']
+  ano = dicionario_argumentos['ano']
 
+  # Loop para fazer um gráfico para cada estação do ano
   if estacao == "Todas":
     for e, est in enumerate(["Verão", "Outono", "Inverno", "Primavera"]):
       df_estacao = df[df['Estação_do_Ano'] == est].copy()
@@ -70,16 +72,16 @@ def iteracao_grafico(dicionario_argumentos, axs, e = None):
         else:
           m = e
         # Cria o gráfico para os dados originais de velocidade do vento
-        criacao_grafico(axs[m], cores[c], Y, X_velocidade, Y_smooth, X_smooth_velocidade, 'original', plataforma, estacao, horario, 'velocidade', componente_velocidade, data)
+        criacao_grafico(axs[m], cores[c], Y, X_velocidade, Y_smooth, X_smooth_velocidade, 'original', plataforma, estacao, horario, 'velocidade', componente_velocidade, data, ano)
 
       elif modo == 'Original-Derivada':
         m = 0
         n = 1
 
         # Cria o gráfico para os dados originais de velocidade do vento
-        criacao_grafico(axs[m], cores[c], Y, X_velocidade, Y_smooth, X_smooth_velocidade, 'original', plataforma, estacao, horario, 'velocidade', componente_velocidade, data)
+        criacao_grafico(axs[m], cores[c], Y, X_velocidade, Y_smooth, X_smooth_velocidade, 'original', plataforma, estacao, horario, 'velocidade', componente_velocidade, data, ano)
         # Cria o gráfico para a derivada da velocidade do vento
-        criacao_grafico(axs[n], cores[c], Y, X_velocidade, Y_smooth, X_smooth_velocidade, 'derivada', plataforma, estacao, horario, 'velocidade', componente_velocidade, data)
+        criacao_grafico(axs[n], cores[c], Y, X_velocidade, Y_smooth, X_smooth_velocidade, 'derivada', plataforma, estacao, horario, 'velocidade', componente_velocidade, data, ano)
 
 
     # Verifica se o modo inclui a temperatura ('temperatura' ou 'ambos')
@@ -102,7 +104,7 @@ def iteracao_grafico(dicionario_argumentos, axs, e = None):
           m = e
 
         # Cria o gráfico para os dados originais de temperatura
-        criacao_grafico(axs[m], cores[c], Y, X_temperatura, Y_smooth, X_smooth_temperatura, 'original', plataforma, estacao, horario, 'temperatura', componente_velocidade, data)
+        criacao_grafico(axs[m], cores[c], Y, X_temperatura, Y_smooth, X_smooth_temperatura, 'original', plataforma, estacao, horario, 'temperatura', componente_velocidade, data, ano)
 
       # Caso o tipo seja 'ambos' (original e derivada), cria dois gráficos: um para os dados originais e outro para a derivada
       elif modo == 'Original-Derivada':
@@ -112,7 +114,7 @@ def iteracao_grafico(dicionario_argumentos, axs, e = None):
 
 
         # Cria o gráfico para os dados originais de temperatura
-        criacao_grafico(axs[m], cores[c], Y, X_temperatura, Y_smooth, X_smooth_temperatura, 'original', plataforma, estacao, horario, 'temperatura', componente_velocidade, data)
+        criacao_grafico(axs[m], cores[c], Y, X_temperatura, Y_smooth, X_smooth_temperatura, 'original', plataforma, estacao, horario, 'temperatura', componente_velocidade, data, ano)
         # Cria o gráfico para a derivada da temperatura
-        criacao_grafico(axs[n], cores[c], Y, X_temperatura, Y_smooth, X_smooth_temperatura, 'derivada', plataforma, estacao, horario, 'temperatura', componente_velocidade, data)
+        criacao_grafico(axs[n], cores[c], Y, X_temperatura, Y_smooth, X_smooth_temperatura, 'derivada', plataforma, estacao, horario, 'temperatura', componente_velocidade, data, ano)
 
