@@ -13,7 +13,6 @@ def criacao_grafico(ax, cor, Y, X, Y_smooth, X_smooth, grafico, plataforma, esta
     label = f'Horário {horario}'
   elif ling_graf == 'en':
     label = f'Hour {horario}'
-    pressao = ti.trad_para_ingles(pressao)
     estacao = ti.trad_para_ingles(estacao)
     horario = ti.trad_para_ingles(horario)
     componente_velocidade = ti.trad_para_ingles(componente_velocidade)
