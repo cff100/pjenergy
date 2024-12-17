@@ -1,7 +1,7 @@
 def resp_usuario_2(perguntas, pressao, estacao, ano, horario):
 
-  
-    aceito_1, aceito_2, aceito_3, aceito_4 = [False] * 4
+
+  aceito_1, aceito_2, aceito_3, aceito_4 = [False] * 4
 
   # Para quando o usuário colocar os argumentos por meio das perguntas
   if perguntas == True:
