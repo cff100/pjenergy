@@ -7,16 +7,16 @@ import src.potencia.potencia_comparacao_alturas as pca
 import matplotlib.pyplot as plt
 import numpy as np
 
-def graf(perguntas = True, variavel = "Ambas", modo = "Original", componente_velocidade = "Resultante", plataforma = "7", estacao = "Geral", indicador = "Média", data = None, ano = "Todos"):
+def graf(perguntas = True, variavel = "Ambas", modo = "Original", componente_velocidade = "Resultante", plataforma = "7", estacao = "Geral", indicador = "Média", data = None, ano = "Todos", ling_graf = 'pt'):
 
   dicionario_argumentos = us.argumentos_usuario(perguntas, variavel, modo, componente_velocidade, plataforma, estacao, indicador, data, ano)
 
   if dicionario_argumentos == None:   # Ocorre quando há uma escolha errada de argumentos na escolha direta do usuário
-    return 
+    return
   elif dicionario_argumentos['indicador'] == 'Sem_filtros':
     print('Não é possível criar um gráfico com essa combinação de data e estação \n Dataframe gerado:')
     return dicionario_argumentos['df']
-  
+
 
   n_lin, n_col = nlc.linhas_colunas(dicionario_argumentos)
   fig, axs = plt.subplots(n_lin, n_col, figsize=(9*n_col, 6*n_lin))
@@ -27,7 +27,7 @@ def graf(perguntas = True, variavel = "Ambas", modo = "Original", componente_vel
   else:  # Se houver apenas um subplot (caso de 1x1)
     axs = [axs]  # Coloca o único subplot em uma lista
 
-  itg.iteracao_grafico(dicionario_argumentos, axs)
+  itg.iteracao_grafico(dicionario_argumentos, axs, ling_graf)
 
 def prob(perguntas = True, pressao = 'Todas', estacao = 'Todas', ano = 'Todos', horario = 'Todos', exibir_grafico=True):
   tabela_probabilidade = dp.usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir_grafico)
