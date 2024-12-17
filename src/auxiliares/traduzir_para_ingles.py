@@ -7,7 +7,7 @@ def trad_para_ingles(variavel):
     return 'All'
   elif variavel == 'Primavera':
     return 'Spring'
-  elif variavel == 'Outono':
+  elif variavel == 'Verão':
     return 'Summer'
   elif variavel == 'Inverno':
     return 'Winter'
