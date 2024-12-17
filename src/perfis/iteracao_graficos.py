@@ -6,7 +6,7 @@ import numpy as np
 from scipy.interpolate import make_interp_spline
 from .criacao_grafico import criacao_grafico
 
-def iteracao_grafico(dicionario_argumentos, axs, e = None, ling_graf):
+def iteracao_grafico(dicionario_argumentos, axs, ling_graf, e = None):
 
   df = dicionario_argumentos['df']
   variavel = dicionario_argumentos['variavel']
@@ -23,7 +23,7 @@ def iteracao_grafico(dicionario_argumentos, axs, e = None, ling_graf):
       df_estacao = df[df['Estação_do_Ano'] == est].copy()
       dicionario_argumentos['df'] = df_estacao
       dicionario_argumentos['estacao'] = est
-      iteracao_grafico(dicionario_argumentos, axs, e)
+      iteracao_grafico(dicionario_argumentos, axs, ling_graf, e)
     return # A execução da função é interrompida aqui
   else:
     pass
