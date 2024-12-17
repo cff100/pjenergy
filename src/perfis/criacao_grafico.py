@@ -2,7 +2,7 @@
 Gera os gráficos de perfil de velocidade e tempertura.
 '''
 
-
+import src.auxiliares.traduzir_para_ingles as ti
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -13,6 +13,10 @@ def criacao_grafico(ax, cor, Y, X, Y_smooth, X_smooth, grafico, plataforma, esta
     label = f'Horário {horario}'
   elif ling_graf == 'en':
     label = f'Hour {horario}'
+    estacao = ti.trad_para_ingles(estacao)
+    horario = ti.trad_para_ingles(horario)
+    componente_velocidade = ti.trad_para_ingles(componente_velocidade)
+    ano = ti.trad_para_ingles(ano)
 
   # Verifica o tipo de gráfico a ser gerado
   if grafico == 'original':
