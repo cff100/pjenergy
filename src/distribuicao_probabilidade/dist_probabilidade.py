@@ -6,7 +6,7 @@ Gera um histograma e a distribuição de Weibull para a velocidade do vento,
 além de uma tabela com os pontos dessa distribuição.
 '''
 
-import src.auxiliares.valores_nao_aceitos as vna
+
 import src.auxiliares.respostas_usuario as ru
 import pandas as pd
 import seaborn as sns

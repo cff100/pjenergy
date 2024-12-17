@@ -1,3 +1,5 @@
+import src.auxiliares.valores_nao_aceitos as vna
+
 def resp_usuario_2(perguntas, pressao, estacao, ano, horario):
 
 
