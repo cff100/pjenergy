@@ -5,7 +5,6 @@ Recebe o input do usuário, filtra e cria o dataframe que será utilizado para a
 
 import pjenergy.main as mp
 import src.auxiliares.caso_zero as cz
-import src.auxiliares.valores_nao_aceitos as vna
 import pandas as pd
 from .grafico_potencia_ponderada import pond_potencia
 import traceback
@@ -26,7 +25,6 @@ def potencia(pressao, estacao, ano, horario, plotar_graficos):
   for chave, valor in variaveis_dict.items():
     if valor == '0':
       variaveis_dict[chave] = cz.zero_para_todos(valor, chave)
-  #print(estacao)
   df_mestre = pd.DataFrame(columns=['Pressão', 'Estação', 'Ano', 'Horário', 'Dataframe_Probabilidade'])
 
   df_base['Data'] = pd.to_datetime(df_base['Data'])
@@ -114,138 +112,13 @@ def usuario_potencia(perguntas, pressao, estacao, ano, horario, plotar_graficos)
 
   '''Inicia a busca pelos argumentos do usuário'''
 
-  aceito_1, aceito_2, aceito_3, aceito_4 = [False] * 4
-
-  if perguntas == True:
-    while aceito_1 == False:
-      valores_aceitos = list(range(972,1001)) + ['0', 'Todas']
-      valores_aceitos = [str(va) if va not in ('Todas', '0') else va for va in valores_aceitos]
-      pressao = input('Qual pressão deseja observar (em HPa)? Escolha um número inteiro entre 972 e 1000. Escreva Todas ou 0 para não filtrar nenhuma pressão específica. \n')
-      aceito_1 = vna.valores_nao_aceitos(pressao, valores_aceitos) # Verifica se é um valor aceito
-
-      print('\n')
-
-    while aceito_2 == False:
-      estacoes_dict = {
-        '0': 'Todas',
-        '1': 'Verão',
-        '2': 'Outono',
-        '3': 'Inverno',
-        '4': 'Primavera',
-      }
-
-      estacao = input(
-          '''Qual estação deseja observar? \n
-          0 - Todas \n
-          1 - Verão \n
-          2 - Outono \n
-          3 - Inverno \n
-          4 - Primavera \n \n'''
-          )
-
-      print("\n")
-      #estacao = input('Qual estação deseja observar? Escolha entre Verão, Outono, Inverno ou Primavera. Escreva Todas ou 0 para não filtrar nenhuma estação específica. \n')
-      #estacao = estacoes_dict[estacao]
-      aceito_2 = vna.valores_nao_aceitos(estacao, ['0', '1', '2', '3', '4', 'Todas']) # Verifica se é um valor aceito
-      if aceito_2 == True:
-        if estacao != 'Todas':
-          estacao = estacoes_dict[estacao]
-        #print(estacao)
-      else:
-        pass
-      #aceito_2 = vna.valores_nao_aceitos(estacao, ['Verão', 'Outono', 'Inverno', 'Primavera', '0', 'Todas']) # Verifica se é um valor aceito
-
-    while aceito_3 == False:
-      valores_aceitos = list(range(2010,2024)) + ['0', 'Todos']
-      valores_aceitos = [str(va) if va not in ('Todos', '0') else va for va in valores_aceitos]
-      ano = input('Qual ano deseja observar? Escolha um número inteiro entre 2010 e 2023. Escreva Todos ou 0 para não filtrar nenhum ano específico. \n')
-      aceito_3 = vna.valores_nao_aceitos(ano, valores_aceitos) # Verifica se é um valor aceito
-
-    while aceito_4 == False:
-      horario_dict = {
-        '0': 'Todos',
-        '1': '03:00',
-        '2': '09:00',
-        '3': '15:00',
-        '4': '21:00',
-      }
-
-      horario = input(
-          '''Qual horário deseja observar? \n
-          0 - Todos \n
-          1 - 03:00 \n
-          2 - 09:00 \n
-          3 - 15:00 \n
-          4 - 21:00 \n \n'''
-          )
-
-      print("\n")
-
-      #horario = input('Qual horário deseja observar? Escolha entre 03:00, 09:00, 15:00 ou 21:00. Escreva Todos ou 0 para não filtrar nenhum horário específico. \n')
-      aceito_4 = vna.valores_nao_aceitos(horario, ['0', '1', '2', '3', '4', 'Todos']) # Verifica se é um valor aceito
-      if aceito_4 == True:
-        if horario != 'Todos':
-          horario = horario_dict[horario]
-      else:
-        pass
-
-    if pressao == '0':
-      print('Pressão: Todas')
-    else:
-      print(f'Pressão: {pressao} hPa')
-    print(f'Estação: {estacao}')
-    if ano == '0':
-      print('Ano: Todos')
-    else:
-      print(f'Ano: {ano}')
-    print(f'Horário: {horario}')
-
-  else:
-
-    if type(pressao) != str:
-      pressao = str(int(pressao))
-    if type(ano) != str:
-      ano = str(ano)
-      
-    valores_aceitos = list(range(972,1001)) + ['0', 'Todas']
-    valores_aceitos = [str(va) if va not in ('Todas', '0') else va for va in valores_aceitos]
-    aceito = vna.valores_nao_aceitos(pressao, valores_aceitos, dica = True, nome_variavel = 'pressão')
-    if aceito == False:
-      return None
-
-    aceito = vna.valores_nao_aceitos(estacao, ['Verão', 'Outono', 'Inverno', 'Primavera', 'Todas', '0'], dica = True, nome_variavel = 'estação')
-    if aceito == False:
-      return None
-
-    valores_aceitos = list(range(2010,2024)) + ['0', 'Todos']
-    valores_aceitos = [str(va) if va not in ('Todos', '0') else va for va in valores_aceitos]
-    aceito = vna.valores_nao_aceitos(str(ano), valores_aceitos, dica = True, nome_variavel = 'ano')
-    if aceito == False:
-      return None
-
-    aceito = vna.valores_nao_aceitos(horario, ['03:00', '09:00', '15:00', '21:00', 'Todos', '0'], dica = True, nome_variavel = 'horário')
-    if aceito == False:
-      return None
-
-  try:
-    if pressao not in ['Todas', '0']:
-      pressao = float(pressao)
-  except:
-    pass
-
-  '''try:
-    ano = int(ano)
-  except:
-    pass
-  '''
-  
-
+  pressao, estacao, ano, horario = ru.resp_usuario_2(perguntas, pressao, estacao, ano, horario)
 
   df_mestre, pressao_lista, estacao_lista, ano_lista, horario_lista = potencia(pressao, estacao, ano, horario, plotar_graficos)
 
   if pressao_lista is None:
     return df_mestre
-  
+
   df_mestre = pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_lista, plotar_graficos)
 
   return df_mestre
