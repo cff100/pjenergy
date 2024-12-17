@@ -103,7 +103,7 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico, ling
       label_1 = 'Dados'
       label_2 = 'Ajuste de Weibull'
     elif ling_graf == 'en':
-      label1 = 'Data'
+      label_1 = 'Data'
       label_2 = 'Weibull Fit'
       pressao = ti.trad_para_ingles(pressao)
       estacao = ti.trad_para_ingles(estacao)
