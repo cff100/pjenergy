@@ -120,9 +120,9 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico, ling
     plt.plot(velocidades, weibull_pdf, label=label_2, color='r', linewidth=2)
 
     if ling_graf == 'pt':
-      ax.set_title(f'Histograma e Ajuste de Distribuição Weibull - Horário: {horario} - Pressão: {pressao} hPa - Estação: {estacao} - Ano: {ano}')
+      ax.set_title(f'Histograma e Ajuste de Distribuição Weibull - Horário: {horario} - Pressão: {pressao} (hPa) - Estação: {estacao} - Ano: {ano}')
     elif ling_graf == 'en':
-      ax.set_title(f'Histogram and Weibull Distribution Fit - Time: {horario} - Pressure: {pressao} hPa - Season: {estacao} - Year: {ano}')
+      ax.set_title(f'Histogram and Weibull Distribution Fit - Time: {horario} - Pressure: {pressao} (hPa) - Season: {estacao} - Year: {ano}')
     texto = plataforma_escolhida
     if ling_graf == 'pt':
       ax.text(0.77, 0.85, f'Plataforma: {texto}', transform=ax.transAxes, fontsize=9, verticalalignment='top')
