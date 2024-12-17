@@ -1,5 +1,9 @@
 import src.auxiliares.valores_nao_aceitos as vna
 
+''' INFO
+Reúne a obtenção e tratamento dos argumentos de entrada do usuário para algumas das funções principais.
+'''
+
 def resp_usuario_2(perguntas, pressao, estacao, ano, horario):
 
 

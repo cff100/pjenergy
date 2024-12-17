@@ -13,6 +13,8 @@ import traceback
 
 def potencia(pressao, estacao, ano, horario, plotar_graficos):
 
+  '''Cria o dataframe que será usado para gerar o gráfico'''
+
   # Lista de caminhos para os arquivos CSV
   arquivos_csv = ['/content/pjenergy/data/dados_interpolados/df_interpolado_Verao.csv', '/content/pjenergy/data/dados_interpolados/df_interpolado_Outono.csv', '/content/pjenergy/data/dados_interpolados/df_interpolado_Inverno.csv', '/content/pjenergy/data/dados_interpolados/df_interpolado_Primavera.csv']
   # Lista para armazenar os DataFrames
@@ -113,13 +115,17 @@ def usuario_potencia(perguntas, pressao, estacao, ano, horario, plotar_graficos)
 
   '''Inicia a busca pelos argumentos do usuário'''
 
+  # Obtém e trata os argumentos de entrada do usuário
   pressao, estacao, ano, horario = ru.resp_usuario_2(perguntas, pressao, estacao, ano, horario)
 
+  # Cria o dataframe que será usado para gerar o gráfico
   df_mestre, pressao_lista, estacao_lista, ano_lista, horario_lista = potencia(pressao, estacao, ano, horario, plotar_graficos)
 
+  
   if pressao_lista is None:
     return df_mestre
 
+  # Geração do gráfico de potência ponderada
   df_mestre = pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_lista, plotar_graficos)
 
   return df_mestre

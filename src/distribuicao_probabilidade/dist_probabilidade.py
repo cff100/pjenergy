@@ -129,6 +129,7 @@ def usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir
 
   '''Inicia a busca pelos argumentos do usuário'''
 
+  # Obtém e trata os argumentos de entrada do usuário 
   pressao, estacao, ano, horario = ru.resp_usuario_2(perguntas, pressao, estacao, ano, horario)
 
   # Chama a função que cria o dataframe com os valores da densidade de probabilidade
