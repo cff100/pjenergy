@@ -29,8 +29,8 @@ def graf(perguntas = True, variavel = "Ambas", modo = "Original", componente_vel
 
   itg.iteracao_grafico(dicionario_argumentos, axs, ling_graf)
 
-def prob(perguntas = True, pressao = 'Todas', estacao = 'Todas', ano = 'Todos', horario = 'Todos', exibir_grafico=True):
-  tabela_probabilidade = dp.usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir_grafico)
+def prob(perguntas = True, pressao = 'Todas', estacao = 'Todas', ano = 'Todos', horario = 'Todos', exibir_grafico=True, ling_graf = 'pt'):
+  tabela_probabilidade = dp.usuario_weibull_velocidade(perguntas, pressao, estacao, ano, horario, exibir_grafico, ling_graf)
   return tabela_probabilidade
 
 def pot(perguntas = True, pressao = 'Todas', estacao = 'Todas', ano = 'Todos', horario = 'Todos', plotar_graficos=True):
