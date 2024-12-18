@@ -4,7 +4,7 @@ Calcula a potência pondera e cria um gráfico para ela.
 
 
 import matplotlib.pyplot as plt
-
+import src.auxiliares.traduzir_para_ingles as ti
 
 def identificacao(pressao_lista, estacao_lista, ano_lista, horario_lista):
 
@@ -40,7 +40,9 @@ def identificacao(pressao_lista, estacao_lista, ano_lista, horario_lista):
 
 
 
-def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_lista, plotar_graficos):
+def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_lista, plotar_graficos, ling_graf):
+
+  ''' Para criar o gráfico da potência ponderada'''
 
   # Parâmetros iniciais
   rho = 1.225  # Densidade do ar (kg/m^3)
@@ -89,7 +91,6 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
   lista_contagem = []
   contagem_grafico = 0
 
-  #print(f'df_mestre: {df_mestre}')
   # Iterar sobre os DataFrames na coluna do DataFrame mestre
   for idx, df in enumerate(df_mestre['Dataframe_Probabilidade']):
     # Calcular a potência
@@ -104,11 +105,21 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
 
     if plotar_graficos == False:
       return df_mestre
+
     # Identificar a estação e o horário correspondentes
     estacao = df_mestre.loc[idx, 'Estação']
     horario = df_mestre.loc[idx, 'Horário']
     pressao = df_mestre.loc[idx, 'Pressão']
     ano = df_mestre.loc[idx, 'Ano']
+
+    # Converter o nome das variáveis para inglês quando necessário
+    if ling_graf == 'pt':
+      pass
+    elif ling_graf == 'en':
+      pressao = ti.trad_para_ingles(pressao)
+      estacao = ti.trad_para_ingles(estacao)
+      horario = ti.trad_para_ingles(horario)
+      ano = ti.trad_para_ingles(ano)
 
     if contagem_grafico == 0:
       # Criar o gráfico
@@ -117,78 +128,120 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
 
 
     if i == [0, 0, 1, 1]:  # i = [i_pr, i_est, i_ano, i_hor]
-      titulo = f'Potência Ponderada: Ano: {ano} - Horário: {horario}  (Diversas Pressões)'
-      titulo_legenda = 'Estações'
+      if ling_graf == 'pt':
+        titulo = f'Potência Ponderada: Ano: {ano} - Horário: {horario}  (Diversas Pressões)'
+        titulo_legenda = 'Estações'
+      elif ling_graf == 'en':
+        titulo = f'Weighted Power: Year: {ano} - Hour: {horario}  (Various Pressures)'
+        titulo_legenda = 'Seasons'
       label = f'{estacao}'
       color = cores_est.get(estacao)
       variavel_contada = estacao
 
 
     elif i == [0, 1, 0, 1]:
-      titulo = f'Potência Ponderada: Estação: {estacao} - Horário: {horario}  (Diversas Pressões)'
-      titulo_legenda = 'Anos'
+      if ling_graf == 'pt':
+        titulo = f'Potência Ponderada: Estação: {estacao} - Horário: {horario}  (Diversas Pressões)'
+        titulo_legenda = 'Anos'
+      elif ling_graf == 'en':
+        titulo = f'Weighted Power: Season: {estacao} - Hour: {horario}  (Various Pressures)'
+        titulo_legenda = 'Years'
       label = f'{ano}'
-      #color = cores_hor.get(horario)
       variavel_contada = ano
 
 
     elif i == [0, 1, 1, 0]:
-      titulo = f'Potência Ponderada: Estação: {estacao} - Ano: {ano}  (Diversas Pressões)'
-      titulo_legenda = 'Horários'
+      if ling_graf == 'pt':
+        titulo = f'Potência Ponderada: Estação: {estacao} - Ano: {ano}  (Diversas Pressões)'
+        titulo_legenda = 'Horários'
+      elif ling_graf == 'en':
+        titulo = f'Weighted Power: Season: {estacao} - Year: {ano}  (Various Pressures)'
+        titulo_legenda = 'Hours'
       label = f'{horario}'
       color = cores_hor.get(horario)
       variavel_contada = horario
 
 
     elif i == [1, 0, 0, 1]:
-      titulo = f'Potência Ponderada: Pressão: {pressao} - Horário: {horario}  (Diversos Anos)'
-      titulo_legenda = 'Estações'
+      if ling_graf == 'pt':
+        titulo = f'Potência Ponderada: Pressão: {pressao} - Horário: {horario}  (Diversos Anos)'
+        titulo_legenda = 'Estações'
+      elif ling_graf == 'en':
+        titulo = f'Weighted Power: Pressure: {pressao} - Hour: {horario}  (Various Years)'
+        titulo_legenda = 'Seasons'
       label = f'{estacao}'
       color = cores_est.get(estacao)
       variavel_contada = estacao
 
     elif i == [1, 0, 1, 0]:
-      titulo = f'Potência Ponderada: Pressão: {pressao} - Ano: {ano}  (Diversos Horários)'
-      titulo_legenda = 'Estações'
+      if ling_graf == 'pt':
+        titulo = f'Potência Ponderada: Pressão: {pressao} - Ano: {ano}  (Diversos Horários)'
+        titulo_legenda = 'Estações'
+      elif ling_graf == 'en':
+        titulo = f'Weighted Power: Pressure: {pressao} - Year: {ano}  (Various Hours)'
+        titulo_legenda = 'Seasons'
       label = f'{estacao}'
       color = cores_est.get(estacao)
       variavel_contada = estacao
 
     elif i == [1, 1, 0, 0]:
-      titulo = f'Potência Ponderada: Pressão: {pressao} - Estação: {estacao}  (Diversos Anos)'
-      titulo_legenda = 'Horários'
+      if ling_graf == 'pt':
+        titulo = f'Potência Ponderada: Pressão: {pressao} - Estação: {estacao}  (Diversos Anos)'
+        titulo_legenda = 'Horários'
+      elif ling_graf == 'en':
+        titulo = f'Weighted Power: Pressure: {pressao} - Season: {estacao}  (Various Years)'
+        titulo_legenda = 'Hours'
       label = f'{horario}'
       color = cores_hor.get(horario)
       variavel_contada = horario
 
     elif i == [0, 1, 1, 1]:
-      titulo = f'Potência Ponderada: Estação: {estacao} - Ano: {ano} - Horário: {horario}'
-      titulo_legenda = 'Pressões'
+      if ling_graf == 'pt':
+        titulo = f'Potência Ponderada: Estação: {estacao} - Ano: {ano} - Horário: {horario}'
+        titulo_legenda = 'Pressões'
+      elif ling_graf == 'en':
+        titulo = f'Weighted Power: Season: {estacao} - Year: {ano} - Hour: {horario}'
+        titulo_legenda = 'Pressures'
       label = f'{pressao}'
       variavel_contada = pressao
 
     elif i == [1, 0, 1, 1]:
-      titulo = f'Potência Ponderada: Pressão: {pressao} - Ano: {ano} - Horário: {horario}'
-      titulo_legenda = 'Estações'
+      if ling_graf == 'pt':
+        titulo = f'Potência Ponderada: Pressão: {pressao} - Ano: {ano} - Horário: {horario}'
+        titulo_legenda = 'Estações'
+      elif ling_graf == 'en':
+        titulo = f'Weighted Power: Pressure: {pressao} - Year: {ano} - Hour: {horario}'
+        titulo_legenda = 'Seasons'
       label = f'{estacao}'
       color = cores_est.get(estacao)
       variavel_contada = estacao
 
     elif i == [1, 1, 0, 1]:
-      titulo = f'Potência Ponderada: Pressão: {pressao} - Estação: {estacao} - Horário: {horario}'
-      titulo_legenda = 'Ano'
+      if ling_graf == 'pt':
+        titulo = f'Potência Ponderada: Pressão: {pressao} - Estação: {estacao} - Horário: {horario}'
+        titulo_legenda = 'Ano'
+      elif ling_graf == 'en':
+        titulo = f'Weighted Power: Pressure: {pressao} - Season: {estacao} - Hour: {horario}'
+        titulo_legenda = 'Year'
       label = f'{ano}'
       variavel_contada = ano
 
     elif i == [1, 1, 1, 0]:
-      titulo = f'Potência Ponderada: Pressão: {pressao} - Estação: {estacao} - Ano: {ano}'
-      titulo_legenda = 'Horário'
+      if ling_graf == 'pt':
+        titulo = f'Potência Ponderada: Pressão: {pressao} - Estação: {estacao} - Ano: {ano}'
+        titulo_legenda = 'Horário'
+      elif ling_graf == 'en':
+        titulo = f'Weighted Power: Pressure: {pressao} - Season: {estacao} - Year: {ano}'
+        titulo_legenda = 'Hour'
       label = f'{horario}'
       color = cores_hor.get(horario)
       variavel_contada = horario
 
     elif i == [1, 1, 1, 1]:
-      titulo = f'Potência Ponderada: Pressão: {pressao} - Estação: {estacao} - Ano: {ano} - Horário: {horario}'
+      if ling_graf == 'pt':
+        titulo = f'Potência Ponderada: Pressão: {pressao} - Estação: {estacao} - Ano: {ano} - Horário: {horario}'
+      elif ling_graf == 'en':
+        titulo = f'Weighted Power: Pressure: {pressao} - Season: {estacao} - Year: {ano} - Hour: {horario}'
       variavel_contada = None
       titulo_legenda = None
 
@@ -199,12 +252,15 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
       handles.append(line)
       labels.append(label)
 
-  #print(f'df: {df}')
 
   # Configurar o gráfico
   ax.set_title(titulo)
-  ax.set_xlabel('Velocidade do Vento (m/s)')
-  ax.set_ylabel('Potência Ponderada (kW/m^2)')
+  if ling_graf == 'pt':
+    ax.set_xlabel('Velocidade do Vento (m/s)')
+    ax.set_ylabel('Potência Ponderada (kW/m^2)')
+  elif ling_graf == 'en':
+    ax.set_xlabel('Wind Speed (m/s)')
+    ax.set_ylabel('Weighted Power (kW/m^2)')
   ax.legend(handles=handles, labels=labels, title=titulo_legenda)  # Adiciona a legenda com os handles e labels armazenados)
   ax.grid(True)
   ax.minorticks_on()

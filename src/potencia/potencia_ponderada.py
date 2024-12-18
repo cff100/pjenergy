@@ -111,7 +111,7 @@ def potencia(pressao, estacao, ano, horario, plotar_graficos):
 
 
 
-def usuario_potencia(perguntas, pressao, estacao, ano, horario, plotar_graficos):
+def usuario_potencia(perguntas, pressao, estacao, ano, horario, plotar_graficos, ling_graf):
 
   '''Inicia a busca pelos argumentos do usuário'''
 
@@ -121,11 +121,11 @@ def usuario_potencia(perguntas, pressao, estacao, ano, horario, plotar_graficos)
   # Cria o dataframe que será usado para gerar o gráfico
   df_mestre, pressao_lista, estacao_lista, ano_lista, horario_lista = potencia(pressao, estacao, ano, horario, plotar_graficos)
 
-  
+
   if pressao_lista is None:
     return df_mestre
 
   # Geração do gráfico de potência ponderada
-  df_mestre = pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_lista, plotar_graficos)
+  df_mestre = pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_lista, plotar_graficos, ling_graf)
 
   return df_mestre
