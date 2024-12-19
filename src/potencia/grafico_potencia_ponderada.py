@@ -96,6 +96,7 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
     
     pressao_manter = [pressao_par for pressao_par in pressao_lista if pressao_par % 2 == 0]  
     df_mestre = df_mestre[df_mestre['Pressão'].isin(pressao_manter)]
+    df_mestre = df_mestre.reset_index(drop=True)
     print(f'1:{df_mestre}')
 
     
