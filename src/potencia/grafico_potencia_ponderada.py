@@ -92,15 +92,11 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
 
   lista_contagem = []
 
+  # Para deixar o gráfico mais limpo, diminuir o número de pressões consideradas no caso em que diversas pressões são plotadas
   if i == [0, 1, 1, 1]:
-    
     pressao_manter = [pressao_par for pressao_par in pressao_lista if pressao_par % 2 == 0]  
     df_mestre = df_mestre[df_mestre['Pressão'].isin(pressao_manter)]
     df_mestre = df_mestre.reset_index(drop=True)
-    print(f'1:{df_mestre}')
-
-    
-    
 
 
   # Iterar sobre os DataFrames na coluna do DataFrame mestre
@@ -215,7 +211,7 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
       elif ling_graf == 'en':
         titulo = f'Weighted Power: Season: {estacao} - Year: {ano} - Hour: {horario}'
         titulo_legenda = 'Pressures'
-      altura = int(pa.pressao_para_altura(pressao/10))
+      altura = int(pa.pressao_para_altura(pressao/10)) # Cálculo da altura correspondente àquela pressão
       label = f'{pressao} ({altura} m)'
       variavel_contada = pressao
 
