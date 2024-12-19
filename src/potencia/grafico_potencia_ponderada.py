@@ -86,6 +86,7 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
   labels = []
   linestyle = '-'  # Default linestyle
   color = None  # Default color
+  ax = False
 
   i = identificacao(pressao_lista, estacao_lista, ano_lista, horario_lista)
 
