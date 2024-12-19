@@ -133,7 +133,8 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
       horario = ti.trad_para_ingles(horario)
       ano = ti.trad_para_ingles(ano)
 
-    if contagem_grafico == 0:
+    #if contagem_grafico == 0:
+    if not ax:
       # Criar o gráfico
       fig, ax = plt.subplots(figsize=(12, 6))
       contagem_grafico += 1
