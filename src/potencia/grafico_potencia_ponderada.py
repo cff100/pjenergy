@@ -86,12 +86,11 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
   labels = []
   linestyle = '-'  # Default linestyle
   color = None  # Default color
-  ax = False
+  ax_criado = False
 
   i = identificacao(pressao_lista, estacao_lista, ano_lista, horario_lista)
 
   lista_contagem = []
-  contagem_grafico = 0
 
   if i == [0, 1, 1, 1]:
     
@@ -135,10 +134,10 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
       ano = ti.trad_para_ingles(ano)
 
     #if contagem_grafico == 0:
-    if not ax:
+    if ax_criado == False:
       # Criar o gráfico
       fig, ax = plt.subplots(figsize=(12, 6))
-      contagem_grafico += 1
+      ax_criado = True
 
 
     if i == [0, 0, 1, 1]:  # i = [i_pr, i_est, i_ano, i_hor]
