@@ -94,15 +94,14 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
 
   if i == [0, 1, 1, 1]:
     
-    pressao_manter = [pressao_par for pressao_par in pressao_lista if pressao_par % 2 == 0]  
-    for pressao in pressao_manter:
-      df_mestre = df_mestre[df_mestre['Pressão'] == pressao]
-      print(f'1:{df_mestre}')
-      df_mestre = df_mestre.dropna(subset = ['Pressão'])
+    pressao_remover = [pressao_par for pressao_par in pressao_lista if pressao_par % 2 != 0]  
+    df_mestre = df_mestre[~df_mestre['Pressão'].isin(pressao_remover)]
+    print(f'1:{df_mestre}')
+      '''df_mestre = df_mestre.dropna(subset = ['Pressão'])
       print(f'2:{df_mestre}')
       df_mestre = df_mestre.reset_index(drop = True)
       print(f'3:{df_mestre}')
-    #df_mestre = df_mestre[~df_mestre['Pressão'].isin(pressao_remover)]
+    #'''
     
 
 
