@@ -2,6 +2,8 @@
 Calcula a altura a partir do valor da pressão atmosférica.
 '''
 
+import math
+
 def pressao_para_altura(pressao):
 
   PA = 101.325  # Pressão atmosférica ao nível do mar em kPa
