@@ -5,6 +5,7 @@ Calcula a potência pondera e cria um gráfico para ela.
 
 import matplotlib.pyplot as plt
 import src.auxiliares.traduzir_para_ingles as ti
+import src.auxiliares.pressao_para_altura as pa
 
 def identificacao(pressao_lista, estacao_lista, ano_lista, horario_lista):
 
@@ -90,6 +91,13 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
 
   lista_contagem = []
   contagem_grafico = 0
+
+  if i == i == [0, 1, 1, 1]:
+
+    #pressao_remover = [valor1, valor2, valor3]  
+    #df_mestre = df_mestre[~df_mestre['Pressão'].isin(pressao_remover)]
+    pass
+
 
   # Iterar sobre os DataFrames na coluna do DataFrame mestre
   for idx, df in enumerate(df_mestre['Dataframe_Probabilidade']):
@@ -202,7 +210,7 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
       elif ling_graf == 'en':
         titulo = f'Weighted Power: Season: {estacao} - Year: {ano} - Hour: {horario}'
         titulo_legenda = 'Pressures'
-      label = f'{pressao}'
+      label = f'{pressao} ({pa.pressao_para_altura(pressao)})'
       variavel_contada = pressao
 
     elif i == [1, 0, 1, 1]:
