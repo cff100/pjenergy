@@ -97,6 +97,7 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
     pressao_remover = [pressao_par for pressao_par in pressao_lista if pressao_par % 2 != 0]  
     for pressao in pressao_remover:
       df_mestre = df_mestre[df_mestre['Pressão'] != pressao]
+      df_mestre = df_mestre.dropna()
     #df_mestre = df_mestre[~df_mestre['Pressão'].isin(pressao_remover)]
     
 
