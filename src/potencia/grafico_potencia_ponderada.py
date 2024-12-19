@@ -210,7 +210,7 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
       elif ling_graf == 'en':
         titulo = f'Weighted Power: Season: {estacao} - Year: {ano} - Hour: {horario}'
         titulo_legenda = 'Pressures'
-      label = f'{pressao} ({pa.pressao_para_altura(pressao)})'
+      label = f'{pressao} ({pa.pressao_para_altura(pressao/10)})'
       variavel_contada = pressao
 
     elif i == [1, 0, 1, 1]:
