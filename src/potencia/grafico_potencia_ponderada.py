@@ -92,11 +92,11 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
   lista_contagem = []
   contagem_grafico = 0
 
-  if i == i == [0, 1, 1, 1]:
-
-    #pressao_remover = [valor1, valor2, valor3]  
-    #df_mestre = df_mestre[~df_mestre['Pressão'].isin(pressao_remover)]
-    pass
+  if i == [0, 1, 1, 1]:
+    
+    pressao_remover = [pressao_par for pressao_par in pressao_lista if pressao_par % 2 == 0]  
+    df_mestre = df_mestre[~df_mestre['Pressão'].isin(pressao_remover)]
+    
 
 
   # Iterar sobre os DataFrames na coluna do DataFrame mestre
@@ -211,7 +211,7 @@ def pond_potencia(df_mestre, pressao_lista, estacao_lista, ano_lista, horario_li
         titulo = f'Weighted Power: Season: {estacao} - Year: {ano} - Hour: {horario}'
         titulo_legenda = 'Pressures'
       altura = int(round(pa.pressao_para_altura(pressao/10), 0))
-      label = f'{pressao} ({altura})'
+      label = f'{pressao} ({altura} m)'
       variavel_contada = pressao
 
     elif i == [1, 0, 1, 1]:
