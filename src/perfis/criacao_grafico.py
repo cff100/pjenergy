@@ -30,12 +30,12 @@ def criacao_grafico(ax, cor, Y, X, Y_smooth, X_smooth, grafico, plataforma, esta
     if variavel == 'velocidade':
       if data == None:
         if ling_graf == 'pt':
-          ax.set_title(f'Perfil de Velocidade do Vento - {plataforma} - Est: {estacao} - Ano: {ano} - Dir: {componente_velocidade}')  # Define o título para perfis de velocidade em português
+          ax.set_title(f'Perfil de Velocidade - {plataforma} - Est: {estacao} - Ano: {ano} - Dir: {componente_velocidade}')  # Define o título para perfis de velocidade em português
         elif ling_graf == 'en':
           ax.set_title(f'Wind Profile - {plataforma} - Est: {estacao} - Year: {ano} - Dir: {componente_velocidade}')  # Define o título para perfis de velocidade em inglês
       else:
         if ling_graf == 'pt':
-          ax.set_title(f'Perfil de Velocidade do Vento - {plataforma} - Est: {estacao} - Data: {data} - Dir: {componente_velocidade}')  # Define o título para perfis de velocidade em português
+          ax.set_title(f'Perfil de Velocidade - {plataforma} - Est: {estacao} - Data: {data} - Dir: {componente_velocidade}')  # Define o título para perfis de velocidade em português
         elif ling_graf == 'en':
           ax.set_title(f'Wind Profile - {plataforma} - Est: {estacao} - Date: {data} - Dir: {componente_velocidade}')  # Define o título para perfis de velocidade em inglês
       if ling_graf == 'pt':
@@ -57,7 +57,7 @@ def criacao_grafico(ax, cor, Y, X, Y_smooth, X_smooth, grafico, plataforma, esta
         ax.set_xlabel('Temperatura (°C)')  # Nome do eixo X para temperatura em português
       elif ling_graf == 'en':
         ax.set_xlabel('Temperature (°C)')  # Nome do eixo X para temperatura em inglês
-  
+
   elif grafico == 'derivada':
 
     # Calcula a derivada dos dados suavizados (gradiente da variável X em relação a Y)
