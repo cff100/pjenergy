@@ -3,7 +3,7 @@ Recebe o input do usuário, filtra e cria o dataframe que será utilizado para a
 '''
 
 
-import pjenergy.main as mp
+import main as mp
 import src.auxiliares.caso_zero as cz
 import src.auxiliares.respostas_usuario as ru
 import pandas as pd

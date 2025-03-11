@@ -9,10 +9,12 @@ from .simplifica import simplifica_plat
 import src.auxiliares.valores_nao_aceitos as vna
 from .dataframe_media import dataframe_media
 from IPython.core.debugger import set_trace
+import os
 #set_trace()
 
 def dataframe_plataforma_escolhida(plataforma):
-  df = pd.read_csv(f'/content/pjenergy/data/dataframe_ventos/dataframes_ventos_por_plataforma/Era5_Vento_CAMPOS-{plataforma}.csv', index_col=0)
+  camin_csv = os.path.join("data", "dataframe_ventos", "dataframes_ventos_por_plataforma", f"Era5_Vento_CAMPOS-{plataforma}.csv")
+  df = pd.read_csv(camin_csv, index_col=0)
   return df
 
 def formato_data(data_escolhida, dica = False):

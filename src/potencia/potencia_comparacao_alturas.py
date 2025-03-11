@@ -1,4 +1,4 @@
-import pjenergy.main as mp
+import main as mp
 import pandas as pd
 from scipy.integrate import simps
 import matplotlib.pyplot as plt
