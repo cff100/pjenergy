@@ -8,7 +8,8 @@ além de uma tabela com os pontos dessa distribuição.
 import src.auxiliares.traduzir_para_ingles as ti
 import src.auxiliares.respostas_usuario as ru
 from ast import arguments
-from scipy.integrate import simps
+#from scipy.integrate import simps
+import scipy.integrate
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -83,8 +84,8 @@ def plot_weibull_velocidade(pressao, estacao, ano, horario, exibir_grafico, ling
   df_combinado['Densidade_de_Probabilidade'] = weibull_pdf
 
   # Calcular a soma das probabilidades usando integração
-  prob_sum = simps(weibull_pdf, velocidades)  # Aproximação da integral
-
+  #prob_sum = simps(weibull_pdf, velocidades)  # Aproximação da integral
+  prob_sum = scipy.integrate.simps(weibull_pdf, velocidades)  # Aproximação da integral
 
 
   if exibir_grafico:
