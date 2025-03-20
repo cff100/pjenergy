@@ -1,6 +1,7 @@
 import main as mp
 import pandas as pd
-from scipy.integrate import simps
+#from scipy.integrate import simps
+import scipy.integrate
 import matplotlib.pyplot as plt
 
 def potencia_altura(perguntas, l_vel_inf, l_vel_sup, plotar_graficos):
@@ -67,7 +68,7 @@ def potencia_altura(perguntas, l_vel_inf, l_vel_sup, plotar_graficos):
     print('\n \n \n')
 
 
-    potencia_media_local = simps(df_limitado['Potência_Ponderada'], df_limitado['Velocidade_Vento_resultante_m/s'])
+    potencia_media_local = scipy.integrate.simps(df_limitado['Potência_Ponderada'], df_limitado['Velocidade_Vento_resultante_m/s'])
 
     print(f'6 -> potencia_media_local: {potencia_media_local}')
     print('\n \n \n')
