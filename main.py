@@ -42,4 +42,5 @@ def pot_media(perguntas = True, l_vel_inf = 3, l_vel_sup = 24):
   pca.potencia_altura(perguntas, l_vel_inf, l_vel_sup, plotar_graficos)
   #return
 
-# graf(perguntas = False)
+graf(perguntas = False)
+# Novo branch
