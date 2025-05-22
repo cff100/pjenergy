@@ -1,0 +1,1 @@
+Funções relacionados ao cálculo e análise dos perfis de velocidade do vento.
