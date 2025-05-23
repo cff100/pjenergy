@@ -1,0 +1,7 @@
+Metadata-Version: 2.1
+Name: pjenergy
+Version: 0.1.0
+Summary: Projeto de análise energética
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
