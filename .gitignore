@@ -1,0 +1,20 @@
+
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Virtual environment
+env/
+venv/
+.venv/
+ENV/
+
+# VS Code
+.vscode/
+
+# Arquivos de ambiente
+.env
+
+# Pacote do projeto
+*.egg-info/
