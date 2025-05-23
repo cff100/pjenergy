@@ -1,0 +1,1 @@
+Funções relacionados ao cálculo e análise da potência do vento.

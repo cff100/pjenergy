@@ -1,0 +1,2 @@
+
+Arquivos relacionados à distribuição de probabilidade dos dados.

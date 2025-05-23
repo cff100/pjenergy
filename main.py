@@ -1,9 +1,9 @@
-import src.perfis.usuario as us
-import src.perfis.numero_linhas_colunas as nlc
-import src.perfis.iteracao_graficos as itg
-import src.distribuicao_probabilidade.dist_probabilidade as dp
-import src.potencia.potencia_ponderada as pp
-import src.potencia.potencia_comparacao_alturas as pca
+import src.wind_profiles.usuario as us
+import src.wind_profiles.numero_linhas_colunas as nlc
+import src.wind_profiles.iteracao_graficos as itg
+import src.probability_distribution.dist_probabilidade as dp
+import src.wind_power.potencia_ponderada as pp
+import src.wind_power.potencia_comparacao_alturas as pca
 import matplotlib.pyplot as plt
 import numpy as np
 
