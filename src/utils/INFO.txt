@@ -1,1 +1,1 @@
-Funções auxiliares, ou seja, que não fazem parte da estrutura principla do projeto.
+# Funções utilitárias ou auxiliares
