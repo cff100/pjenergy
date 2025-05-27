@@ -2,7 +2,8 @@
 class ParametrosObtencaoDados:
     """Agrupamento dos parâmetros utilizados para obtenção dos dados"""
 
-    variaveis = ("u_component_of_wind", "v_component_of_wind", "relative_humidity", "temperature")
+    variaveis = ("u_component_of_wind", "v_component_of_wind", 
+                 "relative_humidity", "temperature", "geopotential")
 
     pressao_nivel =  (900, 925, 950, 975, 1000)
 
@@ -34,3 +35,6 @@ if "__main__" == __name__:
 
     print(f"Área: {ParametrosObtencaoDados.area} \n")
 
+class Constantes:
+
+    g = 9.80665 #m/s**2
