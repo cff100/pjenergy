@@ -8,10 +8,10 @@ class ParametrosObtencaoDados:
     pressao_nivel =  (900, 925, 950, 975, 1000)
 
     # Parâmetros temporais
-    anos = tuple(range(2015, 2025))  # (2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024)
-    meses = tuple(range(1, 13)) # Todos os meses
-    dias = tuple(range(1, 32)) # Todos os dias
-    horas = tuple(f"{h:02d}:00" for h in range(24)) # Todas as horas
+    anos = list(range(2015, 2025))  # [(]2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024]
+    meses = list(range(1, 13)) # Todos os meses
+    dias = list(range(1, 32)) # Todos os dias
+    horas = list(f"{h:02d}:00" for h in range(24)) # Todas as horas
 
     #Área
     norte = -21
@@ -19,7 +19,7 @@ class ParametrosObtencaoDados:
     oeste = -42
     leste = -39
 
-    area = (norte, oeste, sul, leste)
+    area = [norte, oeste, sul, leste]
 
 
 

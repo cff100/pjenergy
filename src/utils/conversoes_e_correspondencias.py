@@ -1,17 +1,17 @@
 from config.constants import Constantes
 from datetime import datetime, timedelta
 
-def brasilia_para_utc(brasilia_horario: str) -> str :
-    "Converte o horário de Brasília para o UTC (Universal Time Coordinated)."
+def utc_para_brasilia(utc_horario: str) -> str :
+    "Converte o horário de UTC (Universal Time Coordinated) para o de Brasília."
 
     # Converter a string em um objeto datetime
-    brasilia_horario = datetime.strptime(brasilia_horario, "%H:%M")
+    utc_horario = datetime.strptime(utc_horario, "%H:%M")
     # Calcular o UTC pela soma da variação dos fusos horários
-    utc_horario = brasilia_horario + timedelta(hours=3)
+    brasilia_horario = utc_horario - timedelta(hours=3)
     # Retornar o objeto datetime à uma string
-    utc_horario = utc_horario.strftime("%H:%M")
+    brasilia_horario = brasilia_horario.strftime("%H:%M")
 
-    return utc_horario
+    return brasilia_horario
 
 
 
@@ -29,5 +29,5 @@ def calcula_altura_atm_padrao():
 if "__main__" == __name__:
     h = calcula_altura_geopotencial(10)
     print(h)
-    utc_hora = brasilia_para_utc("04:00")
+    utc_hora = utc_para_brasilia("04:00")
     print(utc_hora)
