@@ -18,3 +18,5 @@ Abra ou crie o arquivo
 
 E copie para lá o token pessoal fornecido na página https://cds.climate.copernicus.eu/how-to-api (Necessário ter uma conta)
 
+Esse arquivo não está dentro da pasta do projeto, será local.
+

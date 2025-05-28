@@ -5,7 +5,7 @@ class ParametrosObtencaoDados:
     variaveis = ("u_component_of_wind", "v_component_of_wind", 
                  "relative_humidity", "temperature", "geopotential")
 
-    pressao_nivel =  (900, 925, 950, 975, 1000)
+    pressao_niveis =  (900, 925, 950, 975, 1000) # Em hPa
 
     # Parâmetros temporais
     anos = list(range(2015, 2025))  # [(]2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024]
@@ -14,6 +14,8 @@ class ParametrosObtencaoDados:
     horas = list(f"{h:02d}:00" for h in range(24)) # Todas as horas
 
     #Área
+
+    # Coordenadas da Bacia de Campos
     norte = -21
     sul = -24
     oeste = -42
@@ -21,7 +23,8 @@ class ParametrosObtencaoDados:
 
     area = [norte, oeste, sul, leste]
 
-
+    data_format = 'netcdf'
+    download_format = 'unarchived'
 
 if "__main__" == __name__:
     
