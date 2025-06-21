@@ -8,7 +8,7 @@ class ParametrosObtencaoDados:
     pressao_niveis =  (900, 925, 950, 975, 1000) # Em hPa
 
     # Parâmetros temporais
-    anos = list(range(2015, 2025))  # [(]2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024]
+    anos = list(range(2015, 2025))  # [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024]
     meses = list(range(1, 13)) # Todos os meses
     dias = list(range(1, 32)) # Todos os dias
     horas = list(f"{h:02d}:00" for h in range(24)) # Todas as horas
