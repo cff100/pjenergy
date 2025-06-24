@@ -20,7 +20,7 @@ def calcula_altura_geopotencial(geopotencial: float) -> int:
     para assim poder realizar a correspondência entre pressão e altura."""
 
     h = geopotencial / Constantes.g
-    return h
+    return int(h)  # Retorna como inteiro, para arrendondar.
 
 def calcula_altura_atm_padrao():
     pass
