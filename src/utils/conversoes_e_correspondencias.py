@@ -5,9 +5,9 @@ def utc_para_brasilia(utc_horario: str) -> str :
     "Converte o horário de UTC (Universal Time Coordinated) para o de Brasília."
 
     # Converter a string em um objeto datetime
-    utc_horario = datetime.strptime(utc_horario, "%H:%M")
+    utc_horario_dt = datetime.strptime(utc_horario, "%H:%M")
     # Calcular o UTC pela soma da variação dos fusos horários
-    brasilia_horario = utc_horario - timedelta(hours=3)
+    brasilia_horario = utc_horario_dt - timedelta(hours=3)
     # Retornar o objeto datetime à uma string
     brasilia_horario = brasilia_horario.strftime("%H:%M")
 

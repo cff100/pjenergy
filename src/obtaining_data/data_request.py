@@ -26,6 +26,3 @@ def requisicao_dados(nome_arquivo_nc, variaveis, anos, meses, dias, utc_horas, p
     c.retrieve(dataset, request, nome_arquivo_nc)
 
 
-if __name__ == "__main__":
-    c = requisicao_dados()
-    print(c)
