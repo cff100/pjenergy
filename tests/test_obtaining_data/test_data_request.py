@@ -2,7 +2,7 @@ from obtaining_data.data_request import requisicao_dados
 from config.constants import ParametrosObtencaoDados as pod
 import os
 
-def test_requisicao_dados(requisitar = False):
+def test_requisicao_dados(requisitar = True):
     """Teste para verificar a requisição de dados do Climate Data Store (CDS)"""
 
     # Variáveis, anos e pressões a serem solicitados
@@ -15,7 +15,7 @@ def test_requisicao_dados(requisitar = False):
     print(f"Pressões escolhidas: {pressao_niveis}")
 
     # Localização do arquivo de saída
-    arquivo_nc_caminho = f"tests/new_tests_files/test.nc"
+    arquivo_nc_caminho = f"tests/new_tests_files/teste.nc"
     # Nome alternativo -> arquivo_nc_caminho = f"tests/new_tests_files/teste_(var-{variaveis})_(anos-{anos})_(pressao-{pressao_niveis}).nc"
     # Remover espaços
     arquivo_nc_caminho = arquivo_nc_caminho.replace(" ", "_")

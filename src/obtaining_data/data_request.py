@@ -27,11 +27,11 @@ def requisicao_dados(nome_arquivo_nc, variaveis, anos, pressao_niveis, meses = p
     c.retrieve(dataset, request, nome_arquivo_nc)
 
 
-# def requisicao_todos_dados():
+def requisicao_todos_dados():
 
-#     for variaveis in pod.variaveis:
-#         for anos in pod.anos:
-#             for pressao_niveis in pod.pressao_niveis:
-#                 arquivo_nc_nome = 
-#                 arquivo_nc_caminho = paths.CAMINHO_DADOS / arquivo_nc_nome
-#                 requisicao_dados()
+    for variavel in pod.variaveis:
+        for ano in pod.anos:
+            for pressao_nivel in pod.pressao_niveis:
+                arquivo_nc_nome = f"(var-{variavel})_(anos-{ano})_(pressao-{pressao_nivel}).nc"
+                arquivo_nc_caminho = paths.CAMINHO_DADOS_NC / arquivo_nc_nome
+                requisicao_dados(arquivo_nc_caminho, variavel, ano, pressao_nivel)
