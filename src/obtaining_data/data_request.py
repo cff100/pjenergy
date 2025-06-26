@@ -3,7 +3,7 @@
 from config.constants import ParametrosObtencaoDados as pod
 import cdsapi
 
-def requisicao_dados(nome_arquivo_nc, variaveis, anos, meses, dias, utc_horas, pressao_niveis, area = pod.area, data_format = pod.data_format, download_format = pod.download_format):
+def requisicao_dados(nome_arquivo_nc, variaveis, anos, pressao_niveis, meses = pod.meses, dias = pod.dias, utc_horas = pod.horas, area = pod.area, data_format = pod.data_format, download_format = pod.download_format):
 
     # Inicializar API do CDS
     c = cdsapi.Client() # Exige que o url e a key já estejam configurados em um arquivo .cdsapirc externo.
@@ -24,5 +24,3 @@ def requisicao_dados(nome_arquivo_nc, variaveis, anos, meses, dias, utc_horas, p
     }
 
     c.retrieve(dataset, request, nome_arquivo_nc)
-
-
