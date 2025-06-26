@@ -1,10 +1,10 @@
 import xarray as xr
-from config.paths import CAMINHO_BASE
+from config.paths import CAMINHO_BASE_GERAL
 import os
 
 def caminho_arquivo_nc(arquivo_nc_caminho_relativo):
 
-    arquivo_nc = CAMINHO_BASE / arquivo_nc_caminho_relativo
+    arquivo_nc = CAMINHO_BASE_GERAL / arquivo_nc_caminho_relativo
     return arquivo_nc
 
 def ler_nc_infomacoes_principais(arquivo_nc_caminho_relativo):

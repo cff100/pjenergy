@@ -2,6 +2,7 @@
 """Para obtenção  de dados de um dataset do Climate Data Store"""
 from config.constants import ParametrosObtencaoDados as pod
 import cdsapi
+import config.paths as paths
 
 def requisicao_dados(nome_arquivo_nc, variaveis, anos, pressao_niveis, meses = pod.meses, dias = pod.dias, utc_horas = pod.horas, area = pod.area, data_format = pod.data_format, download_format = pod.download_format):
 
@@ -24,3 +25,13 @@ def requisicao_dados(nome_arquivo_nc, variaveis, anos, pressao_niveis, meses = p
     }
 
     c.retrieve(dataset, request, nome_arquivo_nc)
+
+
+# def requisicao_todos_dados():
+
+#     for variaveis in pod.variaveis:
+#         for anos in pod.anos:
+#             for pressao_niveis in pod.pressao_niveis:
+#                 arquivo_nc_nome = 
+#                 arquivo_nc_caminho = paths.CAMINHO_DADOS / arquivo_nc_nome
+#                 requisicao_dados()
