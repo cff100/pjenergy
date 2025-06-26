@@ -6,7 +6,8 @@ Depois de clonar o repositório, para instalar o projeto localmente, ou seja, to
 Usando o conda, no diretório mestre do projeto, digite:
 (caso você não tenha o conda, é necessário instalá-lo)
 
-**conda env create -f environment.yml**
+**conda env create -f environment.yml** 
+
 **conda activate pjenergy**
 
 Isso também serve para permitir a criação do ambiente virtual, mais pacotes necessários para o projeto.
@@ -16,11 +17,11 @@ OBS.: Use **conda env update -f environment.yml** quando adicionar novos pacotes
 ## 2)
 Para adicionar a chave da API do CDS:
 
-Abra ou crie o arquivo
+Abra ou crie o arquivo por meio de:
 
 **notepad $env:USERPROFILE\.cdsapirc**
 
 E copie para lá o token pessoal fornecido na página https://cds.climate.copernicus.eu/how-to-api (Necessário ter uma conta)
 
-Esse arquivo não está dentro da pasta do projeto, será local.
+Esse arquivo não está guardado remotamente, será local.
 
