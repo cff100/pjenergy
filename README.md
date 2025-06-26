@@ -21,7 +21,7 @@ Abra ou crie o arquivo por meio de:
 
 **notepad $env:USERPROFILE\.cdsapirc**
 
-E copie para lá o token pessoal fornecido na página https://cds.climate.copernicus.eu/how-to-api (Necessário ter uma conta)
+E copie para lá o token pessoal fornecido na página https://cds.climate.copernicus.eu/how-to-api (Basta clicar no ícone de copiar). OBS.:Necessário ter uma conta
 
-Esse arquivo não está guardado remotamente, será local.
+Esse arquivo não está guardado remotamente, e deve ficar no seu diretório de usuário. Ex.: C:\Users\nome_do_usuario\.cdsapi
 
