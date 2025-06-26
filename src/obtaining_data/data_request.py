@@ -43,26 +43,26 @@ def requisicao_todos_dados():
             for pressao_nivel in pod.pressao_niveis:
                 
                 arquivo_nc_nome = f"(var-{variavel})_(anos-{ano})_(pressao-{pressao_nivel}).nc"
-                print(f"\n Nome do próximo arquivo: {arquivo_nc_nome}\n")
+                print(f"\n -> -> -> Nome do próximo arquivo: {arquivo_nc_nome}\n")
 
                 # Verifica se o arquivo já existe
                 # Se existir, pula o download
                 if arquivo_existe(arquivo_nc_nome):
-                    print(f"\nArquivo {arquivo_nc_nome} já existe. Pulando download.\n")
+                    print(f" -> -> -> Arquivo {arquivo_nc_nome} já existe. Pulando download.")
                     requisicao_atual += 1
                     porcentagem_cumprida = progresso_requisicao(n_requisicoes, requisicao_atual)
-                    print(f"Progresso atual: {requisicao_atual}/{n_requisicoes} ({porcentagem_cumprida}%)\n")
+                    print(f" -> -> -> Progresso atual: {requisicao_atual}/{n_requisicoes} ({porcentagem_cumprida}%)\n")
                     continue
 
                 arquivo_nc_caminho = paths.CAMINHO_DADOS_NC / arquivo_nc_nome
                 requisicao_dados(arquivo_nc_caminho, variavel, ano, pressao_nivel)
 
-                print(f"\nArquivo {arquivo_nc_nome} baixado com sucesso")
+                print(f" -> -> -> Arquivo {arquivo_nc_nome} baixado com sucesso")
                 requisicao_atual += 1
                 porcentagem_cumprida = progresso_requisicao(n_requisicoes, requisicao_atual)
-                print(f"Progresso atual: {requisicao_atual}/{n_requisicoes} ({porcentagem_cumprida}%)\n")
+                print(f" -> -> -> Progresso atual: {requisicao_atual}/{n_requisicoes} ({porcentagem_cumprida}%)")
 
-    print("Todos os arquivos .nc foram baixados com sucesso.")
+    print("\n -> -> -> Todos os arquivos .nc foram baixados com sucesso.")
 
 
 def progresso_requisicao(n_requisicoes, requisicao_atual):
