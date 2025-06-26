@@ -2,7 +2,7 @@ from obtaining_data.data_request import requisicao_dados
 from config.constants import ParametrosObtencaoDados as pod
 import os
 
-def test_requisicao_dados(requisitar = True):
+def test_requisicao_dados(requisitar = False):
     """Teste para verificar a requisição de dados do Climate Data Store (CDS)"""
 
     # Variáveis, anos e pressões a serem solicitados
