@@ -60,7 +60,7 @@ def requisicao_multiplos_dados(variaveis: tuple[str, ...] = pod.variaveis,
         for ano in anos:
             for pressao_nivel in pressao_niveis:
 
-                arquivo_nc_nome = nome_arquivo(variavel, ano, pressao_nivel)
+                arquivo_nc_nome = gera_nome_arquivo_nc(variavel, ano, pressao_nivel)
                 print(f"\n -> -> -> Nome do próximo arquivo: {arquivo_nc_nome}\n")
 
                 # Gera o caminho completo do arquivo .nc
@@ -71,7 +71,7 @@ def requisicao_multiplos_dados(variaveis: tuple[str, ...] = pod.variaveis,
                 if arquivo_existe(arquivo_nc_caminho):
                     print(f" -> -> -> Arquivo {arquivo_nc_caminho} já existe. Pulando download.")
                     requisicao_atual += 1
-                    porcentagem_cumprida = progresso_requisicao(n_requisicoes, requisicao_atual)
+                    porcentagem_cumprida = gera_progresso_requisicao(n_requisicoes, requisicao_atual)
                     print(f" -> -> -> Progresso atual: {requisicao_atual}/{n_requisicoes} ({porcentagem_cumprida}%)\n")
                     continue
 
@@ -80,7 +80,7 @@ def requisicao_multiplos_dados(variaveis: tuple[str, ...] = pod.variaveis,
 
                 print(f" -> -> -> Arquivo {arquivo_nc_nome} baixado com sucesso")
                 requisicao_atual += 1
-                porcentagem_cumprida = progresso_requisicao(n_requisicoes, requisicao_atual)
+                porcentagem_cumprida = gera_progresso_requisicao(n_requisicoes, requisicao_atual)
                 print(f" -> -> -> Progresso atual: {requisicao_atual}/{n_requisicoes} ({porcentagem_cumprida}%)")
 
     print(f"\n -> -> -> Todos os arquivos .nc foram baixados com sucesso.")
@@ -95,7 +95,7 @@ def requisicao_todos_dados_padrao():
 # Funções auxiliares
 # ----------------------------
 
-def progresso_requisicao(n_requisicoes, requisicao_atual):
+def gera_progresso_requisicao(n_requisicoes, requisicao_atual):
     porcentagem_cumprida = round(100 * requisicao_atual/n_requisicoes, 2)
     return porcentagem_cumprida
 
@@ -103,7 +103,7 @@ def arquivo_existe(arquivo_nc_caminho: Path):
     """Verifica se o arquivo existe no caminho especificado."""
     return arquivo_nc_caminho.exists()
 
-def nome_arquivo(variavel, ano, pressao_nivel):
+def gera_nome_arquivo_nc(variavel, ano, pressao_nivel):
     """Gera o nome do arquivo .nc baseado na variável, ano e nível de pressão."""
     return f"(var-{variavel})_(anos-{ano})_(pressao-{pressao_nivel}).nc"
 

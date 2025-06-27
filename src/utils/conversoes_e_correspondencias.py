@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 
 def utc_para_brasilia(utc_horario: str) -> str :
     "Converte o horário de UTC (Universal Time Coordinated) para o de Brasília."
+    "ATENÇÃO: ESSA FUNÇÃO AINDA PRECISAR SER ADAPTADA PARA CONSIDERAR QUE HORÁRIOS CORRESPONDENTES PODEM ESTAR EM DIAS DIFERENTES."
 
     # Converter a string em um objeto datetime
     utc_horario_dt = datetime.strptime(utc_horario, "%H:%M")
@@ -20,10 +21,11 @@ def calcula_altura_geopotencial(geopotencial: float) -> int:
     para assim poder realizar a correspondência entre pressão e altura."""
 
     h = geopotencial / Constantes.g
-    return int(h)  # Retorna como inteiro, para arrendondar.
+    return int(h)  # Retorna como inteiro, arredondando.
 
 def calcula_altura_atm_padrao():
     pass
+
 
 
 if "__main__" == __name__:

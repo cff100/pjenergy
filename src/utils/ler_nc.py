@@ -3,11 +3,13 @@ from config.paths import CAMINHO_DADOS_NC
 import os
 
 def caminho_arquivo_nc(arquivo_nc_caminho_relativo, caminho_base = CAMINHO_DADOS_NC):
-
+    """Gera o caminho completo do arquivo .nc baseado no caminho relativo a um caminho base."""
     arquivo_nc = caminho_base / arquivo_nc_caminho_relativo
     return arquivo_nc
 
+
 def ler_nc_infomacoes_principais(arquivo_nc_caminho_relativo, caminho_base = CAMINHO_DADOS_NC):
+    """Lê um arquivo .nc e retorna as informações principais do dataset."""
 
     arquivo_nc = caminho_arquivo_nc(arquivo_nc_caminho_relativo, caminho_base)
 

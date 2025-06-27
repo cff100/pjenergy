@@ -26,6 +26,13 @@ class ParametrosObtencaoDados:
     data_format = 'netcdf'
     download_format = 'unarchived'
 
+
+class Constantes:
+
+    g = 9.80665 #m/s**2
+
+
+
 if "__main__" == __name__:
     
     print(f"Anos: {ParametrosObtencaoDados.anos} \n")
@@ -38,6 +45,3 @@ if "__main__" == __name__:
 
     print(f"Área: {ParametrosObtencaoDados.area} \n")
 
-class Constantes:
-
-    g = 9.80665 #m/s**2
