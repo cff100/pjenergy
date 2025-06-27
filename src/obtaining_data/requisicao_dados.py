@@ -1,6 +1,7 @@
 
-"""Para obtenção  de dados de um dataset do Climate Data Store"""
+"""Para obtenção de dados de um dataset do Climate Data Store"""
 from config.constants import ParametrosObtencaoDados as pod
+from utils.cria_caminho_arquivo import cria_caminho_arquivo
 import cdsapi
 import config.paths as paths
 from pathlib import Path
@@ -41,7 +42,9 @@ def requisicao_dados(arquivo_nc_caminho: Path,
     c.retrieve(dataset, request, arquivo_nc_caminho)
 
 
-def requisicao_multiplos_dados(variaveis: tuple[str, ...] = pod.variaveis, 
+def requisicao_multiplos_dados(
+                            caminho_base: Path = paths.CAMINHO_DADOS_NC,
+                            variaveis: tuple[str, ...] = pod.variaveis, 
                             anos: tuple[int, ...] = pod.anos, 
                             pressao_niveis: tuple[int, ...] = pod.pressao_niveis, 
                             meses: tuple[int, ...] = pod.meses, 
@@ -63,15 +66,16 @@ def requisicao_multiplos_dados(variaveis: tuple[str, ...] = pod.variaveis,
                 arquivo_nc_nome = gera_nome_arquivo_nc(variavel, ano, pressao_nivel)
                 print(f"\n -> -> -> Nome do próximo arquivo: {arquivo_nc_nome}\n")
 
-                # Gera o caminho completo do arquivo .nc
-                arquivo_nc_caminho = paths.CAMINHO_DADOS_NC / arquivo_nc_nome
+                # Gera o caminho completo do arquivo .nc. 
+                # Se o caminho base do arquivo não for especificado, usa o padrão
+                arquivo_nc_caminho = cria_caminho_arquivo(arquivo_nc_nome, caminho_base)
 
                 # Verifica se o arquivo já existe
                 # Se existir, pula o download
-                if arquivo_existe(arquivo_nc_caminho):
+                if arquivo_nc_caminho.exists():
                     print(f" -> -> -> Arquivo {arquivo_nc_caminho} já existe. Pulando download.")
                     requisicao_atual += 1
-                    porcentagem_cumprida = gera_progresso_requisicao(n_requisicoes, requisicao_atual)
+                    porcentagem_cumprida = gera_porcentagem_progresso(n_requisicoes, requisicao_atual)
                     print(f" -> -> -> Progresso atual: {requisicao_atual}/{n_requisicoes} ({porcentagem_cumprida}%)\n")
                     continue
 
@@ -80,7 +84,7 @@ def requisicao_multiplos_dados(variaveis: tuple[str, ...] = pod.variaveis,
 
                 print(f" -> -> -> Arquivo {arquivo_nc_nome} baixado com sucesso")
                 requisicao_atual += 1
-                porcentagem_cumprida = gera_progresso_requisicao(n_requisicoes, requisicao_atual)
+                porcentagem_cumprida = gera_porcentagem_progresso(n_requisicoes, requisicao_atual)
                 print(f" -> -> -> Progresso atual: {requisicao_atual}/{n_requisicoes} ({porcentagem_cumprida}%)")
 
     print(f"\n -> -> -> Todos os arquivos .nc foram baixados com sucesso.")
@@ -95,18 +99,19 @@ def requisicao_todos_dados_padrao():
 # Funções auxiliares
 # ----------------------------
 
-def gera_progresso_requisicao(n_requisicoes, requisicao_atual):
-    porcentagem_cumprida = round(100 * requisicao_atual/n_requisicoes, 2)
+def gera_porcentagem_progresso(n_total: int, n_atual: int) -> float:
+    """Calcula a porcentagem de progresso de um conjunto de processos."""
+    """Parâmetros:
+    n_total: Número total de processos.
+    n_atual: Número atual de processos concluídos."""
+
+    porcentagem_cumprida = round(100 * n_atual/n_total, 2)
     return porcentagem_cumprida
 
-def arquivo_existe(arquivo_nc_caminho: Path):
-    """Verifica se o arquivo existe no caminho especificado."""
-    return arquivo_nc_caminho.exists()
-
-def gera_nome_arquivo_nc(variavel, ano, pressao_nivel):
+def gera_nome_arquivo_nc(variavel: str, ano: int, pressao_nivel: int) -> str:
     """Gera o nome do arquivo .nc baseado na variável, ano e nível de pressão."""
-    return f"(var-{variavel})_(anos-{ano})_(pressao-{pressao_nivel}).nc"
+    return f"(var-{variavel})_(anos-{ano})_(pressao-{pressao_nivel}).nc" # Essa formatação é importante para manter a consistência e facilitar a identificação dos arquivos baixados.
 
-def calcula_combinacoes(variaveis: tuple, anos: tuple, pressao_niveis: tuple):
+def calcula_combinacoes(variaveis: tuple, anos: tuple, pressao_niveis: tuple) -> int:
     """Calcula o número total de combinações de variáveis, anos e níveis de pressão."""
     return len(variaveis) * len(anos) * len(pressao_niveis)

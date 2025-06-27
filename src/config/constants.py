@@ -16,10 +16,10 @@ class ParametrosObtencaoDados:
     #Área
 
     # Coordenadas da Bacia de Campos
-    norte = -21
-    sul = -24
-    oeste = -42
-    leste = -39
+    norte = -21.0
+    sul = -24.0
+    oeste = -42.0
+    leste = -39.0
 
     area = (norte, oeste, sul, leste)
 

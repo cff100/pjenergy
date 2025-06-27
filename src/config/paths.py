@@ -5,4 +5,7 @@ CAMINHO_BASE_GERAL = Path(__file__).parent.parent.parent # Caminho do projeto
 CAMINHO_DADOS = CAMINHO_BASE_GERAL / "data"  # Caminho da pasta de dados
 CAMINHO_DADOS_NC = CAMINHO_DADOS / "nc_files" # Caminhos da pasta de dados .nc
 
+CAMINHO_TESTES = CAMINHO_BASE_GERAL / "tests"  # Caminho da pasta de testes
+CAMINHO_TESTES_ARQUIVOS_NOVOS = CAMINHO_TESTES / "new_tests_files"
+
 #print(CAMINHO_ARQUIVO_NC)

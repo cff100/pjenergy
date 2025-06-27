@@ -1,7 +1,7 @@
 from obtaining_data.requisicao_dados import requisicao_dados
 from config.constants import ParametrosObtencaoDados as pod
+from utils.cria_caminho_arquivo import cria_caminho_arquivo
 import config.paths as paths
-from pathlib import Path
 
 def test_requisicao_dados(requisitar = False):
     """Teste para verificar a requisição de dados do Climate Data Store (CDS)"""
@@ -16,13 +16,16 @@ def test_requisicao_dados(requisitar = False):
     print(f" -> -> -> Pressões escolhidas: {pressao_niveis}")
 
     # Localização do arquivo de saída
-    arquivo_nc_caminho_relativo = f"tests/new_tests_files/teste.nc"
+    caminho_base = paths.CAMINHO_TESTES_ARQUIVOS_NOVOS
+    arquivo_nc_caminho_relativo = "teste.nc"
     # Nome alternativo -> arquivo_nc_caminho = f"tests/new_tests_files/teste_(var-{variaveis})_(anos-{anos})_(pressao-{pressao_niveis}).nc"
-
+    
     print(f" -> -> -> Caminho relativo de saída: {arquivo_nc_caminho_relativo}")
 
     # Cria o caminho absoluto e confere se o diretório existe
-    arquivo_nc_caminho = paths.CAMINHO_BASE_GERAL / arquivo_nc_caminho_relativo
+    arquivo_nc_caminho = cria_caminho_arquivo(arquivo_nc_caminho_relativo, caminho_base)
+    print(f" -> -> -> Caminho absoluto de saída: {arquivo_nc_caminho}")
+    
     if arquivo_nc_caminho.exists():
         print(f" -> -> -> Arquivo {arquivo_nc_caminho} já existe. Pulando download.")
         return
