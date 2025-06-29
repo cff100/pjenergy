@@ -23,9 +23,13 @@ def ler_nc_infomacoes_principais(arquivo_nc_caminho_relativo: Path | str, caminh
 
 if __name__ == "__main__":
     ds_1 = ler_nc_infomacoes_principais("(var-temperature)_(anos-2015)_(pressao-950).nc")
-    print("ds_1: \n", ds_1)
+    #print("ds_1: \n", ds_1)
     #print(ds_1.valid_time)
+    #print(ds_1.expver[0])
 
 
     ds_2 = ler_nc_infomacoes_principais("(var-geopotential)_(anos-2020)_(pressao-925).nc", CAMINHO_TESTES_ARQUIVOS_NOVOS)
-    print("\n\n\n ds_2: \n", ds_2)
+    #print("\n\n\n ds_2: \n", ds_2)
+
+    ds_3 = ler_nc_infomacoes_principais("dataset_unico.nc")
+    print(ds_3)

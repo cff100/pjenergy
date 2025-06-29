@@ -28,14 +28,14 @@ def variaveis_match(arquivo: str) -> tuple[str | None, str | None, str | None]:
 
     if match:
         variavel, ano, nivel_pressao = match.groups()
-        return variavel, nivel_pressao, ano
+        return variavel, ano, nivel_pressao
     else:
         return None, None, None
 
 # ---------------------------------------------
 # FUNÇÕES INTERMEDIÁRIAS (pré-processamento e estruturação de dados)
 
-def pega_parametros(diretorio: Path = CAMINHO_DADOS_NC) -> dict:
+def constroi_dicio_parametros(diretorio: Path = CAMINHO_DADOS_NC) -> dict:
     """
     Dado o diretório, obtém conjuntos dos parâmetros utilizados de variáveis, anos e níveis de pressão.
     Retorna um dicionário aninhado: {variavel: {nivel_pressao: {ano: dataset}}}
@@ -66,7 +66,7 @@ def pega_parametros(diretorio: Path = CAMINHO_DADOS_NC) -> dict:
 def concatena_datasets(diretorio: Path = CAMINHO_DADOS_NC) -> dict:
     """Concatena os datasets de variáveis por níveis de pressão e anos."""
     # Obtém os dicionárioos de parâmetros, com os datasets das combinações de variáveis, anos e níveis de pressão.
-    dicio_parametros = pega_parametros(diretorio)
+    dicio_parametros = constroi_dicio_parametros(diretorio)
     # Concatena os datasets de anos para cada nível de pressão, e depois concatena os níveis de pressão para cada variável.
     for chave_variavel in dicio_parametros.keys():
         lista_dataset_pressoes = []
@@ -75,12 +75,18 @@ def concatena_datasets(diretorio: Path = CAMINHO_DADOS_NC) -> dict:
             for chave_ano in dicio_parametros[chave_variavel][chave_pressao].keys():
                 dataset_anos = dicio_parametros[chave_variavel][chave_pressao][chave_ano]
                 lista_dataset_anos.append(dataset_anos)
-        
-            dataset_pressoes = xr.concat(lista_dataset_anos, dim = "valid_time")
+
+            # Concatena os datasets de anos para cada nível de pressão
+            dataset_pressoes = xr.concat(
+                lista_dataset_anos, 
+                dim = "valid_time")
             lista_dataset_pressoes.append(dataset_pressoes)
-            
-        dicio_parametros[chave_variavel] = xr.concat(lista_dataset_pressoes, dim = "pressure_level")
-        
+
+        # Concatena os datasets de diferentes níveis de pressão ao longo da dimensão "pressure_level".
+        dicio_parametros[chave_variavel] = xr.concat(
+            lista_dataset_pressoes,
+            dim="pressure_level")
+
     return dicio_parametros
 
 
@@ -92,7 +98,8 @@ def merge_datasets(dicio_parametros: dict) -> xr.Dataset:
     datasets_variaveis = list(dicio_parametros.values())
     # Concatena os datasets de variáveis em um único dataset
     dataset_unico = xr.merge(datasets_variaveis)
-
+    print(f"Dataset único gerado com {len(dataset_unico.data_vars)} variáveis e {len(dataset_unico.pressure_level)} níveis de pressão.")
+    
     return dataset_unico
 
 
@@ -110,6 +117,6 @@ def salva_dataset_unico(dataset: xr.Dataset, nome_arquivo: str = "dataset_unico.
 
 
 if __name__ == "__main__":
-    dicio_parametros = pega_parametros()
+    dicio_parametros = constroi_dicio_parametros()
     dataset_unico = merge_datasets(dicio_parametros)
     print(dataset_unico)
