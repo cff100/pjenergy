@@ -1,5 +1,5 @@
 # Módulos internos do projeto
-from obtaining_and_manipulating_data.ler_nc import ler_nc_infomacoes_principais
+from obtaining_and_manipulating_data.nc_files.ler_nc import ler_nc_infomacoes_principais
 from config.paths import CAMINHO_TESTES_ARQUIVOS_NOVOS
 
 def test_ler_nc_infomacoes_principais():

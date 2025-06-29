@@ -48,6 +48,7 @@ class ConstantesString:
     # - O ponto de interrogação após o quantificador torna a captura não gananciosa, pegando o menor número possível de caracteres.
     # - A barra invertida antes dos parênteses é necessária para escapar os parênteses, pois eles têm significado especial em expressões regulares. 
     
+    NOME_PADRAO_ARQUIVO_NC_UNICO = "dataset_unico.nc"
 
 if "__main__" == __name__:
     

@@ -1,7 +1,7 @@
 from pathlib import Path
 from xarray import Dataset
 # Módulos internos do projeto
-from obtaining_and_manipulating_data.une_nc import concatena_datasets, merge_datasets, salva_dataset_unico
+from obtaining_and_manipulating_data.nc_files.une_nc import concatena_datasets, merge_datasets, salva_dataset_unico
 from config.paths import CAMINHO_DADOS_NC
 
 def gera_dataset_unico(diretorio: Path = CAMINHO_DADOS_NC) -> Dataset:

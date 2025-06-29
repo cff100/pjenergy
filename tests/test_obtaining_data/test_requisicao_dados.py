@@ -1,6 +1,6 @@
 # Módulos internos do projeto
 import config.paths as paths
-from obtaining_and_manipulating_data.requisicao_dados import requisicao_dados
+from obtaining_and_manipulating_data.nc_files.requisicao_dados import requisicao_dados
 from config.constants import ParametrosObtencaoDados as pod
 from utils.cria_caminho_arquivo import cria_caminho_arquivo
 
