@@ -1,7 +1,8 @@
-from obtaining_data.requisicao_dados import requisicao_dados
+# Módulos internos do projeto
+import config.paths as paths
+from obtaining_and_manipulating_data.requisicao_dados import requisicao_dados
 from config.constants import ParametrosObtencaoDados as pod
 from utils.cria_caminho_arquivo import cria_caminho_arquivo
-import config.paths as paths
 
 def test_requisicao_dados(requisitar = False):
     """Teste para verificar a requisição de dados do Climate Data Store (CDS)"""

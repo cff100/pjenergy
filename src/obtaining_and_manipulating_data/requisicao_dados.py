@@ -1,13 +1,34 @@
 
 """Para obtenção de dados de um dataset do Climate Data Store"""
-from config.constants import ParametrosObtencaoDados as pod
-from utils.cria_caminho_arquivo import cria_caminho_arquivo
 import cdsapi
 import config.paths as paths
 from pathlib import Path
+# Módulos internos do projeto
+from config.constants import ParametrosObtencaoDados as pod
+from utils.cria_caminho_arquivo import cria_caminho_arquivo
 
-# Funções principais de requisição de dados
-# ----------------------------
+
+# FUNÇÕES AUXILIARES
+
+def gera_porcentagem_progresso(n_total: int, n_atual: int) -> float:
+    """Calcula a porcentagem de progresso de um conjunto de processos."""
+    """Parâmetros:
+    n_total: Número total de processos.
+    n_atual: Número atual de processos concluídos."""
+
+    porcentagem_cumprida = round(100 * n_atual/n_total, 2)
+    return porcentagem_cumprida
+
+def gera_nome_arquivo_nc(variavel: str, ano: int, pressao_nivel: int) -> str:
+    """Gera o nome do arquivo .nc baseado na variável, ano e nível de pressão."""
+    return f"(var-{variavel})_(anos-{ano})_(pressao-{pressao_nivel}).nc" # Essa formatação é importante para manter a consistência e facilitar a identificação dos arquivos baixados.
+
+def calcula_combinacoes(variaveis: tuple, anos: tuple, pressao_niveis: tuple) -> int:
+    """Calcula o número total de combinações de variáveis, anos e níveis de pressão."""
+    return len(variaveis) * len(anos) * len(pressao_niveis)
+
+
+# FUNÇÕES PRINCIPAIS
 
 def requisicao_dados(arquivo_nc_caminho: Path, 
                      variavel: str, # Apenas uma variável por vez, como 'u_component_of_wind'
@@ -96,22 +117,3 @@ def requisicao_todos_dados_padrao():
     requisicao_multiplos_dados()
 
 
-# Funções auxiliares
-# ----------------------------
-
-def gera_porcentagem_progresso(n_total: int, n_atual: int) -> float:
-    """Calcula a porcentagem de progresso de um conjunto de processos."""
-    """Parâmetros:
-    n_total: Número total de processos.
-    n_atual: Número atual de processos concluídos."""
-
-    porcentagem_cumprida = round(100 * n_atual/n_total, 2)
-    return porcentagem_cumprida
-
-def gera_nome_arquivo_nc(variavel: str, ano: int, pressao_nivel: int) -> str:
-    """Gera o nome do arquivo .nc baseado na variável, ano e nível de pressão."""
-    return f"(var-{variavel})_(anos-{ano})_(pressao-{pressao_nivel}).nc" # Essa formatação é importante para manter a consistência e facilitar a identificação dos arquivos baixados.
-
-def calcula_combinacoes(variaveis: tuple, anos: tuple, pressao_niveis: tuple) -> int:
-    """Calcula o número total de combinações de variáveis, anos e níveis de pressão."""
-    return len(variaveis) * len(anos) * len(pressao_niveis)

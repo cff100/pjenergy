@@ -1,7 +1,8 @@
 """Para baixar arquivos .nc do Climate Data Store (CDS) com configurações específicas diferentes das padrão do projeto.
 Útil para testes simplificados ou para obter dados que não estão cobertos pelas configurações padrão do projeto."""
 
-from obtaining_data import requisicao_dados
+from obtaining_and_manipulating_data import requisicao_dados
+# Módulos internos do projeto
 from config.paths import CAMINHO_TESTES_ARQUIVOS_NOVOS
 
 # Caminho base para os arquivos .nc a serem baixados. 

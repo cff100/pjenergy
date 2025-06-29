@@ -1,5 +1,7 @@
-from config.constants import Constantes
 from datetime import datetime, timedelta
+# Módulos internos do projeto
+from config.constants import ConstantesNumericas
+
 
 def utc_para_brasilia(utc_horario: str) -> str :
     "Converte o horário de UTC (Universal Time Coordinated) para o de Brasília."
@@ -20,7 +22,7 @@ def calcula_altura_geopotencial(geopotencial: float) -> int:
     """Calcula o valor da altura a partir do valor obtido para o geopotencial,
     para assim poder realizar a correspondência entre pressão e altura."""
 
-    h = geopotencial / Constantes.g
+    h = geopotencial / ConstantesNumericas.g
     return int(h)  # Retorna como inteiro, arredondando.
 
 def calcula_altura_atm_padrao():

@@ -1,7 +1,8 @@
 import xarray as xr
+from pathlib import Path
+# Módulos internos do projeto
 from config.paths import CAMINHO_DADOS_NC, CAMINHO_TESTES_ARQUIVOS_NOVOS
 from utils.cria_caminho_arquivo import cria_caminho_arquivo
-from pathlib import Path
 
 
 def ler_nc_infomacoes_principais(arquivo_nc_caminho_relativo: Path | str, caminho_base: Path = CAMINHO_DADOS_NC) -> xr.Dataset:

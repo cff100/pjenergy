@@ -1,6 +1,6 @@
-from utils.ler_nc import ler_nc_infomacoes_principais
+# Módulos internos do projeto
+from obtaining_and_manipulating_data.ler_nc import ler_nc_infomacoes_principais
 from config.paths import CAMINHO_TESTES_ARQUIVOS_NOVOS
-from pathlib import Path
 
 def test_ler_nc_infomacoes_principais():
     """Teste para verificar a leitura de informações principais de um arquivo .nc"""

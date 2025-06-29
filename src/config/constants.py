@@ -27,11 +27,27 @@ class ParametrosObtencaoDados:
     download_format = 'unarchived'
 
 
-class Constantes:
+class ConstantesNumericas:
 
     g = 9.80665 #m/s**2
 
 
+class ConstantesString:
+    """Agrupamentos de strings importantes"""
+
+    # Padrão geral de nome dos arquivos .nc
+    NOME_PADRAO_ARQUIVOS_NC_GERAL = "(var-*)_(anos-*)_(pressao-*).nc" 
+    # O * serve como um wildcard para capturar qualquer sequência de caracteres.
+
+    # Regex para capturar os parâmetros dos nomes dos arquivos .nc
+    NOME_PADRAO_ARQUIVOS_NC_REGEX = r"\(var-(.+?)\)_\(anos-(\d{4})\)_\(pressao-(\d+?)\).nc" 
+    # Explicação da expressão regular:
+    # - \(var-(.+?)\): Captura a variável entre parênteses,
+    # - \(anos-(\d{4})\): Captura o ano de 4 dígitos entre parênteses,
+    # - \(pressao-(\d+?)\): Captura o nível de pressão entre parênteses.
+    # - O ponto de interrogação após o quantificador torna a captura não gananciosa, pegando o menor número possível de caracteres.
+    # - A barra invertida antes dos parênteses é necessária para escapar os parênteses, pois eles têm significado especial em expressões regulares. 
+    
 
 if "__main__" == __name__:
     
