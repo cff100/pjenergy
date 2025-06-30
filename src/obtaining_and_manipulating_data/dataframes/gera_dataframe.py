@@ -18,7 +18,7 @@ def gera_arquivos_parquet(caminho_nc_unico: Path = CAMINHO_NC_UNICO, diretorio_d
     df = ds.to_dask_dataframe()
 
     # Salva o DataFrame como um conjunto de arquivos Parquet
-    df.to_parquet(diretorio_dados_parquet, write_index=True)
+    df.to_parquet(diretorio_dados_parquet, write_index=True, overwrite=True)
 
     return df
 
