@@ -10,127 +10,136 @@ def ler_dataframe_dask(diretorio_dados_parquet: Path = DIRETORIO_DATAFRAME_COM_C
     return df
 
 
-# VER OS DADOS (INCLUINDO TODAS PARTIÇÕES)
+########## EM MANUTENÇÃO #############
 
-def n_primeiras_linhas(n: int = 5, diretorio_dados_parquet: Path = DIRETORIO_DATAFRAME_COM_COLUNAS_TEMPORAIS):
-    """Mostras as n primeiras linhas."""
+# # VER OS DADOS (INCLUINDO TODAS PARTIÇÕES)
 
-    df = ler_dataframe_dask(diretorio_dados_parquet)
-    head = df.compute().head(n)
-    return head
+# def n_primeiras_linhas(n: int = 5, diretorio_dados_parquet: Path = DIRETORIO_DATAFRAME_COM_COLUNAS_TEMPORAIS):
+#     """Mostras as n primeiras linhas."""
 
-def ler_ultimas_linhas(n: int = 5, diretorio_dados_parquet: Path = DIRETORIO_DATAFRAME_COM_COLUNAS_TEMPORAIS):
-    """Mostras as n últimas linhas."""
+#     df = ler_dataframe_dask(diretorio_dados_parquet)
+#     head = df.compute().head(n)
+#     return head
+
+# def ler_ultimas_linhas(n: int = 5, diretorio_dados_parquet: Path = DIRETORIO_DATAFRAME_COM_COLUNAS_TEMPORAIS):
+#     """Mostras as n últimas linhas."""
     
-    df = ler_dataframe_dask(diretorio_dados_parquet)
-    tail = df.compute().tail(n)
-    return tail
+#     df = ler_dataframe_dask(diretorio_dados_parquet)
+#     tail = df.compute().tail(n)
+#     return tail
 
-def amostra_aleatoria(frac: float = 0.001, diretorio_dados_parquet: Path = DIRETORIO_DATAFRAME_COM_COLUNAS_TEMPORAIS):
-    """Pega uma amostra aleatória de uma quantidade especificada de linhas do dataframe."""
+# def amostra_aleatoria(frac: float = 0.001, diretorio_dados_parquet: Path = DIRETORIO_DATAFRAME_COM_COLUNAS_TEMPORAIS):
+#     """Pega uma amostra aleatória de uma quantidade especificada de linhas do dataframe."""
     
-    df = ler_dataframe_dask(diretorio_dados_parquet)
-    amostra = df.sample(frac = frac).compute()
-    return amostra
+#     df = ler_dataframe_dask(diretorio_dados_parquet)
+#     amostra = df.sample(frac = frac).compute()
+#     return amostra
 
-def acessa_particao_especifica(particao: int = 0, diretorio_dados_parquet: Path = DIRETORIO_DATAFRAME_COM_COLUNAS_TEMPORAIS):
-    """Pega uma amostra aleatória de uma quantidade especificada de linhas do dataframe."""
+# def acessa_particao_especifica(particao: int = 0, diretorio_dados_parquet: Path = DIRETORIO_DATAFRAME_COM_COLUNAS_TEMPORAIS):
+#     """Pega uma amostra aleatória de uma quantidade especificada de linhas do dataframe."""
     
-    df = ler_dataframe_dask(diretorio_dados_parquet)
-    particao = df.partitions[particao].compute()
-    return particao
+#     df = ler_dataframe_dask(diretorio_dados_parquet)
+#     particao = df.partitions[particao].compute()
+#     return particao
     
-# OBTER INFORMAÇÕES DE TIPOS, COLUNAS, DTYPES, ETC
+# # OBTER INFORMAÇÕES DE TIPOS, COLUNAS, DTYPES, ETC
 
-def lista_nomes_colunas(diretorio_dados_parquet: Path = DIRETORIO_DATAFRAME_COM_COLUNAS_TEMPORAIS):
-    """Retorna os nomes das colunas do dataframe."""
+# def lista_nomes_colunas(diretorio_dados_parquet: Path = DIRETORIO_DATAFRAME_COM_COLUNAS_TEMPORAIS):
+#     """Retorna os nomes das colunas do dataframe."""
     
-    df = ler_dataframe_dask(diretorio_dados_parquet)
-    colunas = df.columns.tolist()
-    return colunas
+#     df = ler_dataframe_dask(diretorio_dados_parquet)
+#     colunas = df.columns.tolist()
+#     return colunas
 
-def tipos_colunas(diretorio_dados_parquet: Path = DIRETORIO_DATAFRAME_COM_COLUNAS_TEMPORAIS):
-    """Retorna os tipos de dados das colunas do dataframe."""
+# def tipos_colunas(diretorio_dados_parquet: Path = DIRETORIO_DATAFRAME_COM_COLUNAS_TEMPORAIS):
+#     """Retorna os tipos de dados das colunas do dataframe."""
     
-    df = ler_dataframe_dask(diretorio_dados_parquet)
-    tipos = df.dtypes
-    return tipos
+#     df = ler_dataframe_dask(diretorio_dados_parquet)
+#     tipos = df.dtypes
+#     return tipos
 
-def numero_linhas_e_colunas(diretorio_dados_parquet: Path = DIRETORIO_DATAFRAME_COM_COLUNAS_TEMPORAIS):
-    """Retorna o número de linhas e colunas do dataframe."""
+# def numero_linhas_e_colunas(diretorio_dados_parquet: Path = DIRETORIO_DATAFRAME_COM_COLUNAS_TEMPORAIS):
+#     """Retorna o número de linhas e colunas do dataframe."""
     
-    df = ler_dataframe_dask(diretorio_dados_parquet)
-    num_linhas = df.shape[0].compute()  # Computa o número de linhas
-    num_colunas = df.shape[1]  # Número de colunas é uma propriedade
-    return num_linhas, num_colunas
+#     df = ler_dataframe_dask(diretorio_dados_parquet)
+#     num_linhas = df.shape[0].compute()  # Computa o número de linhas
+#     num_colunas = df.shape[1]  # Número de colunas é uma propriedade
+#     return num_linhas, num_colunas
 
-# INFORMAÇÕES ESTATÍSTICAS E ESTRUTURAIS    
+# # INFORMAÇÕES ESTATÍSTICAS E ESTRUTURAIS    
 
-def resumo_estatistico(diretorio_dados_parquet: Path = DIRETORIO_DATAFRAME_COM_COLUNAS_TEMPORAIS):
-    """Retorna um resumo estatístico do dataframe."""
+# def resumo_estatistico(diretorio_dados_parquet: Path = DIRETORIO_DATAFRAME_COM_COLUNAS_TEMPORAIS):
+#     """Retorna um resumo estatístico do dataframe."""
     
-    df = ler_dataframe_dask(diretorio_dados_parquet)
-    resumo = df.describe().compute()
-    return resumo
+#     df = ler_dataframe_dask(diretorio_dados_parquet)
+#     resumo = df.describe().compute()
+#     return resumo
 
-# OUTROS MÉTODOS ÚTEIS
+# # OUTROS MÉTODOS ÚTEIS
 
-def numero_particoes(diretorio_dados_parquet: Path = DIRETORIO_DATAFRAME_COM_COLUNAS_TEMPORAIS):
-    """Retorna o número de partições do dataframe."""
+# def numero_particoes(diretorio_dados_parquet: Path = DIRETORIO_DATAFRAME_COM_COLUNAS_TEMPORAIS):
+#     """Retorna o número de partições do dataframe."""
     
-    df = ler_dataframe_dask(diretorio_dados_parquet)
-    num_particoes = df.npartitions
-    return num_particoes
+#     df = ler_dataframe_dask(diretorio_dados_parquet)
+#     num_particoes = df.npartitions
+#     return num_particoes
 
-from typing import Callable
+# from typing import Callable
 
-def executa_em_cada_particao(funcao: Callable, diretorio_dados_parquet: Path = DIRETORIO_DATAFRAME_COM_COLUNAS_TEMPORAIS):
-    """Executa uma função em cada partição do dataframe."""
+# def executa_em_cada_particao(funcao: Callable, diretorio_dados_parquet: Path = DIRETORIO_DATAFRAME_COM_COLUNAS_TEMPORAIS):
+#     """Executa uma função em cada partição do dataframe."""
     
-    df = ler_dataframe_dask(diretorio_dados_parquet)
-    resultados = df.map_partitions(funcao).compute()
-    return resultados
+#     df = ler_dataframe_dask(diretorio_dados_parquet)
+#     resultados = df.map_partitions(funcao).compute()
+#     return resultados
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
 
-    df = ler_dataframe_dask()
+#     # TESTES
 
-    head = n_primeiras_linhas(10)
-    print(" -> -> -> head:")
-    print(head)
-    print("\n")
+#     ## VER OS DADOS
 
-    tail = ler_ultimas_linhas()
-    print(" -> -> -> tail:")
-    print(tail)
-    print("\n")
+#     df = ler_dataframe_dask()
+    
 
-    # amostra = amostra_aleatoria(frac=0.0001)
-    # print(amostra.tail(100))
+#     head = df.head(n = 10) 
+#     print(" -> -> -> head:")
+#     print(head)
+#     print("\n")
 
-    # particao = acessa_particao_especifica()
-    # print(particao)
+#     # tail = df.compute().tail(10)
+#     # print(" -> -> -> tail:")
+#     # print(tail)
+#     # print("\n")
 
-    # colunas = lista_nomes_colunas()
-    # print(colunas)
+#     # amostra_aleatoria = df.compute().sample(frac=0.0001)
+#     # print(" -> -> -> Amostra aleatória:")
+#     # print(amostra_aleatoria)
+#     # print("\n")
 
-    # tipos = tipos_colunas(DIRETORIO_DATAFRAME_COM_COLUNAS_TEMPORAIS)
-    # print(tipos)
+#     # particao = acessa_particao_especifica()
+#     # print(particao)
 
-    # num_linhas, num_colunas = numero_linhas_e_colunas()
-    # print(num_linhas, num_colunas)
+#     # colunas = lista_nomes_colunas()
+#     # print(colunas)
 
-    # resumo = resumo_estatistico()
-    # print(resumo)
+#     # tipos = tipos_colunas(DIRETORIO_DATAFRAME_COM_COLUNAS_TEMPORAIS)
+#     # print(tipos)
 
-    # num_particoes = numero_particoes()
-    # print(num_particoes)
+#     # num_linhas, num_colunas = numero_linhas_e_colunas()
+#     # print(num_linhas, num_colunas)
 
-    # resultados = executa_em_cada_particao(lambda part: part.tail(1))
-    # print(resultados)
+#     # resumo = resumo_estatistico()
+#     # print(resumo)
 
-    # df = ler_dataframe_dask(DIRETORIO_DATAFRAME_COM_COLUNAS_TEMPORAIS)
-    # #print(df["ano"].unique().compute())
-    # #print(df.tail())
-    # df_mes = df[df["hora"] == "03:00"].compute()
-    # print(df_mes.tail())
+#     # num_particoes = numero_particoes()
+#     # print(num_particoes)
+
+#     # resultados = executa_em_cada_particao(lambda part: part.tail(1))
+#     # print(resultados)
+
+#     # df = ler_dataframe_dask(DIRETORIO_DATAFRAME_COM_COLUNAS_TEMPORAIS)
+#     # #print(df["ano"].unique().compute())
+#     # #print(df.tail())
+#     # df_mes = df[df["hora"] == "03:00"].compute()
+#     # print(df_mes.tail())
