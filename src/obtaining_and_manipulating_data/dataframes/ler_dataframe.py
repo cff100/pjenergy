@@ -92,14 +92,14 @@ def executa_em_cada_particao(funcao: Callable, diretorio_dados_parquet: Path = C
     return resultados
 
 if __name__ == "__main__":
-    head = n_primeiras_linhas()
-    print(head)
+    # head = n_primeiras_linhas(10)
+    # print(head)
 
-    # tail = ler_ultimas_linhas()
-    # print(tail)
+    tail = ler_ultimas_linhas()
+    print(tail)
 
-    # amostra = amostra_aleatoria()
-    # print(amostra)
+    amostra = amostra_aleatoria()
+    print(amostra)
 
     # particao = acessa_particao_especifica()
     # print(particao)
@@ -107,8 +107,8 @@ if __name__ == "__main__":
     # colunas = lista_nomes_colunas()
     # print(colunas)
 
-    # tipos = tipos_colunas()
-    # print(tipos)
+    tipos = tipos_colunas()
+    print(tipos)
 
     # num_linhas, num_colunas = numero_linhas_e_colunas()
     # print(num_linhas, num_colunas)
