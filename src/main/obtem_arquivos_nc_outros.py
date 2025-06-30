@@ -3,14 +3,14 @@
 
 from obtaining_and_manipulating_data.nc_files import requisicao_dados
 # Módulos internos do projeto
-from config.paths import CAMINHO_TESTES_ARQUIVOS_NOVOS
+from config.paths import DIRETORIO_TESTES_ARQUIVOS_NOVOS
 
 # Caminho base para os arquivos .nc a serem baixados. 
 # Esse caminho, por padrão, direciona os arquivos baixados para a pasta de arquivos gerados nos testes,
 # para evitar conflitos com os arquivos padrão do projeto.
 # Se necessário, pode ser alterado para outro caminho, mas atenção para não sobrescrever outros arquivos 
 # ou desorganizar a estrutura do projeto.
-CAMINHO_BASE = CAMINHO_TESTES_ARQUIVOS_NOVOS
+CAMINHO_BASE = DIRETORIO_TESTES_ARQUIVOS_NOVOS
 
 # Exemplo de variáveis, anos, pressões, meses, dias, horas e área não padrão
 # Substitua pelos valores reais conforme necessário

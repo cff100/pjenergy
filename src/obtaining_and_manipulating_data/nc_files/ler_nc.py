@@ -1,11 +1,11 @@
 import xarray as xr
 from pathlib import Path
 # Módulos internos do projeto
-from config.paths import CAMINHO_DADOS_NC, CAMINHO_TESTES_ARQUIVOS_NOVOS
+from config.paths import DIRETORIO_DATASET_NC, DIRETORIO_TESTES_ARQUIVOS_NOVOS
 from utils.cria_caminho_arquivo import cria_caminho_arquivo
 
 
-def ler_nc_infomacoes_principais(arquivo_nc_caminho_relativo: Path | str, caminho_base: Path = CAMINHO_DADOS_NC) -> xr.Dataset:
+def ler_nc_infomacoes_principais(arquivo_nc_caminho_relativo: Path | str, caminho_base: Path = DIRETORIO_DATASET_NC) -> xr.Dataset:
     """Lê um arquivo .nc e retorna as informações principais do dataset."""
     """Parâmetros:
     arquivo_nc_caminho_relativo: Caminho relativo do arquivo .nc em relação ao caminho base. 

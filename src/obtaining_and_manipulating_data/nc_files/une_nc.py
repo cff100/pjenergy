@@ -3,12 +3,12 @@ import glob
 from pathlib import Path
 import xarray as xr
 # Módulos internos do projeto
-from config.paths import CAMINHO_DADOS_NC
+from config.paths import DIRETORIO_DATASET_NC
 from config.constants import ConstantesString as cs
 
 # FUNÇÕES AUXILIARES
 
-def pega_arquivos(diretorio: Path = CAMINHO_DADOS_NC) -> list[str]:
+def pega_arquivos(diretorio: Path = DIRETORIO_DATASET_NC) -> list[str]:
     """Pega todos os arquivos de um determinado diretório, com o nome em um determinado padrão"""
 
     caminho_padrao = str(diretorio) + "\\" + cs.NOME_PADRAO_ARQUIVOS_NC_GERAL # Padrão de nome do caminho dos arquivos
@@ -35,7 +35,7 @@ def variaveis_match(arquivo: str) -> tuple[str | None, str | None, str | None]:
 # ---------------------------------------------
 # FUNÇÕES INTERMEDIÁRIAS (pré-processamento e estruturação de dados)
 
-def constroi_dicio_parametros(diretorio: Path = CAMINHO_DADOS_NC) -> dict:
+def constroi_dicio_parametros(diretorio: Path = DIRETORIO_DATASET_NC) -> dict:
     """
     Dado o diretório, obtém conjuntos dos parâmetros utilizados de variáveis, anos e níveis de pressão.
     Retorna um dicionário aninhado: {variavel: {nivel_pressao: {ano: dataset}}}
@@ -63,7 +63,7 @@ def constroi_dicio_parametros(diretorio: Path = CAMINHO_DADOS_NC) -> dict:
 # ---------------------------------------------
 # FUNÇÕES PRINCIPAIS
 
-def concatena_datasets(diretorio: Path = CAMINHO_DADOS_NC) -> dict:
+def concatena_datasets(diretorio: Path = DIRETORIO_DATASET_NC) -> dict:
     """Concatena os datasets de variáveis por níveis de pressão e anos."""
     # Obtém os dicionárioos de parâmetros, com os datasets das combinações de variáveis, anos e níveis de pressão.
     dicio_parametros = constroi_dicio_parametros(diretorio)
@@ -103,7 +103,7 @@ def merge_datasets(dicio_parametros: dict) -> xr.Dataset:
     return dataset_unico
 
 
-def salva_dataset_unico(dataset: xr.Dataset, nome_arquivo: str = cs.NOME_PADRAO_ARQUIVO_NC_UNICO, diretorio: Path = CAMINHO_DADOS_NC) -> None:
+def salva_dataset_unico(dataset: xr.Dataset, nome_arquivo: str = cs.NOME_PADRAO_ARQUIVO_NC_UNICO, diretorio: Path = DIRETORIO_DATASET_NC) -> None:
     """Salva o dataset único em um arquivo .nc. 
     Caso o nome do arquivo seja diferente do default, 
     é necessário adicionar o nome do arquivo ao .gitignore na raiz do projeto 

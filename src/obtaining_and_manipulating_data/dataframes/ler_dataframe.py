@@ -1,9 +1,9 @@
 import dask.dataframe as dd
 from pathlib import Path
 # Módulos internos do projeto
-from config.paths import CAMINHO_DADOS_PARQUET
+from config.paths import DIRETORIO_DATAFRAME_PRIMARIO
 
-def ler_dataframe_dask(diretorio_dados_parquet: Path = CAMINHO_DADOS_PARQUET):
+def ler_dataframe_dask(diretorio_dados_parquet: Path = DIRETORIO_DATAFRAME_PRIMARIO):
     """Ler o dataframe dask composto por arquivos parquet."""
     
     df = dd.read_parquet(diretorio_dados_parquet)
@@ -12,28 +12,28 @@ def ler_dataframe_dask(diretorio_dados_parquet: Path = CAMINHO_DADOS_PARQUET):
 
 # VER OS DADOS (CONTEÚDO PARCIAL)
 
-def n_primeiras_linhas(n: int = 5, diretorio_dados_parquet: Path = CAMINHO_DADOS_PARQUET):
+def n_primeiras_linhas(n: int = 5, diretorio_dados_parquet: Path = DIRETORIO_DATAFRAME_PRIMARIO):
     """Mostras as n primeiras linhas."""
 
     df = ler_dataframe_dask(diretorio_dados_parquet)
     head = df.head(n)
     return head
 
-def ler_ultimas_linhas(n: int = 5, diretorio_dados_parquet: Path = CAMINHO_DADOS_PARQUET):
+def ler_ultimas_linhas(n: int = 5, diretorio_dados_parquet: Path = DIRETORIO_DATAFRAME_PRIMARIO):
     """Mostras as n últimas linhas."""
     
     df = ler_dataframe_dask(diretorio_dados_parquet)
     tail = df.tail(n)
     return tail
 
-def amostra_aleatoria(frac: float = 0.001, diretorio_dados_parquet: Path = CAMINHO_DADOS_PARQUET):
+def amostra_aleatoria(frac: float = 0.001, diretorio_dados_parquet: Path = DIRETORIO_DATAFRAME_PRIMARIO):
     """Pega uma amostra aleatória de uma quantidade especificada de linhas do dataframe."""
     
     df = ler_dataframe_dask(diretorio_dados_parquet)
     amostra = df.sample(frac = frac).compute()
     return amostra
 
-def acessa_particao_especifica(particao: int = 0, diretorio_dados_parquet: Path = CAMINHO_DADOS_PARQUET):
+def acessa_particao_especifica(particao: int = 0, diretorio_dados_parquet: Path = DIRETORIO_DATAFRAME_PRIMARIO):
     """Pega uma amostra aleatória de uma quantidade especificada de linhas do dataframe."""
     
     df = ler_dataframe_dask(diretorio_dados_parquet)
@@ -42,21 +42,21 @@ def acessa_particao_especifica(particao: int = 0, diretorio_dados_parquet: Path 
     
 # OBTER INFORMAÇÕES DE TIPOS, COLUNAS, DTYPES, ETC
 
-def lista_nomes_colunas(diretorio_dados_parquet: Path = CAMINHO_DADOS_PARQUET):
+def lista_nomes_colunas(diretorio_dados_parquet: Path = DIRETORIO_DATAFRAME_PRIMARIO):
     """Retorna os nomes das colunas do dataframe."""
     
     df = ler_dataframe_dask(diretorio_dados_parquet)
     colunas = df.columns.tolist()
     return colunas
 
-def tipos_colunas(diretorio_dados_parquet: Path = CAMINHO_DADOS_PARQUET):
+def tipos_colunas(diretorio_dados_parquet: Path = DIRETORIO_DATAFRAME_PRIMARIO):
     """Retorna os tipos de dados das colunas do dataframe."""
     
     df = ler_dataframe_dask(diretorio_dados_parquet)
     tipos = df.dtypes
     return tipos
 
-def numero_linhas_e_colunas(diretorio_dados_parquet: Path = CAMINHO_DADOS_PARQUET):
+def numero_linhas_e_colunas(diretorio_dados_parquet: Path = DIRETORIO_DATAFRAME_PRIMARIO):
     """Retorna o número de linhas e colunas do dataframe."""
     
     df = ler_dataframe_dask(diretorio_dados_parquet)
@@ -66,7 +66,7 @@ def numero_linhas_e_colunas(diretorio_dados_parquet: Path = CAMINHO_DADOS_PARQUE
 
 # INFORMAÇÕES ESTATÍSTICAS E ESTRUTURAIS    
 
-def resumo_estatistico(diretorio_dados_parquet: Path = CAMINHO_DADOS_PARQUET):
+def resumo_estatistico(diretorio_dados_parquet: Path = DIRETORIO_DATAFRAME_PRIMARIO):
     """Retorna um resumo estatístico do dataframe."""
     
     df = ler_dataframe_dask(diretorio_dados_parquet)
@@ -75,7 +75,7 @@ def resumo_estatistico(diretorio_dados_parquet: Path = CAMINHO_DADOS_PARQUET):
 
 # OUTROS MÉTODOS ÚTEIS
 
-def numero_particoes(diretorio_dados_parquet: Path = CAMINHO_DADOS_PARQUET):
+def numero_particoes(diretorio_dados_parquet: Path = DIRETORIO_DATAFRAME_PRIMARIO):
     """Retorna o número de partições do dataframe."""
     
     df = ler_dataframe_dask(diretorio_dados_parquet)
@@ -84,7 +84,7 @@ def numero_particoes(diretorio_dados_parquet: Path = CAMINHO_DADOS_PARQUET):
 
 from typing import Callable
 
-def executa_em_cada_particao(funcao: Callable, diretorio_dados_parquet: Path = CAMINHO_DADOS_PARQUET):
+def executa_em_cada_particao(funcao: Callable, diretorio_dados_parquet: Path = DIRETORIO_DATAFRAME_PRIMARIO):
     """Executa uma função em cada partição do dataframe."""
     
     df = ler_dataframe_dask(diretorio_dados_parquet)

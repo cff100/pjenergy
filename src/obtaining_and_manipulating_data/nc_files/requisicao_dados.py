@@ -64,7 +64,7 @@ def requisicao_dados(arquivo_nc_caminho: Path,
 
 
 def requisicao_multiplos_dados(
-                            caminho_base: Path = paths.CAMINHO_DADOS_NC,
+                            caminho_base: Path = paths.DIRETORIO_DATASET_NC,
                             variaveis: tuple[str, ...] = pod.variaveis, 
                             anos: tuple[int, ...] = pod.anos, 
                             pressao_niveis: tuple[int, ...] = pod.pressao_niveis, 

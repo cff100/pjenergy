@@ -17,7 +17,7 @@ def test_requisicao_dados(requisitar = False):
     print(f" -> -> -> Pressões escolhidas: {pressao_niveis}")
 
     # Localização do arquivo de saída
-    caminho_base = paths.CAMINHO_TESTES_ARQUIVOS_NOVOS
+    caminho_base = paths.DIRETORIO_TESTES_ARQUIVOS_NOVOS
     arquivo_nc_caminho_relativo = "teste.nc"
     # Nome alternativo -> arquivo_nc_caminho = f"tests/new_tests_files/teste_(var-{variaveis})_(anos-{anos})_(pressao-{pressao_niveis}).nc"
     

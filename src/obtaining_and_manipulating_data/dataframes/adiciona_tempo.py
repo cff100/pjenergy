@@ -2,9 +2,9 @@ import dask.dataframe as dd
 from pathlib import Path
 # Módulos internos do projeto
 from obtaining_and_manipulating_data.dataframes.ler_dataframe import ler_dataframe_dask
-from config.paths import CAMINHO_DADOS_PARQUET
+from config.paths import DIRETORIO_DATAFRAME_PRIMARIO
 
-def adiciona_colunas_tempo(diretorio_dados_parquet: Path = CAMINHO_DADOS_PARQUET):
+def adiciona_colunas_tempo(diretorio_dados_parquet: Path = DIRETORIO_DATAFRAME_PRIMARIO):
     """
     Lê um DataFrame Dask a partir de arquivos Parquet e adiciona colunas derivadas da coluna 'valid_time'.
     Sobrescreve o diretório original com os dados atualizados.

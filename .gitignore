@@ -19,5 +19,6 @@ ENV/
 # Pacote do projeto
 *.egg-info/
 
-# Arquivos grandes
+# Arquivos processados
 dataset_unico.nc
+data/dataframe_primario
