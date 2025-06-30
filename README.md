@@ -14,11 +14,12 @@ Os dados utilizados foram obtidos do Climate Data Store (CDS), um agrupamento de
 
 ## Primeiros Passos
 
-### 1
+### Clonar repositório
 
-Clonar repositório. No diretório em que deseja clonar o projeto digite 
+ - No diretório em que deseja clonar o projeto digite:
+ 
 ´´´bash
-git clone https://github.com/cff100/pjenergy.git
+$git clone https://github.com/cff100/pjenergy.git
 ´´´
 
 ## Obtenção dos Dados
