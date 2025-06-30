@@ -1,4 +1,12 @@
+# Pjenergy
 
+Pjenergy é um projeto que visa a obtenção e estudo do potencial energético do vento na região da Bacia de Campos, especificamente na área em que se localiza um conjunto de plataformas de pretóleo e gás em descomissionamento, com a ideia em mente de contribuir com informações relevantes para a possível contrução de aerogeradores offshore. 
+
+Para o fim de maior aprofundamento, o projeto foca na localização de uma plataforma em específico.
+
+## Obtenção dos dados
+
+Os dados utilizados foram obtidos do Climate Data Store, um agrupamento de dados climaticos do Programa da União Europeia.
 
 ## 1) 
 Depois de clonar o repositório, para instalar o projeto localmente, ou seja, torná-lo utilizável como um pacote no seu ambiente, e instalar dependências: 
