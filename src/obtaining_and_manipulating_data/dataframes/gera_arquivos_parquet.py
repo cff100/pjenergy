@@ -1,31 +1,24 @@
 import xarray as xr
 from pathlib import Path
+import dask.dataframe as dd
+# Módulos internos do projeto
 from config.paths import CAMINHO_NC_UNICO, CAMINHO_DADOS_PARQUET
 
-def gera_arquivos_parquet(caminho_nc_unico: Path = CAMINHO_NC_UNICO, caminhos_dados_parquet = CAMINHO_DADOS_PARQUET):
+def gera_arquivos_parquet(caminho_nc_unico: Path = CAMINHO_NC_UNICO, diretorio_dados_parquet: Path = CAMINHO_DADOS_PARQUET) -> dd.DataFrame:
     """Gera arquivos Parquet a partir de um arquivo NetCDF único.
     É utilizado dask pois o dataset é grande e possivelmente não cabe na memória."""
 
-    ds = xr.open_dataset(caminho_nc_unico, chunks={})
+    # Carrega o dataset com dask, sem definir chunks específicos
+    ds = xr.open_dataset(caminho_nc_unico, chunks={}) 
 
     # Unifica os chunks em todas as variáveis nas dimensões em comum
     ds = ds.unify_chunks()
 
+    # Converte o dataset para um DataFrame do Dask
     df = ds.to_dask_dataframe()
 
-    df.to_parquet(caminhos_dados_parquet, write_index=True)
+    # Salva o DataFrame como um conjunto de arquivos Parquet
+    df.to_parquet(diretorio_dados_parquet, write_index=True)
 
     return df
 
-# if __name__ == "__main__":
-#     #df = gera_arquivos_parquet()
-
-#     # import dask.dataframe as dd 
-#     # import pandas as pd
-
-#     # df = dd.read_parquet(CAMINHO_DADOS_PARQUET)
-#     # pd.set_option('display.max_columns', None)  # Mostra todas as colunas
-#     # # Ajustar largura para caber melhor no terminal
-#     # pd.set_option('display.width', 0)           # Quebra de linha automática no terminal
-#     # print(df.head(2))
-#     # print(df.tail(2))
