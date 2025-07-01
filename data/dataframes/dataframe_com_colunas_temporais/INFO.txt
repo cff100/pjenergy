@@ -1,0 +1,1 @@
+Pasta que armazena o dataframe (e suas partições) gerado a partir do datset primário, com a adição de colunas com representação de elementos temporais (ano, mês, dia e hora)

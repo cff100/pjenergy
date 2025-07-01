@@ -21,4 +21,4 @@ ENV/
 
 # Arquyivos de dados processados ignorados
 dataset_unico.nc
-data/dataframes
+data/dataframes/dataframe*/part*
