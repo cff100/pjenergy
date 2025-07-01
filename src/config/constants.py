@@ -3,7 +3,7 @@ class ParametrosObtencaoDados:
     """Agrupamento dos parâmetros utilizados para obtenção dos dados"""
 
     variaveis = ("u_component_of_wind", "v_component_of_wind", 
-                 "relative_humidity", "temperature", "geopotential")
+                 "relative_humidity", "temperature", "geopotential")  # Representadas respectivamente nos dataset por (u, v, r, t, h)
 
     pressao_niveis =  (900, 925, 950, 975, 1000) # Em hPa
 

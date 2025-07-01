@@ -102,15 +102,15 @@ def ler_dataframe_dask(diretorio_dados_parquet: Path = DIRETORIO_DATAFRAME_COM_C
 #     df = ler_dataframe_dask()
     
 
-#     head = df.head(n = 10) 
+#     head = df.head(n = 5) 
 #     print(" -> -> -> head:")
 #     print(head)
 #     print("\n")
 
-#     # tail = df.compute().tail(10)
-#     # print(" -> -> -> tail:")
-#     # print(tail)
-#     # print("\n")
+#     tail = df.tail(10)
+#     print(" -> -> -> tail:")
+#     print(tail)
+#     print("\n")
 
 #     # amostra_aleatoria = df.compute().sample(frac=0.0001)
 #     # print(" -> -> -> Amostra aleatória:")
