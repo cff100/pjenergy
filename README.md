@@ -83,7 +83,9 @@ Caso se queira ler o conteúdo de algum dos arquivos NetCDF (seja os baixados, s
 
 A partir do dataset unificado, esta [função](src/main/gera_dataframe.py) cria um dask dataframe. Utilizar um dask dataframe é importante nesse caso pois ele permite o particionamente de um único dataframe em vários arquivos distintos, o que é essencial para trabalhar com dados nessa escala de tamanho, já que as memórias RAM comuns não possuem espaço suficiente para processar todo o dataframe ao mesmo tempo.
 
-De forma complementar, foi escolhido [Parquet](https://parquet.apache.org/) como formato de armazenamento das partições do dataframe, devido a sua alta compressão e eficiência de armazenamento, eficiência de leitura (por ser orientado à colunas) e o armazenamento dos metadados da estrutura (o que preserva informações sobre os dados e assim melhora muito a eficiência de processos).
+De forma complementar, foi escolhido [Parquet](https://parquet.apache.org/) como formato de armazenamento das partições do dataframe, devido a sua alta compressão e eficiência de armazenamento, eficiência de leitura (por ser orientado à colunas) e o armazenamento dos metadados da estrutura (o que preserva informações sobre os dados e assim melhora muito a eficiência de processos). 
+
+Esse formato tem a desvantagem de não ser legível por humanos, porém isso pode ser contornado através da conversão parcial do dataframe para o formato CSV.
 
 Esse dataframe com suas partições são guardados nesta [pasta](data/dataframes/dataframe_primario).
 
