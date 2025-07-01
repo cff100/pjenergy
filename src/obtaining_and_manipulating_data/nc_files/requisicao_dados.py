@@ -21,7 +21,11 @@ def gera_porcentagem_progresso(n_total: int, n_atual: int) -> float:
 
 def gera_nome_arquivo_nc(variavel: str, ano: int, pressao_nivel: int) -> str:
     """Gera o nome do arquivo .nc baseado na variável, ano e nível de pressão."""
-    return f"(var-{variavel})_(anos-{ano})_(pressao-{pressao_nivel}).nc" # Essa formatação é importante para manter a consistência e facilitar a identificação dos arquivos baixados.
+    return f"(var-{variavel})_(anos-{ano})_(pressao-{pressao_nivel}).nc" 
+# ATENÇÃO!!
+# Essa formatação do nome do arquivo é muito importante para manter a consistência 
+# e facilitar a identificação dos arquivos baixados.
+# Não é recomendado, mas tenha certeza do que está fazendo se for alterar.
 
 def calcula_combinacoes(variaveis: tuple, anos: tuple, pressao_niveis: tuple) -> int:
     """Calcula o número total de combinações de variáveis, anos e níveis de pressão."""

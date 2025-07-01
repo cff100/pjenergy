@@ -69,3 +69,11 @@ Como esse é um processo extremamente custoso em horas computacionais, os dados 
 Também há uma estrutura para obter dados com diferentes parâmetros. Nesse caso, pode-se inclusive ajustar para se obter uma quantidade bem menor de dados, como um teste, por exemplo. Função principal para essa funcionalidade [aqui](src/main/obtem_arquivos_nc_padrao.py).
 
 
+## Geração do Dataset Único
+
+Obtidos os 250 datasets na etapa anterior, essa é a parte que os une em um só dataset NetCDF com essa [função principal](src/main/gera_dataset_unico.py). A lógica do código faz uso do padrão dos nomes para unir de forma estruturada.
+
+## Leitura de Arquivos NetCDF
+
+Caso se queira ler o conteúdo de algum dos arquivos NetCDF (seja os baixados, seja o feito da união) pode-se usar esta [função](src/obtaining_and_manipulating_data/nc_files/ler_nc.py) para abrí-los.
+
