@@ -100,6 +100,8 @@ def ler_dataframe_dask(diretorio_dados_parquet: Path = DIRETORIO_DATAFRAME_COM_C
 #     ## VER OS DADOS
 
 #     df = ler_dataframe_dask()
+#     df_n = df.partitions[30]
+#     print(df_n.tail())
     
 
 #     head = df.head(n = 5) 
