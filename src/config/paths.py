@@ -10,8 +10,9 @@ CAMINHO_NC_UNICO = DIRETORIO_DATASET_NC / cs.NOME_PADRAO_ARQUIVO_NC_UNICO # Cami
 
 DIRETORIO_DATAFRAMES = DIRETORIO_DADOS / "dataframes" # Diretório de todos os dataframes
 DIRETORIO_DATAFRAME_PRIMARIO = DIRETORIO_DATAFRAMES / "dataframe_primario"  # Diretório da pasta com o dataframe separado em partições
-DIRETORIO_DATAFRAME_COM_COLUNAS_TEMPORAIS = DIRETORIO_DATAFRAMES / "dataframe_com_colunas_temporais" # Diretório da pasta com o novo dataframe, adiciona colunas de ano, mês, dia e hora.
-DIRETORIO_DATAFRAMES_FILTRADOS = DIRETORIO_DATAFRAMES / "dataframes_filtrados"
+DIRETORIO_DATAFRAME_NOVAS_COLUNAS = DIRETORIO_DATAFRAMES / "dataframe_novas_colunas" # Diretório da pasta com o novo dataframe, adiciona novas colunas.
+
+DIRETORIO_DATAFRAME_TEMPORARIO = DIRETORIO_DATAFRAMES / "dataframe_temporario"
 
 DIRETORIO_TESTES = CAMINHO_BASE_GERAL / "tests"  # Diretório da pasta de testes
 DIRETORIO_TESTES_ARQUIVOS_NOVOS = DIRETORIO_TESTES / "new_tests_files" # Diretório de arquivos criados em testes

@@ -1,13 +1,14 @@
 import dask.dataframe as dd
 from pathlib import Path
 # Módulos internos do projeto
-from config.paths import DIRETORIO_DATAFRAME_COM_COLUNAS_TEMPORAIS
+from config.paths import DIRETORIO_DATAFRAME_NOVAS_COLUNAS
 
-def ler_dataframe_dask(diretorio_dados_parquet: Path = DIRETORIO_DATAFRAME_COM_COLUNAS_TEMPORAIS):
+def ler_dataframe_dask(diretorio_dados_parquet: Path = DIRETORIO_DATAFRAME_NOVAS_COLUNAS):
     """Ler o dataframe dask composto por arquivos parquet."""
     
     df = dd.read_parquet(diretorio_dados_parquet)
     return df
+
 
 
 ########## EM MANUTENÇÃO #############
@@ -93,7 +94,9 @@ def ler_dataframe_dask(diretorio_dados_parquet: Path = DIRETORIO_DATAFRAME_COM_C
 #     resultados = df.map_partitions(funcao).compute()
 #     return resultados
 
-# if __name__ == "__main__":
+if __name__ == "__main__":
+    df = ler_dataframe_dask()
+    print(df.head())
 
 #     # TESTES
 
