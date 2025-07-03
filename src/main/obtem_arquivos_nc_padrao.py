@@ -1,5 +1,5 @@
 # Módulos internos do projeto
-from obtaining_and_manipulating_data.nc_files import requisicao_dados
+from inicial_data_operations.nc_files import requisicao_dados
 
 def baixa_arquivos_nc_padrao():
     """Função para baixar os arquivos .nc do Climate Data Store (CDS), 
