@@ -2,16 +2,16 @@ from pathlib import Path
 import dask.dataframe as dd
 # Módulos internos do projeto
 from config.paths import CAMINHO_NC_UNICO, DIRETORIO_DATAFRAME_PRIMARIO
-from obtaining_and_manipulating_data.dataframes.gera_dataframe import gera_arquivos_parquet_dataframe
-from obtaining_and_manipulating_data.dataframes.adiciona_colunas_dataframe import adiciona_colunas_novas
+from inicial_data_operations.dataframes.gera_dataframe import nc_para_dataframe
+from inicial_data_operations.dataframes.edita_dataframe import edita_colunas
 
 def gera_dataframe(caminho_nc_unico: Path = CAMINHO_NC_UNICO, diretorio_dados_parquet: Path = DIRETORIO_DATAFRAME_PRIMARIO) -> dd.DataFrame:
-    """Gera um DataFrame a partir de um arquivo NetCDF único, criando novas colunas de tempo e velocidade resultante."""
+    """Gera um DataFrame a partir de um arquivo NetCDF único e faz edições nas colunas."""
 
-    gera_arquivos_parquet_dataframe(caminho_nc_unico, diretorio_dados_parquet)
-    df_novas_colunas = adiciona_colunas_novas()
+    nc_para_dataframe(caminho_nc_unico, diretorio_dados_parquet)
+    df_editado = edita_colunas()
     
-    return df_novas_colunas
+    return df_editado
 
 
 if __name__ == "__main__":
