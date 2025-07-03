@@ -1,3 +1,6 @@
+
+![alt text](/tutorials/images/Pasted%20image%2020250308162026.png)
+
 # Pjenergy
 
 Pjenergy é um projeto que visa a obtenção e estudo do potencial energético do vento na região da Bacia de Campos, especificamente na área em que se localiza um conjunto de plataformas de pretóleo e gás em descomissionamento, com a ideia em mente de contribuir com informações relevantes para a possível contrução de aerogeradores offshore. 
