@@ -50,6 +50,7 @@ class ConstantesString:
     
     NOME_PADRAO_ARQUIVO_NC_UNICO = "dataset_unico.nc"
 
+
 if "__main__" == __name__:
     
     print(f"Anos: {ParametrosObtencaoDados.anos} \n")

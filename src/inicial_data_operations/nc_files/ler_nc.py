@@ -1,7 +1,7 @@
 import xarray as xr
 from pathlib import Path
 # Módulos internos do projeto
-from config.paths import DIRETORIO_DATASET_NC, DIRETORIO_TESTES_ARQUIVOS_NOVOS
+from config.paths import DIRETORIO_DATASET_NC
 from utils.cria_caminho_arquivo import cria_caminho_arquivo
 
 
@@ -22,13 +22,7 @@ def ler_nc_infomacoes_principais(arquivo_nc_caminho_relativo: Path | str, caminh
 
 
 if __name__ == "__main__":
-    #ds_1 = ler_nc_infomacoes_principais("(var-temperature)_(anos-2015)_(pressao-950).nc")
-    #print("ds_1: \n", ds_1)
-    #print(ds_1.valid_time)
-    #print(ds_1.expver[0])
 
-    #ds_2 = ler_nc_infomacoes_principais("(var-geopotential)_(anos-2020)_(pressao-925).nc", CAMINHO_TESTES_ARQUIVOS_NOVOS)
-    #print("\n\n\n ds_2: \n", ds_2)
-
-    ds_3 = ler_nc_infomacoes_principais("dataset_unico.nc")
-    print(ds_3)
+    # Exemplo
+    ds = ler_nc_infomacoes_principais("dataset_unico.nc")
+    print(ds)

@@ -1,5 +1,6 @@
 
 """Para obtenção de dados de um dataset do Climate Data Store"""
+
 import cdsapi
 import config.paths as paths
 from pathlib import Path
@@ -32,6 +33,7 @@ def calcula_combinacoes(variaveis: tuple, anos: tuple, pressao_niveis: tuple) ->
     return len(variaveis) * len(anos) * len(pressao_niveis)
 
 
+
 # FUNÇÕES PRINCIPAIS
 
 def requisicao_dados(arquivo_nc_caminho: Path, 
@@ -43,8 +45,8 @@ def requisicao_dados(arquivo_nc_caminho: Path,
                      utc_horas: tuple[str, ...] = pod.horas, 
                      area: tuple[float, float, float, float] = pod.area, 
                      data_format: str = pod.data_format, 
-                     download_format: str = pod.download_format): 
-    """Requisita dados do Climate Data Store (CDS) e salva em um arquivo .nc."""
+                     download_format: str = pod.download_format) -> None: 
+    """Requisita dados do Climate Data Store (CDS) e salva em um arquivo NetCDF."""
 
     # Inicializar API do CDS
     c = cdsapi.Client() # Exige que o url e a key já estejam configurados em um arquivo .cdsapirc externo.
@@ -67,6 +69,7 @@ def requisicao_dados(arquivo_nc_caminho: Path,
     c.retrieve(dataset, request, arquivo_nc_caminho)
 
 
+
 def requisicao_multiplos_dados(
                             caminho_base: Path = paths.DIRETORIO_DATASET_NC,
                             variaveis: tuple[str, ...] = pod.variaveis, 
@@ -77,8 +80,8 @@ def requisicao_multiplos_dados(
                             utc_horas: tuple[str, ...] = pod.horas, 
                             area: tuple[float, float, float, float] = pod.area, 
                             data_format: str = pod.data_format, 
-                            download_format: str = pod.download_format):
-    """Faz loops para a obtenção de vários arquivos .nc de acordo com os valores passados como parâmetros."""
+                            download_format: str = pod.download_format) -> None:
+    """Faz loops para a obtenção de vários arquivos NetCDF de acordo com os valores passados como parâmetros."""
 
     n_requisicoes = calcula_combinacoes(variaveis, anos, pressao_niveis)
     print(f"\n -> -> -> Número total de requisições: {n_requisicoes}\n")
@@ -115,7 +118,7 @@ def requisicao_multiplos_dados(
     print(f"\n -> -> -> Todos os arquivos .nc foram baixados com sucesso.")
 
 
-def requisicao_todos_dados_padrao():
+def requisicao_todos_dados_padrao() -> None:
     """Requisita todos os dados padrão definidos em ParametrosObtencaoDados."""
 
     requisicao_multiplos_dados()
