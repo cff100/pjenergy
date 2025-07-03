@@ -3,6 +3,7 @@ import shutil
 import dask.dataframe as dd
 from dask.diagnostics.progress import ProgressBar
 import os
+import time
 from config.paths import DIRETORIO_DATAFRAME_TEMPORARIO
 
 def salva_dataframe_substituindo(novo_dataframe: dd.DataFrame, diretorio_a_substituir: Path, diretorio_dataframe_temporario: Path = DIRETORIO_DATAFRAME_TEMPORARIO):
@@ -10,6 +11,7 @@ def salva_dataframe_substituindo(novo_dataframe: dd.DataFrame, diretorio_a_subst
     # Salva o dask dataframe em um diretório temporário
     with ProgressBar(): # Com barra de progresso no terminal
         novo_dataframe.to_parquet(diretorio_dataframe_temporario, overwrite = True)
+    time.sleep(1)
 
     # Apaga o diretório que será substituído
     shutil.rmtree(diretorio_a_substituir)

@@ -1,10 +1,13 @@
 from pathlib import Path
 import dask.dataframe as dd
 from dask.diagnostics.progress import ProgressBar
+import pytz
 # Módulos internos do projeto
 from inicial_data_operations.dataframes.ler_dataframe import ler_dataframe_dask
 from inicial_data_operations.dataframes.salva_dataframe_substituindo import salva_dataframe_substituindo
 from config.paths import DIRETORIO_DATAFRAME_PRIMARIO, DIRETORIO_DATAFRAME_NOVAS_COLUNAS
+from config.constants import NomeColunasDataframe as ncd
+from config.constants import ConstantesNumericas as cn
 
 def copia_dataframe_primario(diretorio_dataframe_primario: Path = DIRETORIO_DATAFRAME_PRIMARIO, diretorio_dataframe_novas_colunas: Path = DIRETORIO_DATAFRAME_NOVAS_COLUNAS):
     """Faz uma cópia da pasta do dataframe primário na pasta de dataframe com novas colunas. Serve para iniciar a modificação das colunas."""
@@ -24,10 +27,26 @@ def remover_colunas_indesejadas(diretorio_dataframe: Path = DIRETORIO_DATAFRAME_
     # Lê o dataframe original
     df = ler_dataframe_dask(diretorio_dataframe)
 
-    df = df.drop(columns = ["number", "expver"])
+    df = df.drop(columns = [ncd.number, ncd.exp_ver])
 
-    ## Salva dataframe substituindo o original
+    # Salva dataframe substituindo o original
     print("Removendo colunas indesejadas...")
+    salva_dataframe_substituindo(df, diretorio_dataframe)
+    print("\n")
+
+    return df
+
+def renomear_colunas(diretorio_dataframe: Path = DIRETORIO_DATAFRAME_NOVAS_COLUNAS) -> dd.DataFrame:
+    "Renomeia nome de algumas colunas"
+
+    # Lê o dataframe original
+    df = ler_dataframe_dask(diretorio_dataframe)
+
+    # Renomeia as colunas
+    df = df.rename(columns=ncd.novos_nomes)
+
+    # Salva dataframe substituindo o original
+    print("Renomeando colunas...")
     salva_dataframe_substituindo(df, diretorio_dataframe)
     print("\n")
 
@@ -41,11 +60,15 @@ def adiciona_colunas_tempo(diretorio_dataframe: Path = DIRETORIO_DATAFRAME_NOVAS
     # Lê o dataframe original
     df = ler_dataframe_dask(diretorio_dataframe)
 
+    # Ajusta o horário para o fuso de Brasília (UTC-3). Desconsidera-se horário de verão para manter dados comparáveis em toda faixa de anos obtida.
+    utc_3 = pytz.FixedOffset(-180)  # -180 minutos = UTC-3
+    df[ncd.tempo_bras] = df[ncd.tempo_UTC0].dt.tz_localize("UTC").dt.tz_convert(utc_3)
+
     # Extrai componentes da data
-    df["ano"] = df["valid_time"].dt.year
-    df["mes"] = df["valid_time"].dt.month
-    df["dia"] = df["valid_time"].dt.day
-    df["hora"] = df["valid_time"].dt.hour.astype(str).str.zfill(2) + ":" + df["valid_time"].dt.minute.astype(str).str.zfill(2)  # Formata a hora como string com dois dígitos
+    df[ncd.ano] = df[ncd.tempo_bras].dt.year
+    df[ncd.mes] = df[ncd.tempo_bras].dt.month
+    df[ncd.dia] = df[ncd.tempo_bras].dt.day
+    df[ncd.hora] = df[ncd.tempo_bras].dt.hour.astype(str).str.zfill(2) + ":" + df[ncd.tempo_bras].dt.minute.astype(str).str.zfill(2)  # Formata a hora como string com dois dígitos
  
     numero_para_mes = {
         1: "Janeiro", 2: "Fevereiro", 3: "Março", 4: "Abril",
@@ -53,7 +76,7 @@ def adiciona_colunas_tempo(diretorio_dataframe: Path = DIRETORIO_DATAFRAME_NOVAS
         9: "Setembro", 10: "Outubro", 11: "Novembro", 12: "Dezembro"
     }
     # Converte número do mês para nome do mês
-    df["mes_nome"] = df["valid_time"].dt.month.map(numero_para_mes, meta=("mes_nome", "object"))
+    df[ncd.mes_nome] = df[ncd.tempo_bras].dt.month.map(numero_para_mes, meta=(ncd.mes_nome, "object"))
     
     ## Salva dataframe substituindo o original
     print("Adicionando colunas de tempo...")
@@ -69,7 +92,8 @@ def adiciona_coluna_velocidade_resultante(diretorio_dataframe: Path = DIRETORIO_
     # Lê o dataframe original
     df = ler_dataframe_dask(diretorio_dataframe)
 
-    df["velocidade"] = (df["u"]**2 + df["v"]**2)**0.5
+    # Cria a coluna de velocidade resultante
+    df[ncd.velocidade_resultante] = (df[ncd.velocidade_u]**2 + df[ncd.velocidade_v]**2)**0.5
 
     # Salva dataframe substituindo o original
     print("Adicionando colunas velocidade resultante...")
@@ -78,13 +102,29 @@ def adiciona_coluna_velocidade_resultante(diretorio_dataframe: Path = DIRETORIO_
 
     return df
 
+def adiciona_coluna_altura(diretorio_dataframe: Path = DIRETORIO_DATAFRAME_NOVAS_COLUNAS) -> dd.DataFrame:
+
+    # Lê o dataframe original
+    df = ler_dataframe_dask(diretorio_dataframe)
+
+    # Cria a coluna de altura a partir do geopotencial (h = z / g)
+    df[ncd.altura] = df[ncd.geopotencial] / cn.g
+
+    # Salva dataframe substituindo o original
+    print("Adicionando coluna de altura...")
+    salva_dataframe_substituindo(df, diretorio_dataframe)
+    print("\n")
+
+    return df
+
+
 def adiciona_coluna_temperatura_celsius(diretorio_dataframe: Path = DIRETORIO_DATAFRAME_NOVAS_COLUNAS) -> dd.DataFrame:
     """Adiciona uma coluna de temperatura a partir da coluna de temperatura em celsius"""
 
     # Lê o dataframe original
     df = ler_dataframe_dask(diretorio_dataframe)
 
-    df["t_C"] = df["t"] - 273.15
+    df[ncd.temperatura_celsius] = df[ncd.temperatura_kelvin] - 273.15
 
     # Salva dataframe substituindo o original
     print("Adicionando coluna de temperatura em graus celsius...")
@@ -93,18 +133,40 @@ def adiciona_coluna_temperatura_celsius(diretorio_dataframe: Path = DIRETORIO_DA
 
     return df
 
+def ordena_colunas(diretorio_dataframe: Path = DIRETORIO_DATAFRAME_NOVAS_COLUNAS) -> dd.DataFrame:
+    """Ordena as colunas do dataframe"""
+
+    # Lê o dataframe original
+    df = ler_dataframe_dask(diretorio_dataframe)
+
+    df = df[ncd.lista_colunas_ordem]
+
+    # Salva dataframe substituindo o original
+    print("Reordenando colunas...")
+    salva_dataframe_substituindo(df, diretorio_dataframe)
+    print("\n")
+
+    return df
+
+
 # FUNÇÃO PRINCIPAL
 
 def edita_colunas() -> dd.DataFrame:
     """Cria um dataframe com colunas novas"""
 
-    copia_dataframe_primario()
+    # Lista de funções que executam cada parte do processo
+    processos = [copia_dataframe_primario, 
+                 remover_colunas_indesejadas, 
+                 renomear_colunas,
+                 adiciona_colunas_tempo,
+                 adiciona_coluna_velocidade_resultante, 
+                 adiciona_coluna_altura, 
+                 adiciona_coluna_temperatura_celsius, 
+                 ordena_colunas]
 
-    # Realiza operações sucessivas sobre o dataframe
-    remover_colunas_indesejadas()
-    adiciona_colunas_tempo()
-    adiciona_coluna_velocidade_resultante()
-    df = adiciona_coluna_temperatura_celsius()  # Recebe o dataframe depois de todas as modificações
+    # Execução ordenada das funções
+    for funcao in processos:
+        df = funcao()
 
     return df
 

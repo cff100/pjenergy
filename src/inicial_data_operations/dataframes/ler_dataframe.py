@@ -85,12 +85,13 @@ if __name__ == "__main__":
     # OUTROS MÉTODOS ÚTEIS
 
     ## Filtros
+    from config.constants import NomeColunasDataframe as ncd
     hora = "03:00"
-    df_hora_filtrada = df[df["hora"] == hora].compute()
+    df_hora_filtrada = df[df[ncd.hora] == hora].compute()
     print(f" -> -> -> Filtro da hora {hora}\n")
     print(df_hora_filtrada)
 
     velocidade_limite = 20
-    df_velocidade_filtrada = df[df["velocidade"] >= velocidade_limite].compute()
+    df_velocidade_filtrada = df[df[ncd.velocidade_resultante] >= velocidade_limite].compute()
     print(f"\n\n -> -> -> Filtro de velocidades iguais ou maiores de {velocidade_limite}\n")
     print(df_velocidade_filtrada)

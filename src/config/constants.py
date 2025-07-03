@@ -51,6 +51,43 @@ class ConstantesString:
     NOME_PADRAO_ARQUIVO_NC_UNICO = "dataset_unico.nc"
 
 
+class NomeColunasDataframe:
+
+    tempo_UTC0 = "tempo"
+    tempo_bras = "tempo_bras"
+    pressao = "pressao"
+    latitude = "latitude"
+    longitude = "longitude"
+    velocidade_u = "vel_u"
+    velocidade_v = "vel_v"
+    velocidade_resultante = "vel_res"
+    geopotencial = "z"
+    altura = "h"
+    umidade_relativa = "r"
+    temperatura_kelvin = "t_K"
+    temperatura_celsius = "t_C"
+    ano = "ano"
+    mes = "mes"
+    mes_nome = "mes_nome"
+    dia = "dia"
+    hora = "hora"
+    number = "number"
+    exp_ver = "expver"
+
+    # Dicionário {nome pré-existente : novo nome}. Associa um novo nome aos nomes de colunas vindos do dataframe primário. Nem todos os nomes são necessariamente alterados.
+    novos_nomes = {"valid_time": tempo_UTC0, "pressure_level": pressao, 
+                   "latitude": latitude, "longitude": longitude, 
+                   "z": geopotencial, "r": umidade_relativa, 
+                   "t": temperatura_kelvin, "u": velocidade_u, 
+                   "v": velocidade_v}
+    
+    # Lista da ordem das colunas finais do dataframe
+    lista_colunas_ordem = [ano, mes, mes_nome, dia, hora, pressao, geopotencial, 
+                     altura, latitude, longitude, velocidade_u, velocidade_v, 
+                     velocidade_resultante, temperatura_kelvin, temperatura_celsius, 
+                     umidade_relativa, tempo_UTC0, tempo_bras]
+
+
 if "__main__" == __name__:
     
     print(f"Anos: {ParametrosObtencaoDados.anos} \n")
