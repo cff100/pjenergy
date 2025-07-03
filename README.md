@@ -87,7 +87,7 @@ De forma complementar, foi escolhido [Parquet](https://parquet.apache.org/) como
 
 Esse formato tem a desvantagem de não ser legível por humanos, porém isso pode ser contornado através da conversão parcial do dataframe para o formato CSV.
 
-Esse dataframe com suas partições são guardados nesta [pasta](data/dataframes/dataframe_primario).
+Esse dataframe com suas partições são guardados nesta [pasta](data/dataframes/dataframe_primario) (Essa pasta só será gerada localmente).
 
 
 ## Geração de um Dataframe com Colunas Temporais Adicionais (EM ANDAMENTO...)
