@@ -73,6 +73,7 @@ class NomeColunasDataframe:
     hora = "hora"
     number = "number"
     exp_ver = "expver"
+    estacao_do_ano_nome = "estacao"
 
     # Dicionário {nome pré-existente : novo nome}. Associa um novo nome aos nomes de colunas vindos do dataframe primário. Nem todos os nomes são necessariamente alterados.
     novos_nomes = {"valid_time": tempo_UTC0, "pressure_level": pressao, 
@@ -82,10 +83,47 @@ class NomeColunasDataframe:
                    "v": velocidade_v}
     
     # Lista da ordem das colunas finais do dataframe
-    lista_colunas_ordem = [ano, mes, mes_nome, dia, hora, pressao, geopotencial, 
+    lista_colunas_ordem = [ano, estacao_do_ano_nome, mes_nome, mes, dia, hora, pressao, geopotencial, 
                      altura, latitude, longitude, velocidade_u, velocidade_v, 
                      velocidade_resultante, temperatura_kelvin, temperatura_celsius, 
                      umidade_relativa, tempo_UTC0, tempo_bras]
+
+
+class OutrasConstantes:
+
+    # Dicionário de correspondência entre o número do mês e seu nome
+    numero_para_mes = {
+        1: "Janeiro", 2: "Fevereiro", 3: "Março", 4: "Abril",
+        5: "Maio", 6: "Junho", 7: "Julho", 8: "Agosto",
+        9: "Setembro", 10: "Outubro", 11: "Novembro", 12: "Dezembro"
+    }
+
+    # Dicionário com os dias aproximados de início e fim das estações do ano (os dias reais variam por um ou 2 dias de ano em ano)
+    estacao_do_ano_dados = {"Verão": 
+                                {"inicio": 
+                                    {"dia": 21, "mes": 12},
+                                "fim":
+                                    {"dia": 20, "mes": 3}
+                                },
+                            "Outono": 
+                                {"inicio": 
+                                    {"dia": 21, "mes": 3},
+                                "fim":
+                                    {"dia": 20, "mes": 6}
+                                },
+                            "Inverno": 
+                                {"inicio": 
+                                    {"dia": 21, "mes": 6},
+                                "fim":
+                                    {"dia": 22, "mes": 9}
+                                },
+                            "Primavera": 
+                                {"inicio": 
+                                    {"dia": 23, "mes": 9},
+                                "fim":
+                                    {"dia": 20, "mes": 12}
+                                }
+                            }
 
 
 if "__main__" == __name__:

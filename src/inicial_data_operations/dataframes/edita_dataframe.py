@@ -8,6 +8,8 @@ from inicial_data_operations.dataframes.salva_dataframe_substituindo import salv
 from config.paths import DIRETORIO_DATAFRAME_PRIMARIO, DIRETORIO_DATAFRAME_NOVAS_COLUNAS
 from config.constants import NomeColunasDataframe as ncd
 from config.constants import ConstantesNumericas as cn
+from config.constants import OutrasConstantes as oc
+from utils.decide_estacao import decide_estacao_vetorizado
 
 def copia_dataframe_primario(diretorio_dataframe_primario: Path = DIRETORIO_DATAFRAME_PRIMARIO, diretorio_dataframe_novas_colunas: Path = DIRETORIO_DATAFRAME_NOVAS_COLUNAS):
     """Faz uma cópia da pasta do dataframe primário na pasta de dataframe com novas colunas. Serve para iniciar a modificação das colunas."""
@@ -69,17 +71,33 @@ def adiciona_colunas_tempo(diretorio_dataframe: Path = DIRETORIO_DATAFRAME_NOVAS
     df[ncd.mes] = df[ncd.tempo_bras].dt.month
     df[ncd.dia] = df[ncd.tempo_bras].dt.day
     df[ncd.hora] = df[ncd.tempo_bras].dt.hour.astype(str).str.zfill(2) + ":" + df[ncd.tempo_bras].dt.minute.astype(str).str.zfill(2)  # Formata a hora como string com dois dígitos
- 
-    numero_para_mes = {
-        1: "Janeiro", 2: "Fevereiro", 3: "Março", 4: "Abril",
-        5: "Maio", 6: "Junho", 7: "Julho", 8: "Agosto",
-        9: "Setembro", 10: "Outubro", 11: "Novembro", 12: "Dezembro"
-    }
+    
     # Converte número do mês para nome do mês
-    df[ncd.mes_nome] = df[ncd.tempo_bras].dt.month.map(numero_para_mes, meta=(ncd.mes_nome, "object"))
+    df[ncd.mes_nome] = df[ncd.tempo_bras].dt.month.map(oc.numero_para_mes, meta=(ncd.mes_nome, "object"))
     
     ## Salva dataframe substituindo o original
     print("Adicionando colunas de tempo...")
+    salva_dataframe_substituindo(df, diretorio_dataframe)
+    print("\n")
+
+    return df
+
+def adiciona_coluna_estacao(diretorio_dataframe: Path = DIRETORIO_DATAFRAME_NOVAS_COLUNAS) -> dd.DataFrame:
+    "Adiciona a coluna com os valores das estações do ano"
+
+    # Lê o dataframe original
+    df = ler_dataframe_dask(diretorio_dataframe)
+
+    #df[ncd.estacao_do_ano_nome] = decide_estacao_vetorizado(df[ncd.dia], df[ncd.mes])
+
+    df = df.map_partitions(
+                                lambda d: d.assign(**{
+                                    ncd.estacao_do_ano_nome: decide_estacao_vetorizado(d[ncd.dia], d[ncd.mes])
+                                })
+                            )
+
+    ## Salva dataframe substituindo o original
+    print("Adicionando coluna de estações do ano...")
     salva_dataframe_substituindo(df, diretorio_dataframe)
     print("\n")
 
@@ -159,6 +177,7 @@ def edita_colunas() -> dd.DataFrame:
                  remover_colunas_indesejadas, 
                  renomear_colunas,
                  adiciona_colunas_tempo,
+                 adiciona_coluna_estacao,
                  adiciona_coluna_velocidade_resultante, 
                  adiciona_coluna_altura, 
                  adiciona_coluna_temperatura_celsius, 
@@ -176,5 +195,5 @@ if __name__ == "__main__":
     df = edita_colunas()
 
     # Exibe as primeiras linhas do DataFrame atualizado
-    print(df.head())
+    print(df.compute())
     
