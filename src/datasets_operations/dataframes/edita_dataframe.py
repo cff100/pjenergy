@@ -3,8 +3,8 @@ import dask.dataframe as dd
 from dask.diagnostics.progress import ProgressBar
 import pytz
 # Módulos internos do projeto
-from inicial_data_operations.dataframes.ler_dataframe import ler_dataframe_dask
-from inicial_data_operations.dataframes.salva_dataframe_substituindo import salva_dataframe_substituindo
+from datasets_operations.dataframes.ler_dataframe import ler_dataframe_dask
+from datasets_operations.dataframes.salva_dataframe_substituindo import salva_dataframe_substituindo
 from config.paths import DIRETORIO_DATAFRAME_PRIMARIO, DIRETORIO_DATAFRAME_NOVAS_COLUNAS
 from config.constants import NomeColunasDataframe as ncd
 from config.constants import ConstantesNumericas as cn

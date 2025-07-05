@@ -36,16 +36,17 @@ def calcula_combinacoes(variaveis: tuple, anos: tuple, pressao_niveis: tuple) ->
 
 # FUNÇÕES PRINCIPAIS
 
-def requisicao_dados(arquivo_nc_caminho: Path, 
-                     variavel: str, # Apenas uma variável por vez, como 'u_component_of_wind'
-                     ano: int, # Apenas um ano por vez, como 2020
-                     pressao_nivel: int,  # Apenas um nível de pressão por vez, como 900
-                     meses: tuple[int, ...] = pod.meses, 
-                     dias: tuple[int, ...] = pod.dias, 
-                     utc_horas: tuple[str, ...] = pod.horas, 
-                     area: tuple[float, float, float, float] = pod.area, 
-                     data_format: str = pod.data_format, 
-                     download_format: str = pod.download_format) -> None: 
+def requisicao_dados(
+                    variavel: str, # Apenas uma variável por vez, como 'u_component_of_wind'
+                    ano: int, # Apenas um ano por vez, como 2020
+                    pressao_nivel: int,  # Apenas um nível de pressão por vez, como 900
+                    meses: tuple[int, ...] = pod.meses, 
+                    dias: tuple[int, ...] = pod.dias, 
+                    utc_horas: tuple[str, ...] = pod.horas, 
+                    area: tuple[float, float, float, float] = pod.area, 
+                    data_format: str = pod.data_format, 
+                    download_format: str = pod.download_format,
+                    diretorio_datasets: Path = paths.DIRETORIO_DATASETS_ORIGINAIS) -> None: 
     """Requisita dados do Climate Data Store (CDS) e salva em um arquivo NetCDF."""
 
     # Inicializar API do CDS
@@ -66,12 +67,11 @@ def requisicao_dados(arquivo_nc_caminho: Path,
     'download_format': download_format
     }
 
-    c.retrieve(dataset, request, arquivo_nc_caminho)
+    c.retrieve(dataset, request, diretorio_datasets)
 
 
 
 def requisicao_multiplos_dados(
-                            caminho_base: Path = paths.DIRETORIO_DATASET_NC,
                             variaveis: tuple[str, ...] = pod.variaveis, 
                             anos: tuple[int, ...] = pod.anos, 
                             pressao_niveis: tuple[int, ...] = pod.pressao_niveis, 
@@ -80,7 +80,8 @@ def requisicao_multiplos_dados(
                             utc_horas: tuple[str, ...] = pod.horas, 
                             area: tuple[float, float, float, float] = pod.area, 
                             data_format: str = pod.data_format, 
-                            download_format: str = pod.download_format) -> None:
+                            download_format: str = pod.download_format,
+                            diretorio_base: Path = paths.DIRETORIO_DATASETS_ORIGINAIS) -> None:
     """Faz loops para a obtenção de vários arquivos NetCDF de acordo com os valores passados como parâmetros."""
 
     n_requisicoes = calcula_combinacoes(variaveis, anos, pressao_niveis)
@@ -96,7 +97,7 @@ def requisicao_multiplos_dados(
 
                 # Gera o caminho completo do arquivo .nc. 
                 # Se o caminho base do arquivo não for especificado, usa o padrão
-                arquivo_nc_caminho = cria_caminho_arquivo(arquivo_nc_nome, caminho_base)
+                arquivo_nc_caminho = cria_caminho_arquivo(arquivo_nc_nome, diretorio_base)
 
                 # Verifica se o arquivo já existe
                 # Se existir, pula o download
@@ -108,7 +109,7 @@ def requisicao_multiplos_dados(
                     continue
 
                 # O arquivo não existindo, faz a requisição
-                requisicao_dados(arquivo_nc_caminho, variavel, ano, pressao_nivel, meses, dias, utc_horas, area, data_format, download_format)
+                requisicao_dados(variavel, ano, pressao_nivel, meses, dias, utc_horas, area, data_format, download_format, arquivo_nc_caminho)
 
                 print(f" -> -> -> Arquivo {arquivo_nc_nome} baixado com sucesso")
                 requisicao_atual += 1
@@ -117,10 +118,5 @@ def requisicao_multiplos_dados(
 
     print(f"\n -> -> -> Todos os arquivos .nc foram baixados com sucesso.")
 
-
-def requisicao_todos_dados_padrao() -> None:
-    """Requisita todos os dados padrão definidos em ParametrosObtencaoDados."""
-
-    requisicao_multiplos_dados()
 
 

@@ -1,7 +1,7 @@
 from pathlib import Path
 
-def cria_caminho_arquivo(arquivo_caminho_relativo: Path | str, caminho_base: Path) -> Path:
-    """Gera o caminho completo de um arquivo baseado no caminho relativo a um caminho base."""
+def cria_caminho_arquivo(arquivo_caminho_relativo: Path | str, diretorio_base: Path) -> Path:
+    """Gera o caminho completo de um arquivo baseado no caminho relativo a um diretório base."""
 
-    arquivo = caminho_base / arquivo_caminho_relativo
+    arquivo = diretorio_base / arquivo_caminho_relativo
     return arquivo

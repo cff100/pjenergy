@@ -3,26 +3,30 @@ import glob
 from pathlib import Path
 import xarray as xr
 # Módulos internos do projeto
-from config.paths import DIRETORIO_DATASET_NC
+from config.paths import DIRETORIO_DATASETS_ORIGINAIS, CAMINHO_ABSOLUTO_DATASET_UNIDO
 from config.constants import ConstantesString as cs
 
 # FUNÇÕES AUXILIARES
 
-def pega_arquivos(diretorio: Path = DIRETORIO_DATASET_NC) -> list[str]:
+def pega_arquivos(diretorio: Path = DIRETORIO_DATASETS_ORIGINAIS) -> list[str]:
     """Pega todos os arquivos de um determinado diretório, com o nome em um determinado padrão"""
 
     caminho_padrao = str(diretorio) + "\\" + cs.NOME_PADRAO_ARQUIVOS_NC_GERAL # Padrão de nome do caminho dos arquivos
+    
     # Extrai o nome do padrão para exibir na saída
     nome_padrao = caminho_padrao.split("\\")[-1]
-    print(f"\nProcurando arquivos com nome no padrão: {nome_padrao}\n")
+
     # Lista todos os arquivos que correspondem ao padrão
+    print(f"\nProcurando arquivos com nome no padrão: {nome_padrao} ...\n")
     arquivos = glob.glob(caminho_padrao) 
+    print("Arquivos encontrados.\n\n")
 
     return arquivos
 
 
 def variaveis_match(arquivo: str) -> tuple[str | None, str | None, str | None]: 
     """Captura informações a partir do nome do arquivo, como variável, ano e nível de pressão."""
+
     # Utiliza expressão regular para capturar os grupos de interesse do nome dos arquivos que seguem o padrão
     match = re.search(cs.NOME_PADRAO_ARQUIVOS_NC_REGEX, arquivo) 
 
@@ -35,7 +39,7 @@ def variaveis_match(arquivo: str) -> tuple[str | None, str | None, str | None]:
 # ---------------------------------------------
 # FUNÇÕES INTERMEDIÁRIAS (pré-processamento e estruturação de dados)
 
-def constroi_dicio_parametros(diretorio: Path = DIRETORIO_DATASET_NC) -> dict:
+def constroi_dicio_parametros(diretorio: Path = DIRETORIO_DATASETS_ORIGINAIS) -> dict:
     """
     Dado o diretório, obtém conjuntos dos parâmetros utilizados de variáveis, anos e níveis de pressão.
     Retorna um dicionário aninhado: {variavel: {nivel_pressao: {ano: dataset}}}
@@ -44,6 +48,7 @@ def constroi_dicio_parametros(diretorio: Path = DIRETORIO_DATASET_NC) -> dict:
     arquivos = pega_arquivos(diretorio)   
 
     # Cria um dicionário aninhado para armazenar os datasets das combinações de variáveis, anos e níveis de pressão
+    print("Organizando datasets em dicionários aninhados...\n")
     dicio_parametros = {}
     for arquivo in arquivos:
         variavel, ano, nivel_pressao = variaveis_match(arquivo) # Captura os parâmetros a partir do nome do arquivo
@@ -58,16 +63,21 @@ def constroi_dicio_parametros(diretorio: Path = DIRETORIO_DATASET_NC) -> dict:
                 dicio_parametros[variavel][nivel_pressao] = {}
             if ano not in dicio_parametros[variavel][nivel_pressao]:
                 dicio_parametros[variavel][nivel_pressao][ano] = xr.open_dataset(arquivo)
+
+    print("Datasets organizados.\n\n")
     return dicio_parametros
 
 # ---------------------------------------------
 # FUNÇÕES PRINCIPAIS
 
-def concatena_datasets(diretorio: Path = DIRETORIO_DATASET_NC) -> dict:
-    """Concatena os datasets de variáveis por níveis de pressão e anos."""
-    # Obtém os dicionárioos de parâmetros, com os datasets das combinações de variáveis, anos e níveis de pressão.
+def concatena_datasets(diretorio: Path = DIRETORIO_DATASETS_ORIGINAIS) -> dict:
+    """Concatena os datasets de níveis de pressão e anos diferentes."""
+
+    # Obtém os dicionários de parâmetros, com os datasets das combinações de variáveis, anos e níveis de pressão.
     dicio_parametros = constroi_dicio_parametros(diretorio)
+
     # Concatena os datasets de anos para cada nível de pressão, e depois concatena os níveis de pressão para cada variável.
+    print("Concatenando datasets de diversos níveis de pressão e anos...\n")
     for chave_variavel in dicio_parametros.keys():
         lista_dataset_pressoes = []
         for chave_pressao in sorted(dicio_parametros[chave_variavel].keys()): # Ordena os níveis de pressão em ordem crescente
@@ -87,6 +97,7 @@ def concatena_datasets(diretorio: Path = DIRETORIO_DATASET_NC) -> dict:
             lista_dataset_pressoes,
             dim="pressure_level")
 
+    print("Concatenação finalizada.\n\n")
     return dicio_parametros
 
 
@@ -96,26 +107,26 @@ def merge_datasets(dicio_parametros: dict) -> xr.Dataset:
 
     # Faz uma lista dos datasets de variáveis
     datasets_variaveis = list(dicio_parametros.values())
+
     # Concatena os datasets de variáveis em um único dataset
+    print("Unindo datasets de todas as variáveis...\n")
     dataset_unico = xr.merge(datasets_variaveis)
-    print(f"Dataset único gerado com {len(dataset_unico.data_vars)} variáveis e {len(dataset_unico.pressure_level)} níveis de pressão.")
+    print("Finalizado.\n")
+    print(f"Dataset único gerado com {len(dataset_unico.data_vars)} variáveis e {len(dataset_unico.pressure_level)} níveis de pressão.\n\n")
     
     return dataset_unico
 
 
-def salva_dataset_unico(dataset: xr.Dataset, nome_arquivo: str = cs.NOME_PADRAO_ARQUIVO_NC_UNICO, diretorio: Path = DIRETORIO_DATASET_NC) -> None:
-    """Salva o dataset único em um arquivo .nc. 
-    Caso o nome do arquivo seja diferente do default, 
-    é necessário adicionar o nome do arquivo ao .gitignore na raiz do projeto 
-    (sob a sessão de arquivos grandes)."""
+def salva_dataset_unico(dataset: xr.Dataset, caminho_dataset_unico: Path = CAMINHO_ABSOLUTO_DATASET_UNIDO) -> None:
+    """Salva o dataset unido em um arquivo .nc. 
+    """
     
-    caminho_dataset_unico = diretorio / nome_arquivo
-
-    # Garante a extensão correta do arquivo
+    # Garante a extensão correta do arquiv e gera um arquivo NetCDF
     if not caminho_dataset_unico.suffix == ".nc":
         caminho_dataset_unico = caminho_dataset_unico.with_suffix(".nc")
+    print("Salvando arquivo...\n")
     dataset.to_netcdf(caminho_dataset_unico)
-    print(f"Dataset único salvo em: {caminho_dataset_unico}")
+    print(f"Dataset único salvo em: {caminho_dataset_unico}\n\n")
 
 
 

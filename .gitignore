@@ -20,5 +20,5 @@ ENV/
 *.egg-info/
 
 # Arquyivos de dados processados ignorados
-dataset_unico.nc
+data/datasets/merged
 data/dataframes/dataframe*/part*

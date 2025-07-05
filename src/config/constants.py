@@ -48,16 +48,16 @@ class ConstantesString:
     # - O ponto de interrogação após o quantificador torna a captura não gananciosa, pegando o menor número possível de caracteres.
     # - A barra invertida antes dos parênteses é necessária para escapar os parênteses, pois eles têm significado especial em expressões regulares. 
     
-    NOME_PADRAO_ARQUIVO_NC_UNICO = "dataset_unico.nc"
+    NOME_PADRAO_ARQUIVO_NC_UNIDO = "dataset_unido.nc"
 
 
 class NomeColunasDataframe:
 
-    tempo_UTC0 = "tempo"
+    tempo_UTC0 = "tempo_UTC0"
     tempo_bras = "tempo_bras"
     pressao = "pressao"
-    latitude = "latitude"
-    longitude = "longitude"
+    latitude = "lat"
+    longitude = "lon"
     velocidade_u = "vel_u"
     velocidade_v = "vel_v"
     velocidade_resultante = "vel_res"

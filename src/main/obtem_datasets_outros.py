@@ -1,9 +1,9 @@
 """Para baixar arquivos .nc do Climate Data Store (CDS) com configurações específicas diferentes das padrão do projeto.
 Útil para testes simplificados ou para obter dados que não estão cobertos pelas configurações padrão do projeto."""
 
-from inicial_data_operations.nc_files import requisicao_dados
 # Módulos internos do projeto
 from config.paths import DIRETORIO_TESTES_ARQUIVOS_NOVOS
+from datasets_operations.requisicao_dados import requisicao_multiplos_dados
 
 # Caminho base para os arquivos .nc a serem baixados. 
 # Esse caminho, por padrão, direciona os arquivos baixados para a pasta de arquivos gerados nos testes,
@@ -27,16 +27,17 @@ DOWNLOAD_FORMAT_NAO_PADRAO = "unarchived" # "unarchived" ou "zip"
 def baixa_arquivos_nc_outros():
     """Função para baixar os arquivos .nc do Climate Data Store (CDS), 
     utilizando configurações específicas diferentes das padrão do projeto."""
-    requisicao_dados.requisicao_multiplos_dados(caminho_base = CAMINHO_BASE, 
-                                                variaveis=VARIAVEIS_NAO_PADRAO, 
-                                                anos=ANOS_NAO_PADRAO, 
-                                                pressao_niveis=PRESSAO_NIVEIS_NAO_PADRAO, 
-                                                meses=MESES_NAO_PADRAO, 
-                                                dias=DIAS_NAO_PADRAO, 
-                                                utc_horas=UTC_HORAS_NAO_PADRAO, 
-                                                area=AREA_NAO_PADRAO, 
-                                                data_format=DATA_FORMAT_NAO_PADRAO, 
-                                                download_format=DOWNLOAD_FORMAT_NAO_PADRAO)
+    requisicao_multiplos_dados(
+                            diretorio_base = CAMINHO_BASE, 
+                            variaveis=VARIAVEIS_NAO_PADRAO, 
+                            anos=ANOS_NAO_PADRAO, 
+                            pressao_niveis=PRESSAO_NIVEIS_NAO_PADRAO, 
+                            meses=MESES_NAO_PADRAO, 
+                            dias=DIAS_NAO_PADRAO, 
+                            utc_horas=UTC_HORAS_NAO_PADRAO, 
+                            area=AREA_NAO_PADRAO, 
+                            data_format=DATA_FORMAT_NAO_PADRAO, 
+                            download_format=DOWNLOAD_FORMAT_NAO_PADRAO)
 
 
 if __name__ == "__main__":

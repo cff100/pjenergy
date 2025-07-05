@@ -1,30 +1,30 @@
 # Módulos internos do projeto
 import config.paths as paths
-from inicial_data_operations.nc_files.requisicao_dados import requisicao_dados
+from datasets_operations.requisicao_dados import requisicao_dados
 from config.constants import ParametrosObtencaoDados as pod
 from utils.cria_caminho_arquivo import cria_caminho_arquivo
 
-def test_requisicao_dados(requisitar = False):
+def test_requisicao_dados(requisitar = True):
     """Teste para verificar a requisição de dados do Climate Data Store (CDS)"""
 
     # Variáveis, anos e pressões a serem solicitados
-    variaveis = pod.variaveis[0]
-    anos = pod.anos[0]
-    pressao_niveis = pod.pressao_niveis[0]
+    variavel = pod.variaveis[0]
+    ano = pod.anos[0]
+    pressao_nivel = pod.pressao_niveis[0]
 
-    print(f" -> -> -> Variáveis escolhidas: {variaveis}")
-    print(f" -> -> -> Anos escolhidos: {anos}")
-    print(f" -> -> -> Pressões escolhidas: {pressao_niveis}")
+    print(f" -> -> -> Variáveis escolhidas: {variavel}")
+    print(f" -> -> -> Anos escolhidos: {ano}")
+    print(f" -> -> -> Pressões escolhidas: {pressao_nivel}")
 
     # Localização do arquivo de saída
-    caminho_base = paths.DIRETORIO_TESTES_ARQUIVOS_NOVOS
-    arquivo_nc_caminho_relativo = "teste.nc"
+    diretorio_base = paths.DIRETORIO_TESTES_ARQUIVOS_NOVOS
+    arquivo_nome = f"teste-(var-{variavel})_(ano-{ano})_(pressao-{pressao_nivel}).nc"
     # Nome alternativo -> arquivo_nc_caminho = f"tests/new_tests_files/teste_(var-{variaveis})_(anos-{anos})_(pressao-{pressao_niveis}).nc"
     
-    print(f" -> -> -> Caminho relativo de saída: {arquivo_nc_caminho_relativo}")
+    print(f" -> -> -> Caminho relativo de saída: {arquivo_nome}")
 
     # Cria o caminho absoluto e confere se o diretório existe
-    arquivo_nc_caminho = cria_caminho_arquivo(arquivo_nc_caminho_relativo, caminho_base)
+    arquivo_nc_caminho = cria_caminho_arquivo(arquivo_nome, diretorio_base)
     print(f" -> -> -> Caminho absoluto de saída: {arquivo_nc_caminho}")
     
     if arquivo_nc_caminho.exists():
@@ -36,5 +36,5 @@ def test_requisicao_dados(requisitar = False):
     if not requisitar:
         print(" -> -> -> ATENÇÃO: Requisição de dados não realizada. Mude o parâmetro 'requisitar' para True para realizar a requisição.")
     else:
-        requisicao_dados(arquivo_nc_caminho, variaveis, anos, pressao_niveis)
+        requisicao_dados(variavel, ano, pressao_nivel, diretorio_datasets = arquivo_nc_caminho)
         print(" -> -> -> Iniciando o teste de requisição de dados...")
