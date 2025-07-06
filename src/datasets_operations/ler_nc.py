@@ -24,5 +24,5 @@ def ler_dataset_nc(arquivo_nc_caminho_relativo: Path | str, diretorio_base: Path
 if __name__ == "__main__":
 
     # Exemplo
-    ds = ler_dataset_nc("merged/dataset_unido.nc")
+    ds = ler_dataset_nc("edited/dataset_editado.nc")
     print(ds)

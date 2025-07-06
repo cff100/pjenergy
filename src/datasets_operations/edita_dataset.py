@@ -3,10 +3,9 @@ import pandas as pd
 import numpy as np
 import xarray as xr
 from datasets_operations.ler_nc import ler_dataset_nc
-from config.paths import CAMINHO_RELATIVO_DATASET_UNIDO
+from config.paths import CAMINHO_RELATIVO_DATASET_UNIDO, CAMINHO_ABSOLUTO_DATASET_EDITADO
 from config.constants import NomeColunasDataframe as ncd, ConstantesNumericas as cn, ConstantesString as cs, OutrasConstantes as oc
 from datasets_operations.salva_dataset import salva_dataset_nc
-from config.paths import CAMINHO_ABSOLUTO_DATASET_EDITADO
 
 # FUNÇÕES AUXILIARES ---------------------------------------
 
@@ -115,18 +114,19 @@ def dataset_renomeacoes(dataset: xr.Dataset) -> xr.Dataset:
 
 # FUNÇÃO PRINCIPAL ---------------------------------------
 
-def edita_dataset_unico(caminho_relativo: Path | str = CAMINHO_RELATIVO_DATASET_UNIDO) -> xr.Dataset:
+def edita_dataset_unico(caminho_relativo_dataset_unico: Path | str = CAMINHO_RELATIVO_DATASET_UNIDO, 
+                        caminho_absoluto_dataset_editado: Path = CAMINHO_ABSOLUTO_DATASET_EDITADO) -> xr.Dataset:
     "Faz edições no nomes e gera variáveis e coordenadas."
 
-    # Lê dataset
-    ds = ler_dataset_nc(caminho_relativo)
+    # Lê dataset (verificando se o dataset existe)
+    ds = ler_dataset_nc(caminho_relativo_dataset_unico)
 
     processos = [dataset_remocoes, dataset_criacoes, dataset_renomeacoes]
 
     for funcao in processos:
         ds = funcao(ds)
 
-    salva_dataset_nc(ds, CAMINHO_ABSOLUTO_DATASET_EDITADO)
+    salva_dataset_nc(ds, caminho_absoluto_dataset_editado)
 
     return ds
 

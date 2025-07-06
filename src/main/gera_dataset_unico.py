@@ -1,21 +1,15 @@
 from pathlib import Path
-from xarray import Dataset
+import xarray as xr
 # Módulos internos do projeto
-from datasets_operations.une_nc import concatena_datasets, merge_datasets
+from datasets_operations.une_nc import unifica_datasets
 from config.paths import DIRETORIO_DATASETS_ORIGINAIS, CAMINHO_ABSOLUTO_DATASET_UNIDO
-from datasets_operations.salva_dataset import salva_dataset_nc
 
-def gera_dataset_unico(diretorio: Path = DIRETORIO_DATASETS_ORIGINAIS) -> Dataset:
+
+def gera_dataset_unico(diretorio_datasets_originais: Path = DIRETORIO_DATASETS_ORIGINAIS, 
+                     diretorio_dataset_unido: Path = CAMINHO_ABSOLUTO_DATASET_UNIDO) -> xr.Dataset:
     """Gera um dataset único a partir dos datasets de combinações de variáveis, anos e níveis de pressão."""
 
-    # Concatena os datasets de níveis de pressão e anos diferentes
-    dicio_parametros = concatena_datasets(diretorio)
-
-    # Une os datasets de todas variáveis
-    dataset_unico = merge_datasets(dicio_parametros)
-
-    # Salva o dataset em um arquivo NetCDF único
-    salva_dataset_nc(dataset_unico, CAMINHO_ABSOLUTO_DATASET_UNIDO)
+    dataset_unico = unifica_datasets(diretorio_datasets_originais, diretorio_dataset_unido)
 
     return dataset_unico
 

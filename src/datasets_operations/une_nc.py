@@ -5,6 +5,7 @@ import xarray as xr
 # Módulos internos do projeto
 from config.paths import DIRETORIO_DATASETS_ORIGINAIS, CAMINHO_ABSOLUTO_DATASET_UNIDO
 from config.constants import ConstantesString as cs
+from datasets_operations.salva_dataset import salva_dataset_nc
 
 # FUNÇÕES AUXILIARES
 
@@ -36,8 +37,6 @@ def variaveis_match(arquivo: str) -> tuple[str | None, str | None, str | None]:
     else:
         return None, None, None
 
-# ---------------------------------------------
-# FUNÇÕES INTERMEDIÁRIAS (pré-processamento e estruturação de dados)
 
 def constroi_dicio_parametros(diretorio: Path = DIRETORIO_DATASETS_ORIGINAIS) -> dict:
     """
@@ -68,7 +67,8 @@ def constroi_dicio_parametros(diretorio: Path = DIRETORIO_DATASETS_ORIGINAIS) ->
     return dicio_parametros
 
 # ---------------------------------------------
-# FUNÇÕES PRINCIPAIS
+# FUNÇÕES INTERMEDIÁRIAS (pré-processamento e estruturação de dados)
+
 
 def concatena_datasets(diretorio: Path = DIRETORIO_DATASETS_ORIGINAIS) -> dict:
     """Concatena os datasets de níveis de pressão e anos diferentes."""
@@ -117,7 +117,25 @@ def merge_datasets(dicio_parametros: dict) -> xr.Dataset:
     return dataset_unico
 
 
-if __name__ == "__main__":
-    dicio_parametros = constroi_dicio_parametros()
+# ---------------------------------------------
+# FUNÇÃO PRINCIPAL
+
+def unifica_datasets(diretorio_datasets_originais: Path = DIRETORIO_DATASETS_ORIGINAIS, 
+                     diretorio_dataset_unido: Path = CAMINHO_ABSOLUTO_DATASET_UNIDO) -> xr.Dataset:
+    "Gera um dataset único a partir da combinação dos vários datasets originais."
+
+    # Concatena os datasets de níveis de pressão e anos diferentes
+    dicio_parametros = concatena_datasets(diretorio_datasets_originais)
+
+    # Une os datasets de todas variáveis
     dataset_unico = merge_datasets(dicio_parametros)
+
+    # Salva o dataset em um arquivo NetCDF único
+    salva_dataset_nc(dataset_unico, diretorio_dataset_unido)
+
+    return dataset_unico
+
+
+if __name__ == "__main__":
+    dataset_unico = unifica_datasets()
     print(dataset_unico)
