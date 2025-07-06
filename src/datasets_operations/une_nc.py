@@ -117,20 +117,6 @@ def merge_datasets(dicio_parametros: dict) -> xr.Dataset:
     return dataset_unico
 
 
-def salva_dataset_unico(dataset: xr.Dataset, caminho_dataset_unico: Path = CAMINHO_ABSOLUTO_DATASET_UNIDO) -> None:
-    """Salva o dataset unido em um arquivo .nc. 
-    """
-    
-    # Garante a extensão correta do arquiv e gera um arquivo NetCDF
-    if not caminho_dataset_unico.suffix == ".nc":
-        caminho_dataset_unico = caminho_dataset_unico.with_suffix(".nc")
-    print("Salvando arquivo...\n")
-    dataset.to_netcdf(caminho_dataset_unico)
-    print(f"Dataset único salvo em: {caminho_dataset_unico}\n\n")
-
-
-
-
 if __name__ == "__main__":
     dicio_parametros = constroi_dicio_parametros()
     dataset_unico = merge_datasets(dicio_parametros)

@@ -49,6 +49,7 @@ class ConstantesString:
     # - A barra invertida antes dos parênteses é necessária para escapar os parênteses, pois eles têm significado especial em expressões regulares. 
     
     NOME_PADRAO_ARQUIVO_NC_UNIDO = "dataset_unido.nc"
+    NOME_PADRAO_ARQUIVO_NC_EDITADO = "dataset_editado.nc"
 
 
 class NomeColunasDataframe:
@@ -73,7 +74,7 @@ class NomeColunasDataframe:
     hora = "hora"
     number = "number"
     exp_ver = "expver"
-    estacao_do_ano_nome = "estacao"
+    estacao_do_ano = "estacao"
 
     # Dicionário {nome pré-existente : novo nome}. Associa um novo nome aos nomes de colunas vindos do dataframe primário. Nem todos os nomes são necessariamente alterados.
     novos_nomes = {"valid_time": tempo_UTC0, "pressure_level": pressao, 
@@ -83,7 +84,7 @@ class NomeColunasDataframe:
                    "v": velocidade_v}
     
     # Lista da ordem das colunas finais do dataframe
-    lista_colunas_ordem = [ano, estacao_do_ano_nome, mes_nome, mes, dia, hora, pressao, geopotencial, 
+    lista_colunas_ordem = [ano, estacao_do_ano, mes_nome, mes, dia, hora, pressao, geopotencial, 
                      altura, latitude, longitude, velocidade_u, velocidade_v, 
                      velocidade_resultante, temperatura_kelvin, temperatura_celsius, 
                      umidade_relativa, tempo_UTC0, tempo_bras]

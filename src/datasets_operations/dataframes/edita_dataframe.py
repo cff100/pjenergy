@@ -92,7 +92,7 @@ def adiciona_coluna_estacao(diretorio_dataframe: Path = DIRETORIO_DATAFRAME_NOVA
 
     df = df.map_partitions(
                                 lambda d: d.assign(**{
-                                    ncd.estacao_do_ano_nome: decide_estacao_vetorizado(d[ncd.dia], d[ncd.mes])
+                                    ncd.estacao_do_ano: decide_estacao_vetorizado(d[ncd.dia], d[ncd.mes])
                                 })
                             )
 
