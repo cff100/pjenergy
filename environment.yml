@@ -8,6 +8,7 @@ dependencies:
   - cdsapi
   - pytest
   - dask
+  - scipy
   # e outro pacotes
   - pip
   - pip:

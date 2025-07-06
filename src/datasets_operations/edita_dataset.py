@@ -66,6 +66,21 @@ def dataset_remocoes(dataset:xr.Dataset) -> xr.Dataset:
     return ds
 
 
+def dataset_interpola_lat_lon(dataset: xr.Dataset, latitude_longitude_alvo: tuple[float, float]) -> xr.Dataset:
+    """Faz a interpolação das variáveis na longitude e latitude"""
+
+    # Verifica se os pontos de latitude e longitude estão dentro do intervalo do dataset
+    if not (dataset.latitude.min() <= latitude_longitude_alvo[0] <= dataset.latitude.max() and
+            dataset.longitude.min() <= latitude_longitude_alvo[1] <= dataset.longitude.max()):
+        raise ValueError(f"Os pontos de latitude {latitude_longitude_alvo[0]} e longitude {latitude_longitude_alvo[1]} estão fora do intervalo do dataset.")
+    
+    # Interpola as variáveis
+    variaveis_lista = list(dataset.data_vars) # Variáveis a serem interpoladas
+    ds_interp = dataset[variaveis_lista].interp(latitude=latitude_longitude_alvo[0], longitude = latitude_longitude_alvo[1], method="linear")
+
+    return ds_interp
+
+
 
 def dataset_criacoes(dataset: xr.Dataset) -> xr.Dataset:
     "Criar variáveis no dataset"
@@ -114,17 +129,20 @@ def dataset_renomeacoes(dataset: xr.Dataset) -> xr.Dataset:
 
 # FUNÇÃO PRINCIPAL ---------------------------------------
 
-def edita_dataset_unico(caminho_relativo_dataset_unico: Path | str = CAMINHO_RELATIVO_DATASET_UNIDO, 
+def edita_dataset_unico(latitude_longitude_alvo: tuple[float, float], caminho_relativo_dataset_unico: Path | str = CAMINHO_RELATIVO_DATASET_UNIDO, 
                         caminho_absoluto_dataset_editado: Path = CAMINHO_ABSOLUTO_DATASET_EDITADO) -> xr.Dataset:
     "Faz edições no nomes e gera variáveis e coordenadas."
 
     # Lê dataset (verificando se o dataset existe)
     ds = ler_dataset_nc(caminho_relativo_dataset_unico)
 
-    processos = [dataset_remocoes, dataset_criacoes, dataset_renomeacoes]
+    processos = [dataset_remocoes, dataset_interpola_lat_lon, dataset_criacoes, dataset_renomeacoes]
 
     for funcao in processos:
-        ds = funcao(ds)
+        if funcao == dataset_interpola_lat_lon:
+            ds = funcao(ds, latitude_longitude_alvo)
+        else:
+            ds = funcao(ds)
 
     salva_dataset_nc(ds, caminho_absoluto_dataset_editado)
 
@@ -132,8 +150,9 @@ def edita_dataset_unico(caminho_relativo_dataset_unico: Path | str = CAMINHO_REL
 
 
 if __name__ == "__main__":
-    ds = edita_dataset_unico()
+    ds = edita_dataset_unico((-22.0, -40.0))
     print(ds)
+
 
 
 
