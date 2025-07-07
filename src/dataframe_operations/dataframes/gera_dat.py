@@ -6,7 +6,7 @@ from dask.diagnostics.progress import ProgressBar
 from config.paths import CAMINHO_RELATIVO_DATASET_UNIDO, DIRETORIO_DATAFRAME_PRIMARIO
 
 def nc_para_dataframe(caminho_nc_unico: Path = CAMINHO_RELATIVO_DATASET_UNIDO, diretorio_dados_parquet: Path = DIRETORIO_DATAFRAME_PRIMARIO) -> dd.DataFrame:
-    """Gera arquivos Parquet a partir de um arquivo NetCDF único.
+    """Gera arquivos Parquet a partir de um arquivo NetCDF.
     É utilizado dask pois o dataset é grande e possivelmente não cabe na memória."""
 
     # Carrega o dataset com dask

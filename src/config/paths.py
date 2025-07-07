@@ -6,6 +6,9 @@ CAMINHO_BASE_GERAL = Path(__file__).parent.parent.parent # Caminho do projeto
 # ----------------------
 
 DIRETORIO_DADOS = CAMINHO_BASE_GERAL / "data"  # Diretório da pasta de dados
+
+# ----------------------
+
 DIRETORIO_DATASETS = DIRETORIO_DADOS / "datasets" # Diretório da pasta de datasets
 
 DIRETORIO_DATASETS_ORIGINAIS = DIRETORIO_DATASETS / "originals"
@@ -14,6 +17,7 @@ CAMINHO_RELATIVO_DATASET_UNIDO = Path("merged/" + cs.NOME_PADRAO_ARQUIVO_NC_UNID
 CAMINHO_ABSOLUTO_DATASET_UNIDO = DIRETORIO_DATASETS / CAMINHO_RELATIVO_DATASET_UNIDO # Caminho do arquivo NetCDF unido
 
 def caminho_absoluto_dataset_plataforma(plataforma: str | None) -> Path:
+    "Decide o nome do caminho a partir do valor de 'plataforma'. """
     if not plataforma:
         nome_arquivo = "ponto_nao_especifico.nc"
     else:
@@ -25,11 +29,19 @@ def caminho_absoluto_dataset_plataforma(plataforma: str | None) -> Path:
 
 # ----------------------
 
-# DIRETORIO_DATAFRAMES = DIRETORIO_DADOS / "dataframes" # Diretório de todos os dataframes
-# DIRETORIO_DATAFRAME_PRIMARIO = DIRETORIO_DATAFRAMES / "dataframe_primario"  # Diretório da pasta com o dataframe obtido do arquivo NetCDF único
-# DIRETORIO_DATAFRAME_NOVAS_COLUNAS = DIRETORIO_DATAFRAMES / "dataframe_colunas_editadas" # Diretório da pasta com o novo dataframe, com edição, inclusive adição, de novas colunas.
+DIRETORIO_DATAFRAMES = DIRETORIO_DADOS / "dataframes" # Diretório de todos os dataframes
+DIRETORIO_DATAFRAMES_PLATAFORMAS = DIRETORIO_DATAFRAMES / "plataforms"  # Diretório da pasta com os dataframes de pontos específicos
 
-# DIRETORIO_DATAFRAME_TEMPORARIO = DIRETORIO_DATAFRAMES / "dataframe_temporario" # Diretório do dataframe criado temporariamente para operações de edição.
+def caminho_absoluto_dataframe_plataforma(plataforma: str | None) -> Path:
+    "Decide o nome do caminho a partir do valor de 'plataforma'. """
+    if not plataforma:
+        nome_arquivo = "ponto_nao_especifico.parquet"
+    else:
+        nome_arquivo = oc.plataformas_dados[plataforma]["nome_arquivo"]
+
+    CAMINHO_ABSOLUTO_DATASET_PLATAFORMA = DIRETORIO_DATAFRAMES / "plataforms" / nome_arquivo
+    
+    return CAMINHO_ABSOLUTO_DATASET_PLATAFORMA
 
 # ----------------------
 

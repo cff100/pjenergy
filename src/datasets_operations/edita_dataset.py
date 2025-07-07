@@ -72,7 +72,9 @@ def dataset_interpola_lat_lon(dataset: xr.Dataset, latitude_longitude_alvo: tupl
     # Verifica se os pontos de latitude e longitude estão dentro do intervalo do dataset
     if not (dataset.latitude.min() <= latitude_longitude_alvo[0] <= dataset.latitude.max() and
             dataset.longitude.min() <= latitude_longitude_alvo[1] <= dataset.longitude.max()):
-        raise ValueError(f"Os pontos de latitude {latitude_longitude_alvo[0]} e longitude {latitude_longitude_alvo[1]} estão fora do intervalo do dataset.")
+        raise ValueError(
+            f"Os pontos de latitude {latitude_longitude_alvo[0]} e longitude {latitude_longitude_alvo[1]} estão fora do intervalo do dataset. Mínimo: ({dataset.latitude.min().item()},{dataset.longitude.min().item()}) - Máximo: ({dataset.latitude.max().item()},{dataset.longitude.max().item()})"
+            )
     
     # Interpola as variáveis
     #variaveis_lista = list(dataset.data_vars) # Variáveis a serem interpoladas
@@ -236,7 +238,9 @@ def dataset_renomeacoes(dataset: xr.Dataset) -> xr.Dataset:
 
 # FUNÇÕES PRINCIPAIS ---------------------------------------
 
-def cria_dataset_ponto_especifico(plataforma: str | None = None, latitude_longitude_alvo: tuple[float, float] | None = None, caminho_relativo_dataset_unico: Path | str = CAMINHO_RELATIVO_DATASET_UNIDO) -> xr.Dataset:
+def cria_dataset_ponto_especifico(plataforma: str | None = None, 
+                                  latitude_longitude_alvo: tuple[float, float] | None = None, 
+                                  caminho_relativo_dataset_unico: Path | str = CAMINHO_RELATIVO_DATASET_UNIDO) -> xr.Dataset:
     "Faz edições no dataset único para criar um dataset para um ponto específico"
 
     if not plataforma and not latitude_longitude_alvo:
@@ -278,7 +282,8 @@ if __name__ == "__main__":
     #ds = cria_dataset_ponto_especifico("p5", (-22.0, -40.0))
     #ds = cria_dataset_ponto_especifico(latitude_longitude_alvo=(-22.0, -40.0))
     #print(ds)
-    cria_datasets_plataformas()
+    #cria_datasets_plataformas()
+    cria_dataset_ponto_especifico(latitude_longitude_alvo=(-22.0, -40.0))
     
 
 
