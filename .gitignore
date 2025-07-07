@@ -22,5 +22,6 @@ ENV/
 # Arquyivos de dados processados ignorados
 data/datasets/merged
 data/datasets/edited
+data/datasets/plataforms
 
 data/dataframes/dataframe*/part*

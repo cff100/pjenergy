@@ -1,3 +1,5 @@
+from utils.espaco_para_underline import espaco_para_underline
+from utils.indice_mais_um import lista_indice_mais_um
 
 class ParametrosObtencaoDados:
     """Agrupamento dos parâmetros utilizados para obtenção dos dados"""
@@ -49,7 +51,6 @@ class ConstantesString:
     # - A barra invertida antes dos parênteses é necessária para escapar os parênteses, pois eles têm significado especial em expressões regulares. 
     
     NOME_PADRAO_ARQUIVO_NC_UNIDO = "dataset_unido.nc"
-    NOME_PADRAO_ARQUIVO_NC_EDITADO = "dataset_editado.nc"
 
 
 class NomeColunasDataframe:
@@ -83,11 +84,11 @@ class NomeColunasDataframe:
                    "t": temperatura_kelvin, "u": velocidade_u, 
                    "v": velocidade_v}
     
-    # Lista da ordem das colunas finais do dataframe
-    lista_colunas_ordem = [ano, estacao_do_ano, mes_nome, mes, dia, hora, pressao, geopotencial, 
-                     altura, latitude, longitude, velocidade_u, velocidade_v, 
-                     velocidade_resultante, temperatura_kelvin, temperatura_celsius, 
-                     umidade_relativa, tempo_UTC0, tempo_bras]
+    # # Lista da ordem das colunas finais do dataframe
+    # lista_colunas_ordem = [ano, estacao_do_ano, mes_nome, mes, dia, hora, pressao, geopotencial, 
+    #                  altura, latitude, longitude, velocidade_u, velocidade_v, 
+    #                  velocidade_resultante, temperatura_kelvin, temperatura_celsius, 
+    #                  umidade_relativa, tempo_UTC0, tempo_bras]
 
 
 class OutrasConstantes:
@@ -98,6 +99,7 @@ class OutrasConstantes:
         5: "Maio", 6: "Junho", 7: "Julho", 8: "Agosto",
         9: "Setembro", 10: "Outubro", 11: "Novembro", 12: "Dezembro"
     }
+
 
     # Dicionário com os dias aproximados de início e fim das estações do ano (os dias reais variam por um ou 2 dias de ano em ano)
     estacao_do_ano_dados = {"Verão": 
@@ -127,6 +129,28 @@ class OutrasConstantes:
                             }
 
 
+    # Dados das plataformas
+    plataformas = ["NAMORADO 2 (PNA-2)", 
+                   "PETROBRAS 26 (P-26)", "PETROBRAS 32 (P-32)", 
+                   "PETROBRAS 37 (P-37)", "PETROBRAS IX", 
+                   "PETROBRAS XIX", "PETROBRAS XXXIII", 
+                   "VERMELHO 1 (PVM-1)", "VERMELHO 2 (PVM-2)"]
+    
+    
+    coordenadas = [(-22.45073, -40.41175), (-22.4684, -40.02869), 
+                   (-22.2051, -40.1431), (-22.4868, -40.09779),
+                   (-22.57358, -40.82192), (-22.3927, -40.05438),
+                   (-22.37, -40.0267), (-22.16065, -40.27872),
+                   (-22.17535, -40.29147)]
+    
+    simbolos_plataformas = ["p" + str(indice) for indice in lista_indice_mais_um(plataformas)]
+
+    nome_arquivo_plataformas = [s + "-" + espaco_para_underline(p) + ".nc" for s, p in zip(simbolos_plataformas, plataformas)]
+
+    plataformas_dados = {p : {"simbolo" : s, "coords" : c, "nome_arquivo" : na} for s, p, c, na in zip(simbolos_plataformas, plataformas, coordenadas, nome_arquivo_plataformas)}
+
+
+
 if "__main__" == __name__:
     
     print(f"Anos: {ParametrosObtencaoDados.anos} \n")
@@ -138,4 +162,6 @@ if "__main__" == __name__:
     print(f"Horas: {ParametrosObtencaoDados.horas} \n")
 
     print(f"Área: {ParametrosObtencaoDados.area} \n")
+
+    print(f"Dados das plataformas: {OutrasConstantes.plataformas_dados}")
 
