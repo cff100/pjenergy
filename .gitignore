@@ -23,5 +23,6 @@ ENV/
 data/datasets/merged
 data/datasets/edited
 data/datasets/plataforms
+data/dataframes
 
 data/dataframes/dataframe*/part*

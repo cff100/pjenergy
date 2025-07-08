@@ -2,7 +2,7 @@
 import config.paths as paths
 from datasets_operations.requisicao_dados import requisicao_dados
 from config.constants import ParametrosObtencaoDados as pod
-from utils.cria_caminho_arquivo import cria_caminho_arquivo
+from utils.cria_caminho_arquivo import cria_caminho_arquivo_relativo
 
 def test_requisicao_dados(requisitar = True):
     """Teste para verificar a requisição de dados do Climate Data Store (CDS)"""
@@ -24,7 +24,7 @@ def test_requisicao_dados(requisitar = True):
     print(f" -> -> -> Caminho relativo de saída: {arquivo_nome}")
 
     # Cria o caminho absoluto e confere se o diretório existe
-    arquivo_nc_caminho = cria_caminho_arquivo(arquivo_nome, diretorio_base)
+    arquivo_nc_caminho = cria_caminho_arquivo_relativo(arquivo_nome, diretorio_base)
     print(f" -> -> -> Caminho absoluto de saída: {arquivo_nc_caminho}")
     
     if arquivo_nc_caminho.exists():

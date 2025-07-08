@@ -15,10 +15,11 @@ def gera_datasets_pontos_especificos(alternativa_plataforma: str | None = None,
 
     return ds
 
+
 if __name__ == "__main__":
     # Gerar todas as plataformas
     gera_datasets_pontos_especificos(alternativa_plataforma = "all")
 
     # # Gerar um ponto específico
-    #ds = gera_datasets_pontos_especificos(latitude_longitude_alvo = (-22, -40))
-    #print(ds)
+    ds = gera_datasets_pontos_especificos(latitude_longitude_alvo = (-22, -40))
+    print(ds)

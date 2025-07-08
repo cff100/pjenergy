@@ -79,7 +79,6 @@ class NomeColunasDataframe:
 
     # Dicionário {nome pré-existente : novo nome}. Associa um novo nome aos nomes de colunas vindos do dataframe primário. Nem todos os nomes são necessariamente alterados.
     novos_nomes = {"valid_time": tempo_UTC0, "pressure_level": pressao, 
-                   "latitude": latitude, "longitude": longitude, 
                    "z": geopotencial, "r": umidade_relativa, 
                    "t": temperatura_kelvin, "u": velocidade_u, 
                    "v": velocidade_v}

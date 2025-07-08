@@ -6,7 +6,7 @@ import config.paths as paths
 from pathlib import Path
 # Módulos internos do projeto
 from config.constants import ParametrosObtencaoDados as pod
-from utils.cria_caminho_arquivo import cria_caminho_arquivo
+from utils.cria_caminho_arquivo import cria_caminho_arquivo_relativo
 
 
 # FUNÇÕES AUXILIARES
@@ -97,7 +97,7 @@ def requisicao_multiplos_dados(
 
                 # Gera o caminho completo do arquivo .nc. 
                 # Se o caminho base do arquivo não for especificado, usa o padrão
-                arquivo_nc_caminho = cria_caminho_arquivo(arquivo_nc_nome, diretorio_base)
+                arquivo_nc_caminho = cria_caminho_arquivo_relativo(arquivo_nc_nome, diretorio_base)
 
                 # Verifica se o arquivo já existe
                 # Se existir, pula o download

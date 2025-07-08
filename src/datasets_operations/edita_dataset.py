@@ -2,9 +2,9 @@ from pathlib import Path
 import pandas as pd
 import numpy as np
 import xarray as xr
-from datasets_operations.ler_nc import ler_dataset_nc
+from datasets_operations.ler_nc import ler_dataset_nc_relativo
 from config.paths import CAMINHO_RELATIVO_DATASET_UNIDO, caminho_absoluto_dataset_plataforma
-from config.constants import NomeColunasDataframe as ncd, ConstantesNumericas as cn, ConstantesString as cs, OutrasConstantes as oc
+from config.constants import NomeColunasDataframe as ncd, ConstantesNumericas as cn,  OutrasConstantes as oc
 from datasets_operations.salva_dataset import salva_dataset_nc
 from utils.gerencia_plataforma_nome import gerencia_plataforma_nome
 
@@ -51,7 +51,7 @@ def dataset_adiciona_estacao_do_ano(dataset: xr.Dataset) -> xr.Dataset:
 
 
     # Cria a nova variável
-    ds = dataset.assign({ncd.estacao_do_ano: (ncd.tempo_bras, np.array(estacoes))})
+    ds = dataset.assign({ncd.estacao_do_ano: (ncd.tempo_UTC0, np.array(estacoes))})
     return ds
 
 
@@ -80,6 +80,13 @@ def dataset_interpola_lat_lon(dataset: xr.Dataset, latitude_longitude_alvo: tupl
     #variaveis_lista = list(dataset.data_vars) # Variáveis a serem interpoladas
     ds_interp = dataset.interp(latitude=latitude_longitude_alvo[0], longitude = latitude_longitude_alvo[1], method="linear")
 
+    # Remove as dimensões de latitude e longitude
+    for dim in ["latitude", "longitude"]:
+        if dim in ds_interp.dims:
+            ds_interp = ds_interp.squeeze(dim)
+        if dim in ds_interp.coords or dim in ds_interp.variables:
+            ds_interp = ds_interp.drop_vars(dim)
+            
     return ds_interp
 
 
@@ -268,7 +275,7 @@ def cria_dataset_ponto_especifico(plataforma: str | None = None,
             else:
                 pass
     # Lê dataset (verificando se o dataset existe)
-    ds = ler_dataset_nc(caminho_relativo_dataset_unico)
+    ds = ler_dataset_nc_relativo(caminho_relativo_dataset_unico)
 
     processos = [dataset_remocoes, dataset_interpola_lat_lon, interp_alturas_constantes, dataset_criacoes, dataset_renomeacoes]
 
