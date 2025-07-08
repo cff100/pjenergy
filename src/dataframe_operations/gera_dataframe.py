@@ -16,7 +16,7 @@ def nc_para_dataframe(caminho_absoluto_dataset: Path, caminho_absoluto_dataframe
 
     # for var in ds.data_vars:
     #     print(f"{var}: {ds[var].dims}")
-    assert isinstance(ncd.tempo_UTC0, str)
+
     # Seleciona variáveis 2D (tempo e altura)
     variaveis_2d = [v for v in ds.data_vars if ds[v].dims == ('tempo_UTC0', 'altura')]
     # print(variaveis_2d)
