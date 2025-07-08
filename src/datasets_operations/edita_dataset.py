@@ -238,14 +238,24 @@ def dataset_renomeacoes(dataset: xr.Dataset) -> xr.Dataset:
 
 # FUNÇÕES PRINCIPAIS ---------------------------------------
 
+def cria_datasets_plataformas(caminho_relativo_dataset_unico: Path | str = CAMINHO_RELATIVO_DATASET_UNIDO) -> None:
+
+    for plat in list(oc.plataformas_dados.keys()):
+        print(f"Plataforma: {plat}")
+        cria_dataset_ponto_especifico(plataforma = plat, caminho_relativo_dataset_unico = caminho_relativo_dataset_unico)
+
+
+
 def cria_dataset_ponto_especifico(plataforma: str | None = None, 
                                   latitude_longitude_alvo: tuple[float, float] | None = None, 
                                   caminho_relativo_dataset_unico: Path | str = CAMINHO_RELATIVO_DATASET_UNIDO) -> xr.Dataset:
     "Faz edições no dataset único para criar um dataset para um ponto específico"
 
     if not plataforma and not latitude_longitude_alvo:
-        raise ValueError("É necessário informar a plataforma ou a latitude e longitude alvo.")
+        raise ValueError("É necessário informar a latitude e longitude alvo ou a plataforma.")
+    
     elif plataforma:
+            
         plataforma = gerencia_plataforma_nome(plataforma)
 
         if not latitude_longitude_alvo: # Caso seja escolhida uma plataforma específica e as coordenadas não seja dadas, é obtido os valores das coordenadas dela.
@@ -272,18 +282,29 @@ def cria_dataset_ponto_especifico(plataforma: str | None = None,
 
     return ds
 
-def cria_datasets_plataformas(caminho_relativo_dataset_unico: Path | str = CAMINHO_RELATIVO_DATASET_UNIDO) -> None:
 
-    for plat in list(oc.plataformas_dados.keys()):
-        print(f"Plataforma: {plat}")
-        cria_dataset_ponto_especifico(plataforma = plat, caminho_relativo_dataset_unico = caminho_relativo_dataset_unico)
+def cria_datasets_especificos_alternativas(alternativa_plataforma: str | None = None, 
+                                           latitude_longitude_alvo: tuple[float, float] | None = None, 
+                                           caminho_relativo_dataset_unico: Path | str = CAMINHO_RELATIVO_DATASET_UNIDO) -> None | xr.Dataset :
+    """Escolhe a função de criar dataset a ser chamada dependendo da escolha de todas as plataformas (alternativa_plataforma = 'all') ou 
+    um ponto específico (alternativa_plataforma = None)"""
+    
+    if alternativa_plataforma == "all":
+        cria_datasets_plataformas(caminho_relativo_dataset_unico = caminho_relativo_dataset_unico)
+    elif alternativa_plataforma == None:
+        ds = cria_dataset_ponto_especifico(latitude_longitude_alvo = latitude_longitude_alvo, 
+                                           caminho_relativo_dataset_unico = caminho_relativo_dataset_unico)
+        return ds 
+
+
+
 
 if __name__ == "__main__":
-    #ds = cria_dataset_ponto_especifico("p5", (-22.0, -40.0))
-    #ds = cria_dataset_ponto_especifico(latitude_longitude_alvo=(-22.0, -40.0))
+    #ds = cria_datasets_especificos_alternativas("p5", (-22.0, -40.0))
+    #ds = cria_datasets_especificos_alternativas(latitude_longitude_alvo=(-22.0, -40.0))
     #print(ds)
-    #cria_datasets_plataformas()
-    cria_dataset_ponto_especifico(latitude_longitude_alvo=(-22.0, -40.0))
+    #cria_datacria_datasets_especificos_alternativas()
+    cria_datasets_especificos_alternativas(latitude_longitude_alvo=(-22.0, -40.0))
     
 
 
