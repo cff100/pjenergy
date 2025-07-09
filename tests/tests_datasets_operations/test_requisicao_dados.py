@@ -8,9 +8,9 @@ def test_requisicao_dados(requisitar = True):
     """Teste para verificar a requisição de dados do Climate Data Store (CDS)"""
 
     # Variáveis, anos e pressões a serem solicitados
-    variavel = pod.variaveis[0]
-    ano = pod.anos[0]
-    pressao_nivel = pod.pressao_niveis[0]
+    variavel = pod.VARIAVEIS[0]
+    ano = pod.ANOS[0]
+    pressao_nivel = pod.PRESSAO_NIVEIS[0]
 
     print(f" -> -> -> Variáveis escolhidas: {variavel}")
     print(f" -> -> -> Anos escolhidos: {ano}")

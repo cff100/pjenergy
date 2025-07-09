@@ -40,12 +40,12 @@ def requisicao_dados(
                     variavel: str, # Apenas uma variável por vez, como 'u_component_of_wind'
                     ano: int, # Apenas um ano por vez, como 2020
                     pressao_nivel: int,  # Apenas um nível de pressão por vez, como 900
-                    meses: tuple[int, ...] = pod.meses, 
-                    dias: tuple[int, ...] = pod.dias, 
-                    utc_horas: tuple[str, ...] = pod.horas, 
-                    area: tuple[float, float, float, float] = pod.area, 
-                    data_format: str = pod.data_format, 
-                    download_format: str = pod.download_format,
+                    meses: tuple[int, ...] = pod.MESES, 
+                    dias: tuple[int, ...] = pod.DIAS, 
+                    utc_horas: tuple[str, ...] = pod.HORAS, 
+                    area: tuple[float, float, float, float] = pod.AREA, 
+                    data_format: str = pod.DATA_FORMAT, 
+                    download_format: str = pod.DOWNLOAD_FORMAT,
                     diretorio_datasets: Path = paths.DIRETORIO_DATASETS_ORIGINAIS) -> None: 
     """Requisita dados do Climate Data Store (CDS) e salva em um arquivo NetCDF."""
 
@@ -72,15 +72,15 @@ def requisicao_dados(
 
 
 def requisicao_multiplos_dados(
-                            variaveis: tuple[str, ...] = pod.variaveis, 
-                            anos: tuple[int, ...] = pod.anos, 
-                            pressao_niveis: tuple[int, ...] = pod.pressao_niveis, 
-                            meses: tuple[int, ...] = pod.meses, 
-                            dias: tuple[int, ...] = pod.dias, 
-                            utc_horas: tuple[str, ...] = pod.horas, 
-                            area: tuple[float, float, float, float] = pod.area, 
-                            data_format: str = pod.data_format, 
-                            download_format: str = pod.download_format,
+                            variaveis: tuple[str, ...] = pod.VARIAVEIS, 
+                            anos: tuple[int, ...] = pod.ANOS, 
+                            pressao_niveis: tuple[int, ...] = pod.PRESSAO_NIVEIS, 
+                            meses: tuple[int, ...] = pod.MESES, 
+                            dias: tuple[int, ...] = pod.DIAS, 
+                            utc_horas: tuple[str, ...] = pod.HORAS, 
+                            area: tuple[float, float, float, float] = pod.AREA, 
+                            data_format: str = pod.DATA_FORMAT, 
+                            download_format: str = pod.DOWNLOAD_FORMAT,
                             diretorio_base: Path = paths.DIRETORIO_DATASETS_ORIGINAIS) -> None:
     """Faz loops para a obtenção de vários arquivos NetCDF de acordo com os valores passados como parâmetros."""
 

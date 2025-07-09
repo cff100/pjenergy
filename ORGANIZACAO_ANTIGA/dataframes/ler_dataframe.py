@@ -85,7 +85,7 @@ if __name__ == "__main__":
     # OUTROS MÉTODOS ÚTEIS
 
     ## Filtros
-    from config.constants import NomeColunasDataframe as ncd
+    from config.constants import CorrespondeNomesDados as ncd
     hora = "03:00"
     df_hora_filtrada = df[df[ncd.hora] == hora].compute()
     print(f" -> -> -> Filtro da hora {hora}\n")

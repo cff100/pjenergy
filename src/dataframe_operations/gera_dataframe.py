@@ -6,7 +6,7 @@ import dask.dataframe as dd
 from datasets_operations.ler_nc import ler_dataset_nc_absoluto
 from config.paths import caminho_absoluto_dataset_plataforma, caminho_absoluto_dataframe_plataforma
 from utils.gerencia_plataforma_nome import gerencia_plataforma_nome
-from config.constants import OutrasConstantes as oc, NomeColunasDataframe as ncd
+from config.constants import OutrasConstantes as oc, CorrespondeNomesDados as ncd
 
 
 def nc_para_dataframe(caminho_absoluto_dataset: Path, caminho_absoluto_dataframe: Path) -> dd.DataFrame:

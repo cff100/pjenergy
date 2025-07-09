@@ -6,7 +6,7 @@ import pytz
 from datasets_operations.dataframes.ler_dataframe import ler_dataframe_dask
 from datasets_operations.dataframes.salva_dataframe_substituindo import salva_dataframe_substituindo
 from config.paths import DIRETORIO_DATAFRAME_PRIMARIO, DIRETORIO_DATAFRAME_NOVAS_COLUNAS
-from config.constants import NomeColunasDataframe as ncd
+from config.constants import CorrespondeNomesDados as ncd
 from config.constants import ConstantesNumericas as cn
 from config.constants import OutrasConstantes as oc
 from utils.decide_estacao import decide_estacao_vetorizado
