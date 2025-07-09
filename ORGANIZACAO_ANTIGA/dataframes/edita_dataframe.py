@@ -73,7 +73,7 @@ def adiciona_colunas_tempo(diretorio_dataframe: Path = DIRETORIO_DATAFRAME_NOVAS
     df[ncd.hora] = df[ncd.tempo_bras].dt.hour.astype(str).str.zfill(2) + ":" + df[ncd.tempo_bras].dt.minute.astype(str).str.zfill(2)  # Formata a hora como string com dois dígitos
     
     # Converte número do mês para nome do mês
-    df[ncd.mes_nome] = df[ncd.tempo_bras].dt.month.map(oc.numero_para_mes, meta=(ncd.mes_nome, "object"))
+    df[ncd.mes_nome] = df[ncd.tempo_bras].dt.month.map(oc.NUMERO_PARA_MES, meta=(ncd.mes_nome, "object"))
     
     ## Salva dataframe substituindo o original
     print("Adicionando colunas de tempo...")

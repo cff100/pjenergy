@@ -30,7 +30,7 @@ def dataset_adiciona_estacao_do_ano(dataset: xr.Dataset) -> xr.Dataset:
     # Percorre todos os pares mês e dia para dar a cada um valor de estação correspondente 
     for mes, dia in zip(meses, dias): 
         # Percorre as estações
-        for estacao, intervalo in oc.estacao_do_ano_dados.items(): # intervalo: representa o dicionário aninhado que contém o dia e mês de início e fim da específica estação do ano
+        for estacao, intervalo in oc.ESTACAO_DO_ANO_DATAS.items(): # intervalo: representa o dicionário aninhado que contém o dia e mês de início e fim da específica estação do ano
             inicio = intervalo["inicio"]
             fim = intervalo["fim"]
 
@@ -220,7 +220,7 @@ def dataset_criacoes(dataset: xr.Dataset) -> xr.Dataset:
     # Cria coordenadas temporais separadas em partes a partir do datatime no horário de Brasília
     ano = ds[ncd.tempo_bras].dt.year
     mes = ds[ncd.tempo_bras].dt.month
-    mes_str = mes.copy(data=[oc.numero_para_mes[int(m)] for m in mes.values])
+    mes_str = mes.copy(data=[oc.NUMERO_PARA_MES[int(m)] for m in mes.values])
     dia = ds[ncd.tempo_bras].dt.day
     hora = ds[ncd.tempo_bras].dt.hour
     hora_str = ds[ncd.tempo_bras].dt.strftime("%H:00")
