@@ -6,7 +6,7 @@ from datasets_operations.ler_nc import ler_dataset_nc_relativo
 from config.paths import CAMINHO_RELATIVO_DATASET_UNIDO, decide_caminho_absoluto_dataset_localizacao_especifica
 from config.constants import CorrespondeNomesDados as ncd, ConstantesNumericas as cn,  OutrasConstantes as oc
 from datasets_operations.salva_dataset import salva_dataset_nc
-from utils.gerencia_plataforma_nome import gerencia_plataforma_nome
+from utils.gerencia_plataformas_representacoes import gerencia_plataforma_nome
 
 # FUNÇÕES AUXILIARES ---------------------------------------
 

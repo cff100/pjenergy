@@ -5,7 +5,7 @@ import dask.dataframe as dd
 # Módulos internos do projeto
 from datasets_operations.ler_nc import ler_dataset_nc_absoluto
 from config.paths import decide_caminho_absoluto_dataset_localizacao_especifica, caminho_absoluto_dataframe_plataforma
-from utils.gerencia_plataforma_nome import gerencia_plataforma_nome
+from utils.gerencia_plataformas_representacoes import gerencia_plataforma_nome
 from config.constants import OutrasConstantes as oc, CorrespondeNomesDados as ncd
 
 

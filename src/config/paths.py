@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Optional
 from config.constants import ArquivosNomes as an, PastasNomes as pn, Plataformas as plt, Correspondencias as cr, FormatosArquivo as fa
-
+from utils.gerencia_plataformas_representacoes import gerencia_plataforma_representacoes
 
 class DiretoriosBasicos:
     """Agrupamento dos diretorios básicos do projeto"""
@@ -20,7 +20,7 @@ class PathsDados:
     """Agrupamento de diretórios e caminhos da pastas onde se localizam os dados."""
 
     @staticmethod
-    def obter_caminho_coord_especifica(formato_arquivo, plataforma: Optional[str] = None) -> Path:   
+    def obter_caminho_coord_especifica(formato_arquivo: str, plataforma: Optional[str] = None) -> Path:   
         """Decide o caminho absoluto a partir do valor de 'formato_arquivo' e 'plataforma'.
         \nParâmetros:
         - formato_arquivo: str, deve ser "netcdf" ou "parquet".
@@ -29,13 +29,17 @@ class PathsDados:
         - caminho: Path, caminho absoluto do arquivo correspondente.
         """
 
+        # Verifica se o formato do arquivo é string e chama a função de gerência de plataforma
+        # para garantir a possibilidade de receber tanto o nome completo da plataforma quanto seu símbolo.
+        if isinstance(plataforma, str):
+            plataforma = gerencia_plataforma_representacoes(plataforma)
+
         if formato_arquivo == fa.NETCDF:
             chave = cr.ARQUIVO_NC_CHAVE
             pasta_data = pn.DATASETS
         elif formato_arquivo == fa.PARQUET:
             chave = cr.ARQUIVO_PARQUET_CHAVE
-            pasta_data = pn.DATAFRAMES
-            
+            pasta_data = pn.DATAFRAMES  
         else:
             raise ValueError("Chave não aceita. Valores aceitos: 'netcdf' ou 'parquet'.")
         
@@ -90,5 +94,5 @@ class PathsDados:
 
 
 if __name__ == "__main__":
-    caminho = PathsDados.obter_caminho_coord_especifica("parquet", "NAMORADO 2(PNA-2)") # Exemplo de erro na plataforma
+    caminho = PathsDados.obter_caminho_coord_especifica("netcdf", "NAMORADO 2 (PNA-2)") # Exemplo de erro na plataforma
     print(caminho)
