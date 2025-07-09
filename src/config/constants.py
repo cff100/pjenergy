@@ -65,6 +65,7 @@ class PastasNomes:
 
     DADOS = "data"
     DATASETS = "datasets"
+    DATAFRAMES = "dataframes"
     ORIGINAIS = "originais"
     UNIDO = "unido"
     COORDENADAS_ESPECIFICAS = "coordenadas_especificas"
@@ -72,10 +73,17 @@ class PastasNomes:
     PONTOS_NAO_PLATAFORMA = "ponto_nao_plataforma"   
 
     TESTES = "tests"
+    DADOS_GERADOS_TESTES = "dados_gerados_testes"
 
+
+class FormatosArquivo:
+    NETCDF = "netcdf"
+    PARQUET = "parquet"
 
 class Correspondencias:
-    """Agrupamento de nomes de colunas e variáveis para facilitar o acesso"""
+    
+    # --------------------------------------------------------------------
+    # Agrupamento de nomes de colunas e variáveis para facilitar o acesso
 
     # Dicionário de correspondências entre os nomes utilizados para requisitar os dados e os utilizados nos arquivos NetCDF obtidos.
     VARIAVEIS_REPRESENTACAO_ORIGINAL = {"u_component_of_wind": "u", "v_component_of_wind": "v", "relative_humidity": "r", 
@@ -119,6 +127,13 @@ class Correspondencias:
     #                  velocidade_resultante, temperatura_kelvin, temperatura_celsius, 
     #                  umidade_relativa, tempo_UTC0, tempo_bras]
 
+
+    # ----------------------------------------------------------------------
+    # Chaves do dicionário das plataformas
+    SIMBOLO_CHAVE = "simbolo"
+    COORDENADAS_CHAVE = "coords"
+    ARQUIVO_NC_CHAVE = "arquivo_nc_nome"
+    ARQUIVO_PARQUET_CHAVE = "arquivo_parquet_nome"
     
 
 class OutrasConstantes:
@@ -160,8 +175,10 @@ class OutrasConstantes:
                                 }
                             }
 
+
 class Plataformas:
     """Agrupamento de dados das plataformas de petróleo na Bacia de Campos"""
+
 
     # Nome das plataformas, coordenadas e símbolos correspondentes.
     PLATAFORMAS = ["NAMORADO 2 (PNA-2)", 
@@ -177,16 +194,35 @@ class Plataformas:
                    (-22.37, -40.0267), (-22.16065, -40.27872),
                    (-22.17535, -40.29147)]
     
+
     # Criação de símbolos para as plataformas, começando com "p1", "p2", etc.
     # O objetivo é criar uma lista de símbolos que serão utilizados para identificar as plataformas de forma única.
     SIMBOLOS_PLATAFORMAS = ["p" + str(indice) for indice in lista_indice_mais_um(PLATAFORMAS)]
 
-    # Criação dos nomes dos arquivos .nc para cada plataforma, utilizando o símbolo e o nome da plataforma.
-    # O nome do arquivo segue o padrão "p1-NAMORADO_2_(PNA-2).nc", onde "p1" é o símbolo da plataforma e "NAMORADO_2_(PNA-2)" é o nome da plataforma com espaços substituídos por underlines.
-    NOME_ARQUIVO_PLATAFORMAS = [s + "-" + espaco_para_underline(p) + ".nc" for s, p in zip(SIMBOLOS_PLATAFORMAS, PLATAFORMAS)]
+    # Criação dos nomes dos arquivos para cada plataforma, utilizando o símbolo e o nome da plataforma.
+    # O nome do arquivo segue o padrão "p1-NAMORADO_2_(PNA-2)", onde "p1" é o símbolo da plataforma e "NAMORADO_2_(PNA-2)" é o nome da plataforma com espaços substituídos por underlines.
+    ARQUIVO_PLATAFORMAS_NOME = [s + "-" + espaco_para_underline(p) for s, p in zip(SIMBOLOS_PLATAFORMAS, PLATAFORMAS)]
 
-    # Criação de um dicionário que associa cada plataforma a seus dados, incluindo símbolo, coordenadas e nome do arquivo.
-    PLATAFORMAS_DADOS = {p : {"simbolo" : s, "coords" : c, "nome_arquivo" : na} for s, p, c, na in zip(SIMBOLOS_PLATAFORMAS, PLATAFORMAS, COORDENADAS, NOME_ARQUIVO_PLATAFORMAS)}
+    ARQUIVO_NC_PLATAFORMAS_NOME = [n + ".nc" for n in ARQUIVO_PLATAFORMAS_NOME]
+    ARQUIVO_PARQUET_PLATAFORMAS_NOME = [n + ".parquet" for n in ARQUIVO_PLATAFORMAS_NOME]
+
+
+
+    PLATAFORMAS_DADOS = {
+                        p : {
+                            Correspondencias.SIMBOLO_CHAVE : s, 
+                            Correspondencias.COORDENADAS_CHAVE : c, 
+                            Correspondencias.ARQUIVO_NC_CHAVE : na_nc, 
+                            Correspondencias.ARQUIVO_PARQUET_CHAVE : na_pq
+                            } 
+                        for s, p, c, na_nc, na_pq in zip(
+                            SIMBOLOS_PLATAFORMAS, 
+                            PLATAFORMAS, 
+                            COORDENADAS, 
+                            ARQUIVO_NC_PLATAFORMAS_NOME, 
+                            ARQUIVO_PARQUET_PLATAFORMAS_NOME
+                            )   
+                        }
 
 
 
