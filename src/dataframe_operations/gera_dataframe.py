@@ -4,7 +4,7 @@ from dask.diagnostics.progress import ProgressBar
 import dask.dataframe as dd
 # Módulos internos do projeto
 from datasets_operations.ler_nc import ler_dataset_nc_absoluto
-from config.paths import caminho_absoluto_dataset_plataforma, caminho_absoluto_dataframe_plataforma
+from config.paths import decide_caminho_absoluto_dataset_localizacao_especifica, caminho_absoluto_dataframe_plataforma
 from utils.gerencia_plataforma_nome import gerencia_plataforma_nome
 from config.constants import OutrasConstantes as oc, CorrespondeNomesDados as ncd
 
@@ -49,7 +49,7 @@ def plataforma_nc_para_dataframe_ponto_especifico(plataforma: str | None = None)
     if plataforma:
         plataforma = gerencia_plataforma_nome(plataforma)
     
-    caminho_absoluto_dataset = caminho_absoluto_dataset_plataforma(plataforma)
+    caminho_absoluto_dataset = decide_caminho_absoluto_dataset_localizacao_especifica(plataforma)
     caminho_absoluto_dataframe = caminho_absoluto_dataframe_plataforma(plataforma)
 
     df = nc_para_dataframe(caminho_absoluto_dataset, caminho_absoluto_dataframe)

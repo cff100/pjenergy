@@ -2,7 +2,7 @@ from utils.espaco_para_underline import espaco_para_underline
 from utils.indice_mais_um import lista_indice_mais_um
 
 class ParametrosObtencaoDados:
-    """Agrupamento dos parâmetros utilizados para obtenção dos dados"""
+    """Agrupamento dos parâmetros utilizados para obtenção dos dados do Climate Data Store"""
 
     VARIAVEIS = ("u_component_of_wind", "v_component_of_wind", 
                  "relative_humidity", "temperature", "geopotential") 
@@ -36,16 +36,16 @@ class ConstantesNumericas:
     g = 9.80665 # (m/s**2) g mantido como letra minúscula pela convensão da representação física.
 
 
-class ConstantesString:
-    """Agrupamentos de strings importantes"""
+class ArquivosNomes:
+    """Agrupamentos de nomes de arquivos"""
 
-    # Padrão geral de nome dos arquivos .nc
-    NOME_PADRAO_ARQUIVOS_NC_GERAL = "(var-*)_(anos-*)_(pressao-*).nc" 
+    # Padrão geral de nome dos arquivos .nc obtidos do Climate Data Store
+    PADRAO_ARQUIVOS_NC_ORIGINAIS = "(var-*)_(anos-*)_(pressao-*).nc" 
     # O * serve como um wildcard para capturar qualquer sequência de caracteres, 
     # no caso os valores das variáveis armazenados no arquivo
 
     # Regex para capturar os parâmetros dos nomes dos arquivos .nc
-    NOME_PADRAO_ARQUIVOS_NC_REGEX = r"\(var-(.+?)\)_\(anos-(\d{4})\)_\(pressao-(\d+?)\).nc" 
+    PADRAO_ARQUIVOS_NC_ORIGINAIS_REGEX = r"\(var-(.+?)\)_\(anos-(\d{4})\)_\(pressao-(\d+?)\).nc" 
     # Explicação da expressão regular:
     # - \(var-(.+?)\): Captura a variável entre parênteses,
     # - \(anos-(\d{4})\): Captura o ano de 4 dígitos entre parênteses,
@@ -53,7 +53,25 @@ class ConstantesString:
     # - O ponto de interrogação após o quantificador torna a captura não gananciosa, pegando o menor número possível de caracteres.
     # - A barra invertida antes dos parênteses é necessária para escapar os parênteses, pois eles têm significado especial em expressões regulares. 
     
-    NOME_PADRAO_ARQUIVO_NC_UNIDO = "dataset_unido.nc"
+    # Nome do arquivo gerado pela união dos datasets originais
+    ARQUIVO_NC_UNIDO = "dataset_unido.nc"
+
+    # Nome do arquivo do dataset gerado para um ponto específico que não é uma plataforma
+    ARQUIVO_NC_PONTO_NAO_PLATAFORMA = "ponto_nao_plataforma.nc"
+
+
+class PastasNomes:
+    """Agrupamento de nomes de pastas"""
+
+    DADOS = "data"
+    DATASETS = "datasets"
+    ORIGINAIS = "originais"
+    UNIDO = "unido"
+    COORDENADAS_ESPECIFICAS = "coordenadas_especificas"
+    PLATAFORMAS = "plataformas"
+    PONTOS_NAO_PLATAFORMA = "ponto_nao_plataforma"   
+
+    TESTES = "tests"
 
 
 class Correspondencias:

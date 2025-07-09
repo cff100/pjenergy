@@ -4,7 +4,7 @@ from pathlib import Path
 import xarray as xr
 # Módulos internos do projeto
 from config.paths import DIRETORIO_DATASETS_ORIGINAIS, CAMINHO_ABSOLUTO_DATASET_UNIDO
-from config.constants import ConstantesString as cs
+from config.constants import ArquivosNomes as an
 from datasets_operations.salva_dataset import salva_dataset_nc
 
 # FUNÇÕES AUXILIARES
@@ -12,7 +12,7 @@ from datasets_operations.salva_dataset import salva_dataset_nc
 def pega_arquivos(diretorio: Path = DIRETORIO_DATASETS_ORIGINAIS) -> list[str]:
     """Pega todos os arquivos de um determinado diretório, com o nome em um determinado padrão"""
 
-    caminho_padrao = str(diretorio) + "\\" + cs.NOME_PADRAO_ARQUIVOS_NC_GERAL # Padrão de nome do caminho dos arquivos
+    caminho_padrao = str(diretorio) + "\\" + an.PADRAO_ARQUIVOS_NC_ORIGINAIS # Padrão de nome do caminho dos arquivos
     
     # Extrai o nome do padrão para exibir na saída
     nome_padrao = caminho_padrao.split("\\")[-1]
@@ -29,7 +29,7 @@ def variaveis_match(arquivo: str) -> tuple[str | None, str | None, str | None]:
     """Captura informações a partir do nome do arquivo, como variável, ano e nível de pressão."""
 
     # Utiliza expressão regular para capturar os grupos de interesse do nome dos arquivos que seguem o padrão
-    match = re.search(cs.NOME_PADRAO_ARQUIVOS_NC_REGEX, arquivo) 
+    match = re.search(an.PADRAO_ARQUIVOS_NC_ORIGINAIS_REGEX, arquivo) 
 
     if match:
         variavel, ano, nivel_pressao = match.groups()

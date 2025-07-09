@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import xarray as xr
 from datasets_operations.ler_nc import ler_dataset_nc_relativo
-from config.paths import CAMINHO_RELATIVO_DATASET_UNIDO, caminho_absoluto_dataset_plataforma
+from config.paths import CAMINHO_RELATIVO_DATASET_UNIDO, decide_caminho_absoluto_dataset_localizacao_especifica
 from config.constants import CorrespondeNomesDados as ncd, ConstantesNumericas as cn,  OutrasConstantes as oc
 from datasets_operations.salva_dataset import salva_dataset_nc
 from utils.gerencia_plataforma_nome import gerencia_plataforma_nome
@@ -285,7 +285,7 @@ def cria_dataset_ponto_especifico(plataforma: str | None = None,
         else:
             ds = funcao(ds)
 
-    salva_dataset_nc(ds, caminho_absoluto_dataset_plataforma(plataforma))
+    salva_dataset_nc(ds, decide_caminho_absoluto_dataset_localizacao_especifica(plataforma))
 
     return ds
 
