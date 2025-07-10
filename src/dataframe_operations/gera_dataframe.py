@@ -4,15 +4,20 @@ from dask.diagnostics.progress import ProgressBar
 import dask.dataframe as dd
 # Módulos internos do projeto
 from leituras.ler_arquivos import ler_arquivo
-from config.paths import decide_caminho_absoluto_dataset_localizacao_especifica, caminho_absoluto_dataframe_plataforma
+from config.paths import PathsDados as pd
 from utils.gerencia_plataformas_representacoes import gerencia_plataforma_nome
 from config.constants import OutrasConstantes as oc, FormatosArquivo as fa, Correspondencias as cr
 
 
-def nc_para_dask_dataframe(caminho_dataset: Path, caminho_dataframe: Path) -> dd.DataFrame:
-    """Converte NetCDF em Dask DataFrame, salvando como parquet, preservando variáveis 1D e 2D."""
+def nc_para_dask_dataframe(caminho_dataset_relativo: Path, caminho_dataframe_relativo: Path) -> dd.DataFrame:
+    """Converte NetCDF em Dask DataFrame, salvando como parquet, preservando variáveis 1D e 2D.
+    
+    Parâmetros:
+    - caminho_dataset_relativo: caminho do dataset em relação à data/datasets
+    - caminho_dataframe_relativo: caminho da pasta onde ficará o dask dataframe em relação à data/dataframes
+    """
 
-    ds = ler_arquivo(caminho_dataset, formato_arquivo = fa.NETCDF, eh_caminho_relativo = False)
+    ds = ler_arquivo(caminho_dataset_relativo, formato_arquivo = fa.NETCDF, eh_caminho_relativo = False)
 
     if not isinstance(ds, xr.Dataset):
         raise TypeError("'ds' não é um dataset.")
@@ -30,14 +35,18 @@ def nc_para_dask_dataframe(caminho_dataset: Path, caminho_dataframe: Path) -> dd
     df = df.reset_index()
     df = df.merge(df_str, on=cr.TEMPO_UTC0, how="left")
 
+    caminho_dataframe_absoluto = pd.Dataframes.BASE / caminho_dataframe_relativo
+
     # Salvar como parquet
     with ProgressBar():
         print("Salvando dataframe gerado...")
-        df.to_parquet(caminho_dataframe, write_index=True, overwrite=True)
+        df.to_parquet(caminho_dataframe_absoluto, write_index=True, overwrite=True)
         print("\n")
 
     return df
 
+
+# -----------------------------
 
 def plataforma_nc_para_dataframe_ponto_especifico(plataforma: str | None = None) -> dd.DataFrame:
     """Gera um dataframe a partir de um arquivo NetCDF das plataformas."""

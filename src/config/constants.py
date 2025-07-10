@@ -85,7 +85,8 @@ class PastasNomes:
     TESTES = "tests"
     DADOS_GERADOS_TESTES = "dados_gerados_testes"
 
-
+    # Nome do arquivo do dataset gerado para um ponto específico que não é uma plataforma
+    PASTA_DESK_PONTO_NAO_PLATAFORMA = "ponto_nao_plataforma"
 
 class FormatosArquivo:
     NETCDF = "netcdf"

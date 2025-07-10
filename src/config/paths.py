@@ -41,7 +41,7 @@ class PathsDados:
         return chave, pasta_data
     
     @staticmethod
-    def obtem_caminho_relativo(chave: str, plataforma: Optional[str] = None):
+    def obtem_caminho_relativo(chave: str, formato_arquivo: str, plataforma: Optional[str] = None):
 
         # Caso a plataforma exista na base de dados
         if plataforma in plt.PLATAFORMAS:
@@ -49,7 +49,10 @@ class PathsDados:
             caminho_relativo = Path(pn.PLATAFORMAS) / nome_arquivo
         # Caso seja escolhido um outro ponto qualquer coberto pelos dados
         elif plataforma is None:
-            nome_arquivo = an.ARQUIVO_NC_PONTO_NAO_PLATAFORMA
+            if formato_arquivo == fa.NETCDF:
+                nome_arquivo = an.ARQUIVO_NC_PONTO_NAO_PLATAFORMA
+            elif formato_arquivo == fa.PARQUET:
+                nome_arquivo = pn.PASTA_DESK_PONTO_NAO_PLATAFORMA
             caminho_relativo = Path(pn.PONTOS_NAO_PLATAFORMA) / nome_arquivo
         else:
             raise ValueError(f"Valor não válido para plataforma. Valores válidos: \n{plt.PLATAFORMAS} \nOu seus simbolos correspondentes: \n{plt.SIMBOLOS_PLATAFORMAS}")
@@ -73,7 +76,7 @@ class PathsDados:
 
         chave, pasta_data = PathsDados.obtem_chave_e_nome_pasta(formato_arquivo)
 
-        caminho_relativo = PathsDados.obtem_caminho_relativo(chave, plataforma)
+        caminho_relativo = PathsDados.obtem_caminho_relativo(chave, formato_arquivo, plataforma)
         
         diretorio_coordenadas_especificas = DiretoriosBasicos.DIRETORIO_DADOS / pasta_data / pn.COORDENADAS_ESPECIFICAS
         caminho = diretorio_coordenadas_especificas / caminho_relativo
@@ -116,5 +119,5 @@ class PathsDados:
 
 
 if __name__ == "__main__":
-    caminho = PathsDados.obter_path_coord_especifica("parquet", "NAMORADO 2 (PNA-2)")
+    caminho = PathsDados.obter_path_coord_especifica("parquet", None)
     print(caminho)
