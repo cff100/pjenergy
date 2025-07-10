@@ -33,7 +33,7 @@ def ler_arquivo(path: Path | str,
 
     Parâmetros:
     - path: Caminho do arquivo a ser lido. Pode ser um Path ou uma string. 
-    No caso de dask dataframes, o caminho deve ser de uma pasta onde os arquivos parquet estão armazenados. 
+    No caso de dask dataframes, o caminho deve ser de uma pasta onde os arquivos estão armazenados. 
     Mas também pode ser passado o caminho de um arquivo parquet específico, que será lido como um dataframe.
     - formato_arquivo: Formato do arquivo a ser lido. Pode ser "netcdf", "parquet".
     - eh_caminho_relativo: Se o caminho é relativo ao caminho base. Se for True, o caminho será concatenado com o caminho base.
@@ -67,5 +67,6 @@ def ler_arquivo(path: Path | str,
 
 if __name__ == "__main__":
     d = ler_arquivo("merged/dataset_unido.nc", "netcdf")
+    print(d)
     d = ler_arquivo("plataforms/ponto_nao_especifico.parquet/part.403.parquet", "parquet")
     print(d)
