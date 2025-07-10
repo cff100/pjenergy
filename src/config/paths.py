@@ -25,8 +25,40 @@ class PathsDados:
     """Agrupamento de diretórios e caminhos da pastas onde se localizam os dados."""
 
     @staticmethod
-    def obter_caminho_coord_especifica(formato_arquivo: str, plataforma: Optional[str] = None) -> Path:   
-        """Decide o caminho absoluto a partir do valor de 'formato_arquivo' e 'plataforma'.
+    def obtem_chave_e_nome_pasta(formato_arquivo: str) -> tuple[str, str]:
+        """A partir do valor de 'formato_arquivo', decide a chave para o nome do arquivo e 
+        o nome da pasta onde se localizam os arquivos desse formato específico."""
+
+        if formato_arquivo == fa.NETCDF:
+            chave = cr.ARQUIVO_NC_CHAVE
+            pasta_data = pn.DATASETS
+        elif formato_arquivo == fa.PARQUET:
+            chave = cr.PASTA_DASK_CHAVE
+            pasta_data = pn.DATAFRAMES  
+        else:
+            raise ValueError(f"Chave não aceita. Valores aceitos: {fa.FORMATOS_ACEITOS}.")
+        
+        return chave, pasta_data
+    
+    @staticmethod
+    def obtem_caminho_relativo(chave: str, plataforma: Optional[str] = None):
+
+        # Caso a plataforma exista na base de dados
+        if plataforma in plt.PLATAFORMAS:
+            nome_arquivo = plt.PLATAFORMAS_DADOS[plataforma][chave]
+            caminho_relativo = Path(pn.PLATAFORMAS) / nome_arquivo
+        # Caso seja escolhido um outro ponto qualquer coberto pelos dados
+        elif plataforma is None:
+            nome_arquivo = an.ARQUIVO_NC_PONTO_NAO_PLATAFORMA
+            caminho_relativo = Path(pn.PONTOS_NAO_PLATAFORMA) / nome_arquivo
+        else:
+            raise ValueError(f"Valor não válido para plataforma. Valores válidos: \n{plt.PLATAFORMAS} \nOu seus simbolos correspondentes: \n{plt.SIMBOLOS_PLATAFORMAS}")
+        
+        return caminho_relativo
+
+    @staticmethod
+    def obter_path_coord_especifica(formato_arquivo: str, plataforma: Optional[str] = None) -> Path:   
+        """Decide o path absoluto a partir do valor de 'formato_arquivo' e 'plataforma'.
         \nParâmetros:
         - formato_arquivo: str, deve ser "netcdf" ou "parquet".
         - plataforma: str ou None, se for None, o caminho será para um ponto não específico.
@@ -39,26 +71,9 @@ class PathsDados:
         if isinstance(plataforma, str):
             plataforma = gerencia_plataforma_representacoes(plataforma)
 
-        if formato_arquivo == fa.NETCDF:
-            chave = cr.ARQUIVO_NC_CHAVE
-            pasta_data = pn.DATASETS
-        elif formato_arquivo == fa.PARQUET:
-            chave = cr.ARQUIVO_PARQUET_CHAVE
-            pasta_data = pn.DATAFRAMES  
-        else:
-            raise ValueError("Chave não aceita. Valores aceitos: 'netcdf' ou 'parquet'.")
-        
+        chave, pasta_data = PathsDados.obtem_chave_e_nome_pasta(formato_arquivo)
 
-        # Caso a plataforma exista na base de dados
-        if plataforma in plt.PLATAFORMAS:
-            nome_arquivo = plt.PLATAFORMAS_DADOS[plataforma][chave]
-            caminho_relativo = Path(pn.PLATAFORMAS) / nome_arquivo
-        # Caso seja escolhido um outro ponto qualquer coberto pelos dados
-        elif plataforma is None:
-            nome_arquivo = an.ARQUIVO_NC_PONTO_NAO_PLATAFORMA
-            caminho_relativo = Path(pn.PONTOS_NAO_PLATAFORMA) / nome_arquivo
-        else:
-            raise ValueError(f"Valor não válido para plataforma. Valores válidos: \n{plt.PLATAFORMAS} \nOu seus simbolos correspondentes: \n{plt.SIMBOLOS_PLATAFORMAS}")
+        caminho_relativo = PathsDados.obtem_caminho_relativo(chave, plataforma)
         
         diretorio_coordenadas_especificas = DiretoriosBasicos.DIRETORIO_DADOS / pasta_data / pn.COORDENADAS_ESPECIFICAS
         caminho = diretorio_coordenadas_especificas / caminho_relativo
@@ -101,5 +116,5 @@ class PathsDados:
 
 
 if __name__ == "__main__":
-    caminho = PathsDados.obter_caminho_coord_especifica("netcdf", "NAMORADO 2 (PNA-2)") # Exemplo de erro na plataforma
+    caminho = PathsDados.obter_path_coord_especifica("parquet", "NAMORADO 2 (PNA-2)")
     print(caminho)

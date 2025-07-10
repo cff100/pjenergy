@@ -1,6 +1,5 @@
 from utils.espaco_para_underline import espaco_para_underline
 from utils.indice_mais_um import lista_indice_mais_um
-from enum import Enum
 
 
 class ParametrosObtencaoDados:
@@ -38,7 +37,7 @@ class ParametrosObtencaoDados:
 class ConstantesNumericas:
     """Agrupamento de constantes numéricas importantes"""
 
-    g = 9.80665 # (m/s**2) g mantido como letra minúscula pela convensão da representação física.
+    G = 9.80665 # (m/s**2)
 
 
 
@@ -88,11 +87,12 @@ class PastasNomes:
 
 
 
-class FormatosArquivo(str, Enum):
+class FormatosArquivo:
     NETCDF = "netcdf"
     PARQUET = "parquet"
+    DASK = "dask"
 
-
+    FORMATOS_ACEITOS = [NETCDF, PARQUET, DASK]
 
 
 
@@ -149,7 +149,7 @@ class Correspondencias:
     SIMBOLO_CHAVE = "simbolo"
     COORDENADAS_CHAVE = "coords"
     ARQUIVO_NC_CHAVE = "arquivo_nc_nome"
-    ARQUIVO_PARQUET_CHAVE = "arquivo_parquet_nome"
+    PASTA_DASK_CHAVE = "pasta_dask_nome"
     
 
 
@@ -225,7 +225,7 @@ class Plataformas:
     ARQUIVO_PLATAFORMAS_NOME = [s + "-" + espaco_para_underline(p) for s, p in zip(SIMBOLOS_PLATAFORMAS, PLATAFORMAS)]
 
     ARQUIVO_NC_PLATAFORMAS_NOME = [n + ".nc" for n in ARQUIVO_PLATAFORMAS_NOME]
-    ARQUIVO_PARQUET_PLATAFORMAS_NOME = [n + ".parquet" for n in ARQUIVO_PLATAFORMAS_NOME]
+    PASTA_DASK_PLATAFORMAS_NOME = ARQUIVO_PLATAFORMAS_NOME # Não possui extensão, pois é o nome da pasta onde os dados serão armazenados no Dask.
 
 
 
@@ -234,14 +234,14 @@ class Plataformas:
                             Correspondencias.SIMBOLO_CHAVE : s, 
                             Correspondencias.COORDENADAS_CHAVE : c, 
                             Correspondencias.ARQUIVO_NC_CHAVE : na_nc, 
-                            Correspondencias.ARQUIVO_PARQUET_CHAVE : na_pq
+                            Correspondencias.PASTA_DASK_CHAVE : na_pq
                             } 
                         for s, p, c, na_nc, na_pq in zip(
                             SIMBOLOS_PLATAFORMAS, 
                             PLATAFORMAS, 
                             COORDENADAS, 
                             ARQUIVO_NC_PLATAFORMAS_NOME, 
-                            ARQUIVO_PARQUET_PLATAFORMAS_NOME
+                            PASTA_DASK_PLATAFORMAS_NOME
                             )   
                         }
 

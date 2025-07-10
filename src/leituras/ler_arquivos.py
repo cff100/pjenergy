@@ -1,66 +1,71 @@
 from pathlib import Path
 import xarray as xr
 from typing import Literal, Optional
+import dask.dataframe as dd
 
 from utils.existe_path import existe_path
-from utils.eh_arquivo import eh_path_arquivo
 from config.paths import PathsDados
 from leituras.ler_datasets import ler_dataset_nc
-from config.constants import FormatosArquivo
-from utils.identifica_formato_arquivo import identifica_formato_arquivo
+from leituras.ler_dataframes import ler_dataframe_parquet
+from config.constants import FormatosArquivo as fa
 
 
 
-def identifica_caminho_base(tipo_arquivo: FormatosArquivo) -> Path:
+def identifica_caminho_base(formato_arquivo: str) -> Path:
     """Identifica o caminho base da pasta de dados de acordo com o tipo de arquivo desejado"""
 
-    if tipo_arquivo == "netcdf":
+    if formato_arquivo not in fa.FORMATOS_ACEITOS:
+        raise ValueError(f"Formato... \n-> {formato_arquivo} \n...não aceito.")
+    elif formato_arquivo == fa.NETCDF:
         caminho_base = PathsDados.Datasets.BASE
-    elif tipo_arquivo == "parquet":
+    elif formato_arquivo == fa.PARQUET:
         caminho_base = PathsDados.Dataframes.BASE
-    
+
     return caminho_base
 
 
 
-def ler_arquivo(caminho: Path | str, formato_arquivo: Optional[FormatosArquivo] = None, eh_caminho_relativo: bool = False, caminho_base: Path | Literal["padrao"] = "padrao") -> xr.Dataset:
-    """Lê um arquivo de acordo com o tipo de arquivo e o caminho fornecido."""
+def ler_arquivo(path: Path | str, 
+                formato_arquivo: Literal["netcdf", "parquet"],
+                eh_caminho_relativo: bool = True, 
+                caminho_base: Path | Literal["padrao"] = "padrao") -> xr.Dataset | dd.DataFrame:
+    """Lê um arquivo de acordo com o tipo de arquivo e o path fornecido.
 
-    # Para manter em um formato padrão para as próximas funções
-    if isinstance(caminho, str):
-        caminho = Path(caminho)
+    Parâmetros:
+    - path: Caminho do arquivo a ser lido. Pode ser um Path ou uma string. 
+    No caso de dask dataframes, o caminho deve ser de uma pasta onde os arquivos parquet estão armazenados. 
+    Mas também pode ser passado o caminho de um arquivo parquet específico, que será lido como um dataframe.
+    - formato_arquivo: Formato do arquivo a ser lido. Pode ser "netcdf", "parquet".
+    - eh_caminho_relativo: Se o caminho é relativo ao caminho base. Se for True, o caminho será concatenado com o caminho base.
+    - caminho_base: Caminho base a ser usado caso o caminho seja relativo. Se for "padrao", o caminho base será identificado de acordo com o formato do arquivo. Se for passado um caminho, ele será usado como caminho base.
+    Retorna:
+    - Um xr.Dataset se o formato for "netcdf", ou um dd.DataFrame se o formato for "parquet".
+    """
 
-    # Identifica o tipo de arquivo caso nenhum seja passado
-    if formato_arquivo == None:
-        formato_arquivo = identifica_formato_arquivo(caminho)
+    # Para manter em um formato padrão (path) para as próximas funções
+    if isinstance(path, str):
+        path = Path(path)
 
-    # Pega o caminho padrão dependendo do tipo de arquivo
+    # Pega o caminho padrão que varia de acordo com o tipo de arquivo
     if caminho_base == "padrao":
         caminho_base = identifica_caminho_base(formato_arquivo)
 
     # Verifica se o caminho passado é relativo a um caminho base (que também é um parâmetro)
     if eh_caminho_relativo:
-        caminho = caminho_base / caminho
-
-    # Captura o erro do caso em que o caminho não é relativo ao mesmo tempo em que o caminho é um str.
-    # elif isinstance(caminho, str):
-    #     raise TypeError(f"O caminho... \n -> {caminho} \n...é do tipo str. Precisa ser um objeto do tipo Path.")
+        path = caminho_base / path
 
     # Verifica a existência do caminho
-    existe_path(caminho)
+    existe_path(path)
 
-    # Verifica se o caminho é de um arquivo (ao invés de um diretório de pasta)
-    eh_path_arquivo(caminho)
 
-    if formato_arquivo == "netcdf":
-        d = ler_dataset_nc(caminho)
-    elif formato_arquivo == "parquet":
-        raise NotImplementedError("Leitura de arquivos Parquet ainda não implementada.")
-    else:
-        raise ValueError(f"Formato de arquivo inválido: {formato_arquivo}")
+    if formato_arquivo == fa.NETCDF:
+        d = ler_dataset_nc(path)
+    elif formato_arquivo == fa.PARQUET:
+        d = ler_dataframe_parquet(path)
 
     return d
 
 if __name__ == "__main__":
-    d = ler_arquivo("merged/dataset_unido.nc", "netcdf", eh_caminho_relativo=True)
+    d = ler_arquivo("merged/dataset_unido.nc", "netcdf")
+    d = ler_arquivo("plataforms/ponto_nao_especifico.parquet/part.403.parquet", "parquet")
     print(d)
