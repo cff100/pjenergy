@@ -1,7 +1,10 @@
 from pathlib import Path
 from typing import Optional
+
 from config.constants import ArquivosNomes as an, PastasNomes as pn, Plataformas as plt, Correspondencias as cr, FormatosArquivo as fa
 from utils.gerencia_plataformas_representacoes import gerencia_plataforma_representacoes
+
+
 
 class DiretoriosBasicos:
     """Agrupamento dos diretorios básicos do projeto"""
@@ -14,6 +17,8 @@ class DiretoriosBasicos:
 
     # Diretório da pasta de testes
     DIRETORIO_TESTES = DIRETORIO_BASE_GERAL / pn.TESTES  
+
+
 
 
 class PathsDados:
@@ -91,6 +96,8 @@ class PathsDados:
 
         # Diretório de arquivos criados em testes
         DIRETORIO_DADOS_GERADOS_TESTES = DiretoriosBasicos.DIRETORIO_TESTES / pn.DADOS_GERADOS_TESTES
+
+
 
 
 if __name__ == "__main__":

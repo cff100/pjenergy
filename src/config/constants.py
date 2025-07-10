@@ -1,5 +1,7 @@
 from utils.espaco_para_underline import espaco_para_underline
 from utils.indice_mais_um import lista_indice_mais_um
+from enum import Enum
+
 
 class ParametrosObtencaoDados:
     """Agrupamento dos parâmetros utilizados para obtenção dos dados do Climate Data Store"""
@@ -30,10 +32,16 @@ class ParametrosObtencaoDados:
     DOWNLOAD_FORMAT = 'unarchived'
 
 
+
+
+
 class ConstantesNumericas:
     """Agrupamento de constantes numéricas importantes"""
 
     g = 9.80665 # (m/s**2) g mantido como letra minúscula pela convensão da representação física.
+
+
+
 
 
 class ArquivosNomes:
@@ -60,6 +68,9 @@ class ArquivosNomes:
     ARQUIVO_NC_PONTO_NAO_PLATAFORMA = "ponto_nao_plataforma.nc"
 
 
+
+
+
 class PastasNomes:
     """Agrupamento de nomes de pastas"""
 
@@ -76,9 +87,14 @@ class PastasNomes:
     DADOS_GERADOS_TESTES = "dados_gerados_testes"
 
 
-class FormatosArquivo:
+
+class FormatosArquivo(str, Enum):
     NETCDF = "netcdf"
     PARQUET = "parquet"
+
+
+
+
 
 class Correspondencias:
     
@@ -136,6 +152,9 @@ class Correspondencias:
     ARQUIVO_PARQUET_CHAVE = "arquivo_parquet_nome"
     
 
+
+
+
 class OutrasConstantes:
     """Agrupamento de outras constantes importantes"""
 
@@ -174,6 +193,8 @@ class OutrasConstantes:
                                     {"dia": 20, "mes": 12}
                                 }
                             }
+
+
 
 
 class Plataformas:
@@ -226,6 +247,8 @@ class Plataformas:
 
 
 
+
+
 if "__main__" == __name__:
     
     print(f"Anos: {ParametrosObtencaoDados.ANOS} \n")
@@ -239,4 +262,6 @@ if "__main__" == __name__:
     print(f"Área: {ParametrosObtencaoDados.AREA} \n")
 
     print(f"Dados das plataformas: {Plataformas.PLATAFORMAS_DADOS}")
+
+    print(f"Formato netcdf: {FormatosArquivo.NETCDF}")
 
