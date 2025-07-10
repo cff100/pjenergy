@@ -65,6 +65,8 @@ def ler_arquivo(path: Path | str,
 
     return d
 
+
+
 if __name__ == "__main__":
     d = ler_arquivo("merged/dataset_unido.nc", "netcdf")
     print(d)

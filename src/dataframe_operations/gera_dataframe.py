@@ -3,41 +3,37 @@ from pathlib import Path
 from dask.diagnostics.progress import ProgressBar
 import dask.dataframe as dd
 # Módulos internos do projeto
-from datasets_operations.ler_nc import ler_dataset_nc_absoluto
+from leituras.ler_arquivos import ler_arquivo
 from config.paths import decide_caminho_absoluto_dataset_localizacao_especifica, caminho_absoluto_dataframe_plataforma
 from utils.gerencia_plataformas_representacoes import gerencia_plataforma_nome
-from config.constants import OutrasConstantes as oc, CorrespondeNomesDados as ncd
+from config.constants import OutrasConstantes as oc, FormatosArquivo as fa, Correspondencias as cr
 
 
-def nc_para_dataframe(caminho_absoluto_dataset: Path, caminho_absoluto_dataframe: Path) -> dd.DataFrame:
+def nc_para_dask_dataframe(caminho_dataset: Path, caminho_dataframe: Path) -> dd.DataFrame:
     """Converte NetCDF em Dask DataFrame, salvando como parquet, preservando variáveis 1D e 2D."""
 
-    ds = ler_dataset_nc_absoluto(caminho_absoluto_dataset)
+    ds = ler_arquivo(caminho_dataset, formato_arquivo = fa.NETCDF, eh_caminho_relativo = False)
 
-    # for var in ds.data_vars:
-    #     print(f"{var}: {ds[var].dims}")
+    if not isinstance(ds, xr.Dataset):
+        raise TypeError("'ds' não é um dataset.")
 
-    # Seleciona variáveis 2D (tempo e altura)
+    # Seleciona variáveis 2D (tempo e altura) e monta um dataframe com elas
     variaveis_2d = [v for v in ds.data_vars if ds[v].dims == ('tempo_UTC0', 'altura')]
-    # print(variaveis_2d)
-
-    ds_2d = ds[variaveis_2d].chunk({ncd.tempo_UTC0: 200})
-
+    ds_2d = ds[variaveis_2d].chunk({cr.TEMPO_UTC0: 200})
     df = ds_2d.to_dask_dataframe()
 
-    # Seleciona variáveis 1D (somente tempo)
-    variaveis_1d_str = [v for v in ds.data_vars if ds[v].dims == (ncd.tempo_UTC0,)]
-    # print(variaveis_1d_str)
+    # Seleciona variáveis 1D (somente tempo) e monta um dataframe com elas
+    variaveis_1d_str = [v for v in ds.data_vars if ds[v].dims == (cr.TEMPO_UTC0,)]
     df_str = ds[variaveis_1d_str].to_dataframe().reset_index()
 
-    # Merge com base no tempo
+    # Merge dos dataframes com base no tempo
     df = df.reset_index()
-    df = df.merge(df_str, on=ncd.tempo_UTC0, how="left")
+    df = df.merge(df_str, on=cr.TEMPO_UTC0, how="left")
 
     # Salvar como parquet
     with ProgressBar():
         print("Salvando dataframe gerado...")
-        df.to_parquet(caminho_absoluto_dataframe, write_index=True, overwrite=True)
+        df.to_parquet(caminho_dataframe, write_index=True, overwrite=True)
         print("\n")
 
     return df
@@ -52,7 +48,7 @@ def plataforma_nc_para_dataframe_ponto_especifico(plataforma: str | None = None)
     caminho_absoluto_dataset = decide_caminho_absoluto_dataset_localizacao_especifica(plataforma)
     caminho_absoluto_dataframe = caminho_absoluto_dataframe_plataforma(plataforma)
 
-    df = nc_para_dataframe(caminho_absoluto_dataset, caminho_absoluto_dataframe)
+    df = nc_para_dask_dataframe(caminho_absoluto_dataset, caminho_absoluto_dataframe)
 
     return df
 

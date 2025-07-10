@@ -3,7 +3,7 @@
 
 # Módulos internos do projeto
 from config.paths import DIRETORIO_TESTES_ARQUIVOS_NOVOS
-from datasets_operations.requisicao_dados import requisicao_multiplos_dados
+from geracao.requisicao_dados import requisicao_multiplos_dados
 
 # Caminho base para os arquivos .nc a serem baixados. 
 # Esse caminho, por padrão, direciona os arquivos baixados para a pasta de arquivos gerados nos testes,

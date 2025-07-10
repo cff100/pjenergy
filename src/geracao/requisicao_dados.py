@@ -2,7 +2,7 @@
 """Para obtenção de dados de um dataset do Climate Data Store"""
 
 import cdsapi
-import config.paths as paths
+from config.paths import PathsDados as pda
 from pathlib import Path
 # Módulos internos do projeto
 from config.constants import ParametrosObtencaoDados as pod
@@ -46,7 +46,7 @@ def requisicao_dados(
                     area: tuple[float, float, float, float] = pod.AREA, 
                     data_format: str = pod.DATA_FORMAT, 
                     download_format: str = pod.DOWNLOAD_FORMAT,
-                    diretorio_datasets: Path = paths.DIRETORIO_DATASETS_ORIGINAIS) -> None: 
+                    diretorio_datasets: Path = pda.Datasets.DIRETORIO_ORIGINAIS) -> None: 
     """Requisita dados do Climate Data Store (CDS) e salva em um arquivo NetCDF."""
 
     # Inicializar API do CDS
@@ -81,7 +81,7 @@ def requisicao_multiplos_dados(
                             area: tuple[float, float, float, float] = pod.AREA, 
                             data_format: str = pod.DATA_FORMAT, 
                             download_format: str = pod.DOWNLOAD_FORMAT,
-                            diretorio_base: Path = paths.DIRETORIO_DATASETS_ORIGINAIS) -> None:
+                            diretorio_base: Path = pda.Datasets.DIRETORIO_ORIGINAIS) -> None:
     """Faz loops para a obtenção de vários arquivos NetCDF de acordo com os valores passados como parâmetros."""
 
     n_requisicoes = calcula_combinacoes(variaveis, anos, pressao_niveis)
@@ -96,9 +96,8 @@ def requisicao_multiplos_dados(
                 print(f"\n -> -> -> Nome do próximo arquivo: {arquivo_nc_nome}\n")
 
                 # Gera o caminho completo do arquivo .nc. 
-                # Se o caminho base do arquivo não for especificado, usa o padrão
-                arquivo_nc_caminho = cria_caminho_arquivo_relativo(arquivo_nc_nome, diretorio_base)
-
+                arquivo_nc_caminho = diretorio_base / arquivo_nc_nome 
+                
                 # Verifica se o arquivo já existe
                 # Se existir, pula o download
                 if arquivo_nc_caminho.exists():
