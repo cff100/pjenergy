@@ -23,3 +23,5 @@ ENV/
 data/datasets/unido
 data/datasets/coordenadas_especificas
 data/dataframes
+
+tests/dados_gerados_testes

@@ -52,7 +52,7 @@ class PathsDados:
             if formato_arquivo == fa.NETCDF:
                 nome_arquivo = an.ARQUIVO_NC_PONTO_NAO_PLATAFORMA
             elif formato_arquivo == fa.PARQUET:
-                nome_arquivo = pn.PASTA_DESK_PONTO_NAO_PLATAFORMA
+                nome_arquivo = pn.PASTA_DESK_PONTOS_NAO_PLATAFORMA # É na verdade uma pasta
             caminho_relativo = Path(pn.PONTOS_NAO_PLATAFORMA) / nome_arquivo
         else:
             raise ValueError(f"Valor não válido para plataforma. Valores válidos: \n{plt.PLATAFORMAS} \nOu seus simbolos correspondentes: \n{plt.SIMBOLOS_PLATAFORMAS}")

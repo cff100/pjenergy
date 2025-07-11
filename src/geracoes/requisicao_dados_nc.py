@@ -2,11 +2,11 @@
 """Para obtenção de dados de um dataset do Climate Data Store"""
 
 import cdsapi
-from config.paths import PathsDados as pda
 from pathlib import Path
 # Módulos internos do projeto
+from config.paths import PathsDados as pad
 from config.constants import ParametrosObtencaoDados as pod
-from utils.cria_caminho_arquivo import cria_caminho_arquivo_relativo
+
 
 
 # FUNÇÕES AUXILIARES
@@ -46,8 +46,31 @@ def requisicao_dados(
                     area: tuple[float, float, float, float] = pod.AREA, 
                     data_format: str = pod.DATA_FORMAT, 
                     download_format: str = pod.DOWNLOAD_FORMAT,
-                    diretorio_datasets: Path = pda.Datasets.DIRETORIO_ORIGINAIS) -> None: 
-    """Requisita dados do Climate Data Store (CDS) e salva em um arquivo NetCDF."""
+                    arquivo_nome: str = "padrao",
+                    datasets_diretorio: Path = pad.Datasets.DIRETORIO_ORIGINAIS,
+                    substituir: bool = False) -> None: 
+    """Requisita dados do Climate Data Store (CDS) e salva em um arquivo NetCDF.
+    Parâmetros:
+    - datasets_diretorio: diretório da pasta onde o arquivo será salvo.
+    - substituir: True para substituir o arquivo com o mesmo nome caso já exista."""
+
+    # Criar diretório dos diretórios, caso ainda não exista
+    if not datasets_diretorio.exists():
+        datasets_diretorio.mkdir(parents=True, exist_ok=True)
+        print(f" -> -> -> Diretório '{datasets_diretorio}' criado com sucesso.")
+
+    if arquivo_nome == "padrao":
+        arquivo_nome = gera_nome_arquivo_nc(variavel, ano, pressao_nivel)
+    print(f"\n -> -> -> Nome do arquivo atual: {arquivo_nome}\n")
+    
+    dataset_caminho = datasets_diretorio / arquivo_nome
+
+    if dataset_caminho.exists() and substituir == False:
+        raise FileExistsError(f"\n -> -> -> Erro: O arquivo {arquivo_nome} já existe. " \
+            "Para substituí-lo, mude o parâmetro 'substituir' para True."
+        )
+    else:
+        print("\nIniciando requisição... (Tempo médio: 12 minutos).\n")
 
     # Inicializar API do CDS
     c = cdsapi.Client() # Exige que o url e a key já estejam configurados em um arquivo .cdsapirc externo.
@@ -67,8 +90,9 @@ def requisicao_dados(
     'download_format': download_format
     }
 
-    c.retrieve(dataset, request, diretorio_datasets)
+    c.retrieve(dataset, request, dataset_caminho)
 
+    print(f"Requisição de {arquivo_nome} concluída com sucesso!")
 
 
 def requisicao_multiplos_dados(
@@ -81,7 +105,7 @@ def requisicao_multiplos_dados(
                             area: tuple[float, float, float, float] = pod.AREA, 
                             data_format: str = pod.DATA_FORMAT, 
                             download_format: str = pod.DOWNLOAD_FORMAT,
-                            diretorio_base: Path = pda.Datasets.DIRETORIO_ORIGINAIS) -> None:
+                            datasets_diretorio: Path = pad.Datasets.DIRETORIO_ORIGINAIS) -> None:
     """Faz loops para a obtenção de vários arquivos NetCDF de acordo com os valores passados como parâmetros."""
 
     n_requisicoes = calcula_combinacoes(variaveis, anos, pressao_niveis)
@@ -92,25 +116,25 @@ def requisicao_multiplos_dados(
         for ano in anos:
             for pressao_nivel in pressao_niveis:
 
-                arquivo_nc_nome = gera_nome_arquivo_nc(variavel, ano, pressao_nivel)
-                print(f"\n -> -> -> Nome do próximo arquivo: {arquivo_nc_nome}\n")
+                # Monta o caminho do arquivo apenas para verificar sua existência
+                arquivo_nome = gera_nome_arquivo_nc(variavel, ano, pressao_nivel)
+                dataset_caminho = datasets_diretorio / arquivo_nome
 
-                # Gera o caminho completo do arquivo .nc. 
-                arquivo_nc_caminho = diretorio_base / arquivo_nc_nome 
-                
                 # Verifica se o arquivo já existe
                 # Se existir, pula o download
-                if arquivo_nc_caminho.exists():
-                    print(f" -> -> -> Arquivo {arquivo_nc_caminho} já existe. Pulando download.")
+                if dataset_caminho.exists():
+                    print(f" -> -> -> Arquivo {dataset_caminho} já existe. Pulando download.")
                     requisicao_atual += 1
                     porcentagem_cumprida = gera_porcentagem_progresso(n_requisicoes, requisicao_atual)
                     print(f" -> -> -> Progresso atual: {requisicao_atual}/{n_requisicoes} ({porcentagem_cumprida}%)\n")
                     continue
 
                 # O arquivo não existindo, faz a requisição
-                requisicao_dados(variavel, ano, pressao_nivel, meses, dias, utc_horas, area, data_format, download_format, arquivo_nc_caminho)
+                requisicao_dados(variavel, ano, pressao_nivel, 
+                                 meses, dias, utc_horas, area, 
+                                 data_format, download_format, 
+                                 "padrao", datasets_diretorio) 
 
-                print(f" -> -> -> Arquivo {arquivo_nc_nome} baixado com sucesso")
                 requisicao_atual += 1
                 porcentagem_cumprida = gera_porcentagem_progresso(n_requisicoes, requisicao_atual)
                 print(f" -> -> -> Progresso atual: {requisicao_atual}/{n_requisicoes} ({porcentagem_cumprida}%)")
