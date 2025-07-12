@@ -93,8 +93,8 @@ class PathsDados:
         DIRETORIO_ORIGINAIS = BASE / pn.ORIGINAIS
 
         # Caminhos relativo e absoluto do arquivo feito da união dos arquivos originais obtidos
-        CAMINHO_RELATIVO_UNIDOS = Path(pn.UNIDO) / an.ARQUIVO_NC_UNIDO
-        CAMINHO_ABSOLUTO_UNIDOS = BASE / CAMINHO_RELATIVO_UNIDOS 
+        DIRETORIO_UNIDO = BASE / pn.UNIDO
+        CAMINHO_UNIDO = DIRETORIO_UNIDO / an.ARQUIVO_NC_UNIDO
 
         # Diretório de datasets modificados para representar coordenadas específicas
         DIRETORIO_COORDENADAS_ESPECIFICAS = BASE / pn.COORDENADAS_ESPECIFICAS

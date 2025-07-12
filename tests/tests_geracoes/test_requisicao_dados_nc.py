@@ -11,16 +11,15 @@ def test_requisicao_dados(requisitar = True):
     ano = pod.ANOS[0]
     pressao_nivel = pod.PRESSAO_NIVEIS[0]
 
-    print(f" -> -> -> Variável escolhida: {variavel}")
+    print(f"\n -> -> -> Variável escolhida: {variavel}")
     print(f" -> -> -> Ano escolhido: {ano}")
     print(f" -> -> -> Nível de pressão escolhido: {pressao_nivel}")
 
     # Localização do arquivo de saída
-    ds_diretorio = pad.DadosTeste.DIRETORIO_DADOS_GERADOS_TESTES
-    arq_nome = f"teste-(var-{variavel})_(ano-{ano})_(pressao-{pressao_nivel}).nc"
-
+    dataset_caminho = pad.DadosTeste.DIRETORIO_DADOS_GERADOS_TESTES / f"teste-(var-{variavel})_(ano-{ano})_(pressao-{pressao_nivel}).nc"
+   
     if not requisitar:
         print("\n -> -> -> ATENÇÃO: Requisição de dados não realizada. Mude o parâmetro 'requisitar' para True para realizar a requisição.")
     else:
-        requisicao_dados(variavel, ano, pressao_nivel, arquivo_nome = arq_nome, datasets_diretorio = ds_diretorio)
+        requisicao_dados(dataset_caminho, variavel, ano, pressao_nivel, substituir = True)
         

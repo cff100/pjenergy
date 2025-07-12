@@ -1,7 +1,7 @@
 from pathlib import Path
 import xarray as xr
 # Módulos internos do projeto
-from datasets_operations.une_nc import unifica_datasets
+from edicoes.unioes.une_nc import unifica_datasets
 from config.paths import DIRETORIO_DATASETS_ORIGINAIS, CAMINHO_ABSOLUTO_DATASET_UNIDO
 
 
