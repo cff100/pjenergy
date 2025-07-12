@@ -23,13 +23,13 @@ def variaveis_match(arquivo: str) -> tuple[Optional[str], Optional[str], Optiona
         return None, None, None
 
 
-def constroi_parametros_dicio(diretorio: Path = pad.Datasets.DIRETORIO_ORIGINAIS) -> dict:
+def constroi_parametros_dicio() -> dict:
     """
     Dado o diretório, obtém conjuntos dos parâmetros utilizados de variáveis, anos e níveis de pressão.
     Retorna um dicionário aninhado no formato: {variavel: {nivel_pressao: {ano: dataset}}}
     """
     # Obtém os arquivos do diretório que seguem o padrão de nome esperado
-    arquivos = pega_arquivos(diretorio)   
+    arquivos = pega_arquivos(pad.Datasets.DIRETORIO_ORIGINAIS)   
 
     # Cria um dicionário aninhado para armazenar os datasets das combinações de variáveis, anos e níveis de pressão
     print(" -> -> -> Etapa (2/5)\n")
@@ -60,11 +60,11 @@ def constroi_parametros_dicio(diretorio: Path = pad.Datasets.DIRETORIO_ORIGINAIS
 # FUNÇÕES INTERMEDIÁRIAS (pré-processamento e estruturação de dados)
 
 
-def concatena_datasets(diretorio: Path = pad.Datasets.DIRETORIO_ORIGINAIS) -> dict:
+def concatena_datasets() -> dict:
     """Concatena os datasets de níveis de pressão e anos diferentes."""
 
     # Obtém os dicionários de parâmetros, com os datasets das combinações de variáveis, anos e níveis de pressão.
-    parametros_dicio = constroi_parametros_dicio(diretorio)
+    parametros_dicio = constroi_parametros_dicio()
     
     # Concatena os datasets de anos para cada nível de pressão, e depois concatena os níveis de pressão para cada variável.
     print(" -> -> -> Etapa (3/5)\n")
@@ -117,7 +117,7 @@ def unifica_datasets() -> xr.Dataset:
     
     # Concatena os datasets de níveis de pressão e anos diferentes
     print("\n -> -> -> Etapa (1/5)\n")
-    parametros_dicio = concatena_datasets(pad.Datasets.DIRETORIO_ORIGINAIS)
+    parametros_dicio = concatena_datasets()
 
     # Une os datasets de todas variáveis
     print(" -> -> -> Etapa (4/5)\n")
