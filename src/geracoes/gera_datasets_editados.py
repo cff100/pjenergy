@@ -8,6 +8,7 @@ from edicoes.limpezas.remove_de_datasets import remove_variaveis_indesejadas
 from edicoes.interpolacoes.interpola_em_datasets import dataset_interpola_lat_lon, interp_alturas_constantes
 from edicoes.adicoes.adiciona_a_datasets import adiciona_variaveis
 from edicoes.renomeacoes.renomeia_em_datasets import dataset_renomeacoes
+from edicoes.unioes.une_nc import unifica_datasets
 
 
 
@@ -44,6 +45,8 @@ def gera_datasets_editados_pontuais(usa_plataformas: bool = True,
     Parâmetros:
     - usa_plataformas: Se True, gera datasets para todas plataformas. Se False, gera um dataset para as coordenadas fornecidas."""
     
+    unifica_datasets()
+
     if usa_plataformas:
         if latitude_longitude_alvo is not None:
             print("\nAVISO: As plataformas já possuem coordenadas registradas, não é necessário passar valores de latitude e longitude.\n")
