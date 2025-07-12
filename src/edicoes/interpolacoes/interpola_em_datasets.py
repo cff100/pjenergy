@@ -5,13 +5,18 @@ from config.constants import ConstantesNumericas as cn
 
 
 def dataset_interpola_lat_lon(dataset: xr.Dataset, latitude_longitude_alvo: tuple[float, float]) -> xr.Dataset:
-    """Faz a interpolação das variáveis na longitude e latitude"""
+    """Faz a interpolação das variáveis na longitude e latitude
+    
+    Parâmetros:
+    latitude_logitude_alvo: Mínimo: (-24.0,-42.0) - Máximo: (-21.0,-39.0)"""
 
     # Verifica se os pontos de latitude e longitude estão dentro do intervalo do dataset
     if not (dataset.latitude.min() <= latitude_longitude_alvo[0] <= dataset.latitude.max() and
             dataset.longitude.min() <= latitude_longitude_alvo[1] <= dataset.longitude.max()):
         raise ValueError(
-            f"Os pontos de latitude {latitude_longitude_alvo[0]} e longitude {latitude_longitude_alvo[1]} estão fora do intervalo do dataset. Mínimo: ({dataset.latitude.min().item()},{dataset.longitude.min().item()}) - Máximo: ({dataset.latitude.max().item()},{dataset.longitude.max().item()})"
+            f"Os pontos de latitude {latitude_longitude_alvo[0]} e longitude {latitude_longitude_alvo[1]} estão fora do intervalo do dataset. \
+            Mínimo: ({dataset.latitude.min().item()},{dataset.longitude.min().item()}) - \
+            Máximo: ({dataset.latitude.max().item()},{dataset.longitude.max().item()})"
             )
     
     # Interpola as variáveis

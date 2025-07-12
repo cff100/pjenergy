@@ -1,1 +1,0 @@
-Pasta para funções de obtenção e manipulação de dados.

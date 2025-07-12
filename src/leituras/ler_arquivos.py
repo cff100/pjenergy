@@ -1,6 +1,6 @@
 from pathlib import Path
 import xarray as xr
-from typing import Literal, Optional
+from typing import Literal
 import dask.dataframe as dd
 
 from utils.existe_path import existe_path
@@ -25,8 +25,8 @@ def identifica_caminho_base(formato_arquivo: str) -> Path:
 
 
 
-def ler_arquivo(path: Path | str, 
-                formato_arquivo: Literal["netcdf", "parquet"],
+def ler_arquivo(formato_arquivo: Literal["netcdf", "parquet"],
+                path: Path | str, 
                 eh_caminho_relativo: bool = True, 
                 caminho_base: Path | Literal["padrao"] = "padrao") -> xr.Dataset | dd.DataFrame:
     """Lê um arquivo de acordo com o tipo de arquivo e o path fornecido.
@@ -38,6 +38,7 @@ def ler_arquivo(path: Path | str,
     - formato_arquivo: Formato do arquivo a ser lido. Pode ser "netcdf", "parquet".
     - eh_caminho_relativo: Se o caminho é relativo ao caminho base. Se for True, o caminho será concatenado com o caminho base.
     - caminho_base: Caminho base a ser usado caso o caminho seja relativo. Se for "padrao", o caminho base será identificado de acordo com o formato do arquivo. Se for passado um caminho, ele será usado como caminho base.
+    
     Retorna:
     - Um xr.Dataset se o formato for "netcdf", ou um dd.DataFrame se o formato for "parquet".
     """
@@ -46,8 +47,8 @@ def ler_arquivo(path: Path | str,
     if isinstance(path, str):
         path = Path(path)
 
-    # Pega o caminho padrão que varia de acordo com o tipo de arquivo
-    if caminho_base == "padrao":
+    # Caso o caminho seja relativo, pega o caminho base padrão que varia de acordo com o tipo de arquivo
+    if eh_caminho_relativo and caminho_base == "padrao":
         caminho_base = identifica_caminho_base(formato_arquivo)
 
     # Verifica se o caminho passado é relativo a um caminho base (que também é um parâmetro)
@@ -68,7 +69,7 @@ def ler_arquivo(path: Path | str,
 
 
 if __name__ == "__main__":
-    d = ler_arquivo("merged/dataset_unido.nc", "netcdf")
+    d = ler_arquivo("netcdf", "merged/dataset_unido.nc",)
     print(d)
-    d = ler_arquivo("plataforms/ponto_nao_especifico.parquet/part.403.parquet", "parquet")
+    d = ler_arquivo("parquet", "plataforms/ponto_nao_especifico.parquet/part.403.parquet")
     print(d)

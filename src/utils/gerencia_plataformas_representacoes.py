@@ -15,7 +15,9 @@ def gerencia_plataforma_representacoes(representacao: str ) -> str:
 
     # Não altera nada caso a representação não seja algum dos símbolos registrados, mesmo que seja um nome errado da plataforma
     if representacao not in plat.SIMBOLOS_PLATAFORMAS:
-        print(f"\nMantido o nome original: {representacao}\n")
+        if representacao not in plat.PLATAFORMAS:
+            # Aviso para quando a representação não correponde a nenhuma plataforma e nem a nenhum símbolo delas.
+            print(f"\nMantido o nome original: {representacao}\n") 
         return representacao
 
     # Busca o nome da plataforma associada ao símbolo

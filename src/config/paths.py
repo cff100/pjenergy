@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Literal
 
 from config.constants import ArquivosNomes as an, PastasNomes as pn, Plataformas as plt, Correspondencias as cr, FormatosArquivo as fa
 from utils.gerencia_plataformas_representacoes import gerencia_plataforma_representacoes
@@ -41,7 +41,7 @@ class PathsDados:
         return chave, pasta_data
     
     @staticmethod
-    def obtem_caminho_relativo(chave: str, formato_arquivo: str, plataforma: Optional[str] = None):
+    def obtem_caminho_relativo(chave: str, formato_arquivo: Literal["netcdf", "parquet"], plataforma: Optional[str] = None):
 
         # Caso a plataforma exista na base de dados
         if plataforma in plt.PLATAFORMAS:
@@ -60,7 +60,7 @@ class PathsDados:
         return caminho_relativo
 
     @staticmethod
-    def obter_path_coord_especifica(formato_arquivo: str, plataforma: Optional[str] = None) -> Path:   
+    def obter_path_coord_especifica(formato_arquivo: Literal["netcdf", "parquet"], plataforma: Optional[str] = None) -> Path:   
         """Decide o path absoluto a partir do valor de 'formato_arquivo' e 'plataforma'.
         \nParâmetros:
         - formato_arquivo: str, deve ser "netcdf" ou "parquet".

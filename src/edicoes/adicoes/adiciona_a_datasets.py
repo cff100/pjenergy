@@ -48,6 +48,7 @@ def adiciona_estacao_do_ano(dataset: xr.Dataset) -> xr.Dataset:
     return ds
 
 
+
 def adiciona_variaveis(dataset: xr.Dataset) -> xr.Dataset:
     "Criar variáveis/coordenadas no dataset"
 

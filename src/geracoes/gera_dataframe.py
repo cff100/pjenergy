@@ -18,7 +18,7 @@ def nc_para_dask_dataframe(caminho_dataset_relativo: str , caminho_dataframe_rel
     Caso nenhum caminho seja passado, será utilizado um caminho correspondente ao do dataset usado.
     """
 
-    ds = ler_arquivo(caminho_dataset_relativo, formato_arquivo = fa.NETCDF, eh_caminho_relativo = True, caminho_base = pdd.Datasets.DIRETORIO_COORDENADAS_ESPECIFICAS)
+    ds = ler_arquivo(fa.NETCDF, caminho_dataset_relativo, eh_caminho_relativo = True, caminho_base = pdd.Datasets.DIRETORIO_COORDENADAS_ESPECIFICAS)
 
     if not isinstance(ds, xr.Dataset):
         raise TypeError("'ds' não é um dataset.")
