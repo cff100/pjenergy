@@ -65,9 +65,12 @@ def prepara_arquivo_para_download(caminho: Path, substituir: bool = False) -> st
 
     return nome
 
+
+
+
 # FUNÇÕES INTERMEDIÁRIAS ----------------------------------------
 
-def requisita_dados_api(
+def requisita_dados_simples(
                     dataset_salvamento_caminho: Path,
                     variavel: str, # Apenas uma variável por vez, como 'u_component_of_wind'
                     ano: int, # Apenas um ano por vez, como 2020
@@ -129,7 +132,7 @@ def requisita_multiplos_dados() -> None:
                     continue
 
                 # O arquivo não existindo, faz a requisição
-                requisita_dados_api(dataset_salvamento_caminho, variavel, ano, pressao_nivel) 
+                requisita_dados_simples(dataset_salvamento_caminho, variavel, ano, pressao_nivel) 
 
                 requisicao_atual += 1
                 exibe_progresso(requisicao_atual, n_requisicoes)
@@ -139,7 +142,7 @@ def requisita_multiplos_dados() -> None:
 
 # FUNÇÃO PRINCIPAL ----------------------------------------
 
-def requisita_dados(
+def requisita_dados_api(
                     usa_multiplos_dados: bool = True,
                     dataset_salvamento_caminho: Path | Literal["padrao"] = "padrao",
                     variavel: str = "padrao", 
@@ -157,4 +160,4 @@ def requisita_dados(
         if dataset_salvamento_caminho == "padrao" or variavel == "padrao" or ano == "padrao" or pressao_nivel == "padrao":
             raise ValueError("Não se pode usar valores 'padrao' para argumentos quando 'usa_multiplos_dados' é False.")
             
-        requisita_dados_api(dataset_salvamento_caminho, variavel, ano, pressao_nivel, substituir)
+        requisita_dados_simples(dataset_salvamento_caminho, variavel, ano, pressao_nivel, substituir)

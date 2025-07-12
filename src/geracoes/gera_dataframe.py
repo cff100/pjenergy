@@ -9,7 +9,7 @@ from config.paths import PathsDados as pdd
 from config.constants import FormatosArquivo as fa, Correspondencias as cr, Plataformas, PastasNomes as pn
 
 
-def nc_para_dask_dataframe(caminho_dataset_relativo: str , caminho_dataframe_relativo: Optional[str] = None) -> dd.DataFrame:
+def nc_para_dask_dataframe_simples(caminho_dataset_relativo: str , caminho_dataframe_relativo: Optional[str] = None) -> dd.DataFrame:
     """Converte NetCDF em Dask DataFrame, salvando como parquet, preservando variáveis 1D e 2D.
     
     Parâmetros:
@@ -50,6 +50,7 @@ def nc_para_dask_dataframe(caminho_dataset_relativo: str , caminho_dataframe_rel
     return df
 
 
+
 def nc_para_dask_dataframe_todas_plataformas():
 
     plataformas = Plataformas.PLATAFORMAS
@@ -59,13 +60,15 @@ def nc_para_dask_dataframe_todas_plataformas():
     for plat in plataformas:
         print(f"Plataforma: {plat} ({i}/{n})")
         caminho_dataset_relativo = pn.PLATAFORMAS + "/" + Plataformas.PLATAFORMAS_DADOS[plat][cr.ARQUIVO_NC_CHAVE] 
-        df = nc_para_dask_dataframe(caminho_dataset_relativo)
+        df = nc_para_dask_dataframe_simples(caminho_dataset_relativo)
         i += 1
 
     print("Todos os dataframes foram salvos!")
     
     return df  # Retorna o dataframe da última plataforma
 
+
+def converte_nc_para_dask_dataframe(multiplas_plataformas: bool = True, caminho_dataset_relativo: str = "padrao", caminho_dataframe_relativo: str = "padrao") -> dd.DataFrame:
 
 if __name__ == "__main__":
     #df = nc_para_dask_dataframe("plataformas/p1-NAMORADO_2_(PNA-2).nc")

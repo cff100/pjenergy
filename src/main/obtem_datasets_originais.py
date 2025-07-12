@@ -1,6 +1,6 @@
 from typing import Literal
 from pathlib import Path
-from geracoes.requisicao_dados_nc import requisita_dados
+from geracoes.requisicao_dados_nc import requisita_dados_api
 
 def obtem_datasets_originais(
                     usa_multiplos_dados: bool = True,
@@ -15,7 +15,7 @@ def obtem_datasets_originais(
     algum arquivo com combinação específica de argumentos únicos (variável, ano e nível de pressão)
     """
 
-    requisita_dados(usa_multiplos_dados, dataset_salvamento_caminho, variavel, ano, pressao_nivel, substituir)
+    requisita_dados_api(usa_multiplos_dados, dataset_salvamento_caminho, variavel, ano, pressao_nivel, substituir)
 
 
 if __name__ == "__main__":

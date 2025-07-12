@@ -1,6 +1,6 @@
 # Módulos internos do projeto
 from config.paths import PathsDados as pad
-from geracoes.requisicao_dados_nc import requisita_dados
+from geracoes.requisicao_dados_nc import requisita_dados_api
 from config.constants import ParametrosObtencaoDados as pod
 
 def test_requisicao_dados(requisitar = True):
@@ -21,6 +21,6 @@ def test_requisicao_dados(requisitar = True):
     if not requisitar:
         print("\n -> -> -> ATENÇÃO: Requisição de dados não realizada. Mude o parâmetro 'requisitar' para True para realizar a requisição.")
     else:
-        requisita_dados(False, dataset_salvamento_caminho, variavel, ano, pressao_nivel, substituir = True)
+        requisita_dados_api(False, dataset_salvamento_caminho, variavel, ano, pressao_nivel, substituir = True)
         
         
