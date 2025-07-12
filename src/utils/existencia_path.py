@@ -27,6 +27,10 @@ def existe_path_e_exibe_mensagem(path: Path, mensagem: str) -> bool:
         print(mensagem)
     return existe
 
+def garante_path_pai_existencia(path: Path) -> None:
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+
 
 if __name__ == "__main__":
     # Exemplo de levantamento de erro

@@ -52,7 +52,7 @@ class PathsDados:
             if formato_arquivo == fa.NETCDF:
                 nome_arquivo = an.ARQUIVO_NC_PONTO_NAO_PLATAFORMA
             elif formato_arquivo == fa.PARQUET:
-                nome_arquivo = pn.PASTA_DESK_PONTOS_NAO_PLATAFORMA # É na verdade uma pasta
+                nome_arquivo = pn.PONTOS_NAO_PLATAFORMA # É na verdade uma pasta
             caminho_relativo = Path(pn.PONTOS_NAO_PLATAFORMA) / nome_arquivo
         else:
             raise ValueError(f"Valor não válido para plataforma. Valores válidos: \n{plt.PLATAFORMAS} \nOu seus simbolos correspondentes: \n{plt.SIMBOLOS_PLATAFORMAS}")
@@ -98,6 +98,8 @@ class PathsDados:
 
         # Diretório de datasets modificados para representar coordenadas específicas
         DIRETORIO_COORDENADAS_ESPECIFICAS = BASE / pn.COORDENADAS_ESPECIFICAS
+        DIRETORIO_PLATAFORMAS = DIRETORIO_COORDENADAS_ESPECIFICAS / pn.PLATAFORMAS
+        DIRETORIO_NAO_PLATAFORMAS = DIRETORIO_COORDENADAS_ESPECIFICAS / pn.PONTOS_NAO_PLATAFORMA
 
     
     class Dataframes:
@@ -108,6 +110,9 @@ class PathsDados:
 
         # Diretório de dataframes que representam coordenadas específicas
         DIRETORIO_COORDENADAS_ESPECIFICAS = BASE / pn.COORDENADAS_ESPECIFICAS
+        DIRETORIO_PLATAFORMAS = DIRETORIO_COORDENADAS_ESPECIFICAS / pn.PLATAFORMAS
+        DIRETORIO_NAO_PLATAFORMAS = DIRETORIO_COORDENADAS_ESPECIFICAS / pn.PONTOS_NAO_PLATAFORMA
+
 
 
     class DadosTeste:

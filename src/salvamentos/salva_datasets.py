@@ -1,5 +1,6 @@
 from pathlib import Path
 import xarray as xr
+from utils.existencia_path import garante_path_pai_existencia
 
 def salva_dataset_nc(dataset: xr.Dataset, dataset_caminho: Path) -> None:
     """Salva o dataset em um arquivo .nc. 
@@ -12,7 +13,7 @@ def salva_dataset_nc(dataset: xr.Dataset, dataset_caminho: Path) -> None:
     print("Salvando arquivo...")
 
     # Garante que a pasta onde o arquivo será salvo exista
-    dataset_caminho.parent.mkdir(parents=True, exist_ok=True)
+    garante_path_pai_existencia(dataset_caminho)
     
     dataset.to_netcdf(dataset_caminho)
 

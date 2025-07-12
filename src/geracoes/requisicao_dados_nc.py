@@ -1,13 +1,14 @@
 
 """Para obtenção de dados de um dataset do Climate Data Store"""
 
-from typing import Literal
+from typing import Literal, cast
 import cdsapi
 from pathlib import Path
 # Módulos internos do projeto
 from config.paths import PathsDados as pad
 from config.constants import ParametrosObtencaoDados as pod
 from utils.existencia_path import cria_path_se_nao_existe, verifica_erro_ja_existe_path, existe_path_e_exibe_mensagem
+from utils.verifica_argumentos_padrao import erro_algum_parametro_diferente_do_padrao, erro_algum_parametro_igual_ao_padrao
 
 
 
@@ -150,14 +151,17 @@ def requisita_dados_api(
                     pressao_nivel: int | Literal["padrao"] = "padrao", 
                     substituir: bool = False) -> None: 
     
+    # Monta lista com parametros que tem a possibilidade de receber o valor 'padrao'
+    parametros_possivel_padrao = [dataset_salvamento_caminho, variavel, ano, pressao_nivel]
+
     if usa_multiplos_dados:
-        if dataset_salvamento_caminho != "padrao" or variavel != "padrao" or ano != "padrao" or pressao_nivel != "padrao":
-            raise ValueError("Se pode usar apenas valores 'padrao' para argumentos quando 'usa_multiplos_dados' é False.")
-        
+        erro_algum_parametro_diferente_do_padrao(parametros_possivel_padrao, 
+                                                 "Quando 'usa_multiplos_dados' é True, se pode usar apenas o valor 'padrao' para os parâmetros.")
         requisita_multiplos_dados()
 
     elif not usa_multiplos_dados:
-        if dataset_salvamento_caminho == "padrao" or variavel == "padrao" or ano == "padrao" or pressao_nivel == "padrao":
-            raise ValueError("Não se pode usar valores 'padrao' para argumentos quando 'usa_multiplos_dados' é False.")
+        erro_algum_parametro_igual_ao_padrao(parametros_possivel_padrao,
+                                             "Quando 'usa_multiplos_dados' é False, não se pode usar o valor 'padrao' para nenhum parâmetro.")
             
-        requisita_dados_simples(dataset_salvamento_caminho, variavel, ano, pressao_nivel, substituir)
+        requisita_dados_simples(cast(Path, dataset_salvamento_caminho), variavel, cast(int, ano), cast(int, pressao_nivel), substituir)
+        # O cast() serve apenas para ajudar o verificador de tipo estático, para os casos em que ele não reconhece o tipo preciso.
