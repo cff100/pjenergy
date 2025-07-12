@@ -3,7 +3,7 @@ import xarray as xr
 from typing import Literal
 import dask.dataframe as dd
 
-from utils.existe_path import existe_path
+from utils.existencia_path import verifica_erro_nao_existe_path
 from config.paths import PathsDados
 from leituras.ler_datasets import ler_dataset_nc
 from leituras.ler_dataframes import ler_dataframe_parquet
@@ -56,7 +56,7 @@ def ler_arquivo(formato_arquivo: Literal["netcdf", "parquet"],
         path = caminho_base / path
 
     # Verifica a existência do caminho
-    existe_path(path)
+    verifica_erro_nao_existe_path(path)
 
 
     if formato_arquivo == fa.NETCDF:
