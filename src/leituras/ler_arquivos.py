@@ -69,7 +69,6 @@ def ler_arquivo(formato_arquivo: Literal["netcdf", "parquet"],
 
 
 if __name__ == "__main__":
-    d = ler_arquivo("netcdf", "merged/dataset_unido.nc",)
+    d = ler_arquivo("netcdf", "unido/dataset_unido.nc")
     print(d)
-    d = ler_arquivo("parquet", "plataforms/ponto_nao_especifico.parquet/part.403.parquet")
-    print(d)
+

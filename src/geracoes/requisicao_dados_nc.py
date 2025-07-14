@@ -127,7 +127,7 @@ def requisita_multiplos_dados() -> None:
                 # Verifica se o arquivo já existe
                 # Se existir, pula o download
                 if existe_path_e_exibe_mensagem(dataset_salvamento_caminho, 
-                                                f" -> -> -> Arquivo {dataset_salvamento_caminho} já existe. Pulando download."):
+                                                f" -> -> -> Arquivo {dataset_salvamento_caminho} já existe. Pulando download.\n"):
                     requisicao_atual += 1
                     exibe_progresso(requisicao_atual, n_requisicoes)
                     continue

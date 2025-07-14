@@ -69,7 +69,7 @@ def nc_para_dask_dataframe_todas_plataformas():
     i = 1
 
     for plat in plataformas:
-        print(f"Plataforma: {plat} ({representa_progresso(i, plataformas)})\n")
+        print(f" -> -> -> Plataforma: {plat} ({representa_progresso(i, plataformas)})\n")
         df = nc_para_dask_dataframe_simples(plat)
         i += 1
 
