@@ -101,7 +101,7 @@ def merge_datasets(parametros_dicio: dict) -> xr.Dataset:
     # Mescla os datasets de variáveis em um único dataset
     print("Unindo datasets de todas as variáveis...\n")
     dataset_unico = xr.merge(variaveis_datasets)
-    print(f"Dataset único gerado, com {len(dataset_unico.data_vars)} variáveis e {len(dataset_unico.pressure_level)} níveis de pressão.\n\n")
+    print(f"Dataset único gerado, com {len(dataset_unico.data_vars)} variáveis em {len(dataset_unico.pressure_level)} 5 alturas.\n\n")
     
     return dataset_unico
 
@@ -114,10 +114,10 @@ def unifica_datasets() -> xr.Dataset:
     
     Caso o dataset já exista, ele será substituído."""
 
-    print("UNIFICAÇÃO DE DATASETS\n\n")
+    print("\n--- UNIFICAÇÃO DE DATASETS ---\n\n")
 
     # Concatena os datasets de níveis de pressão e anos diferentes
-    print("\n -> -> -> Etapa (1/5)\n")
+    print(" -> -> -> Etapa (1/5)\n")
     parametros_dicio = concatena_datasets()
 
     # Une os datasets de todas variáveis

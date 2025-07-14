@@ -55,7 +55,7 @@ class PathsDados:
                 nome_arquivo = pn.PONTOS_NAO_PLATAFORMA # É na verdade uma pasta
             caminho_relativo = Path(pn.PONTOS_NAO_PLATAFORMA) / nome_arquivo
         else:
-            raise ValueError(f"Valor não válido para plataforma. Valores válidos: \n{plt.PLATAFORMAS} \nOu seus simbolos correspondentes: \n{plt.SIMBOLOS_PLATAFORMAS}")
+            raise ValueError(f" {plataforma} é um valor não válido para plataforma. Valores válidos: \n{plt.PLATAFORMAS} \nOu seus simbolos correspondentes: \n{plt.SIMBOLOS_PLATAFORMAS}")
         
         return caminho_relativo
 

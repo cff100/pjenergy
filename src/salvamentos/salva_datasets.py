@@ -10,7 +10,7 @@ def salva_dataset_nc(dataset: xr.Dataset, dataset_caminho: Path) -> None:
     if not dataset_caminho.suffix == ".nc":
         raise ValueError("O caminho do dataset não possui a extensão .nc")
 
-    print("Salvando arquivo...")
+    print("Salvando arquivo...\n")
 
     # Garante que a pasta onde o arquivo será salvo exista
     garante_path_pai_existencia(dataset_caminho)

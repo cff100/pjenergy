@@ -1,40 +1,25 @@
 import xarray as xr
 from typing import cast
-from pathlib import Path
 import dask.dataframe as dd
 from pandas import DataFrame
-from typing import Literal
 from leituras.ler_arquivos import ler_arquivo
 from config.paths import PathsDados as pad
-from config.constants import FormatosArquivo as fa, Correspondencias as cr, Plataformas, ArquivosNomes as an
+from config.constants import FormatosArquivo as fa, Correspondencias as cr, Plataformas
 from salvamentos.salva_dataframes import salva_dask_dataframe_parquet
-from utils.verifica_argumentos_padrao import erro_algum_parametro_diferente_do_padrao
+from utils.representa_progresso import representa_progresso
+
 
 
 # FUNÇÔES AUXILIARES -------------------------------------------------------------------------------
 
-def decide_caminhos_base(localizacao_tipo: Literal["plataforma", "outra_localizacao"]) -> tuple[Path, Path]:
-
-    if localizacao_tipo == "plataforma":
-        dataset_caminho_base = pad.Datasets.DIRETORIO_PLATAFORMAS
-        dataframe_caminho_base = pad.Dataframes.DIRETORIO_PLATAFORMAS
-    elif localizacao_tipo == "outra_localizacao":
-        dataset_caminho_base = pad.Datasets.DIRETORIO_NAO_PLATAFORMAS
-        dataframe_caminho_base = pad.Dataframes.DIRETORIO_NAO_PLATAFORMAS
-
-    return dataset_caminho_base, dataframe_caminho_base
-
 def monta_dataframes_por_dimensao(ds: xr.Dataset) -> tuple[dd.DataFrame, DataFrame]:
 
-    print(ds)
-    print(ds.data_vars)
-    variaveis_2d = [v for v in ds.data_vars if ds[v].dims == ("tempo_UTC0", "h")]
-    print("Variáveis 2D:", variaveis_2d)
-    ds_2d = ds[variaveis_2d].chunk({"tempo_UTC0": 200})
+    variaveis_2d = [v for v in ds.data_vars if ds[v].dims == (cr.TEMPO_UTC0, cr.ALTURA)]
+    ds_2d = ds[variaveis_2d].chunk({cr.TEMPO_UTC0: 200})
     df = ds_2d.to_dask_dataframe()
 
     # Seleciona variáveis 1D (somente tempo) e monta um dataframe com elas
-    variaveis_1d_str = [v for v in ds.data_vars if ds[v].dims == ("tempo_UTC0",)]
+    variaveis_1d_str = [v for v in ds.data_vars if ds[v].dims == (cr.TEMPO_UTC0,)]
     df_str = ds[variaveis_1d_str].to_dataframe().reset_index()
 
     return df, df_str
@@ -47,16 +32,6 @@ def merge_dataframes_no_tempo(df: dd.DataFrame, df_str: DataFrame) -> dd.DataFra
     df = df.merge(df_str, on=cr.TEMPO_UTC0, how="left")
 
     return df
-
-def obtem_dataframe_dataset_nomes(dataset_arquivo_nome: str, dataframe_pasta_nome: str, dataframe_caminho_base: Path) -> Path:
-
-    if dataset_arquivo_nome == "padrao":
-        dataset_arquivo_nome = an.ARQUIVO_NC_PONTO_NAO_PLATAFORMA
-    if dataframe_pasta_nome == "padrao":
-        dataframe_pasta_nome = dataset_arquivo_nome.split(".nc")[0]
-    dataframe_diretorio_absoluto = dataframe_caminho_base / dataframe_pasta_nome
-
-    return dataframe_diretorio_absoluto
 
 
 # FUNÇÔES INTERMEDIÁRIAS -------------------------------------------------------------------------------
@@ -75,11 +50,8 @@ def nc_para_dask_dataframe_simples(plataforma: str | None) -> dd.DataFrame:
 
     dataset_arquivo_caminho = pad.obter_path_coord_especifica("netcdf", plataforma)
     dataframe_arquivo_caminho = pad.obter_path_coord_especifica("parquet", plataforma)
-
     ds = ler_arquivo(fa.NETCDF, dataset_arquivo_caminho, eh_caminho_relativo = False)
-
     ds = cast(xr.Dataset, ds)
-
 
     df, df_str = monta_dataframes_por_dimensao(ds)
 
@@ -94,25 +66,23 @@ def nc_para_dask_dataframe_simples(plataforma: str | None) -> dd.DataFrame:
 def nc_para_dask_dataframe_todas_plataformas():
 
     plataformas = Plataformas.PLATAFORMAS # Lista de plataformas
-
     i = 1
-    n = len(plataformas)
 
     for plat in plataformas:
-        print(f"Plataforma: {plat} ({i}/{n})")
-        df = nc_para_dask_dataframe_simples(Plataformas.PLATAFORMAS_DADOS[plat][cr.ARQUIVO_NC_CHAVE])
+        print(f"Plataforma: {plat} ({representa_progresso(i, plataformas)})\n")
+        df = nc_para_dask_dataframe_simples(plat)
         i += 1
 
-    print("Todos os dataframes foram salvos!")
+    print("Todos os dataframes foram salvos!\n")
     
     return df  # Retorna o dataframe da última plataforma
 
 
 # FUNÇÃO PRINCIPAL -------------------------------------------------------------------------------
 
-def converte_nc_para_dask_dataframe(usa_plataformas: bool = True) -> dd.DataFrame:
-    
-    
+def converte_nc_para_dask_dataframe(usa_plataformas: bool = True) -> None:
+
+    print("--- CRIAÇÃO DE DATAFRAME(S) ---\n\n")
     
     if usa_plataformas : 
         nc_para_dask_dataframe_todas_plataformas()
@@ -120,8 +90,7 @@ def converte_nc_para_dask_dataframe(usa_plataformas: bool = True) -> dd.DataFram
     elif not usa_plataformas:
         nc_para_dask_dataframe_simples(None)
 
-    return df  
 
 
 if __name__ == "__main__":
-    df = converte_nc_para_dask_dataframe(False)
+    df = converte_nc_para_dask_dataframe()
