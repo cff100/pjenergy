@@ -114,7 +114,8 @@ def unifica_datasets() -> xr.Dataset:
     
     Caso o dataset já exista, ele será substituído."""
 
-    
+    print("UNIFICAÇÃO DE DATASETS\n\n")
+
     # Concatena os datasets de níveis de pressão e anos diferentes
     print("\n -> -> -> Etapa (1/5)\n")
     parametros_dicio = concatena_datasets()
@@ -126,6 +127,8 @@ def unifica_datasets() -> xr.Dataset:
     # Salva o dataset em um arquivo NetCDF único
     print(" -> -> -> Etapa (5/5)\n")
     salva_dataset_nc(dataset_unido, pad.Datasets.CAMINHO_UNIDO)
+
+    print("Datasets unificados com sucesso!\n\n")
 
     return dataset_unido
 

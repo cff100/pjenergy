@@ -6,9 +6,9 @@ from pandas import DataFrame
 from typing import Literal
 from leituras.ler_arquivos import ler_arquivo
 from config.paths import PathsDados as pad
-from config.constants import FormatosArquivo as fa, Correspondencias as cr, Plataformas
+from config.constants import FormatosArquivo as fa, Correspondencias as cr, Plataformas, ArquivosNomes as an
 from salvamentos.salva_dataframes import salva_dask_dataframe_parquet
-from utils.verifica_argumentos_padrao import erro_algum_parametro_diferente_do_padrao, erro_algum_parametro_igual_ao_padrao
+from utils.verifica_argumentos_padrao import erro_algum_parametro_diferente_do_padrao
 
 
 # FUNÇÔES AUXILIARES -------------------------------------------------------------------------------
@@ -26,13 +26,15 @@ def decide_caminhos_base(localizacao_tipo: Literal["plataforma", "outra_localiza
 
 def monta_dataframes_por_dimensao(ds: xr.Dataset) -> tuple[dd.DataFrame, DataFrame]:
 
-    # Seleciona variáveis 2D (tempo e altura) e monta um dataframe com elas
-    variaveis_2d = [v for v in ds.data_vars if ds[v].dims == (cr.TEMPO_UTC0, cr.ALTURA)]
-    ds_2d = ds[variaveis_2d].chunk({cr.TEMPO_UTC0: 200})
+    print(ds)
+    print(ds.data_vars)
+    variaveis_2d = [v for v in ds.data_vars if ds[v].dims == ("tempo_UTC0", "h")]
+    print("Variáveis 2D:", variaveis_2d)
+    ds_2d = ds[variaveis_2d].chunk({"tempo_UTC0": 200})
     df = ds_2d.to_dask_dataframe()
 
     # Seleciona variáveis 1D (somente tempo) e monta um dataframe com elas
-    variaveis_1d_str = [v for v in ds.data_vars if ds[v].dims == (cr.TEMPO_UTC0,)]
+    variaveis_1d_str = [v for v in ds.data_vars if ds[v].dims == ("tempo_UTC0",)]
     df_str = ds[variaveis_1d_str].to_dataframe().reset_index()
 
     return df, df_str
@@ -49,7 +51,7 @@ def merge_dataframes_no_tempo(df: dd.DataFrame, df_str: DataFrame) -> dd.DataFra
 def obtem_dataframe_dataset_nomes(dataset_arquivo_nome: str, dataframe_pasta_nome: str, dataframe_caminho_base: Path) -> Path:
 
     if dataset_arquivo_nome == "padrao":
-        
+        dataset_arquivo_nome = an.ARQUIVO_NC_PONTO_NAO_PLATAFORMA
     if dataframe_pasta_nome == "padrao":
         dataframe_pasta_nome = dataset_arquivo_nome.split(".nc")[0]
     dataframe_diretorio_absoluto = dataframe_caminho_base / dataframe_pasta_nome
@@ -60,9 +62,7 @@ def obtem_dataframe_dataset_nomes(dataset_arquivo_nome: str, dataframe_pasta_nom
 # FUNÇÔES INTERMEDIÁRIAS -------------------------------------------------------------------------------
 
 
-def nc_para_dask_dataframe_simples(localizacao_tipo: Literal["plataforma", "outra_localizacao"], 
-                                   dataset_arquivo_nome: str = "padrao", 
-                                   dataframe_pasta_nome: str = "padrao") -> dd.DataFrame:
+def nc_para_dask_dataframe_simples(plataforma: str | None) -> dd.DataFrame:
     """Converte NetCDF em Dask DataFrame, salvando como parquet, preservando variáveis 1D e 2D.
     
     Parâmetros:
@@ -73,11 +73,10 @@ def nc_para_dask_dataframe_simples(localizacao_tipo: Literal["plataforma", "outr
     Caso nenhum caminho seja passado, será utilizado um caminho correspondente ao do dataset usado.
     """
 
-    dataset_caminho_base, dataframe_caminho_base = decide_caminhos_base(localizacao_tipo)
+    dataset_arquivo_caminho = pad.obter_path_coord_especifica("netcdf", plataforma)
+    dataframe_arquivo_caminho = pad.obter_path_coord_especifica("parquet", plataforma)
 
-    dataframe_diretorio_absoluto = obtem_dataframe_dataset_nomes(dataset_arquivo_nome, dataframe_pasta_nome, dataframe_caminho_base)
-
-    ds = ler_arquivo(fa.NETCDF, dataset_arquivo_nome, eh_caminho_relativo = True, caminho_base = dataset_caminho_base)
+    ds = ler_arquivo(fa.NETCDF, dataset_arquivo_caminho, eh_caminho_relativo = False)
 
     ds = cast(xr.Dataset, ds)
 
@@ -86,7 +85,7 @@ def nc_para_dask_dataframe_simples(localizacao_tipo: Literal["plataforma", "outr
 
     df = merge_dataframes_no_tempo(df, df_str)
 
-    salva_dask_dataframe_parquet(df, dataframe_diretorio_absoluto)
+    salva_dask_dataframe_parquet(df, dataframe_arquivo_caminho)
 
     return df
 
@@ -101,7 +100,7 @@ def nc_para_dask_dataframe_todas_plataformas():
 
     for plat in plataformas:
         print(f"Plataforma: {plat} ({i}/{n})")
-        df = nc_para_dask_dataframe_simples("plataforma", Plataformas.PLATAFORMAS_DADOS[plat][cr.ARQUIVO_NC_CHAVE])
+        df = nc_para_dask_dataframe_simples(Plataformas.PLATAFORMAS_DADOS[plat][cr.ARQUIVO_NC_CHAVE])
         i += 1
 
     print("Todos os dataframes foram salvos!")
@@ -111,26 +110,18 @@ def nc_para_dask_dataframe_todas_plataformas():
 
 # FUNÇÃO PRINCIPAL -------------------------------------------------------------------------------
 
-def converte_nc_para_dask_dataframe(multiplas_plataformas: bool = True, 
-                                    dataset_arquivo_nome: str = "padrao", 
-                                    dataframe_pasta_nome: str = "padrao") -> dd.DataFrame:
+def converte_nc_para_dask_dataframe(usa_plataformas: bool = True) -> dd.DataFrame:
     
-    # Monta lista com parametros que tem a possibilidade de receber o valor 'padrao'
-    parametros_possivel_padrao = [dataset_arquivo_nome, dataframe_pasta_nome]
-
-    if multiplas_plataformas :
-        erro_algum_parametro_diferente_do_padrao(parametros_possivel_padrao, 
-                                                 "Quando 'multiplas_plataformas' é True, se pode usar apenas o valor 'padrao' para os parâmetros.")
+    
+    
+    if usa_plataformas : 
         nc_para_dask_dataframe_todas_plataformas()
-    elif not multiplas_plataformas:
-        erro_algum_parametro_igual_ao_padrao(parametros_possivel_padrao, 
-                                             "Quando 'multiplas_plataformas' é False, não se pode usar o valor 'padrao' para nenhum parâmetro.")
-    
-        nc_para_dask_dataframe_simples("outra_localizacao", dataset_arquivo_nome, dataframe_pasta_nome)
+
+    elif not usa_plataformas:
+        nc_para_dask_dataframe_simples(None)
 
     return df  
 
 
 if __name__ == "__main__":
-    #df = nc_para_dask_dataframe("plataformas/p1-NAMORADO_2_(PNA-2).nc")
-    df = nc_para_dask_dataframe_todas_plataformas()
+    df = converte_nc_para_dask_dataframe(False)

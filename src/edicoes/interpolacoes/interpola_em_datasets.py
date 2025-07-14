@@ -92,7 +92,7 @@ def interp_alturas_constantes(ds: xr.Dataset) -> xr.Dataset:
             h,                      # Altura real calculada (como base para interpolação)
             ds[var],                # Dados da variável a interpolar
             input_core_dims=[["pressure_level"], ["pressure_level"]],
-            output_core_dims=[["altura"]],
+            output_core_dims=[["h"]],
             vectorize=True,         # Aplica elemento a elemento nos outros eixos (no caso, no tempo)
             dask="parallelized",    # Permite processamento paralelo com Dask
             kwargs={"alturas": alturas_desejadas},  # Alturas alvo
@@ -116,7 +116,7 @@ def interp_alturas_constantes(ds: xr.Dataset) -> xr.Dataset:
         h,                                 # altura (h) calculada  / 1º argumento -> h_vals → ["pressure_level"]
         pressao_valores.broadcast_like(h),    # pressão replicada no tempo / 2º argumento -> var_vals → ["pressure_level"]
         input_core_dims=[["pressure_level"], ["pressure_level"]],
-        output_core_dims=[["altura"]],
+        output_core_dims=[["h"]],
         vectorize=True,
         dask="parallelized",
         kwargs={"alturas": alturas_desejadas},
@@ -129,13 +129,13 @@ def interp_alturas_constantes(ds: xr.Dataset) -> xr.Dataset:
     # -----------------------------
     # ETAPA 7: Adicionar coordenada de altura
     # -----------------------------
-    # Para fins de organização, adicionamos explicitamente a coordenada 'altura'
-    ds_interp = ds_interp.assign_coords(altura=("altura", alturas_desejadas))
+    # Para fins de organização, adicionamos explicitamente a coordenada 'h'
+    ds_interp = ds_interp.assign_coords(altura=("h", alturas_desejadas))
 
     # -----------------------------
     # ETAPA 8: Reorganizar as dimensões
     # -----------------------------
     # Garante que as dimensões fiquem na ordem desejada: (tempo, altura)
-    ds_interp = ds_interp.transpose("valid_time", "altura")
+    ds_interp = ds_interp.transpose("valid_time", "h")
 
     return ds_interp

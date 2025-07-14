@@ -23,6 +23,8 @@ def processa_edicoes(plataforma: str | None = None,
     if not isinstance(ds, xr.Dataset):
         raise TypeError("ds precisa ser um dataset")
 
+    print("EDIÇÃO DE DATASET")
+
     processos = [remove_variaveis_indesejadas, dataset_interpola_lat_lon, interp_alturas_constantes, adiciona_variaveis, dataset_renomeacoes]
 
     for funcao in processos:
@@ -44,7 +46,7 @@ def gera_datasets_editados_pontuais(usa_plataformas: bool = True,
     
     Parâmetros:
     - usa_plataformas: Se True, gera datasets para todas plataformas. Se False, gera um dataset para as coordenadas fornecidas."""
-    
+
     unifica_datasets()
 
     if usa_plataformas:

@@ -64,7 +64,7 @@ class ArquivosNomes:
     ARQUIVO_NC_UNIDO = "dataset_unido.nc"
 
     # Nome do arquivo do dataset gerado para um ponto específico que não é uma plataforma
-    ARQUIVO_NC_PONTO_NAO_PLATAFORMA = "pontos_nao_plataforma.nc"
+    ARQUIVO_NC_PONTO_NAO_PLATAFORMA = "ponto_nao_plataforma.nc"
 
 
 
@@ -80,7 +80,7 @@ class PastasNomes:
     UNIDO = "unido"
     COORDENADAS_ESPECIFICAS = "coordenadas_especificas"
     PLATAFORMAS = "plataformas"
-    PONTOS_NAO_PLATAFORMA = "pontos_nao_plataforma"   
+    PONTOS_NAO_PLATAFORMA = "ponto_nao_plataforma"   
 
     TESTES = "tests"
     DADOS_GERADOS_TESTES = "dados_gerados_testes"
