@@ -3,7 +3,16 @@ from utils.indice_mais_um import lista_indice_mais_um
 
 
 class ParametrosObtencaoDados:
-    """Agrupamento dos parâmetros utilizados para obtenção dos dados do Climate Data Store"""
+    """Define os parâmetros fixos para a obtenção de dados meteorológicos do Climate Data Store.
+    
+    Atributos:
+        VARIAVEIS (tuple): Variáveis meteorológicas a serem requisitadas.
+        PRESSAO_NIVEIS (tuple): Níveis de pressão (em hPa) a serem utilizados.
+        ANOS, MESES, DIAS, HORAS (tuple): Intervalos temporais considerados.
+        AREA (tuple): Coordenadas da Bacia de Campos (norte, oeste, sul, leste).
+        DATA_FORMAT (str): Formato dos dados requisitados (ex: 'netcdf').
+        DOWNLOAD_FORMAT (str): Formato de download (ex: 'unarchived').
+    """
 
     VARIAVEIS = ("u_component_of_wind", "v_component_of_wind", 
                  "relative_humidity", "temperature", "geopotential") 
@@ -12,12 +21,13 @@ class ParametrosObtencaoDados:
     PRESSAO_NIVEIS =  (900, 925, 950, 975, 1000) # Em hPa
 
     # Parâmetros temporais
-    ANOS = tuple(range(2015, 2025))  # (2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024)
-    MESES = tuple(range(1, 13)) # Todos os meses
-    DIAS = tuple(range(1, 32)) # Todos os dias
-    HORAS = tuple(f"{h:02d}:00" for h in range(24)) # Todas as horas
+    ANOS = tuple(range(2015, 2025))  # (2015 - 2024)
+    MESES = tuple(range(1, 13)) 
+    DIAS = tuple(range(1, 32)) 
+    HORAS = tuple(f"{h:02d}:00" for h in range(24)) 
 
-    #Área
+
+    # Área
 
     # Coordenadas da Bacia de Campos
     NORTE = -21.0 # Latitude
@@ -35,27 +45,37 @@ class ParametrosObtencaoDados:
 
 
 class ConstantesNumericas:
-    """Agrupamento de constantes numéricas importantes"""
+    """Agrupamento de constantes numéricas importantes
+    
+    Atributos:
+        G (float): Aceleração da gravidade (m/s²).
+    """
 
-    G = 9.80665 # (m/s**2)
+    G = 9.80665 # Aceleração da gravidade(m/s**2)
 
 
 
 
 
 class ArquivosNomes:
-    """Agrupamentos de nomes de arquivos"""
+    """Agrupamento de nomes de arquivos e padrões de nomes de arquivos
+    
+    Atributos:
+        PADRAO_ARQUIVOS_NC_ORIGINAIS (str): Padrão geral de nome para os arquivos .nc obtidos do Climate Data Store.
+        PADRAO_ARQUIVOS_NC_ORIGINAIS_REGEX (str): Expressão regular para capturar os parâmetros dos nomes dos arquivos netCDF.
+        ARQUIVO_NC_UNIDO (str): Nome do arquivo gerado pela união dos datasets originais.
+        ARQUIVO_NC_PONTO_NAO_PLATAFORMA (str): Nome do arquivo do dataset gerado para um ponto específico que não é uma plataforma."""
 
-    # Padrão geral de nome dos arquivos .nc obtidos do Climate Data Store
-    PADRAO_ARQUIVOS_NC_ORIGINAIS = "(var-*)_(anos-*)_(pressao-*).nc" 
+    PADRAO_ARQUIVOS_NC_ORIGINAIS = "(var-*)_(ano-*)_(pressao-*).nc" 
     # O * serve como um wildcard para capturar qualquer sequência de caracteres, 
     # no caso os valores das variáveis armazenados no arquivo
+    # Exemplo de nome de arquivo: "var-velocidade_u_ano-2020_pressao-900.nc"
 
-    # Regex para capturar os parâmetros dos nomes dos arquivos .nc
-    PADRAO_ARQUIVOS_NC_ORIGINAIS_REGEX = r"\(var-(.+?)\)_\(anos-(\d{4})\)_\(pressao-(\d+?)\).nc" 
+
+    PADRAO_ARQUIVOS_NC_ORIGINAIS_REGEX = r"\(var-(.+?)\)_\(ano-(\d{4})\)_\(pressao-(\d+?)\).nc" 
     # Explicação da expressão regular:
     # - \(var-(.+?)\): Captura a variável entre parênteses,
-    # - \(anos-(\d{4})\): Captura o ano de 4 dígitos entre parênteses,
+    # - \(ano-(\d{4})\): Captura o ano de 4 dígitos entre parênteses,
     # - \(pressao-(\d+?)\): Captura o nível de pressão entre parênteses.
     # - O ponto de interrogação após o quantificador torna a captura não gananciosa, pegando o menor número possível de caracteres.
     # - A barra invertida antes dos parênteses é necessária para escapar os parênteses, pois eles têm significado especial em expressões regulares. 
