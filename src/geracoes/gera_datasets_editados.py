@@ -57,7 +57,7 @@ def gera_datasets_editados_pontuais(usa_plataformas: bool = True,
         if latitude_longitude_alvo is not None:
             print("\nAVISO: As plataformas já possuem coordenadas registradas, não é necessário passar valores de latitude e longitude.\n")
 
-        plataformas_dados = Plataformas.PLATAFORMAS_DADOS
+        plataformas_dados = Plataformas.DADOS
         i = 1
 
         for plat in Plataformas.PLATAFORMAS:

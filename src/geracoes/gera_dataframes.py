@@ -14,12 +14,12 @@ from utils.representa_progresso import representa_progresso
 
 def monta_dataframes_por_dimensao(ds: xr.Dataset) -> tuple[dd.DataFrame, DataFrame]:
 
-    variaveis_2d = [v for v in ds.data_vars if ds[v].dims == (cr.TEMPO_UTC0, cr.ALTURA)]
-    ds_2d = ds[variaveis_2d].chunk({cr.TEMPO_UTC0: 200})
+    variaveis_2d = [v for v in ds.data_vars if ds[v].dims == (cr.DadosVariaveis.TEMPO_UTC0, cr.DadosVariaveis.ALTURA)]
+    ds_2d = ds[variaveis_2d].chunk({cr.DadosVariaveis.TEMPO_UTC0: 200})
     df = ds_2d.to_dask_dataframe()
 
     # Seleciona variáveis 1D (somente tempo) e monta um dataframe com elas
-    variaveis_1d_str = [v for v in ds.data_vars if ds[v].dims == (cr.TEMPO_UTC0,)]
+    variaveis_1d_str = [v for v in ds.data_vars if ds[v].dims == (cr.DadosVariaveis.TEMPO_UTC0,)]
     df_str = ds[variaveis_1d_str].to_dataframe().reset_index()
 
     return df, df_str
@@ -29,7 +29,7 @@ def merge_dataframes_no_tempo(df: dd.DataFrame, df_str: DataFrame) -> dd.DataFra
 
     # Merge dos dataframes com base no tempo
     df = df.reset_index()
-    df = df.merge(df_str, on=cr.TEMPO_UTC0, how="left")
+    df = df.merge(df_str, on=cr.DadosVariaveis.TEMPO_UTC0, how="left")
 
     return df
 

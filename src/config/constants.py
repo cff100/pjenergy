@@ -5,7 +5,7 @@ from utils.indice_mais_um import lista_indice_mais_um
 class ParametrosObtencaoDados:
     """Define os parâmetros fixos para a obtenção de dados meteorológicos do Climate Data Store.
     
-    Atributos:
+    Attributes:
         VARIAVEIS (tuple): Variáveis meteorológicas a serem requisitadas.
         PRESSAO_NIVEIS (tuple): Níveis de pressão (em hPa) a serem utilizados.
         ANOS, MESES, DIAS, HORAS (tuple): Intervalos temporais considerados.
@@ -47,7 +47,7 @@ class ParametrosObtencaoDados:
 class ConstantesNumericas:
     """Agrupamento de constantes numéricas importantes
     
-    Atributos:
+    Attributes:
         G (float): Aceleração da gravidade (m/s²).
     """
 
@@ -60,7 +60,7 @@ class ConstantesNumericas:
 class ArquivosNomes:
     """Agrupamento de nomes de arquivos e padrões de nomes de arquivos
     
-    Atributos:
+    Attributes:
         PADRAO_ARQUIVOS_NC_ORIGINAIS (str): Padrão geral de nome para os arquivos .nc obtidos do Climate Data Store.
         PADRAO_ARQUIVOS_NC_ORIGINAIS_REGEX (str): Expressão regular para capturar os parâmetros dos nomes dos arquivos netCDF.
         ARQUIVO_NC_UNIDO (str): Nome do arquivo gerado pela união dos datasets originais.
@@ -80,10 +80,8 @@ class ArquivosNomes:
     # - O ponto de interrogação após o quantificador torna a captura não gananciosa, pegando o menor número possível de caracteres.
     # - A barra invertida antes dos parênteses é necessária para escapar os parênteses, pois eles têm significado especial em expressões regulares. 
     
-    # Nome do arquivo gerado pela união dos datasets originais
     ARQUIVO_NC_UNIDO = "dataset_unido.nc"
 
-    # Nome do arquivo do dataset gerado para um ponto específico que não é uma plataforma
     ARQUIVO_NC_PONTO_NAO_PLATAFORMA = "ponto_nao_plataforma.nc"
 
 
@@ -91,7 +89,20 @@ class ArquivosNomes:
 
 
 class PastasNomes:
-    """Agrupamento de nomes de pastas"""
+    """Agrupamento de nomes de pastas.
+
+    Attributes:
+        DADOS (str): Nome da pasta onde todos os dados serão armazenados.
+        DATASETS (str): Nome da pasta onde os datasets serão armazenados.
+        DATAFRAMES (str): Nome da pasta onde os dataframes serão armazenados.
+        ORIGINAIS (str): Nome da pasta onde os arquivos originais serão armazenados.
+        UNIDO (str): Nome da pasta onde o dataset unificado será armazenado.
+        COORDENADAS_ESPECIFICAS (str): Nome da pasta onde os dados de coordenadas específicas serão armazenados.
+        PLATAFORMAS (str): Nome da pasta onde os dados das plataformas serão armazenados.
+        PONTOS_NAO_PLATAFORMA (str): Nome da pasta onde os dados de pontos que não são plataformas serão armazenados.
+        TESTES (str): Nome da pasta onde os testes serão armazenados.
+        DADOS_GERADOS_TESTES (str): Nome da pasta onde os dados gerados para testes serão armazenados.
+    """
 
     DADOS = "data"
     DATASETS = "datasets"
@@ -105,87 +116,128 @@ class PastasNomes:
     TESTES = "tests"
     DADOS_GERADOS_TESTES = "dados_gerados_testes"
 
+
 class FormatosArquivo:
+    """Agrupamento de formatos de arquivo suportados.
+
+    Attributes:
+        NETCDF (str): Formato NetCDF.
+        PARQUET (str): Formato Parquet.
+        FORMATOS_ACEITOS (list): Lista de formatos aceitos.
+    """
+
     NETCDF = "netcdf"
     PARQUET = "parquet"
-    DASK = "dask"
 
-    FORMATOS_ACEITOS = [NETCDF, PARQUET, DASK]
+    FORMATOS_ACEITOS = [NETCDF, PARQUET]
 
 
 
 class Correspondencias:
+    """Agrupamento de diversas correspondências de constantes e nomes de variáveis.
+
+    Attributes:
+        DadosVariaveis (class): Agrupamento de nomes de variáveis e dimensões para facilitar o acesso e manipulação dos dados obtidos.
+        Chaves (class): Agrupamento de chaves utilizadas em dicionários para facilitar o acesso aos dados das plataformas."""
+
+    class DadosVariaveis:
+        """Agrupamento de nomes de variáveis e dimensões para facilitar o acesso e manipulação dos dados obtidos.
+        
+        Attributes:
+            VARIAVEIS_REPRESENTACAO_ORIGINAL (dict): Correspondências entre os nomes utilizados para requisitar os dados e os utilizados nos arquivos NetCDF obtidos.
+            TEMPO_UTC0 (str): Nome da variável de tempo em UTC.
+            TEMPO_BRAS (str): Nome da variável de tempo em horário brasileiro.
+            PRESSAO (str): Nome da variável de pressão.
+            LATITUDE (str): Nome da variável de latitude.
+            LONGITUDE (str): Nome da variável de longitude.
+            VELOCIDADE_U (str): Nome da variável de velocidade u.
+            VELOCIDADE_V (str): Nome da variável de velocidade v.
+            VELOCIDADE_RESULTANTE (str): Nome da variável de velocidade resultante.
+            GEOPOTENCIAL (str): Nome da variável de geopotencial.
+            ALTURA (str): Nome da variável de altura.
+            UMIDADE_RELATIVA (str): Nome da variável de umidade relativa.
+            TEMPERATURA_KELVIN (str): Nome da variável de temperatura em Kelvin.
+            TEMPERATURA_CELSIUS (str): Nome da variável de temperatura em Celsius.
+            ANO (str): Nome da variável de ano.
+            MES (str): Nome da variável de mês.
+            MES_NOME (str): Nome da variável de nome do mês.
+            DIA (str): Nome da variável de dia.
+            HORA (str): Nome da variável de hora.
+            NUMBER (str): Nome da variável de número.
+            EXP_VER (str): Nome da variável de versão experimental.
+            ESTACAO_DO_ANO (str): Nome da variável de estação do ano.
+            NOVOS_NOMES (dict): Correspondência entre nomes de variáveis e dimensões antigos, no formato {nome_antigo: nome_novo}.
+            NUMERO_PARA_MES (dict): Correspondência entre o número do mês e seu nome
+            """
+        
+
+        VARIAVEIS_REPRESENTACAO_ORIGINAL = {"u_component_of_wind": "u", "v_component_of_wind": "v", "relative_humidity": "r", 
+                                "temperature": "t", "geopotential": "z"}
+
+
+        # Estes nomes são utilizados para renomear as variáveis e dimensões dos dados obtidos, entre outras coisas,
+        # facilitando a manipulação e análise dos dados.
+        TEMPO_UTC0 = "tempo_UTC0"
+        TEMPO_BRAS = "tempo_bras"
+        PRESSAO = "pressao"
+        LATITUDE = "lat"
+        LONGITUDE = "lon"
+        VELOCIDADE_U = "vel_u"
+        VELOCIDADE_V = "vel_v"
+        VELOCIDADE_RESULTANTE = "vel_res"
+        GEOPOTENCIAL = "z"
+        ALTURA = "h"
+        UMIDADE_RELATIVA = "r"
+        TEMPERATURA_KELVIN = "t_K"
+        TEMPERATURA_CELSIUS = "t_C"
+        ANO = "ano"
+        MES = "mes"
+        MES_NOME = "mes_nome"
+        DIA = "dia"
+        HORA = "hora"
+        NUMBER = "number"
+        EXP_VER = "expver"
+        ESTACAO_DO_ANO = "estacao"
+
+        # Nem todos os nomes são necessariamente alterados.
+        NOVOS_NOMES = {"valid_time": TEMPO_UTC0, "pressure_level": PRESSAO, 
+                    "z": GEOPOTENCIAL, "r": UMIDADE_RELATIVA, 
+                    "t": TEMPERATURA_KELVIN, "u": VELOCIDADE_U, 
+                    "v": VELOCIDADE_V}
     
-    # --------------------------------------------------------------------
-    # Agrupamento de nomes de colunas e variáveis para facilitar o acesso
+   
+        NUMERO_PARA_MES = {
+            1: "Janeiro", 2: "Fevereiro", 3: "Março", 4: "Abril",
+            5: "Maio", 6: "Junho", 7: "Julho", 8: "Agosto",
+            9: "Setembro", 10: "Outubro", 11: "Novembro", 12: "Dezembro"
+        }
 
-    # Dicionário de correspondências entre os nomes utilizados para requisitar os dados e os utilizados nos arquivos NetCDF obtidos.
-    VARIAVEIS_REPRESENTACAO_ORIGINAL = {"u_component_of_wind": "u", "v_component_of_wind": "v", "relative_humidity": "r", 
-                               "temperature": "t", "geopotential": "z"}
 
-    # Conjunto de novos nomes de variáveis e dimensões
-    # Estes nomes são utilizados para renomear as variáveis e dimensões dos dados obtidos,
-    # facilitando a manipulação e análise dos dados.
-    TEMPO_UTC0 = "tempo_UTC0"
-    TEMPO_BRAS = "tempo_bras"
-    PRESSAO = "pressao"
-    LATITUDE = "lat"
-    LONGITUDE = "lon"
-    VELOCIDADE_U = "vel_u"
-    VELOCIDADE_V = "vel_v"
-    VELOCIDADE_RESULTANTE = "vel_res"
-    GEOPOTENCIAL = "z"
-    ALTURA = "h"
-    UMIDADE_RELATIVA = "r"
-    TEMPERATURA_KELVIN = "t_K"
-    TEMPERATURA_CELSIUS = "t_C"
-    ANO = "ano"
-    MES = "mes"
-    MES_NOME = "mes_nome"
-    DIA = "dia"
-    HORA = "hora"
-    NUMBER = "number"
-    EXP_VER = "expver"
-    ESTACAO_DO_ANO = "estacao"
+    class Chaves:
+        """Agrupamento de chaves utilizadas em dicionários para facilitar o acesso aos dados das plataformas.
+        
+        Attributes:
+            SIMBOLO_CHAVE (str): Chave para o símbolo da plataforma.
+            COORDENADAS_CHAVE (str): Chave para as coordenadas da plataforma.
+            ARQUIVO_NC_CHAVE (str): Chave para o nome do arquivo NetCDF
+            PASTA_DASK_CHAVE (str): Chave para o nome da pasta no Dask onde os dados da plataforma serão armazenados."""
 
-    # Dicionário {nome pré-existente : novo nome}. Associa um novo nome aos nomes de variáveis e dimensões. 
-    # Nem todos os nomes são necessariamente alterados.
-    NOVOS_NOMES = {"valid_time": TEMPO_UTC0, "pressure_level": PRESSAO, 
-                   "z": GEOPOTENCIAL, "r": UMIDADE_RELATIVA, 
-                   "t": TEMPERATURA_KELVIN, "u": VELOCIDADE_U, 
-                   "v": VELOCIDADE_V}
+
+
+        SIMBOLO_CHAVE = "simbolo"
+        COORDENADAS_CHAVE = "coords"
+        ARQUIVO_NC_CHAVE = "arquivo_nc_nome"
+        PASTA_DASK_DATAFRAME_CHAVE = "pasta_dask_nome"
     
-    # # Lista da ordem das colunas finais do dataframe
-    # lista_colunas_ordem = [ano, estacao_do_ano, mes_nome, mes, dia, hora, pressao, geopotencial, 
-    #                  altura, latitude, longitude, velocidade_u, velocidade_v, 
-    #                  velocidade_resultante, temperatura_kelvin, temperatura_celsius, 
-    #                  umidade_relativa, tempo_UTC0, tempo_bras]
-
-
-    # ----------------------------------------------------------------------
-    # Chaves do dicionário das plataformas
-    SIMBOLO_CHAVE = "simbolo"
-    COORDENADAS_CHAVE = "coords"
-    ARQUIVO_NC_CHAVE = "arquivo_nc_nome"
-    PASTA_DASK_CHAVE = "pasta_dask_nome"
-    
-
-
-
 
 class OutrasConstantes:
-    """Agrupamento de outras constantes importantes"""
+    """Agrupamento de outras constantes importantes.
+    
+    Attributes:
+        ESTACAO_DO_ANO_DATAS (dict): Datas aproximadas de início e fim das estações do ano.
+    """
 
-    # Dicionário de correspondência entre o número do mês e seu nome
-    NUMERO_PARA_MES = {
-        1: "Janeiro", 2: "Fevereiro", 3: "Março", 4: "Abril",
-        5: "Maio", 6: "Junho", 7: "Julho", 8: "Agosto",
-        9: "Setembro", 10: "Outubro", 11: "Novembro", 12: "Dezembro"
-    }
-
-
-    # Dicionário com as datas aproximadas de início e fim das estações do ano.
-    # OBS: As datas reais variam por um ou 2 dias de ano em ano.
+    # As datas reais variam por um ou 2 dias de ano em ano.
     ESTACAO_DO_ANO_DATAS = {"Verão": 
                                 {"inicio": 
                                     {"dia": 21, "mes": 12},
@@ -216,7 +268,29 @@ class OutrasConstantes:
 
 
 class Plataformas:
-    """Agrupamento de dados das plataformas de petróleo na Bacia de Campos"""
+    """Agrupamento de dados das plataformas de petróleo na Bacia de Campos
+    
+    Attributes:
+        PLATAFORMAS (list): Nomes das plataformas.
+        COORDENADAS (list): Coordenadas das plataformas.
+        SIMBOLOS (list): Símbolos das plataformas.
+
+            Exemples: ["p1", "p2", "p3", ...]
+        
+        ARQUIVOS_NOMES_BASE (list): Base dos nomes dos arquivos para cada plataforma, utilizando o símbolo e o nome da plataforma.
+
+            Exemples: ["p1-NAMORADO_2_(PNA-2)", "p2-PETROBRAS_26_(P-26)", ...]
+
+        ARQUIVOS_NC_NOMES (list): Nomes dos arquivos NetCDF correspondentes, com extensão ".nc".
+
+            Exemples: ["p1-NAMORADO_2_(PNA-2).nc", "p2-PETROBRAS_26_(P-26).nc", ...]
+
+        PASTAS_DASK_DATAFRAME_NOMES (list): Nomes das pastas onde os dados serão armazenados no Dask DataFrame, sem extensão.
+
+            Exemples: ["p1-NAMORADO_2_(PNA-2)", "p2-PETROBRAS_26_(P-26)", ...]
+
+        DADOS (dict): Dados das plataformas, no formato {plataforma: {chave: valor}, onde valor é um dicionário de simbolos, coordenadas, nome do arquivo NetCDF e nome da pasta do arquivo dask dataframe.
+        """
 
 
     # Nome das plataformas, coordenadas e símbolos correspondentes.
@@ -234,32 +308,30 @@ class Plataformas:
                    (-22.17535, -40.29147)]
     
 
-    # Criação de símbolos para as plataformas, começando com "p1", "p2", etc.
     # O objetivo é criar uma lista de símbolos que serão utilizados para identificar as plataformas de forma única.
-    SIMBOLOS_PLATAFORMAS = ["p" + str(indice) for indice in lista_indice_mais_um(PLATAFORMAS)]
+    SIMBOLOS = ["p" + str(indice) for indice in lista_indice_mais_um(PLATAFORMAS)]
 
-    # Criação dos nomes dos arquivos para cada plataforma, utilizando o símbolo e o nome da plataforma.
     # O nome do arquivo segue o padrão "p1-NAMORADO_2_(PNA-2)", onde "p1" é o símbolo da plataforma e "NAMORADO_2_(PNA-2)" é o nome da plataforma com espaços substituídos por underlines.
-    ARQUIVO_PLATAFORMAS_NOME = [s + "-" + espaco_para_underline(p) for s, p in zip(SIMBOLOS_PLATAFORMAS, PLATAFORMAS)]
+    ARQUIVOS_NOMES_BASE = [s + "-" + espaco_para_underline(p) for s, p in zip(SIMBOLOS, PLATAFORMAS)]
 
-    ARQUIVO_NC_PLATAFORMAS_NOME = [n + ".nc" for n in ARQUIVO_PLATAFORMAS_NOME]
-    PASTA_DASK_PLATAFORMAS_NOME = ARQUIVO_PLATAFORMAS_NOME # Não possui extensão, pois é o nome da pasta onde os dados serão armazenados no Dask.
+    ARQUIVOS_NC_NOMES = [n + ".nc" for n in ARQUIVOS_NOMES_BASE]
+    PASTAS_DASK_DATAFRAME_NOMES = ARQUIVOS_NOMES_BASE # Não possui extensão, pois é o nome da pasta onde os dados serão armazenados no Dask.
 
 
 
-    PLATAFORMAS_DADOS = {
+    DADOS = {
                         p : {
-                            Correspondencias.SIMBOLO_CHAVE : s, 
-                            Correspondencias.COORDENADAS_CHAVE : c, 
-                            Correspondencias.ARQUIVO_NC_CHAVE : na_nc, 
-                            Correspondencias.PASTA_DASK_CHAVE : na_pq
+                            Correspondencias.Chaves.SIMBOLO_CHAVE : s, 
+                            Correspondencias.Chaves.COORDENADAS_CHAVE : c, 
+                            Correspondencias.Chaves.ARQUIVO_NC_CHAVE : na_nc, 
+                            Correspondencias.Chaves.PASTA_DASK_DATAFRAME_CHAVE : na_pq
                             } 
                         for s, p, c, na_nc, na_pq in zip(
-                            SIMBOLOS_PLATAFORMAS, 
+                            SIMBOLOS, 
                             PLATAFORMAS, 
                             COORDENADAS, 
-                            ARQUIVO_NC_PLATAFORMAS_NOME, 
-                            PASTA_DASK_PLATAFORMAS_NOME
+                            ARQUIVOS_NC_NOMES, 
+                            PASTAS_DASK_DATAFRAME_NOMES
                             )   
                         }
 
@@ -268,6 +340,8 @@ class Plataformas:
 
 
 if "__main__" == __name__:
+    
+    # Verificação 
     
     print(f"Anos: {ParametrosObtencaoDados.ANOS} \n")
 
@@ -279,7 +353,7 @@ if "__main__" == __name__:
 
     print(f"Área: {ParametrosObtencaoDados.AREA} \n")
 
-    print(f"Dados das plataformas: {Plataformas.PLATAFORMAS_DADOS}")
+    print(f"Dados das plataformas: {Plataformas.DADOS}")
 
     print(f"Formato netcdf: {FormatosArquivo.NETCDF}")
 

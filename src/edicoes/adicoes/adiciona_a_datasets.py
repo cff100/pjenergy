@@ -44,7 +44,7 @@ def adiciona_estacao_do_ano(dataset: xr.Dataset) -> xr.Dataset:
 
 
     # Cria a nova variável
-    ds = dataset.assign({cr.ESTACAO_DO_ANO: (cr.TEMPO_UTC0, np.array(estacoes))})
+    ds = dataset.assign({cr.DadosVariaveis.ESTACAO_DO_ANO: (cr.DadosVariaveis.TEMPO_UTC0, np.array(estacoes))})
     return ds
 
 
@@ -54,25 +54,25 @@ def adiciona_variaveis(dataset: xr.Dataset) -> xr.Dataset:
 
 
     # Cria variável de velocidade resultante
-    dataset[cr.VELOCIDADE_RESULTANTE] = (dataset["u"]**2 + dataset["v"]**2) ** 0.5
+    dataset[cr.DadosVariaveis.VELOCIDADE_RESULTANTE] = (dataset["u"]**2 + dataset["v"]**2) ** 0.5
 
     # Cria variável de temperatura em celsius
-    dataset[cr.TEMPERATURA_CELSIUS] = dataset["t"] - 273.15
+    dataset[cr.DadosVariaveis.TEMPERATURA_CELSIUS] = dataset["t"] - 273.15
 
     # Cria coordenada de tempo no UTC-3
     nome_datetime = "valid_time"
     tempo_bras = pd.to_datetime(dataset[nome_datetime].values).tz_localize("UTC").tz_convert("Etc/GMT+3").tz_localize(None)
-    ds = dataset.assign_coords({cr.TEMPO_BRAS: (nome_datetime, tempo_bras)})
+    ds = dataset.assign_coords({cr.DadosVariaveis.TEMPO_BRAS: (nome_datetime, tempo_bras)})
 
     
     
     # Cria coordenadas temporais separadas em partes a partir do datatime no horário de Brasília
-    ano = ds[cr.TEMPO_BRAS].dt.year
-    mes = ds[cr.TEMPO_BRAS].dt.month
-    mes_str = mes.copy(data=[oc.NUMERO_PARA_MES[int(m)] for m in mes.values])
-    dia = ds[cr.TEMPO_BRAS].dt.day
-    hora = ds[cr.TEMPO_BRAS].dt.hour
-    hora_str = ds[cr.TEMPO_BRAS].dt.strftime("%H:00")
+    ano = ds[cr.DadosVariaveis.TEMPO_BRAS].dt.year
+    mes = ds[cr.DadosVariaveis.TEMPO_BRAS].dt.month
+    mes_str = mes.copy(data=[cr.DadosVariaveis.NUMERO_PARA_MES[int(m)] for m in mes.values])
+    dia = ds[cr.DadosVariaveis.TEMPO_BRAS].dt.day
+    hora = ds[cr.DadosVariaveis.TEMPO_BRAS].dt.hour
+    hora_str = ds[cr.DadosVariaveis.TEMPO_BRAS].dt.strftime("%H:00")
 
     dados = {"ano": ano, "mes": mes, "mes_str": mes_str, "dia": dia, "hora": hora, "hora_str": hora_str}
 

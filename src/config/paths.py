@@ -30,10 +30,10 @@ class PathsDados:
         o nome da pasta onde se localizam os arquivos desse formato específico."""
 
         if formato_arquivo == fa.NETCDF:
-            chave = cr.ARQUIVO_NC_CHAVE
+            chave = cr.Chaves.SIMBOLO_CHAVE
             pasta_data = pn.DATASETS
         elif formato_arquivo == fa.PARQUET:
-            chave = cr.PASTA_DASK_CHAVE
+            chave = cr.Chaves.SIMBOLO_CHAVE
             pasta_data = pn.DATAFRAMES  
         else:
             raise ValueError(f"Chave não aceita. Valores aceitos: {fa.FORMATOS_ACEITOS}.")
@@ -45,7 +45,7 @@ class PathsDados:
 
         # Caso a plataforma exista na base de dados
         if plataforma in plt.PLATAFORMAS:
-            nome_arquivo = plt.PLATAFORMAS_DADOS[plataforma][chave]
+            nome_arquivo = plt.DADOS[plataforma][chave]
             caminho_relativo = Path(pn.PLATAFORMAS) / nome_arquivo
         # Caso seja escolhido um outro ponto qualquer coberto pelos dados
         elif plataforma is None:
@@ -55,7 +55,7 @@ class PathsDados:
                 nome_arquivo = pn.PONTOS_NAO_PLATAFORMA # É na verdade uma pasta
             caminho_relativo = Path(pn.PONTOS_NAO_PLATAFORMA) / nome_arquivo
         else:
-            raise ValueError(f" {plataforma} é um valor não válido para plataforma. Valores válidos: \n{plt.PLATAFORMAS} \nOu seus simbolos correspondentes: \n{plt.SIMBOLOS_PLATAFORMAS}")
+            raise ValueError(f" {plataforma} é um valor não válido para plataforma. Valores válidos: \n{plt.PLATAFORMAS} \nOu seus simbolos correspondentes: \n{plt.SIMBOLOS}")
         
         return caminho_relativo
 

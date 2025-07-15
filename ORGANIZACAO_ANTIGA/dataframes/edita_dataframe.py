@@ -8,7 +8,7 @@ from datasets_operations.dataframes.salva_dataframe_substituindo import salva_da
 from config.paths import DIRETORIO_DATAFRAME_PRIMARIO, DIRETORIO_DATAFRAME_NOVAS_COLUNAS
 from config.constants import CorrespondeNomesDados as ncd
 from config.constants import ConstantesNumericas as cn
-from config.constants import OutrasConstantes as oc
+from config.constants import OutrasConstantes as oc, Correspondencias as cr
 from utils.decide_estacao import decide_estacao_vetorizado
 
 def copia_dataframe_primario(diretorio_dataframe_primario: Path = DIRETORIO_DATAFRAME_PRIMARIO, diretorio_dataframe_novas_colunas: Path = DIRETORIO_DATAFRAME_NOVAS_COLUNAS):
@@ -73,7 +73,7 @@ def adiciona_colunas_tempo(diretorio_dataframe: Path = DIRETORIO_DATAFRAME_NOVAS
     df[ncd.hora] = df[ncd.tempo_bras].dt.hour.astype(str).str.zfill(2) + ":" + df[ncd.tempo_bras].dt.minute.astype(str).str.zfill(2)  # Formata a hora como string com dois dígitos
     
     # Converte número do mês para nome do mês
-    df[ncd.mes_nome] = df[ncd.tempo_bras].dt.month.map(oc.NUMERO_PARA_MES, meta=(ncd.mes_nome, "object"))
+    df[ncd.mes_nome] = df[ncd.tempo_bras].dt.month.map(cr.DadosVariaveis.NUMERO_PARA_MES, meta=(ncd.mes_nome, "object"))
     
     ## Salva dataframe substituindo o original
     print("Adicionando colunas de tempo...")

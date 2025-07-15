@@ -33,5 +33,7 @@ def garante_path_pai_existencia(path: Path) -> None:
 
 
 if __name__ == "__main__":
-    # Exemplo de levantamento de erro
-    verifica_erro_nao_existe_path(Path("a/b/c/d/e/f"))
+    
+    # Testes
+    
+    verifica_erro_nao_existe_path(Path("a/b/c/d/e/f")) # Exemplo de levantamento de erro

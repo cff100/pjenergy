@@ -14,7 +14,7 @@ def gerencia_plataforma_representacoes(representacao: str ) -> str:
 
 
     # Não altera nada caso a representação não seja algum dos símbolos registrados, mesmo que seja um nome errado da plataforma
-    if representacao not in plat.SIMBOLOS_PLATAFORMAS:
+    if representacao not in plat.SIMBOLOS:
         if representacao not in plat.PLATAFORMAS:
             # Aviso para quando a representação não correponde a nenhuma plataforma e nem a nenhum símbolo delas.
             print(f"\nMantido o nome original: {representacao}\n") 
@@ -22,13 +22,13 @@ def gerencia_plataforma_representacoes(representacao: str ) -> str:
 
     # Busca o nome da plataforma associada ao símbolo
     for plataforma in plat.PLATAFORMAS:
-        if plat.PLATAFORMAS_DADOS[plataforma][cr.SIMBOLO_CHAVE] == representacao:
+        if plat.DADOS[plataforma][cr.Chaves.SIMBOLO_CHAVE] == representacao:
             print(f"\nCorrespondência: {representacao} -> {plataforma}\n")
             return plataforma
         
     raise ValueError(
         f"Valor de 'representacao' inválido: {representacao}."
-        f"Símbolos válidos: {plat.SIMBOLOS_PLATAFORMAS}"
+        f"Símbolos válidos: {plat.SIMBOLOS}"
         )
 
 if __name__ == "__main__":

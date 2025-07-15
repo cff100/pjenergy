@@ -7,5 +7,6 @@ def espaco_para_underline(nome: str) -> str:
 
 
 if __name__ == "__main__":
+    # Teste
     nome = espaco_para_underline("casa azul")
     print(nome)
