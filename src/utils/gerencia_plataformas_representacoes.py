@@ -13,7 +13,8 @@ def gerencia_plataforma_representacoes(representacao: str ) -> str:
         da plataforma.
 
     Raises:
-        ValueError: 
+        ValueError: Se a representação não for válida.
+        ValueError: Se a representação for um símbolo que não está associado a nenhuma plataforma conhecida.
     """
 
 
