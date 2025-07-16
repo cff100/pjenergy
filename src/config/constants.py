@@ -45,7 +45,7 @@ class ParametrosObtencaoDados:
 
 
 class ConstantesNumericas:
-    """Agrupamento de constantes numéricas importantes
+    """Agrupa constantes numéricas importantes
     
     Attributes:
         G (float): Aceleração da gravidade (m/s²).
@@ -58,7 +58,7 @@ class ConstantesNumericas:
 
 
 class ArquivosNomes:
-    """Agrupamento de nomes de arquivos e padrões de nomes de arquivos
+    """Agrupa nomes de arquivos e padrões de nomes de arquivos.
     
     Attributes:
         PADRAO_ARQUIVOS_NC_ORIGINAIS (str): Padrão geral de nome para os arquivos .nc obtidos do Climate Data Store.
@@ -89,7 +89,7 @@ class ArquivosNomes:
 
 
 class PastasNomes:
-    """Agrupamento de nomes de pastas.
+    """Agrupa nomes de pastas.
 
     Attributes:
         DADOS (str): Nome da pasta onde todos os dados serão armazenados.
@@ -118,7 +118,7 @@ class PastasNomes:
 
 
 class FormatosArquivo:
-    """Agrupamento de formatos de arquivo suportados.
+    """Agrupa formatos de arquivo.
 
     Attributes:
         NETCDF (str): Formato NetCDF.
@@ -134,14 +134,15 @@ class FormatosArquivo:
 
 
 class Correspondencias:
-    """Agrupamento de diversas correspondências de constantes e nomes de variáveis.
+    """Agrupa diversas correspondências de constantes e nomes de variáveis.
 
     Attributes:
         DadosVariaveis (class): Agrupamento de nomes de variáveis e dimensões para facilitar o acesso e manipulação dos dados obtidos.
-        Chaves (class): Agrupamento de chaves utilizadas em dicionários para facilitar o acesso aos dados das plataformas."""
+        Chaves (class): Agrupamento de chaves utilizadas em dicionários para facilitar o acesso aos dados das plataformas.
+    """
 
     class DadosVariaveis:
-        """Agrupamento de nomes de variáveis e dimensões para facilitar o acesso e manipulação dos dados obtidos.
+        """Agrupa nomes de variáveis e dimensões para facilitar o acesso e manipulação dos dados obtidos.
         
         Attributes:
             VARIAVEIS_REPRESENTACAO_ORIGINAL (dict): Correspondências entre os nomes utilizados para requisitar os dados e os utilizados nos arquivos NetCDF obtidos.
@@ -214,7 +215,7 @@ class Correspondencias:
 
 
     class Chaves:
-        """Agrupamento de chaves utilizadas em dicionários para facilitar o acesso aos dados das plataformas.
+        """Agrupa chaves utilizadas em dicionários para facilitar o acesso aos dados das plataformas.
         
         Attributes:
             SIMBOLO_CHAVE (str): Chave para o símbolo da plataforma.
@@ -231,7 +232,7 @@ class Correspondencias:
     
 
 class OutrasConstantes:
-    """Agrupamento de outras constantes importantes.
+    """Agrupa outras constantes importantes.
     
     Attributes:
         ESTACAO_DO_ANO_DATAS (dict): Datas aproximadas de início e fim das estações do ano.
@@ -268,7 +269,7 @@ class OutrasConstantes:
 
 
 class Plataformas:
-    """Agrupamento de dados das plataformas de petróleo na Bacia de Campos
+    """Agrupa dados das plataformas de petróleo na Bacia de Campos
     
     Attributes:
         PLATAFORMAS (list): Nomes das plataformas.

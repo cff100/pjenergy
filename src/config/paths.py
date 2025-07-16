@@ -7,7 +7,13 @@ from utils.gerencia_plataformas_representacoes import gerencia_plataforma_repres
 
 
 class DiretoriosBasicos:
-    """Agrupamento dos diretorios básicos do projeto"""
+    """Agrupa diretorios básicos do projeto
+    
+    Attributes:
+        DIRETORIO_BASE_GERAL (Path): Diretório base do projeto.
+        DIRETORIO_DADOS (Path): Diretório onde se localizam os dados.
+        DIRETORIO_TESTES (Path): Diretório onde se localizam os testes.
+        """
 
     # Diretório do projeto
     DIRETORIO_BASE_GERAL = Path(__file__).parent.parent.parent 
@@ -22,7 +28,7 @@ class DiretoriosBasicos:
 
 
 class PathsDados:
-    """Agrupamento de diretórios e caminhos da pastas onde se localizam os dados."""
+    """Agrupa diretórios principais e fornece funções para construir caminhos para diferentes tipos de dados."""
 
     @staticmethod
     def obtem_chave_e_nome_pasta(formato_arquivo: str) -> tuple[str, str]:
@@ -61,17 +67,25 @@ class PathsDados:
 
     @staticmethod
     def obter_path_coord_especifica(formato_arquivo: Literal["netcdf", "parquet"], plataforma: Optional[str] = None) -> Path:   
-        """Decide o path absoluto a partir do valor de 'formato_arquivo' e 'plataforma'.
-        \nParâmetros:
-        - formato_arquivo: str, deve ser "netcdf" ou "parquet".
-        - plataforma: str ou None, se for None, o caminho será para um ponto não específico.
-        Retorna:
-        - caminho: Path, caminho absoluto do arquivo correspondente.
+        """Decide o path (caminho ou diretório) absoluto do arquivo ou pasta que contém dados 
+        para coordenadas específicas para uma plataforma, dado o formato de arquivo com o qual 
+        se deseja trabalhar.
+        
+        Args:
+            formato_arquivo (Literal["netcdf", "parquet"]): Formato de arquivo com o qual se deseja trabalhar.
+
+                Se `formato_arquivo` for "netcdf", o caminho retornado é de um **arquivo único**.
+                Se for "parquet", o caminho retornado é de uma **pasta** com múltiplos arquivos .parquet.
+
+            plataforma (Optional[str]): Nome (ou símbolo) da plataforma cujo caminho dos dados se deseja obter.
+
+        Returns: 
+            Path: Caminho ou diretório absoluto do arquivo ou pasta.
         """
 
-        # Verifica se o formato do arquivo é string e chama a função de gerência de plataforma
-        # para garantir a possibilidade de receber tanto o nome completo da plataforma quanto seu símbolo.
-        if isinstance(plataforma, str):
+
+        if isinstance(plataforma, str): # Condição para descartar os casos em que não é passado nenhuma disciplina em específico.
+            # Garante a possibilidade de receber tanto o nome completo da plataforma quanto seu símbolo
             plataforma = gerencia_plataforma_representacoes(plataforma)
 
         chave, pasta_data = PathsDados.obtem_chave_e_nome_pasta(formato_arquivo)
