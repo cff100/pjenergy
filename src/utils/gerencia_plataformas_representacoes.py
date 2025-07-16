@@ -1,35 +1,41 @@
-from config.constants import Plataformas as plat, Correspondencias as cr
+from config.constants import Plataformas, Correspondencias as cr
 
 def gerencia_plataforma_representacoes(representacao: str ) -> str:
-    """Gerencia a representação de plataformas, convertendo símbolos em nomes de plataformas específicos.
+    """Gerencia a representação de plataformas, convertendo símbolos em nomes de plataformas específicos e 
+    levantando erros para nomes errados.
 
-    Parâmetros:
-    - representacao: str
-    Pode ser um nome padronizado de plataforma, um símbolo associado ou outro valor qualquer. 
-    Se for um nome já padronizado ou um valor irreconhecível, será mantido sem alteração.
+    Args:
+        representacao (str): Pode ser um nome padronizado de plataforma, um símbolo associado ou outra string qualquer. 
+            Nesse último caso, é levantado um erro. 
 
-    Retorna:
-    - str: nome da plataforma correspondente ou o próprio valor se não houver conversão.
+    Returns:
+        str: Nome da plataforma, no caso de `representação` ser o símbolo associado à plataforma ou já ser o próprio nome
+        da plataforma.
+
+    Raises:
+        ValueError: 
     """
 
 
-    # Não altera nada caso a representação não seja algum dos símbolos registrados, mesmo que seja um nome errado da plataforma
-    if representacao not in plat.SIMBOLOS:
-        if representacao not in plat.PLATAFORMAS:
-            # Aviso para quando a representação não correponde a nenhuma plataforma e nem a nenhum símbolo delas.
-            print(f"\nMantido o nome original: {representacao}\n") 
-        return representacao
+    if representacao not in Plataformas.SIMBOLOS and representacao not in Plataformas.PLATAFORMAS:
+        raise ValueError("Nome inválido para plataforma. " \
+        f"Nomes validos: {Plataformas.PLATAFORMAS} ou " \
+        f"Seus símbolos: {Plataformas.SIMBOLOS}")
 
-    # Busca o nome da plataforma associada ao símbolo
-    for plataforma in plat.PLATAFORMAS:
-        if plat.DADOS[plataforma][cr.Chaves.SIMBOLO_CHAVE] == representacao:
-            print(f"\nCorrespondência: {representacao} -> {plataforma}\n")
-            return plataforma
+    elif representacao in Plataformas.PLATAFORMAS:
+        return representacao
+    
+    else: # representacao in Plataformas.SIMBOLOS:
+        # Busca o nome da plataforma associada ao símbolo
+        for plataforma in Plataformas.PLATAFORMAS:
+            if Plataformas.DADOS[plataforma][cr.Chaves.SIMBOLO_CHAVE] == representacao:
+                print(f"\nCorrespondência: {representacao} -> {plataforma}\n")
+                return plataforma
+        # Se não encontrar, lança erro
+        raise ValueError("Símbolo não associado a nenhuma plataforma conhecida.")
+
         
-    raise ValueError(
-        f"Valor de 'representacao' inválido: {representacao}."
-        f"Símbolos válidos: {plat.SIMBOLOS}"
-        )
+ 
 
 if __name__ == "__main__":
     plataforma = gerencia_plataforma_representacoes("p3")   

@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Optional, Literal
 
-from config.constants import ArquivosNomes as an, PastasNomes as pn, Plataformas as plt, Correspondencias as cr, FormatosArquivo as fa
+from config.constants import ArquivosNomes as an, PastasNomes as pn, Plataformas, Correspondencias as cr, FormatosArquivo as fa
 from utils.gerencia_plataformas_representacoes import gerencia_plataforma_representacoes
 
 
@@ -31,9 +31,13 @@ class PathsDados:
     """Agrupa diretórios principais e fornece funções para construir caminhos para diferentes tipos de dados."""
 
     @staticmethod
-    def obtem_chave_e_nome_pasta(formato_arquivo: str) -> tuple[str, str]:
-        """A partir do valor de 'formato_arquivo', decide a chave para o nome do arquivo e 
-        o nome da pasta onde se localizam os arquivos desse formato específico."""
+    def obtem_chave_e_nome_pasta(formato_arquivo: Literal["netcdf", "parquet"]) -> tuple[str, str]:
+        """Decide a chave para o nome do arquivo ou pasta, a partir do formato do arquivo, 
+        além de decidir o nome da pasta onde se localizam os arquivos desse formato específico.
+        
+        Args:
+            formato_arquivo (Literal["netcdf", "parquet"]): Formato de arquivo com o qual se deseja trabalhar.
+        """
 
         if formato_arquivo == fa.NETCDF:
             chave = cr.Chaves.SIMBOLO_CHAVE
@@ -41,8 +45,8 @@ class PathsDados:
         elif formato_arquivo == fa.PARQUET:
             chave = cr.Chaves.SIMBOLO_CHAVE
             pasta_data = pn.DATAFRAMES  
-        else:
-            raise ValueError(f"Chave não aceita. Valores aceitos: {fa.FORMATOS_ACEITOS}.")
+        # else:
+        #     raise ValueError(f"Chave não aceita. Valores aceitos: {fa.FORMATOS_ACEITOS}.")
         
         return chave, pasta_data
     
@@ -50,8 +54,8 @@ class PathsDados:
     def obtem_caminho_relativo(chave: str, formato_arquivo: Literal["netcdf", "parquet"], plataforma: Optional[str] = None):
 
         # Caso a plataforma exista na base de dados
-        if plataforma in plt.PLATAFORMAS:
-            nome_arquivo = plt.DADOS[plataforma][chave]
+        if plataforma in Plataformas.PLATAFORMAS:
+            nome_arquivo = Plataformas.DADOS[plataforma][chave]
             caminho_relativo = Path(pn.PLATAFORMAS) / nome_arquivo
         # Caso seja escolhido um outro ponto qualquer coberto pelos dados
         elif plataforma is None:
@@ -61,7 +65,7 @@ class PathsDados:
                 nome_arquivo = pn.PONTOS_NAO_PLATAFORMA # É na verdade uma pasta
             caminho_relativo = Path(pn.PONTOS_NAO_PLATAFORMA) / nome_arquivo
         else:
-            raise ValueError(f" {plataforma} é um valor não válido para plataforma. Valores válidos: \n{plt.PLATAFORMAS} \nOu seus simbolos correspondentes: \n{plt.SIMBOLOS}")
+            raise ValueError(f" {plataforma} é um valor não válido para plataforma. Valores válidos: \n{Plataformas.PLATAFORMAS} \nOu seus simbolos correspondentes: \n{Plataformas.SIMBOLOS}")
         
         return caminho_relativo
 
@@ -72,19 +76,19 @@ class PathsDados:
         se deseja trabalhar.
         
         Args:
-            formato_arquivo (Literal["netcdf", "parquet"]): Formato de arquivo com o qual se deseja trabalhar.
-
-                Se `formato_arquivo` for "netcdf", o caminho retornado é de um **arquivo único**.
+            formato_arquivo (Literal["netcdf", "parquet"]): Formato de arquivo com o qual se deseja trabalhar. 
+                Se `formato_arquivo` for "netcdf", o caminho retornado é de um **arquivo único**. 
                 Se for "parquet", o caminho retornado é de uma **pasta** com múltiplos arquivos .parquet.
-
+                
             plataforma (Optional[str]): Nome (ou símbolo) da plataforma cujo caminho dos dados se deseja obter.
 
         Returns: 
             Path: Caminho ou diretório absoluto do arquivo ou pasta.
+
         """
 
 
-        if isinstance(plataforma, str): # Condição para descartar os casos em que não é passado nenhuma disciplina em específico.
+        if isinstance(plataforma, str): # Condição para descartar os casos em que não é passado nenhuma disciplina em específico (None)
             # Garante a possibilidade de receber tanto o nome completo da plataforma quanto seu símbolo
             plataforma = gerencia_plataforma_representacoes(plataforma)
 
