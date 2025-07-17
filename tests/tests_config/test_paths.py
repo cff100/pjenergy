@@ -1,21 +1,19 @@
-import os
 import pytest
-from config.paths import PathsDados
+from config.paths import PathsDados, DiretoriosBasicos
 from config.constants import FormatosArquivo as fa
 
 @pytest.mark.parametrize(
-    "formato_arquivo, plataforma, esperado_parte",
+    "formato_arquivo, plataforma, esperado_path",
     [
-        (fa.NETCDF, "NAMORADO 2 (PNA-2)", "datasets/coordenadas_especificas/plataformas/p1-NAMORADO_2_(PNA-2).nc"),
-        (fa.PARQUET, "p2", "dataframes/coordenadas_especificas/plataformas/p2-PETROBRAS_26_(P-26)"),
-        (fa.NETCDF, None, "datasets/coordenadas_especificas/ponto_nao_plataforma/ponto_nao_plataforma.nc"),
-        (fa.PARQUET, None, "dataframes/coordenadas_especificas/ponto_nao_plataforma/ponto_nao_plataforma"),
+        (fa.NETCDF, "NAMORADO 2 (PNA-2)", DiretoriosBasicos.DIRETORIO_DADOS / "datasets/coordenadas_especificas/plataformas/p1-NAMORADO_2_(PNA-2).nc"),
+        (fa.PARQUET, "p2", DiretoriosBasicos.DIRETORIO_DADOS /"dataframes/coordenadas_especificas/plataformas/p2-PETROBRAS_26_(P-26)"),
+        (fa.NETCDF, None, DiretoriosBasicos.DIRETORIO_DADOS / "datasets/coordenadas_especificas/ponto_nao_plataforma/ponto_nao_plataforma.nc"),
+        (fa.PARQUET, None, DiretoriosBasicos.DIRETORIO_DADOS / "dataframes/coordenadas_especificas/ponto_nao_plataforma/ponto_nao_plataforma"),
     ]
 )
-def test_obtem_path_coord_especifica(formato_arquivo, plataforma, esperado_parte):
+def test_obtem_path_coord_especifica(formato_arquivo, plataforma, esperado_path):
     path = PathsDados.obtem_path_coord_especifica(formato_arquivo, plataforma)
-    esperado_norm = os.path.normpath(esperado_parte)
-    assert str(path).endswith(esperado_norm)
+    assert esperado_path == path
 
 def test_obtem_path_coord_especifica_plataforma_invalida():
     with pytest.raises(ValueError):

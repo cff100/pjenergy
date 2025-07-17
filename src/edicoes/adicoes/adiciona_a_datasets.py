@@ -4,14 +4,13 @@ import pandas as pd
 from config.constants import OutrasConstantes as oc, Correspondencias as cr
 
 def adiciona_estacao_do_ano(dataset: xr.Dataset) -> xr.Dataset:
-    """
-    Adiciona a variável 'estacao' ao Dataset com base nas colunas 'mes' e 'dia'.
+    """Adiciona a variável 'estacao' ao dataset com base nas colunas 'mes' e 'dia'.
 
-    Parâmetros:
-        dataset (xarray.Dataset): Deve conter 'mes' e 'dia' como variáveis.
+    Args:
+        dataset (xarray.Dataset): Dataset que deve conter 'mes' e 'dia' como variáveis.
 
-    Retorna:
-        xarray.Dataset com a variável 'estacao'.
+    Returns:
+        xarray.Dataset: Dataset com a variável 'estacao'.
     """
 
     # Pega os valores de mes e dia em arrays numpy
@@ -45,12 +44,22 @@ def adiciona_estacao_do_ano(dataset: xr.Dataset) -> xr.Dataset:
 
     # Cria a nova variável
     ds = dataset.assign({cr.DadosVariaveis.ESTACAO_DO_ANO: (cr.DadosVariaveis.TEMPO_UTC0, np.array(estacoes))})
+
     return ds
 
 
 
 def adiciona_variaveis(dataset: xr.Dataset) -> xr.Dataset:
-    "Criar variáveis/coordenadas no dataset"
+    """Criar diversas variáveis/coordenadas no dataset. Cria as variáveis de velocidade resultante, temperatura em Celsius,
+    e coordenadas temporais separadas (ano, mês, dia, hora, hora_str) a partir do tempo UTC-3.
+    
+    Args:
+        dataset (xarray.Dataset): Dataset a ter variáveis/coordenadas adicionadas.
+
+    Returns:
+        xarray.Dataset: Dataset com a variáveis/coordenadas adicionadas.
+        
+    """
 
 
     # Cria variável de velocidade resultante

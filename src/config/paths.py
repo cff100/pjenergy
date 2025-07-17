@@ -172,17 +172,13 @@ class PathsDados:
             DIRETORIO_NAO_PLATAFORMAS (Path): Diretório de datasets modificados para representar pontos que não são plataformas.
         """
 
-        # Diretório da pasta onde se encontram todos os datasets
         BASE = DiretoriosBasicos.DIRETORIO_DADOS / pn.DATASETS 
 
-        # Diretório dos arquivos originais obtidos do Climate Data Store
         DIRETORIO_ORIGINAIS = BASE / pn.ORIGINAIS
 
-        # Caminhos relativo e absoluto do arquivo feito da união dos arquivos originais obtidos
         DIRETORIO_UNIDO = BASE / pn.UNIDO
         CAMINHO_UNIDO = DIRETORIO_UNIDO / an.ARQUIVO_NC_UNIDO
 
-        # Diretório de datasets modificados para representar coordenadas específicas
         DIRETORIO_COORDENADAS_ESPECIFICAS = BASE / pn.COORDENADAS_ESPECIFICAS
         DIRETORIO_PLATAFORMAS = DIRETORIO_COORDENADAS_ESPECIFICAS / pn.PLATAFORMAS
         DIRETORIO_NAO_PLATAFORMAS = DIRETORIO_COORDENADAS_ESPECIFICAS / pn.PONTOS_NAO_PLATAFORMA
@@ -198,10 +194,8 @@ class PathsDados:
             DIRETORIO_NAO_PLATAFORMAS (Path): Diretório de dataframes que representam pontos que não são plataformas.  
         """
 
-        # Diretório onde se encontram todos os dataframes
         BASE = DiretoriosBasicos.DIRETORIO_DADOS /  pn.DATAFRAMES
 
-        # Diretório de dataframes que representam coordenadas específicas
         DIRETORIO_COORDENADAS_ESPECIFICAS = BASE / pn.COORDENADAS_ESPECIFICAS
         DIRETORIO_PLATAFORMAS = DIRETORIO_COORDENADAS_ESPECIFICAS / pn.PLATAFORMAS
         DIRETORIO_NAO_PLATAFORMAS = DIRETORIO_COORDENADAS_ESPECIFICAS / pn.PONTOS_NAO_PLATAFORMA
@@ -214,13 +208,5 @@ class PathsDados:
         Attributes:
             DIRETORIO_DADOS_GERADOS_TESTES (Path): Diretório de dados gerados em testes.  
         """
-        # Diretório de arquivos criados em testes
+
         DIRETORIO_DADOS_GERADOS_TESTES = DiretoriosBasicos.DIRETORIO_TESTES / pn.DADOS_GERADOS_TESTES
-
-
-
-
-if __name__ == "__main__":
-    #caminho = PathsDados.obter_path_coord_especifica("parquet", "PETROBRAS 26 (P-26)")
-    caminho = PathsDados.obtem_path_coord_especifica("parquet", "p3")
-    print(caminho)
