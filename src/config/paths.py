@@ -192,7 +192,10 @@ class PathsDados:
         """Agrupa diretórios onde se localizam dataframes.
         
         Attributes:
-            
+            BASE (Path): Diretório base onde se encontram todos os dataframes.
+            DIRETORIO_COORDENADAS_ESPECIFICAS (Path): Diretório de dataframes que representam coordenadas específicas.
+            DIRETORIO_PLATAFORMAS (Path): Diretório de dataframes que representam pontos de plataformas específicas.
+            DIRETORIO_NAO_PLATAFORMAS (Path): Diretório de dataframes que representam pontos que não são plataformas.  
         """
 
         # Diretório onde se encontram todos os dataframes
@@ -205,8 +208,12 @@ class PathsDados:
 
 
 
-    class DadosTeste:
-
+    class Testes:
+        """Agrupa diretórios onde se localizam dados de teste.
+        
+        Attributes:
+            DIRETORIO_DADOS_GERADOS_TESTES (Path): Diretório de dados gerados em testes.  
+        """
         # Diretório de arquivos criados em testes
         DIRETORIO_DADOS_GERADOS_TESTES = DiretoriosBasicos.DIRETORIO_TESTES / pn.DADOS_GERADOS_TESTES
 
