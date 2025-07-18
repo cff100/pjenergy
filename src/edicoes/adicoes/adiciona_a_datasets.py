@@ -28,16 +28,16 @@ def adiciona_estacao_do_ano(dataset: xr.Dataset) -> xr.Dataset:
 
             # Estações que não cruzam o ano
             if inicio["mes"] < fim["mes"]:
-                if ((mes > inicio["mes"] and mes < fim["mes"]) or
-                    (mes == inicio["mes"] and dia >= inicio["dia"]) or
-                    (mes == fim["mes"] and dia <= fim["dia"])):
+                if ((mes > inicio["mes"] and mes < fim["mes"]) or       # Nos dois meses entre os meses de iníco e fim da estação
+                    (mes == inicio["mes"] and dia >= inicio["dia"]) or  # No mês de início, a partir do dia de início da estação
+                    (mes == fim["mes"] and dia <= fim["dia"])):         # No mês de fim, até o dia do fim da estação
                     estacoes.append(estacao)
                     break
-            # Estação que cruza o ano - Verão
+            # Estação que cruza o ano (Verão)
             else:
-                if ((mes > inicio["mes"] or mes < fim["mes"]) or
-                    (mes == inicio["mes"] and dia >= inicio["dia"]) or
-                    (mes == fim["mes"] and dia <= fim["dia"])):
+                if ((mes < fim["mes"]) or                               # Nos dois meses entre os meses de iníco e fim da estação (Janeiro e Fevereiro)
+                    (mes == inicio["mes"] and dia >= inicio["dia"]) or  # No mês de início (Dezembro), a partir do dia de início da estação
+                    (mes == fim["mes"] and dia <= fim["dia"])):         # No mês de fim (Março), até o dia do fim da estação
                     estacoes.append(estacao)
                     break
 
@@ -50,15 +50,17 @@ def adiciona_estacao_do_ano(dataset: xr.Dataset) -> xr.Dataset:
 
 
 def adiciona_variaveis(dataset: xr.Dataset) -> xr.Dataset:
-    """Criar diversas variáveis/coordenadas no dataset. Cria as variáveis de velocidade resultante, temperatura em Celsius,
-    e coordenadas temporais separadas (ano, mês, dia, hora, hora_str) a partir do tempo UTC-3.
+    """Criar diversas variáveis/coordenadas no dataset. 
+    
+    Cria as variáveis de velocidade resultante, temperatura em Celsius,
+    e coordenadas temporais separadas (ano, mes, mes_str, dia, hora, hora_str) a partir do tempo UTC-3, 
+    além de chamar a função de adição da estação do ano.
     
     Args:
         dataset (xarray.Dataset): Dataset a ter variáveis/coordenadas adicionadas.
 
     Returns:
         xarray.Dataset: Dataset com a variáveis/coordenadas adicionadas.
-        
     """
 
 
@@ -70,7 +72,14 @@ def adiciona_variaveis(dataset: xr.Dataset) -> xr.Dataset:
 
     # Cria coordenada de tempo no UTC-3
     nome_datetime = "valid_time"
-    tempo_bras = pd.to_datetime(dataset[nome_datetime].values).tz_localize("UTC").tz_convert("Etc/GMT+3").tz_localize(None)
+    # Converte os valores do tempo para objetos datetime do pandas
+    tempo_bras = pd.to_datetime(dataset[nome_datetime].values)
+    # Define o fuso horário como UTC
+    tempo_bras = tempo_bras.tz_localize("UTC")
+    # Converte o fuso horário de UTC para o horário de Brasília (UTC-3)
+    tempo_bras = tempo_bras.tz_convert("Etc/GMT+3")
+    # Remove a informação de fuso horário, deixando os datetimes como "naive"
+    tempo_bras = tempo_bras.tz_localize(None)
     ds = dataset.assign_coords({cr.DadosVariaveis.TEMPO_BRAS: (nome_datetime, tempo_bras)})
 
     
