@@ -162,21 +162,21 @@ def interp_alturas_constantes(ds: xr.Dataset) -> xr.Dataset:
     ds_interp = ds_interp.transpose("valid_time", "h")
 
 
-    import matplotlib.pyplot as plt
+    # import matplotlib.pyplot as plt
 
-    # Pegue uma amostra de tempo
-    h_exemplo = h.isel(valid_time=1000).values
-    t_exemplo = ds["t"].isel(valid_time=1000).values
-    alturas_exemplo = alturas_desejadas
-    t_interp = interp_1d(h_exemplo, t_exemplo, alturas_exemplo)
+    # # Pegue uma amostra de tempo
+    # h_exemplo = h.isel(valid_time=1000).values
+    # t_exemplo = ds["t"].isel(valid_time=1000).values
+    # alturas_exemplo = alturas_desejadas
+    # t_interp = interp_1d(h_exemplo, t_exemplo, alturas_exemplo)
 
-    plt.plot(h_exemplo, t_exemplo, label="Original")
-    #plt.plot(alturas_exemplo, t_interp, "o--", label="Interpolado")
-    plt.xlabel("Altura (m)")
-    plt.ylabel("Temperatura (K)")
-    plt.legend()
-    plt.title("Interpolação para altura constante (exemplo)")
-    plt.grid(True)
-    plt.show()
+    # plt.plot(h_exemplo, t_exemplo, label="Original")
+    # #plt.plot(alturas_exemplo, t_interp, "o--", label="Interpolado")
+    # plt.xlabel("Altura (m)")
+    # plt.ylabel("Temperatura (K)")
+    # plt.legend()
+    # plt.title("Interpolação para altura constante (exemplo)")
+    # plt.grid(True)
+    # plt.show()
 
     return ds_interp
