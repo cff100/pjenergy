@@ -7,13 +7,27 @@ def verifica_erro_nao_existe_path(path: Path) -> None:
         raise FileNotFoundError(f"\nO arquivo... \n -> {path} \n...não existe.\n")
 
 
-def verifica_erro_ja_existe_path(path: Path, mensagem_erro: str) -> None:
+def verifica_erro_ja_existe_arquivo(caminho: Path, mensagem_erro: str) -> None:
+    """Levanta um erro caso o arquivo já exista.
+    
+    Args: 
+        caminho (Path): Caminho a ser verificado
+        mensagem_erro: Mensagem a ser exibida em caso de erro
 
-    if path.exists():
+    Raises:
+        FileExistsError: Erro de existência do arquivo
+    """
+
+    if caminho.exists():
         raise FileExistsError(mensagem_erro)
 
 
 def cria_path_se_nao_existe(path: Path) -> None:
+    """Cria um path caso não exista.
+    
+    Args:
+        path (Path): Path cuja existência se deseja garantir.
+    """
 
     if not path.exists():
         path.mkdir(parents=True, exist_ok=True)
@@ -21,6 +35,15 @@ def cria_path_se_nao_existe(path: Path) -> None:
 
 
 def existe_path_e_exibe_mensagem(path: Path, mensagem: str) -> bool:
+    """Retorna a existência de um path e printa uma mensagem caso exista.
+    
+    Args: 
+        path (Path): Path a ser verificado.
+    mensagem (str): Mensagem a ser printada caso `path` exista.
+
+    Returns: 
+        bool: Se o path existe ou não.
+    """
 
     existe = path.exists()
     if existe:
@@ -29,13 +52,14 @@ def existe_path_e_exibe_mensagem(path: Path, mensagem: str) -> bool:
 
 
 def garante_path_pai_existencia(path: Path) -> None:
-    """Cria pastas parentais para um path caso não exista
+    """Cria pastas parentais para um path caso não exista.
     
     Args:
         path (Path): Path cujo pastas parentais se busca garantir
     """
 
-    path.parent.mkdir(parents=True, exist_ok=True)
+    cria_path_se_nao_existe(path.parent)
+
 
 
 if __name__ == "__main__":

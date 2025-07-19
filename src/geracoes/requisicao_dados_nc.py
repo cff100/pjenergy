@@ -4,10 +4,9 @@
 from typing import Literal, cast
 import cdsapi
 from pathlib import Path
-# Módulos internos do projeto
 from config.paths import PathsDados as pad
 from config.constants import ParametrosObtencaoDados as pod
-from utils.existencia_path import cria_path_se_nao_existe, verifica_erro_ja_existe_path, existe_path_e_exibe_mensagem
+from utils.existencia_path import garante_path_pai_existencia, verifica_erro_ja_existe_arquivo, existe_path_e_exibe_mensagem
 from utils.verifica_argumentos_padrao import erro_algum_parametro_diferente_do_padrao, erro_algum_parametro_igual_ao_padrao
 
 
@@ -15,10 +14,15 @@ from utils.verifica_argumentos_padrao import erro_algum_parametro_diferente_do_p
 # FUNÇÕES AUXILIARES ----------------------------------------
 
 def gera_porcentagem_progresso(n_total: int, n_atual: int) -> float:
-    """Calcula a porcentagem de progresso de um conjunto de processos."""
-    """Parâmetros:
-    n_total: Número total de processos.
-    n_atual: Número atual de processos concluídos."""
+    """Calcula a porcentagem de progresso de um processo.
+
+    Args:
+        n_total: Número total de processos.
+        n_atual: Número atual de processos concluídos.
+    
+    Returns: 
+        float: Porcentagem cumprida (%)
+    """
 
     porcentagem_cumprida = round(100 * n_atual/n_total, 2)
     return porcentagem_cumprida
@@ -26,6 +30,12 @@ def gera_porcentagem_progresso(n_total: int, n_atual: int) -> float:
 
 
 def exibe_progresso(n_atual: int, n_total: int) -> None:
+    """Printa o progresso de um processo.
+    
+    Args:
+        n_atual (int): Etapa atual.
+        n_total (int): Número total de etapas.
+    """
     porcentagem = gera_porcentagem_progresso(n_total, n_atual)
     print(f" -> -> -> Progresso atual: {n_atual}/{n_total} ({porcentagem}%)\n")
 
@@ -33,7 +43,17 @@ def exibe_progresso(n_atual: int, n_total: int) -> None:
 
 
 def gera_nome_arquivo_nc_padrao(variavel: str, ano: int, pressao_nivel: int) -> str:
-    """Gera o nome do arquivo .nc baseado na variável, ano e nível de pressão."""
+    """Gera o nome do arquivo .nc baseado na variável, ano e nível de pressão.
+    
+    Args:
+        variavel (str): Variável considerada.
+        ano (int): Ano considerado.
+        pressao_nivel (int): Nível de pressão considerado.
+
+    Returns:
+        str: Nome do arquivo
+    """
+
     return f"(var-{variavel})_(anos-{ano})_(pressao-{pressao_nivel}).nc" 
 # ATENÇÃO!!
 # Essa formatação do nome do arquivo é muito importante para manter a consistência 
@@ -43,25 +63,39 @@ def gera_nome_arquivo_nc_padrao(variavel: str, ano: int, pressao_nivel: int) -> 
 
 
 def calcula_combinacoes(variaveis: tuple, anos: tuple, pressao_niveis: tuple) -> int:
-    """Calcula o número total de combinações de variáveis, anos e níveis de pressão."""
+    """Calcula o número total de requisições contando o número de combinações de variáveis, anos e níveis de pressão.
+    
+    Args:
+        variaveis (tuple): Tupla de variáveis.
+        anos (tuple): Tupla de anos.
+        pressao_niveis (tuple): Tupla de níveis de pressão.
+
+    Returns:
+        int: Número total de requisições 
+    """
     n_requisicoes = len(variaveis) * len(anos) * len(pressao_niveis)
     print(f"\n -> -> -> Número total de requisições: {n_requisicoes}\n")
     return n_requisicoes
 
 
 def prepara_arquivo_para_download(caminho: Path, substituir: bool = False) -> str:
-    """Prepara o diretório do caminho e verifica se o arquivo já existe.
+    """Prepara o diretório, verifica se o arquivo já existe e retorna o nome do arquivo.
+
+    Args: 
+        caminho (Path): Caminho do arquivo.
+        substituir (bool): True para permitir a substituição do arquivo caso já exista.
+            False levanta um erro caso o arquivo já exista.
     
-    Lança FileExistsError se o arquivo existir e substituir=False.
+    Returns:
+        str: Nome do arquivo extraído do caminho dele.
     """
-    diretorio = caminho.parent
-    cria_path_se_nao_existe(diretorio)
+    garante_path_pai_existencia(caminho)
 
     nome = caminho.name
     print(f"\n -> -> -> Nome do arquivo atual: {nome}\n")
 
     if not substituir:
-        verifica_erro_ja_existe_path(caminho, f"\n -> -> -> Erro: O arquivo {nome} já existe. \
+        verifica_erro_ja_existe_arquivo(caminho, f"\n -> -> -> Erro: O arquivo {nome} já existe. \
                                         Para substituí-lo, mude o parâmetro 'substituir' para True.")
 
     return nome
@@ -73,13 +107,20 @@ def prepara_arquivo_para_download(caminho: Path, substituir: bool = False) -> st
 
 def requisita_dados_simples(
                     dataset_salvamento_caminho: Path,
-                    variavel: str, # Apenas uma variável por vez, como 'u_component_of_wind'
-                    ano: int, # Apenas um ano por vez, como 2020
-                    pressao_nivel: int,  # Apenas um nível de pressão por vez, como 900
+                    variavel: str, 
+                    ano: int, 
+                    pressao_nivel: int,  
                     substituir: bool = False) -> None: 
     """Requisita dados do Climate Data Store (CDS) e salva em um arquivo NetCDF.
-    Parâmetros:
-    - substituir: True para substituir o arquivo com o mesmo nome caso já exista."""
+
+    Args:
+        dataset_salvamento_caminho (Path | Literal["padrao"]): Caminho onde será salvo o dataset. É um caminho padrão 
+            quando `usa_multiplos_dados` é True.
+        variavel (str): Variável a ser obtida.
+        ano (int | Literal["padrao"]): Ano a ser obtido.
+        pressao_nivel (int | Literal["padrao"]): Nível de pressão a ser obtido.
+        substituir (bool): True para permitir a substituição do arquivo caso já exista.
+    """
 
     arquivo_nome = prepara_arquivo_para_download(dataset_salvamento_caminho, substituir)
 
@@ -108,9 +149,9 @@ def requisita_dados_simples(
 
 
 def requisita_multiplos_dados() -> None:
-    
-    """Faz loops para a obtenção de vários arquivos NetCDF de acordo com os valores passados como parâmetros.
-    O caminho onde os datasets são salvos é fixo."""
+    """Faz loops de várias requesições do Climate Data Store (CDS) para obter vários arquivos NetCDF 
+    de acordo com os valores padrões passados como parâmetros. 
+    O caminho onde os datasets são salvos também é padronizado."""
 
     n_requisicoes = calcula_combinacoes(pod.VARIAVEIS, pod.ANOS, pod.PRESSAO_NIVEIS)
     
@@ -150,6 +191,23 @@ def requisita_dados_api(
                     ano: int | Literal["padrao"] = "padrao", 
                     pressao_nivel: int | Literal["padrao"] = "padrao", 
                     substituir: bool = False) -> None: 
+    """Requisita dados da API do Climate Data Store, podendo ser vários arquivos NetCDF ou apenas um.
+    
+    Args:
+        usa_multiplos_dados (bool): True para requisitar múltiplos arquivos NetCDF, seguindo argumentos `padrao`. 
+            Caso não sejam escolhidos os argumentos padrões, será levantado um ValueError. 
+            Caso False, apenas um arquivo NetCDF será requisitado. Nesse caso, os argumentos devem ser definidos, pois,
+            se mantidos como `padrao`, também será levantado um ValueError.
+        dataset_salvamento_caminho (Path | Literal["padrao"]): Caminho onde será salvo o dataset. É um caminho padrão 
+            quando `usa_multiplos_dados` é True.
+        variavel (str): Variável a ser obtida. É padronizado quando `usa_multiplos_dados` é True.
+            Exemples: "u_component_of_wind", "v_component_of_wind", "relative_humidity", "temperature", "geopotential".
+        ano (int | Literal["padrao"]): Ano a ser obtido. É padronizado quando `usa_multiplos_dados` é True.
+            Exemples: 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024.
+        pressao_nivel (int | Literal["padrao"]): Nível de pressão a ser obtido. É padronizado quando `usa_multiplos_dados` é True.
+            Exemples: 900, 925, 950, 975, 1000.
+        substituir (bool): True para permitir a substituição do arquivo caso já exista.
+    """
     
     # Monta lista com parametros que tem a possibilidade de receber o valor 'padrao'
     parametros_possivel_padrao = [dataset_salvamento_caminho, variavel, ano, pressao_nivel]
@@ -163,5 +221,5 @@ def requisita_dados_api(
         erro_algum_parametro_igual_ao_padrao(parametros_possivel_padrao,
                                              "Quando 'usa_multiplos_dados' é False, não se pode usar o valor 'padrao' para nenhum parâmetro.")
             
-        requisita_dados_simples(cast(Path, dataset_salvamento_caminho), variavel, cast(int, ano), cast(int, pressao_nivel), substituir)
+        requisita_dados_simples(cast(Path, dataset_salvamento_caminho), variavel, cast(int, ano), cast(int, pressao_nivel), substituir) 
         # O cast() serve apenas para ajudar o verificador de tipo estático, para os casos em que ele não reconhece o tipo preciso.
