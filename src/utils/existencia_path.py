@@ -27,7 +27,13 @@ def existe_path_e_exibe_mensagem(path: Path, mensagem: str) -> bool:
         print(mensagem)
     return existe
 
+
 def garante_path_pai_existencia(path: Path) -> None:
+    """Cria pastas parentais para um path caso não exista
+    
+    Args:
+        path (Path): Path cujo pastas parentais se busca garantir
+    """
 
     path.parent.mkdir(parents=True, exist_ok=True)
 
