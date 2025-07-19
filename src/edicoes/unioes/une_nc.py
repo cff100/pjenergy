@@ -1,8 +1,6 @@
 import re
-from pathlib import Path
 import xarray as xr
 from typing import Optional
-# Módulos internos do projeto
 from config.paths import PathsDados as pad
 from config.constants import ArquivosNomes as an
 from salvamentos.salva_datasets import salva_dataset_nc
@@ -61,7 +59,10 @@ def constroi_parametros_dicio() -> dict:
 
 
 def concatena_datasets() -> dict:
-    """Concatena os datasets de níveis de pressão e anos diferentes."""
+    """Concatena os datasets de níveis de pressão e anos diferentes.
+    
+    Returns:
+        dict: Dicionário que agrupa um dataset para cada combinação """
 
     # Obtém os dicionários de parâmetros, com os datasets das combinações de variáveis, anos e níveis de pressão.
     parametros_dicio = constroi_parametros_dicio()
@@ -111,8 +112,11 @@ def merge_datasets(parametros_dicio: dict) -> xr.Dataset:
 
 def unifica_datasets() -> xr.Dataset:
     """Gera um dataset único a partir da combinação dos vários datasets originais.
+    Caso o dataset já exista, ele será substituído.
     
-    Caso o dataset já exista, ele será substituído."""
+    Returns:
+        xr.Dataset: Dataset unificado.
+    """
 
     print("\n--- UNIFICAÇÃO DE DATASETS ---\n\n")
 
