@@ -12,10 +12,19 @@ from edicoes.unioes.une_nc import unifica_datasets
 from utils.representa_progresso import representa_progresso
 
 
+# FUNÇÃO AUXILIARR ----------------------------------------
 
-def processa_edicoes(plataforma: str | None = None, 
-                    latitude_longitude_alvo: tuple[float, float] | None = None) -> xr.Dataset:
-    "Chama as várias funções que realizam edições sequenciais no dataset único para criar um dataset para uma coordenada específica."
+def processa_edicoes(plataforma: Optional[str] = None, 
+                    latitude_longitude_alvo: Optional[tuple[float, float]] = None) -> xr.Dataset:
+    """Chama as várias funções que realizam edições sequenciais no dataset único para criar um dataset para uma coordenada específica.
+    
+    Args: 
+        plataforma (Optional[str]): Nome da plataforma ou None no caso de se escolher um ponto pelas coordenadas.
+        latitude_longitude_alvo (Optional[tuple[float, float]]): Coordenadas caso não seja escolhida uma plataforma.
+
+    Returns: 
+        xr.Dataset: Dataset após o processamento de todas as edições.
+    """
 
     print("Editando...\n")
     
@@ -26,9 +35,10 @@ def processa_edicoes(plataforma: str | None = None,
         raise TypeError("ds precisa ser um dataset")
 
     
-
+    # Lista de processo a ser aplicado
     processos = [remove_variaveis_indesejadas, dataset_interpola_lat_lon, interp_alturas_constantes, adiciona_variaveis, dataset_renomeacoes]
 
+    # Aplicações sequnecial de cada processo
     for funcao in processos:
         if funcao == dataset_interpola_lat_lon:
             ds = funcao(ds, latitude_longitude_alvo)
@@ -36,18 +46,30 @@ def processa_edicoes(plataforma: str | None = None,
             ds = funcao(ds)
 
     print("Editado.\n")
+
     salva_dataset_nc(ds, pad.obtem_path_coord_especifica("netcdf", plataforma))
 
     return ds
 
 
+# FUNÇÃO PRINCIPAL ----------------------------------------
+
 
 def gera_datasets_editados_pontuais(usa_plataformas: bool = True, 
                         latitude_longitude_alvo: Optional[tuple[float, float]] = None) -> xr.Dataset :
-    """Gera datasets editados em relação ao dataset unido de ponto geográficos específicos.
-    
-    Parâmetros:
-    - usa_plataformas: Se True, gera datasets para todas plataformas. Se False, gera um dataset para as coordenadas fornecidas."""
+    """Gera um ou vários datasets editados de ponto geográficos específicos, a partir do dataset unido. 
+
+    Args:
+        usa_plataformas: Se True, gera datasets para todas plataformas. Se False, gera um dataset para as coordenadas fornecidas.
+        latitude_longitude_alvo (Optional[tuple[float, float]]): Coordenadas caso não seja escolhida uma plataforma.
+
+    Returns: 
+        xr.Dataset: Dataset após o processamento de todas as edições. 
+            Se `usa_plataformas` for True, retorna apenas o dataset da última plataforma.   
+
+    Raises:
+        ValueError: Erro quando `usa_plataformas` é False, mas não são passadas coordenas específicas.
+    """
 
     unifica_datasets()
 
@@ -55,7 +77,9 @@ def gera_datasets_editados_pontuais(usa_plataformas: bool = True,
 
     if usa_plataformas:
         if latitude_longitude_alvo is not None:
-            print("\nAVISO: As plataformas já possuem coordenadas registradas, não é necessário passar valores de latitude e longitude.\n")
+            print("\nAVISO: As plataformas já possuem coordenadas registradas," \
+                  "não é necessário passar valores de latitude e longitude." \
+                  f"Coordenadas {latitude_longitude_alvo} ignoradas \n")
 
         plataformas_dados = Plataformas.DADOS
         i = 1
@@ -65,6 +89,7 @@ def gera_datasets_editados_pontuais(usa_plataformas: bool = True,
             latitude_longitude_alvo = plataformas_dados[plat]["coords"]
             ds = processa_edicoes(plat, latitude_longitude_alvo)  # Retorna o valor da última plataforma
             i += 1
+
     else:
         if latitude_longitude_alvo is None:
             raise ValueError("É necessário informar a latitude e longitude alvo.")
@@ -74,5 +99,7 @@ def gera_datasets_editados_pontuais(usa_plataformas: bool = True,
 
 
 if __name__ == "__main__":
+
+    # EXEMPLO
     ds = gera_datasets_editados_pontuais(False, (-22, -40))
     print(ds)
