@@ -10,19 +10,35 @@ from leituras.ler_dataframes import ler_dataframe_parquet
 from config.constants import FormatosArquivo as fa
 
 
+# FUNÇÃO AUXILIAR -------------------------------------------------------------------------------
 
-def identifica_caminho_base(formato_arquivo: str) -> Path:
-    """Identifica o caminho base da pasta de dados de acordo com o tipo de arquivo desejado"""
+
+def identifica_caminho_base_padrao(formato_arquivo: str) -> Path:
+    """Identifica o caminho base da pasta de dados de acordo com o tipo de arquivo desejado
+    
+    Args:
+        formato_arquivo (str): Formato do arquivo que se quer identificar o caminho.
+
+    Returns:
+        Path: Caminho base da pasta de dados.
+
+    Raises:
+        ValueError: Erro quando o formato usado não é aceito.
+    
+    """
 
     if formato_arquivo not in fa.FORMATOS_ACEITOS:
         raise ValueError(f"Formato... \n-> {formato_arquivo} \n...não aceito.")
     elif formato_arquivo == fa.NETCDF:
-        caminho_base = PathsDados.Datasets.BASE
+        caminho_base_padrao = PathsDados.Datasets.BASE
     elif formato_arquivo == fa.PARQUET:
-        caminho_base = PathsDados.Dataframes.BASE
+        caminho_base_padrao = PathsDados.Dataframes.BASE
 
-    return caminho_base
+    return caminho_base_padrao
 
+
+
+# FUNÇÃO PRINCIPAL -------------------------------------------------------------------------------
 
 
 def ler_arquivo(formato_arquivo: Literal["netcdf", "parquet"],
@@ -31,27 +47,31 @@ def ler_arquivo(formato_arquivo: Literal["netcdf", "parquet"],
                 caminho_base: Path | Literal["padrao"] = "padrao") -> xr.Dataset | dd.DataFrame:
     """Lê um arquivo de acordo com o tipo de arquivo e o path fornecido.
 
-    Parâmetros:
-    - path: Caminho do arquivo a ser lido. Pode ser um Path ou uma string. 
-    No caso de dask dataframes, o caminho deve ser de uma pasta onde os arquivos estão armazenados. 
-    Mas também pode ser passado o caminho de um arquivo parquet específico, que será lido como um dataframe.
-    - formato_arquivo: Formato do arquivo a ser lido. Pode ser "netcdf", "parquet".
-    - eh_caminho_relativo: Se o caminho é relativo ao caminho base. Se for True, o caminho será concatenado com o caminho base.
-    - caminho_base: Caminho base a ser usado caso o caminho seja relativo. Se for "padrao", o caminho base será identificado de acordo com o formato do arquivo. Se for passado um caminho, ele será usado como caminho base.
+    Args:
+        formato_arquivo: Formato do arquivo a ser lido.
+            Exemples: "netcdf", "parquet".
+        path: Caminho do arquivo a ser lido. Pode ser um Path ou uma string. 
+            No caso de dask dataframes, o caminho deve ser de uma pasta onde os arquivos estão armazenados. 
+            Mas também pode ser passado o caminho de um arquivo parquet específico, que será lido como um dask dataframe.
+        eh_caminho_relativo: Se o caminho é relativo ao caminho base. Se for True, o caminho será concatenado com o caminho base.
+        caminho_base: Caminho base a ser usado caso o caminho seja relativo. 
+            Se for "padrao", o caminho base será identificado de acordo com o formato do arquivo. 
+            Se for passado um caminho, ele será usado como caminho base.
     
-    Retorna:
-    - Um xr.Dataset se o formato for "netcdf", ou um dd.DataFrame se o formato for "parquet".
+    Returns:
+        xr.Dataset: Dataset lido se o formato de arquivo passado for "netcdf".
+        dd.DataFrame: Dataframe lido se o formato de arquivo passado for "parquet".
     """
 
-    # Para manter em um formato padrão (path) para as próximas funções
+    # Para manter em um formato padrão (path) para os seguintes processos
     if isinstance(path, str):
         path = Path(path)
 
-    # Caso o caminho seja relativo, pega o caminho base padrão que varia de acordo com o tipo de arquivo
+    # Caso o caminho seja relativo, pega o caminho base padrão, que varia de acordo com o tipo de arquivo
     if eh_caminho_relativo and caminho_base == "padrao":
-        caminho_base = identifica_caminho_base(formato_arquivo)
+        caminho_base = identifica_caminho_base_padrao(formato_arquivo)
 
-    # Verifica se o caminho passado é relativo a um caminho base (que também é um parâmetro)
+    # Se o caminho passado é relativo, monta o caminho absoluto
     if eh_caminho_relativo:
         path = caminho_base / path
 
@@ -69,7 +89,11 @@ def ler_arquivo(formato_arquivo: Literal["netcdf", "parquet"],
 
 
 if __name__ == "__main__":
+
+    # EXEMPLOS:
+
     #d = ler_arquivo("netcdf", "unido/dataset_unido.nc")
-    d = ler_arquivo("parquet", "coordenadas_especificas/plataformas/p1-NAMORADO_2_(PNA-2)")
+    #d = ler_arquivo("parquet", "coordenadas_especificas/plataformas/p1-NAMORADO_2_(PNA-2)")
+    d = ler_arquivo("parquet", "coordenadas_especificas/plataformas/p1-NAMORADO_2_(PNA-2)/part.0.parquet")
     print(d.compute())
 

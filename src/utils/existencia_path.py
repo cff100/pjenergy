@@ -1,7 +1,14 @@
 from pathlib import Path
 
 def verifica_erro_nao_existe_path(path: Path) -> None:
-    """Verifica a existência de um arquivo ou diretório e levanta erro caso não exista."""
+    """Verifica a existência de um arquivo ou diretório e levanta erro caso não exista.
+    
+    Args
+        path (Path): Path a ser verificado.
+
+    Raises:
+        FileNotFoundError: Erro levantado quando o path não existe.
+    """
 
     if not path.exists():
         raise FileNotFoundError(f"\nO arquivo... \n -> {path} \n...não existe.\n")
