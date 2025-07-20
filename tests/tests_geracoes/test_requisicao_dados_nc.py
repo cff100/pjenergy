@@ -23,4 +23,4 @@ def test_requisicao_dados(requisitar = True):
     else:
         requisita_dados_api(False, dataset_salvamento_caminho, variavel, ano, pressao_nivel, substituir = True)
         
-        
+    print(f"Dataset salvo em {dataset_salvamento_caminho} .")
