@@ -6,7 +6,7 @@ def salva_dataset_nc(dataset: xr.Dataset, dataset_caminho: Path) -> None:
     """Salva o dataset em um arquivo .nc. 
 
     Args:
-        dataset (xr.Dataset): Dataset a ser salvo
+        dataset (xr.Dataset): Dataset a ser salvo.
         dataset_caminho (Path): Caminho absoluto do dataset a ser salvo. 
             As pastas parentais são criadas caso não existam.
     """
