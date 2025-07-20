@@ -39,5 +39,7 @@ def gerencia_plataforma_representacoes(representacao: str ) -> str:
  
 
 if __name__ == "__main__":
+
+    # EXEMPLOS
     plataforma = gerencia_plataforma_representacoes("p3")   
     plataforma = gerencia_plataforma_representacoes("PETROBRAS 26 (P-26)")

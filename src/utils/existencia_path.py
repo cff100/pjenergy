@@ -46,7 +46,7 @@ def existe_path_e_exibe_mensagem(path: Path, mensagem: str) -> bool:
     
     Args: 
         path (Path): Path a ser verificado.
-    mensagem (str): Mensagem a ser printada caso `path` exista.
+        mensagem (str): Mensagem a ser printada caso `path` exista.
 
     Returns: 
         bool: Se o path existe ou não.
@@ -71,6 +71,6 @@ def garante_path_pai_existencia(path: Path) -> None:
 
 if __name__ == "__main__":
     
-    # Testes
+    # EXEMPLOS
     
     verifica_erro_nao_existe_path(Path("a/b/c/d/e/f")) # Exemplo de levantamento de erro

@@ -7,7 +7,7 @@ def representa_progresso(indice_atual: int, itens_lista: list) -> str:
         itens_lista (lista): Lista de itens que serão contados.
 
     Returns:
-        str: String do progresso, no formato 'indice_atual/total'
+        str: String do progresso, no formato 'indice_atual/total'.
     """
 
     return f"{indice_atual}/{len(itens_lista)}"

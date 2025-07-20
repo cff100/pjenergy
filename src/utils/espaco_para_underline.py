@@ -1,5 +1,13 @@
 
 def espaco_para_underline(nome: str) -> str:
+    """Muda os espaços de um nome para undeline.
+    
+    Args:
+        nome (str): Nome a ser alterado.
+
+    Returns: 
+        str: Nome modificado.
+    """
 
     nome = nome.replace(" ", "_")
 

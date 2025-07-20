@@ -8,8 +8,8 @@ def pega_arquivos(diretorio: Path = pad.Datasets.DIRETORIO_ORIGINAIS, nome_padra
     """Pega todos os arquivos de um determinado diretório com o nome em um determinado padrão
     
     Args:
-        diretorio (Path): Diretório onde os arquivos serão procurados
-        nome_padrao (str): Nome padrão de arquivo a ser procurado
+        diretorio (Path): Diretório onde os arquivos serão procurados.
+        nome_padrao (str): Nome padrão de arquivo a ser procurado.
 
     Returns: 
         list[str]: Lista dos nomes dos arquivos que seguem ao padrão de nome.
