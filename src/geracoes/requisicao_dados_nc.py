@@ -114,11 +114,11 @@ def requisita_dados_simples(
     """Requisita dados do Climate Data Store (CDS) e salva em um arquivo NetCDF.
 
     Args:
-        dataset_salvamento_caminho (Path | Literal["padrao"]): Caminho onde será salvo o dataset. É um caminho padrão 
+        dataset_salvamento_caminho (Path): Caminho onde será salvo o dataset. É um caminho padrão 
             quando `usa_multiplos_dados` é True.
         variavel (str): Variável a ser obtida.
-        ano (int | Literal["padrao"]): Ano a ser obtido.
-        pressao_nivel (int | Literal["padrao"]): Nível de pressão a ser obtido.
+        ano (int): Ano a ser obtido.
+        pressao_nivel (int): Nível de pressão a ser obtido.
         substituir (bool): True para permitir a substituição do arquivo caso já exista.
     """
 
@@ -194,7 +194,7 @@ def requisita_dados_api(
     """Requisita dados da API do Climate Data Store, podendo ser vários arquivos NetCDF ou apenas um.
     
     Args:
-        usa_multiplos_dados (bool): True para requisitar múltiplos arquivos NetCDF, seguindo argumentos `padrao`. 
+        usa_multiplos_dados (bool): `True` para requisitar múltiplos arquivos NetCDF, seguindo argumentos `padrao`. 
             Caso não sejam escolhidos os argumentos padrões, será levantado um ValueError. 
             Caso False, apenas um arquivo NetCDF será requisitado. Nesse caso, os argumentos devem ser definidos, pois,
             se mantidos como `padrao`, também será levantado um ValueError.

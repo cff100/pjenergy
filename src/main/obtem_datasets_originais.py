@@ -9,10 +9,24 @@ def obtem_datasets_originais(
                     ano: int | Literal["padrao"] = "padrao", 
                     pressao_nivel: int | Literal["padrao"] = "padrao", 
                     substituir: bool = False) -> None: 
-    """Função para baixar os arquivos netCDF do Climate Data Store (CDS). 
+    """Função para baixar os arquivos NetCDF do Climate Data Store (CDS). 
     
-    Pode-se baixar arquivos da combinação de argumentos padrão do projeto ou 
-    algum arquivo com combinação específica de argumentos únicos (variável, ano e nível de pressão)
+    Requisita dados da API do Climate Data Store, podendo ser vários arquivos NetCDF ou apenas um.
+
+    Args:
+        usa_multiplos_dados (bool): `True` para requisitar múltiplos arquivos NetCDF, seguindo argumentos `padrao`. 
+            Caso não sejam escolhidos os argumentos padrões, será levantado um erro. 
+            Caso `False`, apenas um arquivo NetCDF será requisitado. Nesse caso, os argumentos devem ser definidos, pois,
+            se mantidos como `padrao`, também será levantado um erro.
+        dataset_salvamento_caminho (Path | Literal["padrao"]): Caminho onde será salvo o dataset. É um caminho padrão 
+            quando `usa_multiplos_dados` é True.
+        variavel (str): Variável a ser obtida. É padronizado quando `usa_multiplos_dados` é True.
+            Exemples: "u_component_of_wind", "v_component_of_wind", "relative_humidity", "temperature", "geopotential".
+        ano (int | Literal["padrao"]): Ano a ser obtido. É padronizado quando `usa_multiplos_dados` é True.
+            Exemples: 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024.
+        pressao_nivel (int | Literal["padrao"]): Nível de pressão a ser obtido. É padronizado quando `usa_multiplos_dados` é True.
+            Exemples: 900, 925, 950, 975, 1000.
+        substituir (bool): True para permitir a substituição do arquivo caso já exista.
     """
 
     requisita_dados_api(usa_multiplos_dados, dataset_salvamento_caminho, variavel, ano, pressao_nivel, substituir)
