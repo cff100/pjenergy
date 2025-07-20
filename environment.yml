@@ -9,7 +9,7 @@ dependencies:
   - pytest
   - dask
   - scipy
-  # e outro pacotes
+  # e outros pacotes
   - pip
   - pip:
     - -e .
