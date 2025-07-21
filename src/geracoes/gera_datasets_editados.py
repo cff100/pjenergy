@@ -5,10 +5,9 @@ from leituras.ler_arquivos import ler_arquivo
 from config.paths import PathsDados as pad
 from salvamentos.salva_datasets import salva_dataset_nc
 from edicoes.limpezas.remove_de_datasets import remove_variaveis_indesejadas
-from edicoes.interpolacoes.interpola_em_datasets import dataset_interpola_lat_lon, interp_alturas_constantes
+from edicoes.interpolacoes.interpola_em_datasets import dataset_interpola_lat_lon, interpola_varias_variaveis_em_altura
 from edicoes.adicoes.adiciona_a_datasets import adiciona_variaveis
 from edicoes.renomeacoes.renomeia_em_datasets import dataset_renomeacoes
-from edicoes.unioes.une_nc import unifica_datasets
 from utils.representa_progresso import representa_progresso
 
 
@@ -36,7 +35,11 @@ def processa_edicoes(plataforma: Optional[str] = None,
 
     
     # Lista de processo a ser aplicado
-    processos = [remove_variaveis_indesejadas, dataset_interpola_lat_lon, interp_alturas_constantes, adiciona_variaveis, dataset_renomeacoes]
+    processos = [remove_variaveis_indesejadas, 
+                 dataset_interpola_lat_lon,  
+                 interpola_varias_variaveis_em_altura,
+                 adiciona_variaveis,
+                 dataset_renomeacoes]
 
     # Aplicações sequnecial de cada processo
     for funcao in processos:
@@ -44,6 +47,7 @@ def processa_edicoes(plataforma: Optional[str] = None,
             ds = funcao(ds, latitude_longitude_alvo)
         else:
             ds = funcao(ds)
+        #print(f"Função: {funcao} \n{ds}")
 
     print("Editado.\n")
 
@@ -70,8 +74,6 @@ def gera_datasets_editados_pontuais(usa_plataformas: bool = True,
     Raises:
         ValueError: Erro quando `usa_plataformas` é False, mas não são passadas coordenas específicas.
     """
-
-    unifica_datasets()
 
     print("--- EDIÇÃO DE DATASET(S) ---\n\n")
 
@@ -101,5 +103,6 @@ def gera_datasets_editados_pontuais(usa_plataformas: bool = True,
 if __name__ == "__main__":
 
     # EXEMPLO
-    ds = gera_datasets_editados_pontuais(False, (-22, -40))
+    #ds = gera_datasets_editados_pontuais(False, (-22, -40))
+    ds = gera_datasets_editados_pontuais()
     print(ds)

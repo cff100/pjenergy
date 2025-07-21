@@ -1,6 +1,7 @@
 import xarray as xr
 from typing import cast
 import dask.dataframe as dd
+from typing import Optional
 from pandas import DataFrame
 from leituras.ler_arquivos import ler_arquivo
 from config.paths import PathsDados as pad
@@ -13,23 +14,48 @@ from utils.representa_progresso import representa_progresso
 # FUNÇÔES AUXILIARES -------------------------------------------------------------------------------
 
 def monta_dataframes_por_dimensao(ds: xr.Dataset) -> tuple[dd.DataFrame, DataFrame]:
+    """Cria dataframes a partir de um dataset, separando variáveis 1D e 2D.
+    
+    Args:
+        ds (xr.Dataset): Dataset contendo as variáveis a serem convertidas em dataframes.
+        
+    Returns:
+        tuple[dd.DataFrame, DataFrame]: DataFrame Dask com variáveis 2D e DataFrame Pandas com variáveis 1D.
+    """
 
-    variaveis_2d = [v for v in ds.data_vars if ds[v].dims == (cr.DadosVariaveis.TEMPO_UTC0, cr.DadosVariaveis.ALTURA)]
-    ds_2d = ds[variaveis_2d].chunk({cr.DadosVariaveis.TEMPO_UTC0: 200})
-    df = ds_2d.to_dask_dataframe()
+    variaveis_2D = [v for v in ds.data_vars if ds[v].dims == (cr.DadosVariaveis.TEMPO_UTC0, cr.DadosVariaveis.ALTURA)]
+    #print(f"Variáveis 2D: \n{variaveis_2D}")
+    ds_2D = ds[variaveis_2D].chunk({cr.DadosVariaveis.TEMPO_UTC0: 200})
+    df_2D = ds_2D.to_dask_dataframe()
 
     # Seleciona variáveis 1D (somente tempo) e monta um dataframe com elas
-    variaveis_1d_str = [v for v in ds.data_vars if ds[v].dims == (cr.DadosVariaveis.TEMPO_UTC0,)]
-    df_str = ds[variaveis_1d_str].to_dataframe().reset_index()
+    variaveis_1D = [v for v in ds.data_vars if ds[v].dims == (cr.DadosVariaveis.TEMPO_UTC0,)]
+    #print(f"Variáveis 1D: \n{variaveis_1D}")
+    df_1D = ds[variaveis_1D].to_dataframe().reset_index()
 
-    return df, df_str
+    #print(f"1D: \n{df_1D.head()}\n\n")
+    #print(f"2D: \n{df_2D.head()}")
+
+    return df_2D, df_1D
 
 
-def merge_dataframes_no_tempo(df: dd.DataFrame, df_str: DataFrame) -> dd.DataFrame:
+def merge_dataframes_no_tempo(df_2D: dd.DataFrame, df_1D: DataFrame) -> dd.DataFrame:
+    """Realiza o merge dos dataframes Dask e Pandas com base no tempo.
+
+    Args:
+        df (dd.DataFrame): DataFrame Dask com variáveis 2D.
+        df_1D (DataFrame): DataFrame Pandas com variáveis 1D.
+    Returns:
+        dd.DataFrame: DataFrame Dask resultante do merge, contendo todas as variáveis
+        com base no tempo.
+    """
+
+    # Para evitar que no merge ocorra a duplicação de coluna existente nos dois dataframes 
+    df_1D = df_1D.drop(columns=["tempo_bras"], errors="ignore")
 
     # Merge dos dataframes com base no tempo
-    df = df.reset_index()
-    df = df.merge(df_str, on=cr.DadosVariaveis.TEMPO_UTC0, how="left")
+    df_2D = df_2D.reset_index()
+    df = df_2D.merge(df_1D, on=cr.DadosVariaveis.TEMPO_UTC0, how="left")
 
     return df
 
@@ -37,15 +63,14 @@ def merge_dataframes_no_tempo(df: dd.DataFrame, df_str: DataFrame) -> dd.DataFra
 # FUNÇÔES INTERMEDIÁRIAS -------------------------------------------------------------------------------
 
 
-def nc_para_dask_dataframe_simples(plataforma: str | None) -> dd.DataFrame:
+def nc_para_dask_dataframe_simples(plataforma: Optional[str]) -> dd.DataFrame:
     """Converte NetCDF em Dask DataFrame, salvando como parquet, preservando variáveis 1D e 2D.
-    
-    Parâmetros:
-    - caminho_dataset_relativo: caminho do dataset em relação à data/datasets/coordenadas_especificas/plataformas ou 
-    data/datasets/coordenadas_especificas/ponto_nao_plataforma
-    - caminho_dataframe_relativo: caminho da pasta onde ficará o dask dataframe em relação à data/dataframes/coordenadas_especificas/plataformas ou
-    data/dataframes/coordenadas_especificas/ponto_nao_plataforma
-    Caso nenhum caminho seja passado, será utilizado um caminho correspondente ao do dataset usado.
+
+    Args:
+        plataforma (Optional[str]): Nome da plataforma ou None se for um outro ponto específico.
+
+    Returns:
+        dd.DataFrame: DataFrame Dask resultante da conversão.
     """
 
     dataset_arquivo_caminho = pad.obtem_path_coord_especifica("netcdf", plataforma)
@@ -64,6 +89,7 @@ def nc_para_dask_dataframe_simples(plataforma: str | None) -> dd.DataFrame:
 
 
 def nc_para_dask_dataframe_todas_plataformas():
+    """Converte NetCDF de todas plataformas em Dask DataFrame, salvando como parquet."""
 
     plataformas = Plataformas.PLATAFORMAS # Lista de plataformas
     i = 1
@@ -81,10 +107,15 @@ def nc_para_dask_dataframe_todas_plataformas():
 # FUNÇÃO PRINCIPAL -------------------------------------------------------------------------------
 
 def converte_nc_para_dask_dataframe(usa_plataformas: bool = True) -> None:
+    """Converte NetCDF em Dask DataFrame, salvando como parquet, para todas plataformas ou coordenadas específicas.
+
+    Args:
+        usa_plataformas (bool): Se True, converte NetCDF de todas plataformas. Se False, converte NetCDF de coordenadas específicas.
+    """
 
     print("--- CRIAÇÃO DE DATAFRAME(S) ---\n\n")
-    
-    if usa_plataformas : 
+
+    if usa_plataformas:
         nc_para_dask_dataframe_todas_plataformas()
 
     elif not usa_plataformas:

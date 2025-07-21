@@ -1,6 +1,6 @@
 import xarray as xr
 import numpy as np
-from config.constants import ConstantesNumericas as cn
+from config.constants import OutrasConstantes as oc, ConstantesNumericas as cn
 
 
 
@@ -45,120 +45,77 @@ def dataset_interpola_lat_lon(dataset: xr.Dataset, latitude_longitude_alvo: tupl
     return ds_interp
 
 
+# -----------------------------------------------------------------------------------------------------------------------------------
 
-def interp_alturas_constantes(ds: xr.Dataset) -> xr.Dataset:
+
+def interp_por_altura(h: np.ndarray, var: np.ndarray, alturas_interp: np.ndarray = oc.ALTURAS_DESEJADAS) -> np.ndarray:
+    """Interpolação linear de uma variável 'var' em função da altura 'h' para alturas especificadas em 'alturas_interp'.
+    
+    Args:
+        h (np.ndarray): Array de alturas correspondentes aos valores da variável 'var'.
+        var (np.ndarray): Array de valores da variável a ser interpolada.
+        alturas_interp (np.ndarray, optional): Alturas alvo para interpolação. Default é oc.ALTURAS_DESEJADAS.
+
+    Returns:
+        np.ndarray: Valores interpolados da variável 'var' nas alturas especificadas em 'alturas_interp'.
     """
-    Interpola as variáveis do dataset para alturas constantes (em metros),
-    usando o geopotencial como base para calcular essas alturas.
 
-    Retorna um novo Dataset, agora com as variáveis expressas em função da altura (e não mais da pressão),
-    e com a pressão estimada como uma variável comum (não mais uma coordenada).
+    # Ordena os arrays de altura e, de forma correspondente, a variável
+    ordenado = np.argsort(h)
+    h_ordenado = h[ordenado]
+    var_ordenado = var[ordenado]
+
+    # Realiza a interpolação linear
+    return np.interp(alturas_interp, h_ordenado, var_ordenado)
+
+
+def interpolar_variavel_em_altura(var_name: str, h: xr.DataArray, ds: xr.Dataset) -> xr.DataArray:
+    """Interpolação de uma variável específica do dataset em função da altura.
+
+    Args:
+        var_name (str): Nome da variável a ser interpolada.
+        h (xr.DataArray): Array de alturas correspondentes aos valores da variável.
+        ds (xr.Dataset): Dataset original contendo a variável a ser interpolada.
+
+    Returns:
+        xr.DataArray: Array de dados interpolados da variável nas alturas especificadas.
     """
 
-    # -----------------------------
-    # ETAPA 1: Definir alturas alvo
-    # -----------------------------
-    # Essas são as alturas fixas para as quais queremos obter os dados.
-    # Estamos pedindo valores de 25 em 25 metros, de 100 até 350 metros.
-    # Isso nos permite estudar os dados em alturas regulares e controladas.
-    alturas_desejadas = np.arange(100, 350, 25)
+    alturas_desejadas = oc.ALTURAS_DESEJADAS
 
-    # -----------------------------
-    # ETAPA 2: Calcular altura a partir do geopotencial
-    # -----------------------------
-    # O geopotencial é uma medida de energia potencial por unidade de massa (em m²/s²),
-    # e está disponível no dataset com o nome "z".
-    # Ao dividirmos pelo valor da gravidade (g), obtemos a altura geométrica real em metros.
-    # Isso nos dá, para cada tempo e nível de pressão, a altura correspondente.
-    h = ds["z"] / cn.G  # cn.G é a aceleração da gravidade
+    return xr.apply_ufunc(
+        interp_por_altura,
+        h,     # Função a ser aplicada                                                 
+        ds[var_name], # Dados da variável original
+        kwargs={'alturas_interp': alturas_desejadas}, # Alturas alvo para interpolação
+        input_core_dims=[['pressure_level'], ['pressure_level']], # Dimensões de entrada: pressão 
+        output_core_dims=[['altura']], # Dimensão de saída: altura
+        vectorize=True, # Aplica a função para cada tempo automaticamente
+        dask='parallelized', # Permite execução paralela (útil para grandes volumes de dados)
+        output_dtypes=[float], # Tipo de dado da saída (float, pois estamos interpolando valores contínuos)
+    ).assign_coords(altura=alturas_desejadas) # Atribui as alturas desejadas como coordenada do resultado
 
-    # -----------------------------
-    # ETAPA 3: Identificar variáveis a serem interpoladas
-    # -----------------------------
-    # Queremos interpolar apenas as variáveis que estão organizadas com as dimensões:
-    # (tempo, nível de pressão). Por exemplo, temperatura[tempo, pressão].
-    # Isso evita tentar interpolar variáveis com outras dimensões, o que causaria erro.
-    variaveis = [
-        var for var in ds.data_vars
-        if set(ds[var].dims) == {"valid_time", "pressure_level"}
-    ]
 
-    # Criamos um novo Dataset vazio onde vamos guardar os resultados interpolados
+def interpola_varias_variaveis_em_altura(dataset: xr.Dataset) -> xr.Dataset:
+    """Aplica a interpolação de várias variáveis do dataset em função da altura.
+    
+    Args:
+        dataset (xr.Dataset): Dataset contendo as variáveis a serem interpoladas.
+    Returns:
+        xr.Dataset: Dataset com as variáveis interpoladas nas alturas especificadas.
+    """
+    
+    # Lista de variáveis que serão interpoladas
+    variaveis = ["u", "v", "z", "r", "t"]
+
+    # Cria um novo dataset para armazenar as variáveis interpoladas
     ds_interp = xr.Dataset()
 
-    # -----------------------------
-    # ETAPA 4: Função auxiliar de interpolação 1D
-    # -----------------------------
-    # Essa função realiza a interpolação propriamente dita para cada linha de dados.
-    # h_valores: vetor com alturas originais
-    # var_valores: valores da variável nesses pontos
-    # alturas: alturas para as quais queremos estimar os novos valores
-    def interp_1d(h_valores, var_valores, alturas):
-        # Por segurança, garantimos que os valores estejam em ordem crescente de altura
-        ordenado = np.argsort(h_valores)
-        # np.interp faz interpolação linear entre os pontos fornecidos
-        return np.interp(alturas, h_valores[ordenado], var_valores[ordenado])
+    h = dataset["z"] / cn.G  # Altura em metros, obtida da variável de geopotencial do dataset
 
-    # -----------------------------
-    # ETAPA 5: Aplicar interpolação nas variáveis
-    # -----------------------------
-    # Para cada variável identificada anteriormente:
+    # Interpola cada variável na lista
     for var in variaveis:
-        # Aplicamos a função de interpolação usando xarray.apply_ufunc,
-        # que permite aplicar funções NumPy em objetos xarray de forma vetorizada.
-        da_interp = xr.apply_ufunc(
-            interp_1d,              # Função a ser aplicada
-            h,                      # Altura em metros (calculada com z/g)
-            ds[var],                # Dados da variável original
-            input_core_dims=[["pressure_level"], ["pressure_level"]],
-            output_core_dims=[["h"]],  # Indicamos que a saída terá uma nova dimensão chamada 'h'
-            vectorize=True,         # Aplica a função para cada tempo automaticamente
-            dask="parallelized",    # Permite execução paralela (útil para grandes volumes de dados)
-            kwargs={"alturas": alturas_desejadas},  # Passamos as alturas alvo como argumento fixo
-            output_dtypes=[ds[var].dtype]  # Mantemos o mesmo tipo de dado da variável original
-        )
-        # Adicionamos a variável interpolada ao novo dataset
-        ds_interp[var] = da_interp
-
-    # -----------------------------
-    # ETAPA 6: Interpolar também a pressão
-    # -----------------------------
-    # A pressão original (pressure_level) é uma coordenada no dataset,
-    # mas como agora trabalhamos com altura como base, queremos saber
-    # "qual a pressão estimada em cada uma dessas novas alturas".
-    # Por isso, aplicamos a mesma interpolação.
-    pressao_valores = ds["pressure_level"]
-
-    # Como a pressão depende só do nível e não do tempo,
-    # usamos broadcast_like para replicá-la ao longo do tempo
-    # e permitir que a função de interpolação funcione corretamente.
-    da_pressao_interp = xr.apply_ufunc(
-        interp_1d,
-        h,                                 # Altura calculada a partir do geopotencial
-        pressao_valores.broadcast_like(h),  # Pressão replicada para cada tempo
-        input_core_dims=[["pressure_level"], ["pressure_level"]],
-        output_core_dims=[["h"]],
-        vectorize=True,
-        dask="parallelized",
-        kwargs={"alturas": alturas_desejadas},
-        output_dtypes=[pressao_valores.dtype],
-    )
-
-    # Adicionamos a nova variável de pressão ao dataset interpolado
-    ds_interp["pressure_level"] = da_pressao_interp
-
-    # -----------------------------
-    # ETAPA 7: Adicionar coordenada de altura
-    # -----------------------------
-    # Aqui indicamos que a nova dimensão 'h' representa altura em metros,
-    # e associamos os valores exatos usados na interpolação
-    ds_interp = ds_interp.assign_coords(altura=("h", alturas_desejadas))
-
-    # -----------------------------
-    # ETAPA 8: Reorganizar as dimensões
-    # -----------------------------
-    # Por fim, reorganizamos as dimensões do dataset para que fiquem
-    # na ordem esperada: primeiro o tempo, depois a altura.
-    ds_interp = ds_interp.transpose("valid_time", "h")
+        ds_interp[var] = interpolar_variavel_em_altura(var, h, dataset)
 
     return ds_interp
+

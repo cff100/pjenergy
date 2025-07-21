@@ -127,7 +127,7 @@ def merge_datasets(variaveis_dicio: dict) -> xr.Dataset:
     # Mescla os datasets de variáveis em um único dataset
     print("Unindo datasets de todas as variáveis...\n")
     dataset_unico = xr.merge(variaveis_datasets)
-    print(f"Dataset único gerado, com {len(dataset_unico.data_vars)} variáveis em {len(dataset_unico.pressure_level)} 5 alturas.\n\n")
+    print(f"Dataset único gerado, com {len(dataset_unico.data_vars)} variáveis em {len(dataset_unico.pressure_level)} alturas.\n\n")
     
     return dataset_unico  
 

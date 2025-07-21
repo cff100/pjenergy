@@ -103,7 +103,7 @@ pytest -s .\tests\tests_geracoes\test_requisicao_dados_nc.py
 
 ## Montagem dos dados (EM DESENVOLVIMENTO...)
 
-Essa etapa envolve várias subetapas, incluindo a união e edição dos datasets obtidos, o mapeamento para as coordenadas das plataformas e a geração de dataframes correspondentes.
+Essa etapa envolve várias subetapas, incluindo a união dos datasets obtidos, edição e mapeamento para as coordenadas das plataformas e a geração de dataframes correspondentes.
 
 A função principal para esta etapa está [aqui](src/main/montagem_dados.py).
 

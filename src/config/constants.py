@@ -1,3 +1,4 @@
+import numpy as np
 from utils.espaco_para_underline import espaco_para_underline
 from utils.indice_mais_um import lista_indice_mais_um
 
@@ -201,10 +202,10 @@ class Correspondencias:
         ESTACAO_DO_ANO = "estacao"
 
         # Nem todos os nomes são necessariamente alterados.
-        NOVOS_NOMES = {"valid_time": TEMPO_UTC0, "pressure_level": PRESSAO, 
+        NOVOS_NOMES = {"valid_time": TEMPO_UTC0, 
                     "z": GEOPOTENCIAL, "r": UMIDADE_RELATIVA, 
                     "t": TEMPERATURA_KELVIN, "u": VELOCIDADE_U, 
-                    "v": VELOCIDADE_V}
+                    "v": VELOCIDADE_V, "altura": ALTURA}
     
    
         NUMERO_PARA_MES = {
@@ -236,7 +237,10 @@ class OutrasConstantes:
     
     Attributes:
         ESTACAO_DO_ANO_DATAS (dict): Datas aproximadas de início e fim das estações do ano.
+        ALTURAS_DESEJADAS (np.ndarray): Alturas desejadas para interpolação, de 130 a 350 metros, com passo de 10 metros.
     """
+
+    ALTURAS_DESEJADAS = np.arange(130, 351, 10)
 
     # As datas reais variam por um ou 2 dias de ano em ano.
     ESTACAO_DO_ANO_DATAS = {"Verão": 
