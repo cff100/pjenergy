@@ -92,7 +92,12 @@ def adiciona_variaveis(dataset: xr.Dataset) -> xr.Dataset:
     hora = ds[cr.DadosVariaveis.TEMPO_BRAS].dt.hour
     hora_str = ds[cr.DadosVariaveis.TEMPO_BRAS].dt.strftime("%H:00")
 
-    dados = {"ano": ano, "mes": mes, "mes_str": mes_str, "dia": dia, "hora": hora, "hora_str": hora_str}
+    dados = {cr.DadosVariaveis.ANO: ano, 
+             cr.DadosVariaveis.MES: mes, 
+             cr.DadosVariaveis.MES_STR: mes_str, 
+             cr.DadosVariaveis.DIA: dia, 
+             cr.DadosVariaveis.HORA: hora, 
+             cr.DadosVariaveis.HORA_STR: hora_str}
 
     ds = ds.assign(dados)
 

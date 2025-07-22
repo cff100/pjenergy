@@ -82,9 +82,11 @@ def nc_para_dask_dataframe_simples(plataforma: Optional[str]) -> dd.DataFrame:
 
     df = merge_dataframes_no_tempo(df, df_str)
 
-    salva_dask_dataframe_parquet(df, dataframe_arquivo_caminho)
+    df_reordenado = df[cr.DadosVariaveis.NOVA_ORDEM_COLUNAS]
 
-    return df
+    salva_dask_dataframe_parquet(df_reordenado, dataframe_arquivo_caminho)
+
+    return df_reordenado
 
 
 

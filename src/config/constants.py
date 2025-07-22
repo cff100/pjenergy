@@ -162,13 +162,15 @@ class Correspondencias:
             TEMPERATURA_CELSIUS (str): Nome da variável de temperatura em Celsius.
             ANO (str): Nome da variável de ano.
             MES (str): Nome da variável de mês.
-            MES_NOME (str): Nome da variável de nome do mês.
+            MES_STR (str): Nome da variável de nome do mês.
             DIA (str): Nome da variável de dia.
-            HORA (str): Nome da variável de hora.
+            HORA (int): Nome da variável de hora.
+            HORA_STR (str): Nome da variável em string de hora.
             NUMBER (str): Nome da variável de número.
             EXP_VER (str): Nome da variável de versão experimental.
             ESTACAO_DO_ANO (str): Nome da variável de estação do ano.
             NOVOS_NOMES (dict): Correspondência entre nomes de variáveis e dimensões antigos, no formato {nome_antigo: nome_novo}.
+            NOVA_ORDEM_COLUNAS (list): Lista que define a ordem das colunas dos dataframes gerados.
             NUMERO_PARA_MES (dict): Correspondência entre o número do mês e seu nome
             """
         
@@ -194,9 +196,10 @@ class Correspondencias:
         TEMPERATURA_CELSIUS = "t_C"
         ANO = "ano"
         MES = "mes"
-        MES_NOME = "mes_nome"
+        MES_STR = "mes_nome"
         DIA = "dia"
         HORA = "hora"
+        HORA_STR = "hora_str"
         NUMBER = "number"
         EXP_VER = "expver"
         ESTACAO_DO_ANO = "estacao"
@@ -206,6 +209,15 @@ class Correspondencias:
                     "z": GEOPOTENCIAL, "r": UMIDADE_RELATIVA, 
                     "t": TEMPERATURA_KELVIN, "u": VELOCIDADE_U, 
                     "v": VELOCIDADE_V, "altura": ALTURA}
+        
+
+        # Os nomes de colunas foram ordenados de forma a priorizar as variáveis mais importantes para análise como colunas iniciais.
+        NOVA_ORDEM_COLUNAS = [ANO, ESTACAO_DO_ANO, MES_STR, 
+                              DIA, HORA_STR, ALTURA, VELOCIDADE_U, 
+                              VELOCIDADE_V, VELOCIDADE_RESULTANTE, 
+                              TEMPERATURA_CELSIUS, TEMPERATURA_KELVIN,  
+                              UMIDADE_RELATIVA, GEOPOTENCIAL, TEMPO_BRAS, 
+                              MES, HORA, TEMPO_UTC0]
     
    
         NUMERO_PARA_MES = {

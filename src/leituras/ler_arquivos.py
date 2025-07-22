@@ -92,8 +92,14 @@ if __name__ == "__main__":
 
     # EXEMPLOS:
 
+    # Configura o pandas para mostrar todas as colunas
+    import pandas as pd
+    pd.set_option('display.max_columns', None)
+    
     #d = ler_arquivo("netcdf", "unido/dataset_unido.nc")
-    #d = ler_arquivo("parquet", "coordenadas_especificas/plataformas/p1-NAMORADO_2_(PNA-2)")
+    d = ler_arquivo("parquet", "coordenadas_especificas/plataformas/p1-NAMORADO_2_(PNA-2)")
+    print(d.compute())
+    print(d.columns)
     d = ler_arquivo("parquet", "coordenadas_especificas/plataformas/p1-NAMORADO_2_(PNA-2)/part.0.parquet")
     print(d.compute())
 
