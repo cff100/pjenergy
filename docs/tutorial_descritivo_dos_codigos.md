@@ -1,5 +1,5 @@
 
-Descrição dos objetivos e funcionamentos por trás dos códigos. Antes de tudo explicado aqui, é necessário seguir os Primeiros Passos do [README](../README.md)
+Descrição extensiva dos objetivos e funcionamentos por trás dos códigos. Antes de tudo explicado aqui, é necessário seguir os Primeiros Passos do [README](../README.md)
 
 # Obtenção dos dados originais
 
