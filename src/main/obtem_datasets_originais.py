@@ -33,5 +33,5 @@ def obtem_datasets_originais(
 
 
 if __name__ == "__main__":
-    obtem_datasets_originais()
+    obtem_datasets_originais() # Obtenção de todos os arquivos NetCDF de cada combinação de variável, ano e nível de pressão.
     
