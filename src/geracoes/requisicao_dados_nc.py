@@ -105,7 +105,7 @@ def prepara_arquivo_para_download(caminho: Path, substituir: bool = False) -> st
 
 # FUNÇÕES INTERMEDIÁRIAS ----------------------------------------
 
-def requisita_dados_simples(
+def requisita_unica_combinacao(
                     dataset_salvamento_caminho: Path,
                     variavel: str, 
                     ano: int, 
@@ -115,7 +115,7 @@ def requisita_dados_simples(
 
     Args:
         dataset_salvamento_caminho (Path): Caminho onde será salvo o dataset. É um caminho padrão 
-            quando `usa_multiplos_dados` é True.
+            quando `usa_multiplas_combinacoes` é True.
         variavel (str): Variável a ser obtida.
         ano (int): Ano a ser obtido.
         pressao_nivel (int): Nível de pressão a ser obtido.
@@ -148,7 +148,7 @@ def requisita_dados_simples(
 
 
 
-def requisita_multiplos_dados() -> None:
+def requisita_multiplas_combinacoes() -> None:
     """Faz loops de várias requesições do Climate Data Store (CDS) para obter vários arquivos NetCDF 
     de acordo com os valores padrões passados como parâmetros. 
     O caminho onde os datasets são salvos também é padronizado."""
@@ -174,7 +174,7 @@ def requisita_multiplos_dados() -> None:
                     continue
 
                 # O arquivo não existindo, faz a requisição
-                requisita_dados_simples(dataset_salvamento_caminho, variavel, ano, pressao_nivel) 
+                requisita_unica_combinacao(dataset_salvamento_caminho, variavel, ano, pressao_nivel) 
 
                 requisicao_atual += 1
                 exibe_progresso(requisicao_atual, n_requisicoes)
@@ -185,7 +185,7 @@ def requisita_multiplos_dados() -> None:
 # FUNÇÃO PRINCIPAL ----------------------------------------
 
 def requisita_dados_api(
-                    usa_multiplos_dados: bool = True,
+                    usa_multiplas_combinacoes: bool = True,
                     dataset_salvamento_caminho: Path | Literal["padrao"] = "padrao",
                     variavel: str = "padrao", 
                     ano: int | Literal["padrao"] = "padrao", 
@@ -194,17 +194,17 @@ def requisita_dados_api(
     """Requisita dados da API do Climate Data Store, podendo ser vários arquivos NetCDF ou apenas um.
     
     Args:
-        usa_multiplos_dados (bool): `True` para requisitar múltiplos arquivos NetCDF, seguindo argumentos `padrao`. 
+        usa_multiplas_combinacoes (bool): `True` para requisitar múltiplos arquivos NetCDF, seguindo argumentos `padrao`. 
             Caso não sejam escolhidos os argumentos padrões, será levantado um ValueError. 
             Caso False, apenas um arquivo NetCDF será requisitado. Nesse caso, os argumentos devem ser definidos, pois,
             se mantidos como `padrao`, também será levantado um ValueError.
         dataset_salvamento_caminho (Path | Literal["padrao"]): Caminho onde será salvo o dataset. É um caminho padrão 
-            quando `usa_multiplos_dados` é True.
-        variavel (str): Variável a ser obtida. É padronizado quando `usa_multiplos_dados` é True.
+            quando `usa_multiplas_combinacoes` é True.
+        variavel (str): Variável a ser obtida. É padronizado quando `usa_multiplas_combinacoes` é True.
             Exemples: "u_component_of_wind", "v_component_of_wind", "relative_humidity", "temperature", "geopotential".
-        ano (int | Literal["padrao"]): Ano a ser obtido. É padronizado quando `usa_multiplos_dados` é True.
+        ano (int | Literal["padrao"]): Ano a ser obtido. É padronizado quando `usa_multiplas_combinacoes` é True.
             Exemples: 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024.
-        pressao_nivel (int | Literal["padrao"]): Nível de pressão a ser obtido. É padronizado quando `usa_multiplos_dados` é True.
+        pressao_nivel (int | Literal["padrao"]): Nível de pressão a ser obtido. É padronizado quando `usa_multiplas_combinacoes` é True.
             Exemples: 900, 925, 950, 975, 1000.
         substituir (bool): True para permitir a substituição do arquivo caso já exista.
     """
@@ -212,14 +212,14 @@ def requisita_dados_api(
     # Monta lista com parametros que tem a possibilidade de receber o valor 'padrao'
     parametros_possivel_padrao = [dataset_salvamento_caminho, variavel, ano, pressao_nivel]
 
-    if usa_multiplos_dados:
+    if usa_multiplas_combinacoes:
         erro_algum_parametro_diferente_do_padrao(parametros_possivel_padrao, 
-                                                 "Quando 'usa_multiplos_dados' é True, se pode usar apenas o valor 'padrao' para os parâmetros.")
-        requisita_multiplos_dados()
+                                                 "Quando 'usa_multiplas_combinacoes' é True, se pode usar apenas o valor 'padrao' para os parâmetros.")
+        requisita_multiplas_combinacoes()
 
-    elif not usa_multiplos_dados:
+    elif not usa_multiplas_combinacoes:
         erro_algum_parametro_igual_ao_padrao(parametros_possivel_padrao,
-                                             "Quando 'usa_multiplos_dados' é False, não se pode usar o valor 'padrao' para nenhum parâmetro.")
+                                             "Quando 'usa_multiplas_combinacoes' é False, não se pode usar o valor 'padrao' para nenhum parâmetro.")
             
-        requisita_dados_simples(cast(Path, dataset_salvamento_caminho), variavel, cast(int, ano), cast(int, pressao_nivel), substituir) 
+        requisita_unica_combinacao(cast(Path, dataset_salvamento_caminho), variavel, cast(int, ano), cast(int, pressao_nivel), substituir) 
         # O cast() serve apenas para ajudar o verificador de tipo estático, para os casos em que ele não reconhece o tipo preciso.
