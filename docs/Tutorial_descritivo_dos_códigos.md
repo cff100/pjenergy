@@ -25,5 +25,8 @@ Não importando, quais os valores do trio de parâmetros passados para a funçã
 
 ## Apenas uma combinação
 
-No caso de apenas uma combinação, a função de 
+No caso de apenas uma combinação, a [função de requisitar uma única combinação é chamada](../src/geracoes/requisicao_dados_nc.py#L108). Ela usa o *url* e *key* salvas em um arquivo `.cdsapirc` para enfim utilizar a API, fazendo a requisição dos dados e salvando em um arquivo NetCDF (com um nome descritivo dos parâmetros relacionados).
 
+## Múltiplas combinações
+
+No [caso de múltiplas combinações](../src/geracoes/requisicao_dados_nc.py#151), a função cria um loop que chama repetidamente a função de requisitar uma única combinação, o que permite a geração de um arquivo NetCDF para cada combinação do trio de parâmetros.

@@ -62,7 +62,7 @@ def garante_path_pai_existencia(path: Path) -> None:
     """Cria pastas parentais para um path caso não exista.
     
     Args:
-        path (Path): Path cujo pastas parentais se busca garantir
+        path (Path): Path cujas pastas parentais se busca garantir
     """
 
     cria_path_se_nao_existe(path.parent)
