@@ -37,7 +37,7 @@ def exibe_progresso(n_atual: int, n_total: int) -> None:
         n_total (int): Número total de etapas.
     """
     porcentagem = gera_porcentagem_progresso(n_total, n_atual)
-    print(f" -> -> -> Progresso atual: {n_atual}/{n_total} ({porcentagem}%)\n")
+    print(f" -> -> -> Progresso atual: {n_atual}/{n_total} ({porcentagem}%)\n\n {'-'*100} \n")
 
 
 
@@ -54,7 +54,7 @@ def gera_nome_arquivo_nc_padrao(variavel: str, ano: int, pressao_nivel: int) -> 
         str: Nome do arquivo
     """
 
-    return f"(var-{variavel})_(anos-{ano})_(pressao-{pressao_nivel}).nc" 
+    return f"(var-{variavel})_(ano-{ano})_(pressao-{pressao_nivel}).nc" 
 # ATENÇÃO!!
 # Essa formatação do nome do arquivo é muito importante para manter a consistência 
 # e facilitar a identificação dos arquivos baixados.
