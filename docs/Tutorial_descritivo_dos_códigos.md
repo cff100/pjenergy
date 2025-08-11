@@ -30,3 +30,6 @@ No caso de apenas uma combinação, a [função de requisitar uma única combina
 ## Múltiplas combinações
 
 No [caso de múltiplas combinações](../src/geracoes/requisicao_dados_nc.py#151), a função cria um loop que chama repetidamente a função de requisitar uma única combinação, o que permite a geração de um arquivo NetCDF para cada combinação do trio de parâmetros.
+
+
+# Montagem dos dados
