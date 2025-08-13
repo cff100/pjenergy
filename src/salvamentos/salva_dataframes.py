@@ -13,12 +13,9 @@ def salva_dask_dataframe_parquet(dataframe: dd.DataFrame, dataframe_diretorio: P
             As pastas parentais são criadas caso não existam.
     """
 
-    # Garante a existência do diretorio da pasta onde a pasta do dataframe está contida
+    # Garante a existência do diretorio pai onde a pasta do dataframe está contida
     garante_path_pai_existencia(dataframe_diretorio)
-
-    # Garante que as pastas onde o dataframe será salvo exista
-    garante_path_pai_existencia(dataframe_diretorio)
-
+    
     # Cria uma barra de progresso do salvamento
     with ProgressBar():
         print("Salvando...")
