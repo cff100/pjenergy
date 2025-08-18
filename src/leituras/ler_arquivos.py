@@ -67,7 +67,7 @@ def ler_arquivo(formato_arquivo: Literal["netcdf", "parquet"],
     if isinstance(path, str):
         path = Path(path)
 
-    # Caso o caminho seja relativo, pega o caminho base padrão, que varia de acordo com o tipo de arquivo
+    # Caso o caminho seja relativo e exige o caminho base padrão, que varia de acordo com o tipo de arquivo
     if eh_caminho_relativo and caminho_base == "padrao":
         caminho_base = identifica_caminho_base_padrao(formato_arquivo)
 

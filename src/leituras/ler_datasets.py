@@ -7,7 +7,7 @@ def ler_dataset_nc(caminho: Path) -> xr.Dataset:
     """Lê dataset no formato NetCDF.
     
     Args:
-        diretorio (Path): Diretório do dataset
+        caminho (Path): Caminho do dataset
 
     Returns:
         dd.Dataset: Dataset lido.
