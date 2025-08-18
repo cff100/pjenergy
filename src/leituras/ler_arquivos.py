@@ -60,6 +60,7 @@ def ler_arquivo(formato_arquivo: Literal["netcdf", "parquet"],
     
     Returns:
         xr.Dataset: Dataset lido se o formato de arquivo passado for "netcdf".
+        
         dd.DataFrame: Dataframe lido se o formato de arquivo passado for "parquet".
     """
 
