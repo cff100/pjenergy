@@ -22,7 +22,7 @@ class ParametrosObtencaoDados:
     PRESSAO_NIVEIS =  (900, 925, 950, 975, 1000) # Em hPa
 
     # Parâmetros temporais
-    ANOS = tuple(range(2015, 2025))  # (2015 - 2024)
+    ANOS = tuple(range(2015, 2026))  # (2015 - 2025)
     MESES = tuple(range(1, 13)) 
     DIAS = tuple(range(1, 32)) 
     HORAS = tuple(f"{h:02d}:00" for h in range(24)) 
