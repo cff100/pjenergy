@@ -22,7 +22,12 @@ class ParametrosObtencaoDados:
     PRESSAO_NIVEIS =  (900, 925, 950, 975, 1000) # Em hPa
 
     # Parâmetros temporais
-    ANOS = tuple(range(2015, 2026))  # (2015 - 2025)
+    ANOS = tuple(range(2015, 2026))  # (2015 - 2025) 
+    # O estudo planejado se dá até o fim do ano de 2024, 
+    # mas foi necessário obter dados do ano seguinte por causa da ocasional diferença de ano 
+    # entre o horário de Brasília e o UTC. Por exemplo, às 22:00 do dia 31 de Dezembro de 2024 
+    # no horário de Brasília corresponde à 01:00 do 01 de Janeiro de 2025 no UTC 
+    
     MESES = tuple(range(1, 13)) 
     DIAS = tuple(range(1, 32)) 
     HORAS = tuple(f"{h:02d}:00" for h in range(24)) 

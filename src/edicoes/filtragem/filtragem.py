@@ -1,7 +1,6 @@
 from pathlib import Path
 from typing import Union, cast
 import dask.dataframe as dd
-
 from leituras.ler_arquivos import ler_arquivo
 
 def filtra_estacao(dataframe_diretorio_relativo: Union[str, Path], estacoes: Union[str, list]) -> dd.DataFrame:
