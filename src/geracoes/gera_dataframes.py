@@ -7,6 +7,7 @@ from config.paths import Dataframes
 from config.constants import Correspondencias as cr, Plataformas
 from salvamentos.salva_dataframes import salva_dask_dataframe_parquet
 from utils.representa_progresso import representa_progresso
+from utils.obtem_dados_plataformas import plataforma_para_pasta_nome
 from leituras.ler_arquivos_pastas_especificas import ler_datasets_pontuais_plataformas_geral
 
 
@@ -63,18 +64,20 @@ def merge_dataframes_no_tempo(df_2D: dd.DataFrame, df_1D: DataFrame) -> dd.DataF
 # FUNÇÔES INTERMEDIÁRIAS -------------------------------------------------------------------------------
 
 
-def nc_para_dask_dataframe_simples(plataforma_representacao: str) -> dd.DataFrame:
+def nc_para_dask_dataframe_simples(plataforma: str) -> dd.DataFrame:
     """Converte NetCDF em Dask DataFrame, salvando como parquet, preservando variáveis 1D e 2D.
 
     Args:
-        plataforma_representacao (str): Nome (ou símbolo) da plataforma cujo caminho dos dados se deseja obter.
+        plataforma (str): Nome da plataforma cujo caminho dos dados se deseja obter.
 
     Returns:
         dd.DataFrame: DataFrame Dask resultante da conversão.
     """
 
-    ds = ler_datasets_pontuais_plataformas_geral(plataforma_representacao)
-    df_caminho = Dataframes.DIRETORIO_PLATAFORMAS_GERAL / plataforma_representacao
+    ds = ler_datasets_pontuais_plataformas_geral(plataforma)
+    
+    nome_pasta = plataforma_para_pasta_nome(plataforma)
+    df_caminho = Dataframes.DIRETORIO_PLATAFORMAS_GERAL / nome_pasta
 
     df, df_str = monta_dataframes_por_dimensao(ds)
 

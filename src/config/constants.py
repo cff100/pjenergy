@@ -209,7 +209,7 @@ class Correspondencias:
 
         SIMBOLO_CHAVE = "simbolo"
         COORDENADAS_CHAVE = "coords"
-        ARQUIVO_CHAVE = "arquivo_nome"
+        ARQUIVO_NC_CHAVE = "arquivo_nc_nome"
         PASTA_CHAVE = "pasta_nome"
     
 
@@ -308,15 +308,15 @@ class Plataformas:
 
 
     DADOS = {
-                        p : {
-                            Correspondencias.Chaves.SIMBOLO_CHAVE : s, 
-                            Correspondencias.Chaves.COORDENADAS_CHAVE : c, 
-                            Correspondencias.Chaves.ARQUIVO_CHAVE : na_nc, 
-                            Correspondencias.Chaves.PASTA_CHAVE : na_pq
+                        plat : {
+                            Correspondencias.Chaves.SIMBOLO_CHAVE : simb, 
+                            Correspondencias.Chaves.COORDENADAS_CHAVE : coord, 
+                            Correspondencias.Chaves.ARQUIVO_NC_CHAVE : arquivo_nc_nome, 
+                            Correspondencias.Chaves.PASTA_CHAVE : pasta_nome
                             } 
-                        for s, p, c, na_nc, na_pq in zip(
+                        for plat, simb, coord, arquivo_nc_nome, pasta_nome in zip(
+                            PLATAFORMAS,
                             SIMBOLOS, 
-                            PLATAFORMAS, 
                             COORDENADAS, 
                             ARQUIVOS_NC_NOMES, 
                             PASTAS_NOMES
@@ -341,7 +341,9 @@ if "__main__" == __name__:
 
     print(f"Área: {ParametrosObtencaoDados.AREA} \n")
 
-    print(f"Dados das plataformas: {Plataformas.DADOS}")
+    print(f"Dados das plataformas: {Plataformas.DADOS}\n")
+
+    print(f"Nomes das pastas: {Plataformas.PASTAS_NOMES}\n")
 
 
 

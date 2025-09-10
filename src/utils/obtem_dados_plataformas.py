@@ -17,7 +17,7 @@ def plataforma_para_arquivo_nome(plataforma: str) -> str:
 
     for plat in Plataformas.DADOS:
         if plat == plataforma:
-            arquivo_nome = Plataformas.DADOS[plat][cr.Chaves.ARQUIVO_CHAVE]
+            arquivo_nome = Plataformas.DADOS[plat][cr.Chaves.ARQUIVO_NC_CHAVE]
             return arquivo_nome
 
     raise TypeError("Essa função deve retornar o nome de um arquivo (str)")
