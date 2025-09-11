@@ -27,8 +27,12 @@ def filtro_especifico(coluna_de_filtragem: str,
         plataforma_representacao = cast(str, plataforma_representacao)
         df = ler_dataframes_pontuais_plataformas_geral(plataforma_representacao)
 
+    if objetos_de_filtragem != None:
+        df_filtrado = df[df[coluna_de_filtragem].isin(objetos_de_filtragem) if isinstance(objetos_de_filtragem, list) else df[coluna_de_filtragem] == objetos_de_filtragem]
+    else: 
+        df_filtrado = df
 
-    df_filtrado = df[df[coluna_de_filtragem].isin(objetos_de_filtragem) if isinstance(objetos_de_filtragem, list) else df[coluna_de_filtragem] == objetos_de_filtragem]
+
     print(df_filtrado.compute())
     return df_filtrado
 
@@ -62,6 +66,7 @@ def filtro_faixa_de_valores(coluna_de_filtragem: str,
 
     df_filtrado = cast(dd.DataFrame, df_filtrado)
     print(df_filtrado.compute())
+
     return df_filtrado
 
 
@@ -215,7 +220,7 @@ def filtragem_abrangente(anos: Optional[Union[int, list]] = None,
                                     filtra_temperatura: (temperatura_maior_igual_a, temperatura_menor_igual_a)
                                     }  
     
-    df_filtrado = None
+    df_filtrado = df
     for funcao in dicionario_funcoes_argumentos.keys():
         argumentos = dicionario_funcoes_argumentos[funcao]
         print(argumentos)
@@ -257,6 +262,6 @@ if __name__ == "__main__":
 
     # print(f'Tipos:\n {df_filtrado.dtypes}\n')
     
-    df_filtrado = filtragem_abrangente(horas = "03:00", plataforma_representacao = "p7")
+    df_filtrado = filtragem_abrangente(horas = 5, estacoes= "Inverno", plataforma_representacao = "p7")
     print(f'Filtragem abrangente:\n {df_filtrado.compute()}\n')
     
