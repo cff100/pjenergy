@@ -33,7 +33,7 @@ def filtro_especifico(coluna_de_filtragem: str,
         df_filtrado = df
 
 
-    print(df_filtrado.compute())
+    #print(df_filtrado.compute())
     return df_filtrado
 
 
@@ -65,7 +65,7 @@ def filtro_faixa_de_valores(coluna_de_filtragem: str,
         df_filtrado = df
 
     df_filtrado = cast(dd.DataFrame, df_filtrado)
-    print(df_filtrado.compute())
+    #print(df_filtrado.compute())
 
     return df_filtrado
 
@@ -223,7 +223,7 @@ def filtragem_abrangente(anos: Optional[Union[int, list]] = None,
     df_filtrado = df
     for funcao in dicionario_funcoes_argumentos.keys():
         argumentos = dicionario_funcoes_argumentos[funcao]
-        print(argumentos)
+        #print(argumentos)
         if isinstance(argumentos, tuple):
             df_filtrado = funcao(*argumentos, plataforma_representacao, df_filtrado)
         else:
