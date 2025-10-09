@@ -9,6 +9,7 @@ from salvamentos.salva_dataframes import salva_dask_dataframe_parquet
 from utils.representa_progresso import representa_progresso
 from utils.obtem_dados_plataformas import plataforma_para_pasta_nome
 from leituras.ler_arquivos_pastas_especificas import ler_datasets_pontuais_plataformas_geral
+from edicoes.limpezas.remove_linhas_com_nan import remove_linhas_nan_dataframes
 
 
 
@@ -85,9 +86,11 @@ def nc_para_dask_dataframe_simples(plataforma: str) -> dd.DataFrame:
 
     df_reordenado = df[cr.DadosVariaveis.NOVA_ORDEM_COLUNAS]
 
-    salva_dask_dataframe_parquet(df_reordenado, df_caminho)
+    df = remove_linhas_nan_dataframes(df)
 
-    return df_reordenado
+    salva_dask_dataframe_parquet(df, df_caminho)
+
+    return df
 
 
 
