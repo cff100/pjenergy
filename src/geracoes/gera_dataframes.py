@@ -15,7 +15,7 @@ from edicoes.limpezas.remove_linhas_com_nan import remove_linhas_nan_dataframes
 
 # FUNÇÔES AUXILIARES -------------------------------------------------------------------------------
 
-def monta_dataframes_por_dimensao(ds: xr.Dataset) -> tuple[dd.DataFrame, DataFrame]:
+def monta_dataframes_por_dimensao(ds: xr.Dataset) -> tuple[dd.DataFrame, DataFrame, DataFrame]:
     """Cria dataframes a partir de um dataset, separando variáveis 1D e 2D.
     
     Args:
@@ -31,33 +31,42 @@ def monta_dataframes_por_dimensao(ds: xr.Dataset) -> tuple[dd.DataFrame, DataFra
     df_2D = ds_2D.to_dask_dataframe()
 
     # Seleciona variáveis 1D (somente tempo) e monta um dataframe com elas
-    variaveis_1D = [v for v in ds.data_vars if ds[v].dims == (cr.DadosVariaveis.TEMPO_UTC0,)]
+    variaveis_1D_tempo = [v for v in ds.data_vars if ds[v].dims == (cr.DadosVariaveis.TEMPO_UTC0,)]
     #print(f"Variáveis 1D: \n{variaveis_1D}")
-    df_1D = ds[variaveis_1D].to_dataframe().reset_index()
+    df_1D_tempo = ds[variaveis_1D_tempo].to_dataframe().reset_index()
 
-    #print(f"1D: \n{df_1D.head()}\n\n")
-    #print(f"2D: \n{df_2D.head()}")
+    # Seleciona variáveis 1D (somente altura) e monta um dataframe com elas
+    variaveis_1D_altura = [v for v in ds.data_vars if ds[v].dims == (cr.DadosVariaveis.ALTURA,)]
+    #print(f"Variáveis 1D: \n{variaveis_1D}")
+    df_1D_altura = ds[variaveis_1D_altura].to_dataframe().reset_index()
 
-    return df_2D, df_1D
+    print(f"1D_tempo: \n{df_1D_tempo.head()}\n\n")
+    print(f"1D_altura: \n{df_1D_altura.head()}\n\n")
+    print(f"2D: \n{df_2D.head()}")
+
+    return df_2D, df_1D_tempo, df_1D_altura
 
 
-def merge_dataframes_no_tempo(df_2D: dd.DataFrame, df_1D: DataFrame) -> dd.DataFrame:
+def merge_dataframes_no_tempo(df_2D: dd.DataFrame, df_1D_tempo: DataFrame, df_1D_altura) -> dd.DataFrame:
     """Realiza o merge dos dataframes Dask e Pandas com base no tempo.
 
     Args:
-        df (dd.DataFrame): DataFrame Dask com variáveis 2D.
-        df_1D (DataFrame): DataFrame Pandas com variáveis 1D.
+        df_2D (dd.DataFrame): DataFrame Dask com variáveis 2D.
+        df_1D_tempo (DataFrame): DataFrame Pandas com variáveis 1D (tempo).
+        df_1D_altura (DataFrame): DataFrame Pandas com variáveis 1D (altura).
     Returns:
         dd.DataFrame: DataFrame Dask resultante do merge, contendo todas as variáveis
         com base no tempo.
     """
 
-    # Para evitar que no merge ocorra a duplicação de coluna existente nos dois dataframes 
-    df_1D = df_1D.drop(columns=["tempo_bras"], errors="ignore")
-
+    # Para evitar que no merge ocorra a duplicação de coluna existente em dois dataframes 
+    df_1D_tempo = df_1D_tempo.drop(columns=["tempo_bras"], errors="ignore")
+    
     # Merge dos dataframes com base no tempo
     df_2D = df_2D.reset_index()
-    df = df_2D.merge(df_1D, on=cr.DadosVariaveis.TEMPO_UTC0, how="left")
+    df = df_2D.merge(df_1D_tempo, on=cr.DadosVariaveis.TEMPO_UTC0, how="left") # Merge com base no tempo
+    df = df.merge(df_1D_altura, on=cr.DadosVariaveis.ALTURA, how="left") # Merge com base na altura
+
 
     return df
 
@@ -80,11 +89,13 @@ def nc_para_dask_dataframe_simples(plataforma: str) -> dd.DataFrame:
     nome_pasta = plataforma_para_pasta_nome(plataforma)
     df_caminho = Dataframes.DIRETORIO_PLATAFORMAS_GERAL / nome_pasta
 
-    df, df_str = monta_dataframes_por_dimensao(ds)
+    df_2D, df_1D_tempo, df_1D_altura = monta_dataframes_por_dimensao(ds)
 
-    df = merge_dataframes_no_tempo(df, df_str)
+    df = merge_dataframes_no_tempo(df_2D, df_1D_tempo, df_1D_altura)
 
-    df_reordenado = df[cr.DadosVariaveis.NOVA_ORDEM_COLUNAS]
+    print(df.compute())
+
+    df = df[cr.DadosVariaveis.NOVA_ORDEM_COLUNAS]
 
     df = remove_linhas_nan_dataframes(df)
 

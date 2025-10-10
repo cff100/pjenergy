@@ -106,7 +106,7 @@ def interpola_varias_variaveis_em_altura(dataset: xr.Dataset) -> xr.Dataset:
     """
     
     # Lista de variáveis que serão interpoladas
-    variaveis = ["u", "v", "z", "r", "t"]
+    variaveis = ["u", "v", "r", "t"]
 
     # Cria um novo dataset para armazenar as variáveis interpoladas
     ds_interp = xr.Dataset()
@@ -116,6 +116,8 @@ def interpola_varias_variaveis_em_altura(dataset: xr.Dataset) -> xr.Dataset:
     # Interpola cada variável na lista
     for var in variaveis:
         ds_interp[var] = interpolar_variavel_em_altura(var, h, dataset)
+    ds_interp["z"] = ds_interp["altura"] * cn.G
+    print(ds_interp)
 
     return ds_interp
 

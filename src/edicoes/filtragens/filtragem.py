@@ -263,6 +263,6 @@ if __name__ == "__main__":
     # print(f'Tipos:\n {df_filtrado.dtypes}\n')
     
     #df_filtrado = filtragem_abrangente(plataforma_representacao = "p4")
-    df_filtrado = filtragem_abrangente(horas = 5, estacoes= "Inverno", plataforma_representacao = "p7")
-    print(f'Filtragem abrangente:\n {df_filtrado.compute()}\n')
+    df_filtrado = filtragem_abrangente(horas = 5, meses = "Julho", plataforma_representacao = "p7")
+    print(f'Filtragem abrangente:\n {df_filtrado.compute().head(15)}\n')
     
