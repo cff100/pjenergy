@@ -89,6 +89,7 @@ def adiciona_variaveis(dataset: xr.Dataset) -> xr.Dataset:
     mes = ds[cr.DadosVariaveis.TEMPO_BRAS].dt.month
     mes_str = mes.copy(data=[cr.DadosVariaveis.NUMERO_PARA_MES[int(m)] for m in mes.values])
     dia = ds[cr.DadosVariaveis.TEMPO_BRAS].dt.day
+    data = ds[cr.DadosVariaveis.TEMPO_BRAS].dt.floor("D")
     hora = ds[cr.DadosVariaveis.TEMPO_BRAS].dt.hour
     hora_str = ds[cr.DadosVariaveis.TEMPO_BRAS].dt.strftime("%H:00")
 
@@ -96,8 +97,10 @@ def adiciona_variaveis(dataset: xr.Dataset) -> xr.Dataset:
              cr.DadosVariaveis.MES: mes, 
              cr.DadosVariaveis.MES_STR: mes_str, 
              cr.DadosVariaveis.DIA: dia, 
+             cr.DadosVariaveis.DATA_BRAS: data,
              cr.DadosVariaveis.HORA: hora, 
-             cr.DadosVariaveis.HORA_STR: hora_str}
+             cr.DadosVariaveis.HORA_STR: hora_str
+            }
 
     ds = ds.assign(dados)
 

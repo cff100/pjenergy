@@ -40,9 +40,9 @@ def monta_dataframes_por_dimensao(ds: xr.Dataset) -> tuple[dd.DataFrame, DataFra
     #print(f"Variáveis 1D: \n{variaveis_1D}")
     df_1D_altura = ds[variaveis_1D_altura].to_dataframe().reset_index()
 
-    print(f"1D_tempo: \n{df_1D_tempo.head()}\n\n")
-    print(f"1D_altura: \n{df_1D_altura.head()}\n\n")
-    print(f"2D: \n{df_2D.head()}")
+    #print(f"1D_tempo: \n{df_1D_tempo.head()}\n\n")
+    #print(f"1D_altura: \n{df_1D_altura.head()}\n\n")
+    #print(f"2D: \n{df_2D.head()}")
 
     return df_2D, df_1D_tempo, df_1D_altura
 
@@ -93,7 +93,7 @@ def nc_para_dask_dataframe_simples(plataforma: str) -> dd.DataFrame:
 
     df = merge_dataframes_no_tempo(df_2D, df_1D_tempo, df_1D_altura)
 
-    print(df.compute())
+    #print(df.compute())
 
     df = df[cr.DadosVariaveis.NOVA_ORDEM_COLUNAS]
 

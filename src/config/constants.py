@@ -166,6 +166,7 @@ class Correspondencias:
         MES = "mes"
         MES_STR = "mes_nome"
         DIA = "dia"
+        DATA_BRAS = "data_bras"
         HORA = "hora"
         HORA_STR = "hora_str"
         NUMBER = "number"
@@ -185,7 +186,7 @@ class Correspondencias:
                               VELOCIDADE_V, VELOCIDADE_RESULTANTE, 
                               TEMPERATURA_CELSIUS, TEMPERATURA_KELVIN,  
                               UMIDADE_RELATIVA, GEOPOTENCIAL, TEMPO_BRAS, 
-                              MES, HORA, TEMPO_UTC0]
+                              DATA_BRAS, MES, HORA, TEMPO_UTC0]
     
    
         NUMERO_PARA_MES = {

@@ -265,4 +265,5 @@ if __name__ == "__main__":
     #df_filtrado = filtragem_abrangente(plataforma_representacao = "p4")
     df_filtrado = filtragem_abrangente(horas = 5, meses = "Julho", plataforma_representacao = "p7")
     print(f'Filtragem abrangente:\n {df_filtrado.compute().head(15)}\n')
+    print(df_filtrado)
     
