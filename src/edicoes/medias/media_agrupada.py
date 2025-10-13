@@ -1,20 +1,22 @@
 import dask.dataframe as dd
 from typing import cast
 
-def media_agrupada(df: dd.DataFrame, colunas_remover: list, 
-                   categoria_de_agrupamento: list = ["data_bras", "h"], 
-                   colunas_alvo: list = ["vel_u","vel_v","vel_res","t_C","t_K","r"]) -> dd.DataFrame:
+from config.constants import Correspondencias as cr
+
+def media_agrupada(df: dd.DataFrame, 
+                   categoria_de_agrupamento: list, 
+                   colunas_remover: list, ) -> dd.DataFrame:
     """
     Função geral para fazer média agrupada de valores de um dataframe.
 
     Args:
         df (dd.Dataframe): Dataframe objeto da média
+        categorias_de_agrupamento (lista): Lista com as categorias em relação às quais agrupar.
         colunas_remover (list): Lista com os nomes das colunas a serem removidas. 
             Por exemplo, em uma média diária, a coluna de horas se torna inútil e deve ser eliminada.
-        categorias_de_agrupamento (lista): Lista com as categorias em relação às quais agrupar
-        colunas_alvos (lista): Lista com os nomes das colunas com valores que deseja se fazer a média.
-
     """
+    # Lista com os nomes das colunas com valores que deseja se fazer a média.
+    colunas_alvo = cr.DadosVariaveis.VARIAVEIS_DE_ANALISE  
 
     # Remove colunas desnecessárias
     df = df.drop(columns=colunas_remover, errors="ignore")
@@ -41,7 +43,9 @@ def media_agrupada(df: dd.DataFrame, colunas_remover: list,
 if __name__ == "__main__":
     from leituras.ler_arquivos_pastas_especificas import ler_dataframes_pontuais_plataformas_geral
     df = ler_dataframes_pontuais_plataformas_geral("p7")
-    media = media_agrupada(df,["hora","hora_str"])
+    media = media_agrupada(df, ["data_bras", "h"], ["hora","hora_str"])
     print(media.compute().tail(50))
     print(media.columns)
-    print(media[media["data_bras"] == "2021-11-14"].compute())
+    print(media)
+    print(media[media["data_bras"] == "2016-11-14"].compute())
+    print(media[media["ano"] == 2015].compute())

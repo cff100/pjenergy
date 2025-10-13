@@ -140,6 +140,7 @@ class Correspondencias:
             NOVOS_NOMES (dict): Correspondência entre nomes de variáveis e dimensões antigos, no formato {nome_antigo: nome_novo}.
             NOVA_ORDEM_COLUNAS (list): Lista que define a ordem das colunas dos dataframes gerados.
             NUMERO_PARA_MES (dict): Correspondência entre o número do mês e seu nome
+            VARIAVEIS_DE_ANALISE (list): Lista de variáveis foco de análise, que pode passar por operações de média.
             """
         
 
@@ -195,6 +196,7 @@ class Correspondencias:
             9: "Setembro", 10: "Outubro", 11: "Novembro", 12: "Dezembro"
         }
 
+        VARIAVEIS_DE_ANALISE = ["vel_u","vel_v","vel_res","t_C","t_K","r"]
 
     class Chaves:
         """Agrupa chaves utilizadas em dicionários para facilitar o acesso aos dados das plataformas.
