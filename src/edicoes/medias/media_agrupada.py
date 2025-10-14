@@ -18,20 +18,24 @@ def media_agrupada(df: dd.DataFrame,
     # Lista com os nomes das colunas com valores que deseja se fazer a média.
     colunas_alvo = cr.DadosVariaveis.VARIAVEIS_DE_ANALISE  
 
+    print(df)
     # Remove colunas desnecessárias
     df = df.drop(columns=colunas_remover, errors="ignore")
     # Remove a coluna de tempo em UTC0, já que as médias são feitas considerando o tempo no horário de Brasília, 
     # tornando os valores em outros fusos horários incompatíveis.
-    df = df.drop(columns=["tempo_UTC0"], errors="ignore")  
+    df = df.drop(columns=["tempo_UTC0", "tempo_bras"], errors="ignore")  
 
     #print(df.compute())
 
     todas_colunas = list(df.columns)
     colunas_nao_alvo = [coluna for coluna in todas_colunas if coluna not in colunas_alvo] # Lista de colunas que não se deseja vazer média
+    print(f"Todas colunas: {todas_colunas}")
+    #print(f"Colunas não alvo: {colunas_nao_alvo}")
 
     # Criação de dicionário com instruções para o método de média agrupada
     agg_dicio = {col: "mean" for col in colunas_alvo}
     agg_dicio.update({col: "first" for col in colunas_nao_alvo})
+    #print(f"agg_dicio: {agg_dicio}")
 
     # Cálculo da média agrupada
     media = df.groupby(categoria_de_agrupamento, sort=categoria_de_agrupamento).agg(agg_dicio)
@@ -43,8 +47,8 @@ def media_agrupada(df: dd.DataFrame,
 if __name__ == "__main__":
     from leituras.ler_arquivos_pastas_especificas import ler_dataframes_pontuais_plataformas_geral
     df = ler_dataframes_pontuais_plataformas_geral("p7")
-    media = media_agrupada(df, ["data_bras", "h"], ["hora","hora_str"])
-    print(media.compute().tail(50))
+    media = media_agrupada(df, ["data_bras", "h"], ["hora", "hora_str"])
+    print(media.compute().head(50))
     print(media.columns)
     print(media)
     print(media[media["data_bras"] == "2016-11-14"].compute())
