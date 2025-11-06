@@ -4,10 +4,10 @@ from edicoes.medias.media_agrupada import media_agrupada
 
 def media_mensal_por_ano(df: dd.DataFrame) -> dd.DataFrame:
     """
-    
+    Faz a média agrupada por mês e altura de um ano específico.
     """
     
-    categoria_de_agrupamento: list = ["ano", "mes", "h"]
+    categoria_de_agrupamento: list = ["mes_nome", "h"]
     colunas_remover = ["dia", "hora_str", "tempo_bras", "data_bras", "hora", "estacao"]
 
     media = media_agrupada(df, categoria_de_agrupamento, colunas_remover)

@@ -1,8 +1,8 @@
 from typing import Union, Any, Optional, Literal, cast
 import dask.dataframe as dd
 
-from leituras.ler_arquivos_pastas_especificas import ler_dataframes_pontuais_plataformas_geral
 from config.constants import Correspondencias as cr
+from utils.dataframe_e_plataforma_representacao import resolve_dataframe_e_plataforma_representação
 
 
 def filtro_especifico(coluna_de_filtragem: str, 
@@ -18,14 +18,7 @@ def filtro_especifico(coluna_de_filtragem: str,
         df (Optional[dd.DataFrame]): Dataframe que se deseja filtrar.
     """
 
-    if isinstance(df, dd.DataFrame):
-        pass # df é o df passado como parâmetro
-    elif df == None and plataforma_representacao == None:
-        raise TypeError("Obrigatoriamente, a dupla de parâmetros 'plataforma_representacao' e 'df' " \
-        "devem ter no máximo um dos dois com valor None.")
-    else: 
-        plataforma_representacao = cast(str, plataforma_representacao)
-        df = ler_dataframes_pontuais_plataformas_geral(plataforma_representacao)
+    df = resolve_dataframe_e_plataforma_representação(plataforma_representacao, df)
 
     if objetos_de_filtragem != None:
         df_filtrado = df[df[coluna_de_filtragem].isin(objetos_de_filtragem) if isinstance(objetos_de_filtragem, list) else df[coluna_de_filtragem] == objetos_de_filtragem]
@@ -45,15 +38,8 @@ def filtro_faixa_de_valores(coluna_de_filtragem: str,
                             plataforma_representacao: Optional[str] = None, 
                             df: Optional[dd.DataFrame] = None) -> dd.DataFrame:
     
-    if isinstance(df, dd.DataFrame):
-        pass # df é o df passado como parâmetro
-    elif df == None and plataforma_representacao == None:
-        raise TypeError("Obrigatoriamente, a dupla de parâmetros 'plataforma_representacao' e 'df' " \
-        "devem ter no máximo um dos dois com valor None.")
-    else: 
-        plataforma_representacao = cast(str, plataforma_representacao)
-        df = ler_dataframes_pontuais_plataformas_geral(plataforma_representacao)
     
+    df = resolve_dataframe_e_plataforma_representação(plataforma_representacao, df)
 
     if maior_igual_a is not None and menor_igual_a is not None:
         df_filtrado = df[(df[coluna_de_filtragem] >= maior_igual_a) & (df[coluna_de_filtragem] <= menor_igual_a)]
@@ -262,7 +248,6 @@ if __name__ == "__main__":
 
     # print(f'Tipos:\n {df_filtrado.dtypes}\n')
     
-    #df_filtrado = filtragem_abrangente(plataforma_representacao = "p4")
     df_filtrado = filtragem_abrangente(horas = 5, meses = "Julho", plataforma_representacao = "p7")
     print(f'Filtragem abrangente:\n {df_filtrado.compute().head(15)}\n')
     print(df_filtrado)
