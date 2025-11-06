@@ -55,8 +55,7 @@ def media_agrupada(categorias_de_agrupamento: list,
 
 
 if __name__ == "__main__":
-    from leituras.ler_arquivos_pastas_especificas import ler_dataframes_pontuais_plataformas_geral
-    df = ler_dataframes_pontuais_plataformas_geral("p7")
+
     media = media_agrupada(["data_bras", "h"], ["hora", "hora_str"], "p7")
     print(media.compute().head(50))
     print(media.columns)

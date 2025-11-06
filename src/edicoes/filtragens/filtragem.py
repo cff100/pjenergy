@@ -207,6 +207,8 @@ def filtragem_abrangente(anos: Optional[Union[int, list]] = None,
                                     }  
     
     df_filtrado = df
+
+    i = True
     for funcao in dicionario_funcoes_argumentos.keys():
         argumentos = dicionario_funcoes_argumentos[funcao]
         #print(argumentos)
@@ -214,6 +216,9 @@ def filtragem_abrangente(anos: Optional[Union[int, list]] = None,
             df_filtrado = funcao(*argumentos, plataforma_representacao, df_filtrado)
         else:
             df_filtrado = funcao(argumentos, plataforma_representacao, df_filtrado)
+        if i: # Para mudar o argumento de filtragem após a primeira filtragem
+            i = False
+            plataforma_representacao = None
 
     df_filtrado = cast(dd.DataFrame, df_filtrado)
     return df_filtrado
@@ -250,5 +255,5 @@ if __name__ == "__main__":
     
     df_filtrado = filtragem_abrangente(horas = 5, meses = "Julho", plataforma_representacao = "p7")
     print(f'Filtragem abrangente:\n {df_filtrado.compute().head(15)}\n')
-    print(df_filtrado)
+    #print(df_filtrado)
     

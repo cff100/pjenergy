@@ -9,12 +9,10 @@ def resolve_dataframe_e_plataforma_representação(plataforma_representacao: Opt
 
     valores = [plataforma_representacao, df] 
     valores_bool = [v is None for v in valores]
-    print(valores_bool)
-    print(plataforma_representacao)
-    print(df)
-    print(any([df, plataforma_representacao]))
-    print(all([df, plataforma_representacao]))
- 
+    #print(plataforma_representacao)
+    #print(df)
+    #print(valores_bool)
+
     if not (any(valores_bool) and not all(valores_bool)):
         raise TypeError("Obrigatoriamente, a dupla de parâmetros 'plataforma_representacao' e 'df' " \
         "devem ter exatamente um dos dois com valor None.")
