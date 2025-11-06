@@ -4,43 +4,6 @@ import numpy as np
 
 from config.constants import Correspondencias as cr
 
-def listas_para_agrupamento(categorias_de_agrupamento: list): #-> tuple[list, list]
-    """Gera, à partir das categorias de agrupamento escolhidas, as listas de colunas a serem removidas do dataframe e a de colunas que receberão argumento 'first' no agrupamento.
-    Args:
-        categorias_de_agrupamento (lista): Lista com as categorias em relação às quais agrupar.
-    """
-
-    # Variáveis ordenadas por abrangência, da mais abrangente para a menos abrtangente
-    variaveis_ordenadas_por_abrangencia = ["ano", "estação", "mes", 
-                                           "mes_nome", "data_bras", 
-                                           "dia", "hora", "hora_str"] 
-    
-    # Matriz que organiza a relação entre as categorias nas colunas com as categorias das linhas
-    # Legenda:
-        # S: Superioridade
-        # D: Divergência
-        # L: Linearidade
-        # EQ: Equivalência
-    matriz_de_relacoes = np.array([["-", "D", "D", "D", "L", "L", "D", "D"],
-                                   ["S", "-", "D", "D", "L", "L", "D", "D"],
-                                   ["S", "S", "-", "EQ", "L", "L", "D", "D"],
-                                   ["S", "S", "EQ", "-", "L", "L", "D", "D"],
-                                   ["S", "S", "S", "S", "-", "L", "D", "D"],
-                                   ["S", "S", "S", "S", "S", "-", "D", "D"],
-                                   ["S", "S", "S", "S", "S", "S", "-", "EQ"],
-                                   ["S", "S", "S", "S", "S", "S", "EQ", "-"]])
-
-    numero_de_linhas_e_colunas = len(matriz_de_relacoes)
-
-    for categoria in variaveis_ordenadas_por_abrangencia: # Varrer todas as variáveis existentes
-        if categoria in categorias_de_agrupamento:
-            i = variaveis_ordenadas_por_abrangencia.index(categoria) # Pega o número na linha relacionada daquela categoria
-            for j in range(numero_de_linhas_e_colunas): # Percorre todas as colunas
-                matriz_de_relacoes[i][j] = 0  # Transforma os elementos em 0 para os identificar como a serem desconsiderados
-
-    print(matriz_de_relacoes)
-
-
 def media_agrupada(df: dd.DataFrame, 
                    categorias_de_agrupamento: list, 
                    colunas_remover: list, ) -> dd.DataFrame:
