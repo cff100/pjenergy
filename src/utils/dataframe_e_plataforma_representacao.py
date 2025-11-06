@@ -3,7 +3,6 @@ from typing import Optional, cast
 
 from leituras.ler_arquivos_pastas_especificas import ler_dataframes_pontuais_plataformas_geral
 
-
 def resolve_dataframe_e_plataforma_representação(plataforma_representacao: Optional[str], 
                                                  df: Optional[dd.DataFrame]):
 
