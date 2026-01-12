@@ -1,6 +1,3 @@
-[build-system]
-requires = ["setuptools>=64", "wheel"]
-build-backend = "setuptools.build_meta"
 
 [project]
 name = "pjenergy"
@@ -9,10 +6,5 @@ description = "Projeto de análise energética"
 requires-python = ">=3.10"
 dependencies = []
 
-[tool.setuptools]
-package-dir = { "" = "src" }
-include-package-data = true
-
-[tool.setuptools.packages.find]
-where = ["src"]
-include = ["*"]
+[tool.pytest]
+addopts = ["-ra", "--cov=src", "--cov-report=term-missing", "--cov-report=html"]
