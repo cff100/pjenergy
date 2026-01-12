@@ -5,21 +5,15 @@ __pycache__/
 .pytest_cache/
 
 # Virtual environment
-env/
-venv/
 .venv/
-ENV/
 
 # VS Code
 .vscode/
 
-# Arquivos de ambiente
-.env
-
-# Pacote do projeto
+# Project package
 *.egg-info/
 
-# Arquyivos de dados processados ignorados
+# Data
 data/datasets/unido
 data/datasets/pontuais
 data/dataframes
