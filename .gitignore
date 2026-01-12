@@ -14,8 +14,3 @@ __pycache__/
 *.egg-info/
 
 # Data
-data/datasets/unido
-data/datasets/pontuais
-data/dataframes
-
-tests/dados_gerados_testes
