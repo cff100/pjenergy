@@ -10,6 +10,7 @@ description = "Projeto de análise energética"
 authors = [{ name = "Caio Felix" }]
 readme = "README.md"
 requires-python = ">=3.10"
+dependencies = ["cdsapi"]
 
 [tool.pytest]
 addopts = ["-ra", "--cov=src", "--cov-report=term-missing", "--cov-report=html"]
