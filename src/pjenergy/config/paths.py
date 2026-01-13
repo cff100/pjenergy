@@ -9,14 +9,14 @@ class BasicDirectories:
         DIRETORIO_TESTES (Path): Diretório onde se localizam os testes.
         """
 
-    # Diretório do projeto
-    DIRETORIO_BASE_GERAL = Path(__file__).parent.parent.parent 
+    # # Diretório do projeto
+    # DIRETORIO_BASE_GERAL = Path(__file__).parent.parent.parent 
 
-    # Diretório da pasta de dados
-    DIRETORIO_DADOS = DIRETORIO_BASE_GERAL / "data" # .../data
+    # # Diretório da pasta de dados
+    # DIRETORIO_DADOS = DIRETORIO_BASE_GERAL / "data" # .../data
 
-    # Diretório da pasta de testes
-    DIRETORIO_TESTES = DIRETORIO_BASE_GERAL / "tests" # .../data/tests
+    # # Diretório da pasta de testes
+    # DIRETORIO_TESTES = DIRETORIO_BASE_GERAL / "tests" # .../data/tests
 
     @staticmethod
     def default_cdsapirc_path() -> Path:
