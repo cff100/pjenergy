@@ -1,6 +1,6 @@
 from pathlib import Path
 
-class DiretoriosBasicos:
+class BasicDirectories:
     """Agrupa diretorios básicos do projeto
     
     Attributes:
@@ -18,6 +18,9 @@ class DiretoriosBasicos:
     # Diretório da pasta de testes
     DIRETORIO_TESTES = DIRETORIO_BASE_GERAL / "tests" # .../data/tests
 
+    @staticmethod
+    def default_cdsapirc_path() -> Path:
+        return Path.home() / ".cdsapirc"
 
 
 
