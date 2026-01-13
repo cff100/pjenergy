@@ -16,4 +16,19 @@ def create_era5_client_doc(key: str ,
 def request_era5():
 
     client = cdsapi.Client()
-    pass
+    
+    dataset = 'reanalysis-era5-pressure-levels'
+    request = {
+    'product_type': ['reanalysis'],
+    'variable': variavel,
+    'year': ano,
+    'month': pod.MESES,
+    'day': pod.DIAS,
+    'time': pod.HORAS,
+    'area': pod.AREA,  
+    'pressure_level': pressao_nivel,  # Em hPa
+    'data_format': pod.DATA_FORMAT,
+    'download_format': pod.DOWNLOAD_FORMAT
+    }
+
+    c.retrieve(dataset, request, dataset_salvamento_caminho)
