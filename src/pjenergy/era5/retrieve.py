@@ -1,5 +1,6 @@
+from dataclasses import dataclass
 from pathlib import Path
-from typing import Optional 
+from typing import Optional, Sequence
 import cdsapi
 
 from pjenergy.config.paths import BasicDirectories
@@ -11,6 +12,20 @@ def create_era5_client_doc(key: str ,
     
     path = path or BasicDirectories.default_cdsapirc_path()
     path.write_text(f"url: {url}\nkey: {key}\n")
+
+
+
+@dataclass
+class ERA5Request:
+    dataset: str
+    variable: Sequence[str]
+    year: str
+    month: Sequence[str] | None = None
+    day: Sequence[str] | None = None
+    time: Sequence[str] | None = None
+    product_type: str = "reanalysis"
+    format: str = "netcdf"
+
 
 
 def request_era5():
