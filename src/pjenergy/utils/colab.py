@@ -22,6 +22,7 @@ def execute_curl_command(raw_url: str, destiny_path: Path):
 def download_template_from_github(raw_url: str, colab_path: Path):
   
     if not colab_path.exists():
+        colab_path.parent.mkdir(parents=True, exist_ok=True)
         print(f"Downloading from github: {raw_url} ...")
         execute_curl_command(raw_url, colab_path)
         print("Now you can edit it freely in Colab.")
