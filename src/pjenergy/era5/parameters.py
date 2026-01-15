@@ -2,7 +2,8 @@ from dataclasses import dataclass
 from typing import Sequence
 from pathlib import Path
 from pjenergy.config.paths import BasicDirectories
-from pjenergy.io.read_yaml import read_yaml
+from pjenergy.io.yaml import read_yaml, write_yaml
+from pjenergy.utils.colab import is_in_colab
 
 
 @dataclass
@@ -35,10 +36,20 @@ class ERA5Parameters:
         return cds_dict
 
 
+def write_parameters_template_in_colab() -> None:
+
+    data = read_yaml(BasicDirectories.TEMPLATES_PATH / "era5_parameters.yaml")
+
+    if is_in_colab():
+        write_yaml(data, Path("era5_parameters.yaml"))
 
 
-def load_parameters_from_template(path: Path = BasicDirectories.PJENERGY_PATH / "templates" / "era5_parameters"):
-    data = read_yaml(path)
+def load_parameters_from_template():
+
+    if is_in_colab():
+        data = read_yaml(Path("era5_parameters.yaml"))
+    else:
+        data = read_yaml(BasicDirectories.TEMPLATES_PATH / "era5_parameters.yaml")
 
     return ERA5Parameters(**data)
 

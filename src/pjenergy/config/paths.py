@@ -8,6 +8,7 @@ class BasicDirectories:
     def default_cdsapirc_path() -> Path:
         return Path.home() / ".cdsapirc"
     
+    TEMPLATES_PATH = PJENERGY_PATH / "templates"
 
 if __name__ == "__main__":
     print(BasicDirectories.PJENERGY_PATH)
