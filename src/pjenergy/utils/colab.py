@@ -30,7 +30,7 @@ def download_template_from_github(raw_url: str, colab_path: Path):
         print(f"The {colab_path} already exists in Colab.")
         replace = None
         while replace not in ["Y", "N"]:
-            replace = input("Do you want to replace it? (Y / N)")
+            replace = input("Do you want to replace it? (Y / N)  ")
         if replace == "Y":
             print(f"Downloading from github: {raw_url} ...")
             execute_curl_command(raw_url, colab_path)
