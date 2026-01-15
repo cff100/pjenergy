@@ -1,19 +1,14 @@
-from dataclasses import dataclass
-from typing import Sequence
+from pathlib import Path
 
-@dataclass
-class ERA5Request:
-    dataset: str
-    product_type: Sequence[str]
-    variables: Sequence[str]
-    years: Sequence[str]
-    months: Sequence[str]
-    days: Sequence[str]
-    times: Sequence[str]
-    area: Sequence[float]
-    pressure_levels: Sequence[str]
-    data_format: Sequence[str]
-    download_format: Sequence[str]
+from .client import create_era5_client
+from .parameters import load_parameters_from_template
 
-    def to_cds_dict(self) -> dict:
-        
+def request_era5():
+
+    client = create_era5_client()
+
+    parameters = load_parameters_from_template()
+    dataset = parameters.dataset
+    request = parameters.to_cds_dict()
+
+    client.retrieve(dataset, request, Path.home() / "test")
