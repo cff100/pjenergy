@@ -10,7 +10,7 @@ def create_era5_client_doc(key: str ,
                            url: str="https://cds.climate.copernicus.eu/api",
                            path: Optional[Path] = None):
     
-    path = path or BasicDirectories.default_cdsapirc_path()
+    path = path or BasicDirectories.cdsapirc()
     path.write_text(f"url: {url}\nkey: {key}\n")
 
 
