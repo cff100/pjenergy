@@ -17,7 +17,9 @@ class BasicDirectories:
 
     @staticmethod
     def build_from_root(relative_path: str | Path) -> Path:
-        return BasicDirectories.content_root() / relative_path
+        path = BasicDirectories.content_root() / relative_path
+        path.parent.mkdir(parents=True, exist_ok=True)
+        return path
 
     @staticmethod
     def templates() -> Path:
