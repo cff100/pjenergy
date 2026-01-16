@@ -43,7 +43,9 @@ class DataDirectories:
 
     @staticmethod
     def cds() -> Path:
-        return BasicDirectories.data() / "cds"
+        path = BasicDirectories.data() / "cds"
+        path.mkdir(parents=True, exist_ok=True)
+        return path
 
 
 if __name__ == "__main__":
