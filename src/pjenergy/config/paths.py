@@ -34,7 +34,7 @@ class TemplatesDirectories:
     def parameters() -> Path:
         return BasicDirectories.templates() / "era5_parameters.yaml"
 
-    GITHUB_PARAMETERS_TEMPLATE_RAW_URL = "https://raw.githubusercontent.com/cff100/pjenergy/refs/heads/refactor/arquitetura/src/pjenergy/templates/era5_parameters.yaml"
+    GITHUB_PARAMETERS_TEMPLATE_RAW_URL = "https://raw.githubusercontent.com/cff100/pjenergy/refs/heads/refactor/arquitetura/templates/era5_parameters.yaml"
 
 
 class DataDirectories:
