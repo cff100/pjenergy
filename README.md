@@ -1,5 +1,5 @@
 
-![alt text](/tutorials/images/Pasted%20image%2020250308162026.png)
+![alt text](/readme_front_image.png)
 
 # Pjenergy
 
