@@ -45,6 +45,7 @@ def download_parameters_from_github(force: bool = False) -> None:
         download_template(TemplatesDirectories.GITHUB_PARAMETERS_TEMPLATE_RAW_URL, 
                                       TemplatesDirectories.parameters(), force)
 
+
 def load_parameters_from_template() -> ERA5Parameters:
 
     data = read_yaml(TemplatesDirectories.parameters())

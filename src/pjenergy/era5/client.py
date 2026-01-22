@@ -22,3 +22,7 @@ def create_cdsapi_client_doc(key: str ,
 
 def create_cdsapi_client() -> cdsapi.Client:
     return cdsapi.Client()
+
+
+if __name__ == "__main__":
+    create_cdsapi_client_doc("")
