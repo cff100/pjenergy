@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import Sequence
 from pjenergy.config.paths import TemplatesDirectories
 from pjenergy.io.yaml import read_yaml
-from pjenergy.utils.colab import is_in_colab, download_template_from_github
+from pjenergy.utils.colab import is_in_colab, download_template
 
 
 @dataclass
@@ -35,11 +35,15 @@ class ERA5Parameters:
         return cds_dict
 
 
-def download_parameters_from_github():
+def download_parameters_from_github(force: bool = False):
+    """    
+    :param force: If the file already exists, force a replacement.
+    :type force: bool
+    """
 
     if is_in_colab():
-        download_template_from_github(TemplatesDirectories.GITHUB_PARAMETERS_TEMPLATE_RAW_URL, 
-                                      TemplatesDirectories.parameters())
+        download_template(TemplatesDirectories.GITHUB_PARAMETERS_TEMPLATE_RAW_URL, 
+                                      TemplatesDirectories.parameters(), force)
 
 def load_parameters_from_template():
 

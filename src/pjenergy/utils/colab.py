@@ -1,6 +1,7 @@
 import subprocess
 from pathlib import Path
 
+from pjenergy.utils.path_existence import ask_replace_file
 
 def is_in_colab() -> bool:
 
@@ -19,20 +20,19 @@ def execute_curl_command(raw_url: str, destiny_path: Path):
     print("Download concluído.")
 
 
-def download_template_from_github(raw_url: str, colab_path: Path):
-  
-    if not colab_path.exists():
+def download_template_from_github(raw_url: str, colab_path: Path) -> None:
         print(f"Downloading from github: {raw_url} ...")
         execute_curl_command(raw_url, colab_path)
         print("Now you can edit it freely in Colab.")
+
+
+def download_template(raw_url: str, colab_path: Path, force: bool = False) -> None:
+
+    if not colab_path.exists() or force:
+        download_template_from_github(raw_url, colab_path)
     else: 
-        print(f"The {colab_path} already exists in Colab.")
-        replace = None
-        while replace not in ["Y", "N"]:
-            replace = input("Do you want to replace it? (Y / N)  ")
-        if replace == "Y":
-            print(f"Downloading from github: {raw_url} ...")
-            execute_curl_command(raw_url, colab_path)
-            print("Now you can edit it freely in Colab.")
-        else: 
-            return
+        if ask_replace_file():
+            download_template_from_github(raw_url, colab_path)
+
+        
+
