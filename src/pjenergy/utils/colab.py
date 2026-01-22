@@ -14,15 +14,15 @@ def is_in_colab() -> bool:
     return IN_COLAB
 
 
-def execute_curl_command(raw_url: str, destiny_path: Path):
-    print(f"Downloading template to {destiny_path} ...")
+def execute_curl_donwload_command(raw_url: str, destiny_path: Path):
     subprocess.run(["curl", "-sSL", "-o", str(destiny_path), raw_url], check=True)
-    print("Download concluído.")
+    
 
 
 def download_template_from_github(raw_url: str, colab_path: Path) -> None:
-        print(f"Downloading from github: {raw_url} ...")
-        execute_curl_command(raw_url, colab_path)
+        print(f"Downloading template from github: {raw_url} to {colab_path} ...")
+        execute_curl_donwload_command(raw_url, colab_path)
+        print("Download concluído.")
         print("Now you can edit it freely in Colab.")
 
 
