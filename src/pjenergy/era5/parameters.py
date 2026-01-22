@@ -35,7 +35,7 @@ class ERA5Parameters:
         return cds_dict
 
 
-def download_parameters_from_github(force: bool = False):
+def download_parameters_from_github(force: bool = False) -> None:
     """    
     :param force: If the file already exists, force a replacement.
     :type force: bool
@@ -45,7 +45,7 @@ def download_parameters_from_github(force: bool = False):
         download_template(TemplatesDirectories.GITHUB_PARAMETERS_TEMPLATE_RAW_URL, 
                                       TemplatesDirectories.parameters(), force)
 
-def load_parameters_from_template():
+def load_parameters_from_template() -> ERA5Parameters:
 
     data = read_yaml(TemplatesDirectories.parameters())
 

@@ -17,6 +17,12 @@ class BasicDirectories:
 
     @staticmethod
     def build_from_root(relative_path: str | Path) -> Path:
+        """
+        :param relative_path: Path in relation to the project's root.
+        :type relative_path: str | Path
+        :return: Absolute path.
+        :rtype: Path
+        """
         path = BasicDirectories.content_root() / relative_path
         path.mkdir(parents=True, exist_ok=True)
         return path

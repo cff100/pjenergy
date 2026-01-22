@@ -1,12 +1,11 @@
-from pathlib import Path
 
-from .client import create_era5_client
+from .client import create_cdsapi_client
 from .parameters import load_parameters_from_template
 from pjenergy.config.paths import DataDirectories
 
-def request_era5():
+def request_era5() -> None:
 
-    client = create_era5_client()
+    client = create_cdsapi_client()
 
     parameters = load_parameters_from_template()
     dataset = parameters.dataset
