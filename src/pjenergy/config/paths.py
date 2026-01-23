@@ -23,7 +23,6 @@ class BasicDirectories:
         :rtype: Path
         """
         path = BasicDirectories.content_root() / relative_path
-        path.mkdir(parents=True, exist_ok=True)
         return path
     
     @staticmethod
@@ -69,4 +68,6 @@ class DataDirectories:
 
 
 if __name__ == "__main__":
-    pass
+    # path = TemplatesDirectories.era5_parameters_master_file()
+    path = TemplatesDirectories.era5_parameters()
+    print(path)
