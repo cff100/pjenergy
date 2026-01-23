@@ -11,10 +11,8 @@ class BasicDirectories:
     
     @staticmethod
     def content_root() -> Path:
-        if is_in_colab():
-            return Path("/content")
-        else:
-            return Path(__file__).parents[3]
+        return Path("/content") if is_in_colab() else Path(__file__).parents[3]
+
 
     @staticmethod
     def build_from_root(relative_path: str | Path) -> Path:
@@ -31,11 +29,7 @@ class BasicDirectories:
     @staticmethod
     def build_relative_paths(base_path: Path | str, relative_path: Optional[Path | str]) -> Path:
         base_path = Path(base_path)
-        if not relative_path:
-            path = base_path
-        else:
-            path = base_path / relative_path
-        return path
+        return base_path / relative_path if relative_path else base_path
 
     @staticmethod
     def templates(relative_path: Optional[Path | str] = None) -> Path:
@@ -56,14 +50,12 @@ class TemplatesDirectories:
         return BasicDirectories.templates(path) 
     
     @staticmethod
-    def era5_parameters_file(file_name: str | Path = "master.yaml") -> Path:
-        file_name = Path(file_name)
-        return TemplatesDirectories.era5_parameters(file_name)
+    def era5_parameters_master_file() -> Path:
+        return TemplatesDirectories.era5_parameters("master.yaml")
     
     @staticmethod
     def era5_parameters_temp_file(file_name: str | Path) -> Path:
-        path = Path("tmp") / file_name
-        return TemplatesDirectories.era5_parameters(path)
+        return TemplatesDirectories.era5_parameters(f"tmp/{file_name}")
     
 
     GITHUB_PARAMETERS_TEMPLATE_RAW_URL = "https://raw.githubusercontent.com/cff100/pjenergy/refs/heads/refactor/arquitetura/templates/era5_parameters.yaml"

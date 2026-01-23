@@ -43,12 +43,12 @@ def download_parameters_from_github(force: bool = False) -> None:
 
     if is_in_colab():
         download_template(TemplatesDirectories.GITHUB_PARAMETERS_TEMPLATE_RAW_URL, 
-                                      TemplatesDirectories.era5_parameters_file(), force)
+                                      TemplatesDirectories.era5_parameters_master_file(), force)
 
 
 def load_parameters_from_template() -> ERA5Parameters:
 
-    data = read_yaml(TemplatesDirectories.era5_parameters_file())
+    data = read_yaml(TemplatesDirectories.era5_parameters_master_file())
 
     return ERA5Parameters(**data)
 
