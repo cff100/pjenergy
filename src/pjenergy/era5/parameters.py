@@ -1,6 +1,7 @@
 from dataclasses import dataclass, asdict
 from typing import Sequence
 from pathlib import Path
+from math import prod
 
 from pjenergy.config.paths import TemplatesDirectories
 from pjenergy.io.yaml import read_yaml
@@ -26,7 +27,18 @@ class ERA5Parameters:
         del self.cds_dict["dataset"]
 
         return self.cds_dict
+    
+    def count_parameter_combinations(self):
+        self.dict = asdict(self)
+        del self.dict["area"] # The area is not relevant to the requisition load
+        self.parameters_count_dict = {
+            k: (len(v) if not isinstance(v, str) else 1)
+            for (k, v) in self.dict.items() 
+        }
+        self.parameters_combinations = prod(self.parameters_count_dict.values())
 
+        return self.parameters_combinations
+        
 
 def download_parameters_from_github(force: bool = False) -> None:
     """    
@@ -46,5 +58,8 @@ def load_parameters_from_template(file_path: Path = TemplatesDirectories.era5_pa
 
 if __name__ == "__main__":
     p = load_parameters_from_template()
-    cds_dict = p.to_cds_dict()
-    print(cds_dict)
+    # cds_dict = p.to_cds_dict()
+    # print(cds_dict)
+    print(p.count_parameter_combinations())
+    
+
