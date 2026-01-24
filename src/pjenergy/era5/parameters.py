@@ -6,6 +6,7 @@ from math import prod
 from pjenergy.config.paths import TemplatesDirectories
 from pjenergy.io.yaml import read_yaml
 from pjenergy.utils.colab import is_in_colab, download_template
+from pjenergy.io.ask import is_answer_yes, ask_value
 
 
 @dataclass
@@ -28,7 +29,7 @@ class ERA5Parameters:
 
         return self.cds_dict
     
-    def count_parameter_combinations(self):
+    def count_parameter_combinations(self) -> int:
         self.dict = asdict(self)
         del self.dict["area"] # The area is not relevant to the requisition load
         self.parameters_count_dict = {
@@ -38,6 +39,27 @@ class ERA5Parameters:
         self.parameters_combinations = prod(self.parameters_count_dict.values())
 
         return self.parameters_combinations
+    
+    def validate_parameter_combination_count(self, allowed_combination_limit: int = 600, force: bool = False):
+        while allowed_combination_limit >= 5400 or not force:
+            if allowed_combination_limit >= 6000:
+                print(f"{allowed_combination_limit} combinations is a very costly request. \
+                    The request will not be prioritized and even risks not being accepted by the CDS. \
+                    A lower value is better.")
+            else:
+                print(f"{allowed_combination_limit} combinations is a request of considerable size, \
+                    so it will not be prioritized by the CDS. 600 is better value")
+                
+            if is_answer_yes(f"Do you want to keep this value ({allowed_combination_limit} combinations)?"):
+                break
+            
+            
+            allowed_combination_limit = ask_value("What value do you want?")
+
+ 
+        return allowed_combination_limit
+
+
         
 
 def download_parameters_from_github(force: bool = False) -> None:

@@ -1,7 +1,7 @@
 import subprocess
 from pathlib import Path
 
-from pjenergy.utils.path_existence import ask_replace_file
+from pjenergy.io.ask import is_answer_yes
 
 def is_in_colab() -> bool:
 
@@ -31,7 +31,7 @@ def download_template(raw_url: str, colab_path: Path, force: bool = False) -> No
     if not colab_path.exists() or force:
         download_template_from_github(raw_url, colab_path)
     else: 
-        if ask_replace_file():
+        if is_answer_yes("File already exists. Replace? (Y/N): "):
             download_template_from_github(raw_url, colab_path)
 
         
