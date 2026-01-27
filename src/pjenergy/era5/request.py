@@ -1,6 +1,6 @@
 
 from pjenergy.era5.client import create_cdsapi_client
-from pjenergy.era5.parameters import load_parameters_from_template
+from pjenergy.era5.loaders import load_parameters_from_template
 from pjenergy.config.paths import DataDirectories
 
 def request_era5() -> None:
