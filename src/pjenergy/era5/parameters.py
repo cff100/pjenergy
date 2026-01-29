@@ -2,7 +2,9 @@ from dataclasses import dataclass, asdict
 from typing import Sequence
 from math import prod
 
-from pjenergy.io.ask import is_answer_yes, ask_value
+from pjenergy.era5.loaders import ask_alternative_combination_limit
+
+
 
 
 @dataclass
@@ -26,6 +28,10 @@ class ERA5Parameters:
         return data
     
     def count_parameter_combinations(self) -> int:
+        """        
+        :return: Number of possible parameters combinations. 
+        :rtype: int
+        """
         data = asdict(self)
         data.pop("area") # The area is not relevant to the requisition load
 
@@ -36,7 +42,9 @@ class ERA5Parameters:
 
         return prod(counts)
     
-    def is_within_combinations_limit(self, limit: int) -> bool:
+    def respects_request_limit(self, limit: int = 600, force: bool = False) -> bool:
+        if limit > 5400 and not force:
+            limit = ask_alternative_combination_limit(limit)
         return self.count_parameter_combinations() <= limit
     
     

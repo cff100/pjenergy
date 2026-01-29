@@ -4,6 +4,7 @@ from pjenergy.config.paths import TemplatesDirectories
 from pjenergy.io.yaml import read_yaml
 from pjenergy.utils.colab import is_in_colab, download_template
 from pjenergy.era5.parameters import ERA5Parameters
+from pjenergy.io.ask import is_answer_yes, ask_value
 
 def download_parameters_from_github(force: bool = False) -> None:
     """    
@@ -21,24 +22,7 @@ def load_parameters_from_template(file_path: Path = TemplatesDirectories.era5_pa
     return ERA5Parameters(**data)
 
 
-def prompt_for_combination_limit(self, allowed_combination_limit: int = 600, force: bool = False) -> None:
 
-    while allowed_combination_limit >= 5400 and not force:
-        if allowed_combination_limit >= 6000:
-            print(f"{allowed_combination_limit} combinations is a very costly request. \
-                The request will not be prioritized and even risks not being accepted by the CDS. \
-                A lower value is better.")
-        else:
-            print(f"{allowed_combination_limit} combinations is a request of considerable size, \
-                so it will not be prioritized by the CDS. 600 is better value")
-            
-        if is_answer_yes(f"Do you want to keep this value ({allowed_combination_limit} combinations)?"):
-            break
-        
-        
-        allowed_combination_limit = ask_value("What value do you want?")
-
-    return 
 
 
 def validate_parameter_combination_count(self, allowed_combination_limit: int = 600, force: bool = False) -> bool:
