@@ -23,16 +23,6 @@ def load_parameters_from_template(file_path: Path = TemplatesDirectories.era5_pa
 
 
 
-
-
-def validate_parameter_combination_count(self, allowed_combination_limit: int = 600, force: bool = False) -> bool:
-    
-    is_valid = self.is_within_combinations_limit(allowed_combination_limit)
-    self.prompt_for_combination_limit(allowed_combination_limit, force)
-
-    return is_valid
-
-
 if __name__ == "__main__":
     p = load_parameters_from_template()
     cds_dict = p.to_cds_dict()

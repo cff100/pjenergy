@@ -2,9 +2,6 @@ from dataclasses import dataclass, asdict
 from typing import Sequence
 from math import prod
 
-from pjenergy.era5.loaders import ask_alternative_combination_limit
-
-
 
 
 @dataclass
@@ -42,9 +39,15 @@ class ERA5Parameters:
 
         return prod(counts)
     
-    def respects_request_limit(self, limit: int = 600, force: bool = False) -> bool:
-        if limit > 5400 and not force:
-            limit = ask_alternative_combination_limit(limit)
+    def respects_request_limit(self, limit: int = 600) -> bool:
+        """
+        Checks if the number of parameters combinations in the request is below the limit.
+        
+        :param limit: 
+        :type limit: int
+        :return:
+        :rtype: bool
+        """
         return self.count_parameter_combinations() <= limit
     
     

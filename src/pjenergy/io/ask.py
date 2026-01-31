@@ -1,4 +1,5 @@
-
+from pjenergy.io.console import print_combination_limit_warning
+from pjenergy.config.constants import RequestFlowConstants
 
 def is_answer_yes_or_no(answer: str) -> bool:
     answer = answer.strip().upper()
@@ -23,21 +24,21 @@ def ask_value(question: str) -> int:
             str_value = input(question)
 
 
-def ask_alternative_combination_request_limit(limit: int) -> int:
+def ask_request_limit(limit) -> int:
+    if limit == RequestFlowConstants.DEFAULT_REQUEST_LIMIT:
+        return limit
+    else:
+        return ask_value("What limit do you want for each request?")
+
+
+def ask_alternative_combination_limit(limit: int) -> int:
 
     while True:
-        if limit >= 6000:
-            print(f"{limit} combinations is a very costly request. \
-                The request will not be prioritized and even risks not being accepted by the CDS. \
-                A lower value is better.")
-        else:
-            print(f"{limit} combinations is a request of considerable size, \
-                so it will not be prioritized by the CDS. 600 is better value")
+        print_combination_limit_warning(limit) 
             
         if is_answer_yes(f"Do you want to keep this value ({limit} combinations)?"):
             break
         
-        
-        limit = ask_value("What value do you want?") # type: ignore
+        limit = ask_value("What value do you want?") 
 
     return limit
