@@ -24,19 +24,12 @@ def ask_value(question: str) -> int:
             str_value = input(question)
 
 
-def ask_request_limit(limit) -> int:
-    if limit == RequestFlowConstants.DEFAULT_REQUEST_LIMIT:
-        return limit
-    else:
-        return ask_value("What limit do you want for each request?")
-
-
 def ask_alternative_combination_limit(limit: int) -> int:
 
     while True:
         print_combination_limit_warning(limit) 
             
-        if is_answer_yes(f"Do you want to keep this value ({limit} combinations)?"):
+        if is_answer_yes(f"Do you want to keep this value ({limit} combinations) (Y/N)?"):
             break
         
         limit = ask_value("What value do you want?") 
