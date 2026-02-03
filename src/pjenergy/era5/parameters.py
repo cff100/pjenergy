@@ -54,33 +54,53 @@ class ERA5Parameters:
         return self.count_parameter_combinations() <= limit
     
     
-    def placeholder_1(self, limit: int, param_dict: dict):
+    def placeholder_1(self, limit: int):
+        data = asdict(self)
         obj = self
+        i = 0
+        parameters_dicts_list_total = [data]
+        first_dict = parameters_dicts_list_total[0]
         while not obj.respects_request_limit(limit):
-            obj = self.placeholder_2(param_dict)
-        return parameters_dicts_list
-        
-                
-    def placeholder_2(self, param_dict: dict):
-        for param in RequestFlowConstants.PARAMETERS_PRIORITY_ORDER:
-            if len(param_dict[param]) == 1:
-                continue
+            param = RequestFlowConstants.PARAMETERS_PRIORITY_ORDER[i]
+            if len(first_dict[param]) == 1:
+                pass
             else: 
-                parameters_dicios_list = self.placeholder_3(param_dict, param)
-        return parameters_dicios_list
+                parameters_dicts_list_2 = []
+                for d in parameters_dicts_list_total:
+                    parameters_dicts_list = []
+                    for elem in d[param]:
+                        new_dict = deepcopy(d)
+                        new_dict[param] = elem
+                        parameters_dicts_list.append(new_dict)
+                    parameters_dicts_list_2.extend(parameters_dicts_list) 
+                parameters_dicts_list_total = parameters_dicts_list_2
+                first_dict = parameters_dicts_list_total[0]
+                obj = ERA5Parameters(**first_dict)
+            i += 1
+        return parameters_dicts_list_total
 
-    def placeholder_3(self, param_dict: dict, param: str):
-        parameters_dicios_list = []
-        for elem in param_dict[param]:
-            new_dict = deepcopy(param_dict)
-            new_dict[param] = elem
-            parameters_dicios_list.append(new_dict)
-        return parameters_dicios_list
+
+
+    # def placeholder_2(self, param_dict: dict):
+        
+    #     if len(param_dict[param]) == 1:
+    #         continue
+    #     else: 
+    #         parameters_dicts_list = self.placeholder_3(param_dict, param)
+    #     return parameters_dicts_list
+
+    # def placeholder_3(self, param_dict: dict, param: str):
+    #     parameters_dicios_list = []
+    #     for elem in param_dict[param]:
+    #         new_dict = deepcopy(param_dict)
+    #         new_dict[param] = elem
+    #         parameters_dicios_list.append(new_dict)
+    #     return parameters_dicios_list
             
-    def placeholder_4(self, parameters_dicios_list: list[dict]):
-        first_dict = parameters_dicios_list[0]
-        p = ERA5Parameters(**first_dict)
-        return p
+    # def placeholder_4(self, parameters_dicios_list: list[dict]):
+    #     first_dict = parameters_dicios_list[0]
+    #     p = ERA5Parameters(**first_dict)
+    #     return p
     
     
 
