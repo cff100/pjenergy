@@ -57,7 +57,7 @@ class TemplatesDirectories:
         return TemplatesDirectories.era5_parameters(f"tmp/{file_name}")
     
 
-    GITHUB_PARAMETERS_TEMPLATE_RAW_URL = "https://raw.githubusercontent.com/cff100/pjenergy/refs/heads/refactor/arquitetura/templates/era5_parameters.yaml"
+    GITHUB_PARAMETERS_TEMPLATE_RAW_URL = "https://raw.githubusercontent.com/cff100/pjenergy/refs/heads/refactor/arquitetura/templates/era5_parameters/master.yaml"
 
 
 class DataDirectories:
