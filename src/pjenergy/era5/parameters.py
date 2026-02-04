@@ -22,17 +22,29 @@ class ERA5Parameters:
     download_format: Sequence[str]
 
     def to_cds_dict(self) -> dict:
+        """
+        Assembles the dictionary required for the CDS API request.
+        
+        :return: Dictionary required for the CDS API request.
+        :rtype: dict[Any, Any]
+        """
         data = asdict(self)
         data.pop("dataset")
 
         return data
     
-    def count_parameter_combinations(self) -> int:
+    @staticmethod
+    def count_parameter_combinations(data: dict) -> int:
         """        
-        :return: Number of possible parameters combinations. 
+        Counts the numbers of parameters combinations from a parameters 
+        dictionary.
+
+        :param data: Parameters dictionary.
+        :type data: dict
+        :return: Number of parameters combinations. 
         :rtype: int
         """
-        data = asdict(self)
+        data = data.copy()
         data.pop("area") # The area is not relevant to the requisition load
 
         counts = [
@@ -42,18 +54,41 @@ class ERA5Parameters:
 
         return prod(counts)
     
-    def respects_request_limit(self, limit) -> bool:
+    @staticmethod
+    def respects_request_limit(data: dict, limit: int) -> bool:
         """
         Checks if the number of parameters combinations in the request is below the limit.
         
-        :param limit: 
+        :param data: Parameters dictionary.
+        :type data: dict
+        :param limit: Maximum number of parameters combinations allowed.
         :type limit: int
-        :return:
+        :return: `True` if the number of parameters combinations is below the limit, `False` otherwise.
         :rtype: bool
         """
-        return self.count_parameter_combinations() <= limit
+        return ERA5Parameters.count_parameter_combinations(data) <= limit
     
-    
+
+    @staticmethod
+    def _fix_parameter(data: dict, param: str) -> dict:
+        if len(data[param]) <= 1:
+            return data
+        return {**data, param: data[param][0]}  # {**d, k: v} = clone d and replace k with v.
+
+    @staticmethod
+    def brake_depth(data: dict, limit: int):
+ 
+        for depth, param in enumerate(RequestFlowConstants.PARAMETERS_PRIORITY_ORDER):
+
+            if ERA5Parameters.respects_request_limit(data, limit):
+                return depth
+
+            data = ERA5Parameters._fix_parameter(data, param)
+
+        return len(RequestFlowConstants.PARAMETERS_PRIORITY_ORDER)
+            
+            
+
     def placeholder_1(self, limit: int):
         data = asdict(self)
         obj = self
@@ -81,30 +116,4 @@ class ERA5Parameters:
 
 
 
-    # def placeholder_2(self, param_dict: dict):
-        
-    #     if len(param_dict[param]) == 1:
-    #         continue
-    #     else: 
-    #         parameters_dicts_list = self.placeholder_3(param_dict, param)
-    #     return parameters_dicts_list
-
-    # def placeholder_3(self, param_dict: dict, param: str):
-    #     parameters_dicios_list = []
-    #     for elem in param_dict[param]:
-    #         new_dict = deepcopy(param_dict)
-    #         new_dict[param] = elem
-    #         parameters_dicios_list.append(new_dict)
-    #     return parameters_dicios_list
-            
-    # def placeholder_4(self, parameters_dicios_list: list[dict]):
-    #     first_dict = parameters_dicios_list[0]
-    #     p = ERA5Parameters(**first_dict)
-    #     return p
     
-    
-
-
-
-    
-
