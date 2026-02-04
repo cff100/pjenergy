@@ -70,10 +70,15 @@ class ERA5Parameters:
     
 
     @staticmethod
-    def _fix_parameter(data: dict, param: str) -> dict:
-        if len(data[param]) <= 1:
+    def _is_splitting_valid(data: dict, param: str) -> bool:
+        return len(data[param]) <= 1 or isinstance(data[param], str)
+
+    @staticmethod
+    def _fix_parameter(data: dict, param: str, i: int) -> dict:
+        if ERA5Parameters._is_splitting_valid(data, param):
+            #print("!!")
             return data
-        return {**data, param: data[param][0]}  # {**d, k: v} = clone d and replace k with v.
+        return {**data, param: data[param][i]}  # {**d, k: v} = clone d and replace k with v.
 
     @staticmethod
     def brake_depth(data: dict, limit: int):
@@ -83,36 +88,58 @@ class ERA5Parameters:
             if ERA5Parameters.respects_request_limit(data, limit):
                 return depth
 
-            data = ERA5Parameters._fix_parameter(data, param)
+            data = ERA5Parameters._fix_parameter(data, param, 0)
 
         return len(RequestFlowConstants.PARAMETERS_PRIORITY_ORDER)
             
-            
+    @staticmethod
+    def placeholder_01(data: dict, param: str):
+        
+        new_data_list = []
+        for i in range(len(data[param])):
+            new_data = ERA5Parameters._fix_parameter(data, param, i)
+            new_data_list.append(new_data)
 
-    def placeholder_1(self, limit: int):
-        data = asdict(self)
-        obj = self
-        i = 0
-        parameters_dicts_list_total = [data]
-        first_dict = parameters_dicts_list_total[0]
-        while not obj.respects_request_limit(limit):
-            param = RequestFlowConstants.PARAMETERS_PRIORITY_ORDER[i]
-            if len(first_dict[param]) == 1:
-                pass
-            else: 
-                parameters_dicts_list_2 = []
-                for d in parameters_dicts_list_total:
-                    parameters_dicts_list = []
-                    for elem in d[param]:
-                        new_dict = deepcopy(d)
-                        new_dict[param] = elem
-                        parameters_dicts_list.append(new_dict)
-                    parameters_dicts_list_2.extend(parameters_dicts_list) 
-                parameters_dicts_list_total = parameters_dicts_list_2
-                first_dict = parameters_dicts_list_total[0]
-                obj = ERA5Parameters(**first_dict)
-            i += 1
-        return parameters_dicts_list_total
+        return new_data_list
+    
+    @staticmethod
+    def placeholder_02(initial_data: dict, depth: int):
+
+        data_list = [initial_data]
+
+        for param in RequestFlowConstants.PARAMETERS_PRIORITY_ORDER[:depth]:
+            new_data_list = []
+            for data in data_list:
+                list = ERA5Parameters.placeholder_01(data, param)
+                new_data_list.extend(list)
+            data_list = new_data_list
+        return data_list
+
+
+    # def placeholder_1(self, limit: int):
+    #     data = asdict(self)
+    #     obj = self
+    #     i = 0
+    #     parameters_dicts_list_total = [data]
+    #     first_dict = parameters_dicts_list_total[0]
+    #     while not obj.respects_request_limit(limit):
+    #         param = RequestFlowConstants.PARAMETERS_PRIORITY_ORDER[i]
+    #         if len(first_dict[param]) == 1:
+    #             pass
+    #         else: 
+    #             parameters_dicts_list_2 = []
+    #             for d in parameters_dicts_list_total:
+    #                 parameters_dicts_list = []
+    #                 for elem in d[param]:
+    #                     new_dict = deepcopy(d)
+    #                     new_dict[param] = elem
+    #                     parameters_dicts_list.append(new_dict)
+    #                 parameters_dicts_list_2.extend(parameters_dicts_list) 
+    #             parameters_dicts_list_total = parameters_dicts_list_2
+    #             first_dict = parameters_dicts_list_total[0]
+    #             obj = ERA5Parameters(**first_dict)
+    #         i += 1
+    #     return parameters_dicts_list_total
 
 
 
