@@ -1,3 +1,4 @@
+"""CDS API client helpers."""
 
 import cdsapi
 
@@ -8,7 +9,8 @@ from pjenergy.config.paths import BasicDirectories
 def create_cdsapi_client_doc(key: str , 
                            url: str="https://cds.climate.copernicus.eu/api") -> None:
     """
-    
+    Create the `.cdsapirc` configuration file with API credentials.
+
     :param key: CDS API personal key.
     :type key: str
     :param url: CDS API url.
@@ -21,6 +23,7 @@ def create_cdsapi_client_doc(key: str ,
 
 
 def create_cdsapi_client() -> cdsapi.Client:
+    """Create and return a CDS API client instance."""
     return cdsapi.Client()
 
 

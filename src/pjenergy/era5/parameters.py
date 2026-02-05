@@ -1,7 +1,9 @@
+"""ERA5 parameter models and request-splitting helpers."""
+
 from dataclasses import dataclass, asdict
 from typing import Sequence
 from math import prod
-from copy import deepcopy
+
 
 from pjenergy.config.constants import RequestFlowConstants
 
@@ -9,6 +11,7 @@ from pjenergy.config.constants import RequestFlowConstants
 
 @dataclass
 class ERA5Parameters:
+    """Container for ERA5 request parameters and helper utilities."""
     dataset: str
     product_type: Sequence[str]
     variable: Sequence[str]
@@ -23,10 +26,10 @@ class ERA5Parameters:
 
     def to_cds_dict(self) -> dict:
         """
-        Assembles the dictionary required for the CDS API request.
+        Build the payload dictionary required by the CDS API request.
         
-        :return: Dictionary required for the CDS API request.
-        :rtype: dict[Any, Any]
+        :return: Dictionary required for the CDS API request (without ``dataset``).
+        :rtype: dict
         """
         data = asdict(self)
         data.pop("dataset")
@@ -36,12 +39,13 @@ class ERA5Parameters:
     @staticmethod
     def count_parameter_combinations(data: dict) -> int:
         """        
-        Counts the numbers of parameters combinations from a parameters 
-        dictionary.
+        Count the number of parameter combinations represented by a mapping.
+
+        The ``area`` entry does not affect the request load and is ignored.
 
         :param data: Parameters dictionary.
         :type data: dict
-        :return: Number of parameters combinations. 
+        :return: Number of parameter combinations.
         :rtype: int
         """
         data = data.copy()
@@ -57,7 +61,7 @@ class ERA5Parameters:
     @staticmethod
     def respects_request_limit(data: dict, limit: int) -> bool:
         """
-        Checks if the number of parameters combinations in the request is below the limit.
+        Check whether the number of parameter combinations is within a limit.
         
         :param data: Parameters dictionary.
         :type data: dict
@@ -70,19 +74,63 @@ class ERA5Parameters:
     
 
     @staticmethod
-    def _is_splitting_valid(data: dict, param: str) -> bool:
+    def _is_splitting_invalid(data: dict, param: str) -> bool:
+        """
+        Determine whether splitting parameter values would be invalid.
+
+        Splitting is considered invalid if ``data[param]`` is a string or a
+        sequence with a single value.
+        
+        :param data: Dictionary of parameters
+        :type data: dict
+        :param param: Parameter whose values will be divided among the dictionaries.
+        :type param: str
+        :return: `True` if in the dictionary the parameter value is a string, or a list or tuple with a single value.
+        :rtype: bool
+        """
         return len(data[param]) <= 1 or isinstance(data[param], str)
 
     @staticmethod
     def _fix_parameter(data: dict, param: str, i: int) -> dict:
-        if ERA5Parameters._is_splitting_valid(data, param):
-            #print("!!")
+        """
+        Return a shallow copy of ``data`` with ``param`` replaced by its i-th element.
+
+        This method is typically used when expanding or iterating over parameters
+        that are sequences. If splitting ``param`` is deemed invalid by
+        ``_is_splitting_invalid``, the original dictionary is returned unchanged.
+
+        :param data: Input mapping of parameters to values or sequences of values.
+        :type data: dict
+        :param param: Key whose value should be indexed and replaced.
+        :type param: str
+        :param i: Index of the element to extract from ``data[param]``.
+        :type i: int
+        :return: A new dictionary with ``param`` fixed to a single value, or the
+                original dictionary if splitting is invalid.
+        :rtype: dict
+        """
+
+        if ERA5Parameters._is_splitting_invalid(data, param):
             return data
         return {**data, param: data[param][i]}  # {**d, k: v} = clone d and replace k with v.
 
     @staticmethod
     def brake_depth(data: dict, limit: int):
- 
+        """
+        Determine the split depth needed to respect a request size limit.
+
+        The depth is calculated by progressively fixing parameters (following
+        ``RequestFlowConstants.PARAMETERS_PRIORITY_ORDER``) until the number of
+        parameter combinations is within ``limit``.
+
+        :param data: Parameters dictionary.
+        :type data: dict
+        :param limit: Maximum number of parameter combinations allowed.
+        :type limit: int
+        :return: The depth at which the request is within the limit.
+        :rtype: int
+        """
+
         for depth, param in enumerate(RequestFlowConstants.PARAMETERS_PRIORITY_ORDER):
 
             if ERA5Parameters.respects_request_limit(data, limit):
@@ -93,7 +141,17 @@ class ERA5Parameters:
         return len(RequestFlowConstants.PARAMETERS_PRIORITY_ORDER)
             
     @staticmethod
-    def placeholder_01(data: dict, param: str):
+    def separates_one_parameter_values(data: dict, param: str) -> list[dict[str, Sequence]]:
+        """
+        Split a parameter's values into multiple dictionaries.
+        
+        :param data: Initial dictionary of parameters.
+        :type data: dict
+        :param param: Parameter whose values will be divided among the dictionaries.
+        :type param: str
+        :return: List of dictionaries with ``param`` fixed to each of its values.
+        :rtype: list[dict[str, Sequence]]
+        """
         
         new_data_list = []
         for i in range(len(data[param])):
@@ -103,44 +161,28 @@ class ERA5Parameters:
         return new_data_list
     
     @staticmethod
-    def placeholder_02(initial_data: dict, depth: int):
+    def separates_parameters_values(initial_data: dict, depth: int) -> list[dict[str, Sequence]]:
+        """
+        Split values for the first ``depth`` parameters in the priority list.
+        
+        :param initial_data: Master parameter dictionary containing all parameters.
+        :type initial_data: dict
+        :param depth: Depth of the priority list that determines which parameters
+            will have their values split into separate dictionaries.
+        :type depth: int
+        :return: List of dictionaries with values split for the selected parameters.
+        :rtype: list[dict[str, Sequence]]
+        """
 
         data_list = [initial_data]
 
         for param in RequestFlowConstants.PARAMETERS_PRIORITY_ORDER[:depth]:
             new_data_list = []
             for data in data_list:
-                list = ERA5Parameters.placeholder_01(data, param)
+                list = ERA5Parameters.separates_one_parameter_values(data, param)
                 new_data_list.extend(list)
             data_list = new_data_list
         return data_list
 
 
-    # def placeholder_1(self, limit: int):
-    #     data = asdict(self)
-    #     obj = self
-    #     i = 0
-    #     parameters_dicts_list_total = [data]
-    #     first_dict = parameters_dicts_list_total[0]
-    #     while not obj.respects_request_limit(limit):
-    #         param = RequestFlowConstants.PARAMETERS_PRIORITY_ORDER[i]
-    #         if len(first_dict[param]) == 1:
-    #             pass
-    #         else: 
-    #             parameters_dicts_list_2 = []
-    #             for d in parameters_dicts_list_total:
-    #                 parameters_dicts_list = []
-    #                 for elem in d[param]:
-    #                     new_dict = deepcopy(d)
-    #                     new_dict[param] = elem
-    #                     parameters_dicts_list.append(new_dict)
-    #                 parameters_dicts_list_2.extend(parameters_dicts_list) 
-    #             parameters_dicts_list_total = parameters_dicts_list_2
-    #             first_dict = parameters_dicts_list_total[0]
-    #             obj = ERA5Parameters(**first_dict)
-    #         i += 1
-    #     return parameters_dicts_list_total
-
-
-
-    
+   

@@ -1,3 +1,5 @@
+"""Load and download ERA5 parameter templates."""
+
 from pathlib import Path
 
 from pjenergy.config.paths import TemplatesDirectories
@@ -8,6 +10,8 @@ from pjenergy.era5.parameters import ERA5Parameters
 
 def download_parameters_from_github(force: bool = False) -> None:
     """    
+    Download the ERA5 parameters template from GitHub when running in Colab.
+
     :param force: If the file already exists, force a replacement.
     :type force: bool
     """
@@ -18,6 +22,14 @@ def download_parameters_from_github(force: bool = False) -> None:
 
 
 def load_parameters_from_template(file_path: Path = TemplatesDirectories.era5_parameters_master_file()) -> ERA5Parameters:
+    """
+    Load parameters from a YAML template and build an ``ERA5Parameters`` instance.
+
+    :param file_path: Path to the YAML template file.
+    :type file_path: Path
+    :return: Parsed parameters as an ``ERA5Parameters`` instance.
+    :rtype: ERA5Parameters
+    """
     data = read_yaml(file_path)
     return ERA5Parameters(**data)
 
@@ -33,10 +45,10 @@ if __name__ == "__main__":
     # print(c)
     # l = ERA5Parameters.brake_depth(data, 2455200)
     # print(l)
-    ll = ERA5Parameters.placeholder_02(data, 3)
+    ll = ERA5Parameters.separates_parameters_values(data, 3)
     print(ll)
     # nd = ERA5Parameters.placeholder_01(data, "year")
     # print(nd)
     # cds_dict = p.to_cds_dict()
-    #print(cds_dict)
+    #print(cds_dict).
     #print(p.count_parameter_combinations())

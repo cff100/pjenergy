@@ -1,9 +1,11 @@
+"""ERA5 request entry point."""
 
 from pjenergy.era5.client import create_cdsapi_client
 from pjenergy.era5.loaders import load_parameters_from_template
 from pjenergy.config.paths import DataDirectories
 
 def request_era5() -> None:
+    """Perform an ERA5 data request using the default template parameters."""
 
     client = create_cdsapi_client()
 
